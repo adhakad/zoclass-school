@@ -1,0 +1,35 @@
+<mat-toolbar class="side-navbar">
+    <ul class="nav navbar-nav">
+      <li class="nav-item">
+        <button mat-button class="menu-button" [routerLink]="['/teacher/dashboard']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard </span>
+        </button>
+        </li>
+      
+      <li class="nav-item">
+        <button mat-button class="menu-button" [routerLink]="['/teacher/student']" routerLinkActive="active-link">
+          <mat-icon>person</mat-icon>
+          <span>Student</span>
+        </button>
+      </li>
+      <li class="nav-item">
+        <button mat-button class="menu-button" [routerLink]="['/teacher/subject']" routerLinkActive="active-link">
+          <mat-icon>books</mat-icon>
+          <span>Subject</span>
+        </button>
+      </li>
+      <li class="nav-item">
+        <button mat-button class="menu-button" [routerLink]="['/teacher/test']" routerLinkActive="active-link">
+          <mat-icon>assignment</mat-icon>
+          <span>Test</span>
+        </button>
+      </li>
+      <li class="nav-item">
+        <button mat-button class="menu-button" [routerLink]="['/teacher/study-material']" routerLinkActive="active-link">
+          <mat-icon>post_add</mat-icon>
+          <span>Study Material</span>
+        </button>
+      </li>
+    </ul>
+  </mat-toolbar>

@@ -1,0 +1,96 @@
+<app-header *ngIf="isTestCompleted"></app-header>
+<mat-toolbar class="toolbar" *ngIf="!isTestCompleted">
+    <button class="btn" mat-raised-button (click)="submitTest()" [disabled]="!btnEnabled"
+        *ngIf="!isTestCompleted">Submit</button>
+    <h4 style="width: 100px;" *ngIf="!isTestCompleted"></h4>
+    <span class="timer" *ngIf="!isTestCompleted">{{getFormattedTime()}}</span>
+</mat-toolbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-12" style="padding-top: 1.75vh;">
+            <div class="row">
+                <div class="col-12 col-lg-6 offset-lg-3 big-container">
+                    <div class="col-12 col-lg-10 offset-lg-1">
+                        <div class="main-card">
+                            <div class="col-12" *ngIf="!isTestCompleted">
+                                <h3 class="question"><span>{{currentQuestion+1}}. </span>
+                                    {{questionList[currentQuestion]?.questionText}}</h3>
+                                <mat-card
+                                    [ngClass]="{'option-click' : 1==saveAnswerList[currentQuestion]?.selectAnswer}"
+                                    (click)="answer(currentQuestion+1,1)">
+                                    <h3 class="option"><span>a.</span>
+                                        {{questionList[currentQuestion]?.option1}}
+                                    </h3>
+                                </mat-card>
+                                <mat-card
+                                    [ngClass]="{'option-click' : 2==saveAnswerList[currentQuestion]?.selectAnswer}"
+                                    (click)="answer(currentQuestion+1,2)">
+                                    <h3 class="option"><span>b.</span>
+                                        {{questionList[currentQuestion]?.option2}}</h3>
+                                </mat-card>
+                                <mat-card
+                                    [ngClass]="{'option-click' : 3==saveAnswerList[currentQuestion]?.selectAnswer}"
+                                    (click)="answer(currentQuestion+1,3)">
+                                    <h3 class="option"><span>c.</span>
+                                        {{questionList[currentQuestion]?.option3}}</h3>
+                                </mat-card>
+                                <mat-card
+                                    [ngClass]="{'option-click' : 4==saveAnswerList[currentQuestion]?.selectAnswer}"
+                                    (click)="answer(currentQuestion+1,4)">
+                                    <h3 class="option"><span>d.</span>
+                                        {{questionList[currentQuestion]?.option4}}</h3>
+                                </mat-card>
+                            </div>
+                            <div class="result-card" *ngIf="isTestCompleted">
+                                <h3>Test Result</h3>
+                                <p>Hi, Abhishek congrats your test performance is good.</p>
+                                <div class="row">
+                                    <div class="col-5 col-lg-4 offset-lg-1">
+                                        <h4>Score</h4>
+                                        <h5>Your score {{correctAnswer}}</h5>
+                                        <round-progress [current]="percentile" [max]="100" [color]="'#9a60ff'"
+                                            [background]="'#ccbcffc1'" [radius]="40" [stroke]="5" [rounded]="true"
+                                            [clockwise]="true" [duration]="800" [animation]="'easeInOutQuart'"
+                                            [animationDelay]="0"></round-progress>
+                                        <h4>Percentile</h4>
+                                    </div>
+                                    <div class="col-7 col-lg-4 offset-lg-3">
+                                        <img src="../../../../../assets/icons8-quiz-66.png" alt="">
+                                        <h5>Maximum marks {{questionList.length}}</h5>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <mat-icon class="done">done</mat-icon>
+                                                <mat-icon class="close">close</mat-icon>
+                                                <mat-icon class="unchecked">radio_button_unchecked</mat-icon>
+                                            </div>
+                                            <div class="col-10">
+                                                <h5>{{correctAnswer}} Correct</h5>
+                                                <h5>{{inCorrectAnswer}} Incorrect</h5>
+                                                <h5>{{unAttempted}} Unanswered</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h6>Your marks is {{percentile}}% out of 100% marks</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-toolbar class="bottomBtnNav" *ngIf="!isTestCompleted">
+    <button mat-flat-button>
+        <mat-icon *ngIf="currentQuestion>0">arrow_left</mat-icon>
+        <span *ngIf="currentQuestion>0" (click)="previousQuestion()">Previous</span>
+    </button>
+    <button mat-flat-button></button>
+    <button mat-flat-button></button>
+    <button mat-flat-button>
+        <span *ngIf="nextDisabled>currentQuestion"
+            (click)="nextQuestion()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Next</span>
+        <mat-icon *ngIf="nextDisabled>currentQuestion">arrow_right</mat-icon>
+    </button>
+</mat-toolbar>

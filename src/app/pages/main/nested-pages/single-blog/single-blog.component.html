@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" style="padding-top: 1.75vh;">
+      <div class="row">
+        <div class="col-12 col-lg-6 offset-lg-3 big-container">
+          <div class="col-12 col-lg-10 offset-lg-1">
+            <div class="main-card" *ngIf="blogInfo">
+                <div class="blog-card">
+                  <h2 style="color: #392775bf;font-size: 17px;font-weight: 300;">{{blogInfo.title | titlecase}}</h2>
+                  <h3 style="color: #c0b9e0;font-size: 15px;font-weight: 200;">{{blogInfo.date}} | {{blogInfo.creator}}</h3>
+                  <div style="color: #392775bf;font-size: 15px;font-weight: 200;">
+                    <p>{{blogInfo.content}}</p>
+                  </div>
+                <mat-divider></mat-divider>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

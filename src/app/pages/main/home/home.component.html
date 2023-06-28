@@ -1,0 +1,111 @@
+<app-header></app-header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-1">
+            <app-navbar></app-navbar>
+        </div>
+        <div class="col-12 col-lg-11 padding-top">
+            <div class="owl-carousel banner-carousel">
+                <div *ngFor="let bannerInfo of bannerInfo">
+                    <img class="banner-card" src="http://localhost:3000/public/banner-image/{{bannerInfo.image}}"
+                        alt="">
+                </div>
+            </div>
+            <div class="main-card">
+                <h3 *ngIf="loadTitle">Learning</h3>
+                <div class="owl-carousel subject-carousel">
+                    <div *ngFor="let subjectInfo of subjectInfo">
+                        <div class="subject-card" matRipple routerLink="/subject/category/{{subjectInfo._id}}">
+                            <img src="http://localhost:3000/public/subject-image/{{subjectInfo.image}}" alt="">
+                        </div>
+                        <div class="subject-text-card">
+                            <p>{{subjectInfo.subject}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-card">
+                <h3 *ngIf="loadTitle">Toppers</h3>
+                <div class="owl-carousel topper-carousel">
+                    <div *ngFor="let topperInfo of topperInfo">
+                        <div class="topper-card" matRipple>
+                            <img src="http://localhost:3000/public/topper-image/{{topperInfo.image}}" alt="">
+                        </div>
+                        <div class="topper-text-card">
+                            <p>{{topperInfo.name}}</p>
+                        </div>
+                        <div class="topper-text-card">
+                            <p style="margin-top: -10px;">{{topperInfo.year}} {{topperInfo.class}}th -
+                                {{topperInfo.percentile}}%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-card">
+                <div class="owl-carousel ads-carousel">
+                    <div *ngFor="let adsInfo of adsInfo">
+                        <img class="ads-card" src="http://localhost:3000/public/ads-image/{{adsInfo.image}}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="main-card">
+                <h3 *ngIf="loadTitle">Testimonial</h3>
+                <div class="owl-carousel testimonial-carousel">
+                    <div class="row testimonial-card" *ngFor="let testimonialInfo of testimonialInfo">
+                        <div class="col-5 img-container">
+                            <img src="http://localhost:3000/public/testimonial-image/{{testimonialInfo.image}}" alt="">
+                        </div>
+                        <div class="col-7">
+                            <h3>{{testimonialInfo.name}}</h3>
+                        </div>
+                        <div class="col-12">
+                            <p>" {{testimonialInfo.role}} - {{testimonialInfo.desc}} "</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row footer" *ngIf="loadTitle">
+        <div class="col-12 col-lg-10 offset-lg-1 footer-card">
+            <div class="row">
+                <div class="col-lg-3 offset-lg-1">
+                    <div class="row">
+                        <div class="col-10 offset-1">
+                            <h3>Our Classes</h3>
+                            <p>Competitive Exams</p>
+                            <p>IIT JEE</p>
+                            <p>NEET</p>
+                            <p>Olympiad Preparation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1">
+                    <div class="row">
+                        <div class="col-10 offset-1" >
+                            <h3>Branches</h3>
+                            <p>Guna</p>
+                            <p>Jabalpur</p>
+                            <p>Indore</p>
+                            <p>Bhopal</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1">
+                    <div class="row">
+                        <div class="col-10 offset-1" >
+                            <h3>Contact</h3>
+                            <p>Email - adhakad@gmail.com</p>
+                            <p>Linked In - linkedin.com/abhishek</p>
+                            <p>Mobile - +91 9340700360</p>
+                            <p>Tel - 07542 4736452</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; {{currentYear}} | All rights reserve zoclass.in</p>
+            </div>
+        </div>
+    </div>
+</div>

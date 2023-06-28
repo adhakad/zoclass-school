@@ -1,0 +1,47 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-6 offset-lg-3 login-card">
+      <div class="row">
+        <div class="col-12 col-lg-10 offset-lg-1 padding">
+                    <h3>Teacher Register</h3>
+                    <div class="col-12">
+                        <h2>{{errorMsg}}</h2>
+                        <form [formGroup]="signupForm" (ngSubmit)="signup()">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input matInput type="text" formControlName="email">
+                                <mat-hint *ngIf="!signupForm.get('email')?.valid && signupForm.get('email')?.touched"
+                                    class="form-text text-danger">Please enter email.</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Password</mat-label>
+                                <input matInput type="text" formControlName="password">
+                                <mat-hint
+                                    *ngIf="!signupForm.get('password')?.valid && signupForm.get('password')?.touched"
+                                    class="form-text text-danger">Please enter password.</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>otp</mat-label>
+                                <input matInput type="number" formControlName="otp">
+                                <mat-hint *ngIf="!signupForm.get('otp')?.valid && signupForm.get('otp')?.touched"
+                                    class="form-text text-danger">Please enter otp.</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Teacher User Id</mat-label>
+                                <input matInput type="text" formControlName="teacherUserId">
+                                <mat-hint
+                                    *ngIf="!signupForm.get('teacherUserId')?.valid && signupForm.get('teacherUserId')?.touched"
+                                    class="form-text text-danger">Please enter teacher user id.</mat-hint>
+                            </mat-form-field>
+
+                            <button type="submit" mat-raised-button [disabled]="!signupForm.valid"
+                                class="submit-button">Register</button>
+                        </form>
+                        <p>You have an already account yet? <a routerLink="/teacher/login">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

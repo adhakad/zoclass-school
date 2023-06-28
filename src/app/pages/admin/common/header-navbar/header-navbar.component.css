@@ -1,0 +1,95 @@
+.header{
+  height: 10vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  padding: 0 !important;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  box-shadow: 0 0 1px -10px rgb(215, 203, 255), 
+  0 0 0 1px rgb(235, 230, 255), 
+  0 0 3px 0 rgb(215, 203, 255);
+}
+.logo{
+  color: #8D6DFF;
+  font: 1.2em sans-serif;
+  letter-spacing: 1px;
+}
+.navbar {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  z-index: 1000;
+  padding-top: 5vh;
+  display: block;
+  justify-content: space-around;
+  background-color: white;
+  box-shadow: 0 0 1px -10px rgb(215, 203, 255), 
+  0 0 0 1px rgb(235, 230, 255), 
+  0 0 3px 0 rgb(215, 203, 255);
+  margin-top: -10vh;
+}
+.navbar button {
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+  display: block;
+  flex-direction: column;
+}
+.navbar button .mat-icon {
+  background: linear-gradient(to left, #835FDF,#8D6DFF,#BB9FFF);
+    color: transparent;
+    background-clip: text;
+    display: inline-block;
+    margin-left: 10px;
+}
+.navbar button span {
+  background: linear-gradient(to left,#8D6DFF,#8D6DFF);
+  color: transparent;
+  background-clip: text;
+  display: inline-block;
+  font: 1.15em sans-serif;
+  margin-top: 5px;
+  margin-left: 25px;
+}
+button:hover,
+.active-link {
+  background: #f3f2ff;
+}
+.close-icon{
+  margin-left: 90%;
+}
+.top-navbar{
+  display: none;
+}
+
+@media (min-width: 576px) and (max-width:991.98px){
+  .header{
+     display: none;
+  }
+}
+
+
+@media (min-width: 992px) {
+  .header{
+    box-shadow: 0 0 1px -10px rgb(226, 223, 236),
+     0 0 0 0 rgb(226, 223, 236),
+     0 0 10px 0 rgb(226, 223, 236);
+  }
+.logo{
+  color: #8c88ff;
+  font: 1.2em sans-serif;
+  letter-spacing: .5px;
+  margin-left: -5%;
+}
+.navbar{
+  display: none;
+}
+.openMenu{
+  display: none;
+}
+}
+

@@ -1,0 +1,261 @@
+<app-header-navbar></app-header-navbar>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-lg-2">
+      <app-side-navbar></app-side-navbar>
+    </div>
+    <div class="col-12 col-lg-10">
+      <div class="row">
+        <div class="col-12 big-container">
+          <div class="col-lg-12 offset-lg-0">
+            <div class="main-card">
+              <div class="row pt-4 pb-2">
+                <div class="row pb-3">
+                  <mat-radio-group (change)="onChange($event)">
+                    <mat-radio-button [value]="0" [checked]="selectedValue==0" style="color: #7d719bc7; ">Bulk Result
+                      Create</mat-radio-button>
+                    <mat-radio-button [value]="1" [checked]="selectedValue==1"
+                      style="color: #7d719bc7;margin-left: 40px;">Single Result Create</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col-8 col-lg-5">
+                  <input type="text" class="form-control" placeholder="Result Search..." id="searchText"
+                    name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
+                    (keyup)="getExamResults({page : 1, limit : 0})">
+                </div>
+                <div class="col-4 col-lg-2 offset-lg-5 pb-3">
+                  <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
+                    (click)="addBulkExamResultModel()"><mat-icon style="font-size: 20px;">add</mat-icon>Create</button>
+                  <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
+                    (click)="addExamResultModel()"><mat-icon style="font-size: 20px;">add</mat-icon>Create</button>
+                </div>
+              </div>
+              <table class="table table-hover align-middle mt-1 mb-0 bg-white">
+                <thead class="bg-light">
+                  <tr class="text-muted">
+                    <th>No.</th>
+                    <th>Roll Number</th>
+                    <th>Class</th>
+                    <th *ngFor="let subject of classSubject,let i = index">{{subject.subject}}</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="examResultInfo && examResultInfo.length>0">
+                  <tr *ngFor="let examResults of examResultInfo,let i=index">
+                    <td>
+                      <p class="mb-0">{{number*10+i+1-10}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{examResults.rollNumber}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{examResults.className}}</p>
+                    </td>
+                    <td *ngFor="let marks of examResults.subjectMarks,let i = index">
+                      <p class="mb-0">{{marks}}</p>
+                    </td>
+                    <!-- <td>
+                        <p class="mb-0">{{examResults.subjectMarks[0]}}</p>
+                      </td> -->
+                    <!-- <td>
+                        <a class="mb-0 status-active" (click)="changeStatus(examResults._id,0)" *ngIf="examResults.status == 'Active'" href="javascript:void(0)">&nbsp;&nbsp;&nbsp;{{examResults.status}}</a>
+                        <a class="mb-0 status-inactive" (click)="changeStatus(examResults._id,1)" *ngIf="examResults.status == 'Inactive'" href="javascript:void(0)">{{examResults.status}}</a>
+                      </td> -->
+                    <td class="mb-0">
+                      <mat-icon (click)="updateExamResultModel(examResults)"
+                        style="cursor: pointer;">edit_note</mat-icon>
+                      <mat-icon (click)="deleteExamResultModel(examResults._id)"
+                        style="cursor: pointer;">delete</mat-icon>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+              <div class="pagination">
+                <app-pagination [paginationValues]="paginationValues" (onChange)="getExamResults($event)">
+                </app-pagination>
+              </div>
+
+              <div class="modal fade show" [class.show]="showModal">
+                <div class="modal-dialog modal-dialog-top" role="document">
+
+                  <div class="modal-content" *ngIf="successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p class="success-message">{{successMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <mat-icon></mat-icon>
+                    </div>
+                  </div>
+                  <div class="modal-content" *ngIf="!successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Create New'}} Exam Result
+                        Class - {{cls}}
+                      </h5>
+                      <mat-icon matRipple (click)="closeModal()" style="cursor: pointer;">close</mat-icon>
+                    </div>
+                    <div class="modal-body">
+                      <div *ngIf="errorCheck">
+                        <p class="error-message">{{errorMsg}}</p>
+                      </div>
+                      <form [formGroup]="examResultForm" (ngSubmit)="examResultAddUpdate()" *ngIf="!deleteMode">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Roll Number</mat-label>
+                          <input matInput type="number" formControlName="rollNumber">
+                          <mat-hint
+                            *ngIf="!examResultForm.get('rollNumber')?.valid && examResultForm.get('rollNumber')?.touched"
+                            class="form-text text-danger">Roll number is required</mat-hint>
+                        </mat-form-field>
+
+
+                        <div formGroupName="type">
+                          <div formArrayName="options">
+                            <div *ngFor="let clsSubject of classSubject; let i = index">
+                              <div [formGroupName]="i">
+                                <mat-form-field appearance="outline">
+                                  <mat-label>{{clsSubject.subject}} Marks</mat-label>
+                                  <input matInput type="number" formControlName="marks">
+                                  <mat-hint
+                                    *ngIf="!examResultForm.get('marks')?.valid && examResultForm.get('marks')?.touched"
+                                    class="form-text text-danger">{{clsSubject.subject}} marks is required</mat-hint>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="submit-button" mat-raised-button type="submit"
+                            [disabled]="!examResultForm.valid">Submit</button>
+                        </div>
+                      </form>
+                      <div *ngIf="deleteMode">
+                        <h4>To delete examResult detail, click ok to confirm.</h4>
+                        <div class="modal-footer">
+                          <button class="delete-button" mat-raised-button type="button"
+                            (click)="examResultDelete(deleteById)">Ok</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+              <div class="modal fade show" [class.show]="showBulkResultModal">
+                <div class="modal-dialog modal-dialog-top" role="document">
+
+                  <div class="modal-content" *ngIf="successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p class="success-message">{{successMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <mat-icon></mat-icon>
+                    </div>
+                  </div>
+                  <div class="modal-content" *ngIf="!successMsg">
+                    <div class="modal-header">
+                      <h6 class="modal-title">File Choose xlsx/csv
+                      </h6>
+                      <mat-icon matRipple (click)="closeModal()" style="cursor: pointer;">close</mat-icon>
+                    </div>
+                    <div class="modal-body">
+                      <div *ngIf="errorCheck">
+                        <p class="error-message">{{errorMsg}} <span *ngFor="let rollNumber of existRollnumber,let i = index">{{rollNumber}} , </span> Result already exist !</p>
+                      </div>
+                      <main>
+                        <div class="row mb-2 mt-5">
+                          <div class="col-12">
+                            <div class="row">
+                               <div class="col-8">
+                                <div class="input-group">
+                                  <div class="custom-file">
+                                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile"
+                                      required (change)="handleImport($event)"
+                                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                  </div>
+                                </div>
+                               </div>
+                              <div class="col-4">
+                                
+                                <button [disabled]="!fileChoose" (click)="addBulkExamResult()"
+                                      class="submit-button" mat-raised-button>
+                                      Upload
+                                    </button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Roll Number</th>
+                                            <th scope="col">Class</th>
+                                            <th scope="col">Hindi</th>
+                                            <th scope="col">English</th>
+                                            <th scope="col">Sanskrit</th>
+                                            <th scope="col">Maths</th>
+                                            <th scope="col">Science</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="movies.length;">
+                                            <tr *ngFor="let movie of movies; let i = index">
+                                                <th scope="row">{{ i + 1 }}</th>
+                                                <td>{{ movie.rollNumber }}</td>
+                                                <td>{{ movie.Class }}</td>
+                                                <td>{{ movie.Hindi }}</td>
+                                                <td>{{ movie.English }}</td>
+                                                <td>{{ movie.Sanskrit }}</td>
+                                                <td>{{ movie.Maths }}</td>
+                                                <td>{{ movie.Science }}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                      </main>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

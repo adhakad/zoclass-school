@@ -1,0 +1,45 @@
+<mat-toolbar class="side-navbar">
+  <button mat-button routerLink="/home" routerLinkActive="active-link">
+    <mat-icon class="material-icons">
+      home_outline</mat-icon>
+    <span>Home</span>
+  </button>
+  <button mat-button routerLink="/test" routerLinkActive="active-link">
+    <mat-icon class="material-icons">assignment
+    </mat-icon>
+    <span>Test</span>
+  </button>
+  <button mat-button routerLink="/study" routerLinkActive="active-link">
+    <mat-icon class="material-icons">local_library</mat-icon>
+    <span>Study</span>
+  </button>
+  <button mat-button routerLink="/notice" routerLinkActive="active-link" (click)="viewNotification()">
+    <mat-icon *ngIf="notificationCount" class="material-icons mat-badge-small" [matBadge]="notificationCount"
+      matBadgeColor="accent" matBadgeSize="small">notifications</mat-icon>
+    <mat-icon *ngIf="!notificationCount" class="material-icons mat-badge-small">notifications</mat-icon>
+    <span>Notice</span>
+  </button>
+</mat-toolbar>
+
+<mat-toolbar class="bottom-navbar">
+  <button mat-button routerLink="/home" routerLinkActive="active-link">
+    <mat-icon class="material-icons">
+      home_outline</mat-icon>
+    <span>Home</span>
+  </button>
+  <button mat-button routerLink="/test" routerLinkActive="active-link">
+    <mat-icon class="material-icons">assignment
+    </mat-icon>
+    <span>Test</span>
+  </button>
+  <button mat-button routerLink="/study" routerLinkActive="active-link">
+    <mat-icon class="material-icons">local_library</mat-icon>
+    <span>Study</span>
+  </button>
+  <button mat-button routerLink="/notice" routerLinkActive="active-link" (click)="viewNotification()">
+    <mat-icon *ngIf="notificationCount" class="material-icons mat-badge-small" [matBadge]="notificationCount"
+      matBadgeColor="accent" matBadgeSize="small">notifications</mat-icon>
+    <mat-icon *ngIf="!notificationCount" class="material-icons mat-badge-small">notifications</mat-icon>
+    <span>Notice</span>
+  </button>
+</mat-toolbar>

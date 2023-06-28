@@ -1,0 +1,52 @@
+<app-header-navigation></app-header-navigation>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-2">
+            <app-side-navigation></app-side-navigation>
+        </div>
+        <div class="col-12 col-lg-10">
+            <div class="row">
+                <div class="col-12 big-container">
+                    <div class="col-lg-12 offset-lg-0">
+                        <div class="main-card">
+                            <div *ngIf="studentInfo">
+                                <div class="result-card">
+                                    <h3>Test Result</h3>
+                                    <p>Hi, {{studentInfo.name | titlecase}} congrats your test performance is good.</p>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <h4>Score</h4>
+                                            <h5>Your score {{studentResultInfo?.correctAnswer}}</h5>
+                                            <round-progress [current]="percentile" [max]="100" [color]="'#9a60ff'"
+                                                [background]="'#ccbcffc1'" [radius]="40" [stroke]="5" [rounded]="true"
+                                                [clockwise]="true" [duration]="800" [animation]="'easeInOutQuart'"
+                                                [animationDelay]="0"></round-progress>
+                                            <h4>Percentile</h4>
+                                        </div>
+                                        <div class="col-7 padding">
+                                            <img src="../../../../../assets/icons8-quiz-66.png" alt="">
+                                            <h5>Maximum marks {{testInfo?.totalQuestion}}</h5>
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <mat-icon class="done">done</mat-icon>
+                                                    <mat-icon class="close">close</mat-icon>
+                                                    <mat-icon class="unchecked">radio_button_unchecked</mat-icon>
+                                                </div>
+                                                <div class="col-10">
+                                                    <h5>{{studentResultInfo?.correctAnswer}} Correct</h5>
+                                                    <h5>{{studentResultInfo?.inCorrectAnswer}} Incorrect</h5>
+                                                    <h5>{{studentResultInfo?.unAttempted}} Unanswered</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h6>Your marks is {{percentile}}% out of 100% marks</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

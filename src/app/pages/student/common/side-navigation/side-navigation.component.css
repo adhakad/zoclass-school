@@ -1,0 +1,66 @@
+.side-navbar {
+    display: none;
+  }
+  
+  /* li button {
+    color: #8c88ff;
+  }
+  
+  li > button.active {background-color: #8c88ff;color: #fff; border-radius: 50%;} */
+  
+  @media (min-width: 576px) and (max-width:991.98px){
+    .side-navbar {
+       display: none;
+    }
+  }
+  
+  
+  @media (min-width: 992px) {
+    .side-navbar {
+      height: 90vh;
+      width:16.5%;
+      position: fixed;
+      left: 0;
+      padding-top:2vh;
+      display: block;
+      justify-content: space-around;
+      background-color: white;
+      box-shadow: 0 0 1px -10px rgb(226, 223, 236),
+       0 0 0 0 rgb(226, 223, 236),
+       0 0 10px 0 rgb(226, 223, 236);
+    }
+    li button {
+      color: #8c88ff;
+      width: 100%;
+      padding: 5px;
+      margin-top: 10px;
+      display: block;
+      flex-direction: column;
+    }
+    li button .mat-icon {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  
+    li button span {
+      display: inline-block;
+      font: 1.15em sans-serif;
+      margin-top: 5px;
+      margin-left: 10px;
+    }
+    
+    li button.active-link {
+      background: #f3f2ff;
+      /* background-color: #e7e6f8; */
+      color: #8c88ff;
+    }
+  
+    /* button:hover,
+    button.active-link {
+      background: radial-gradient(#dddcfe, #f3f2ff);
+      box-shadow: 0 0 1px -10px rgb(215, 203, 255),
+        0 0 0 1px rgb(235, 230, 255),
+        0 0 4px 0 rgb(215, 203, 255);
+        background-color: #8c88ff;color: #fff;
+    } */
+  }

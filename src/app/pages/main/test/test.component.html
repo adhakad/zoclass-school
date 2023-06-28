@@ -1,0 +1,100 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-lg-1">
+      <app-navbar></app-navbar>
+    </div>
+    <div class="col-12 col-lg-11" style="padding-top: 1.75vh;">
+      <div class="row">
+        <div class="col-12 col-lg-7 offset-lg-2 big-container">
+          <div class="col-12 col-lg-10 offset-lg-1">
+            <div class="main-card" *ngIf="testAccessMsg">
+              <h3 style="text-align: center;">Test available for only zoclass students</h3>
+            </div>
+            <div class="main-card" *ngIf="cls && !showModal && !testAccessMsg">
+              <div *ngIf="newTestInfo">
+                <h3>New Test - {{scheduleDate}}</h3>
+                <div class="test-card">
+                  <div class="row">
+                    <div class="col-8">
+                      <h4>{{newTestInfo?.subject}}</h4>
+                      <p>{{startTiming}} - {{completeTiming}}</p>
+                      <p>{{newTestInfo?.duration}} Minutes</p>
+                      <p>{{newTestInfo?.totalQuestion}} Questions</p>
+                    </div>
+                    <div class="col-4">
+                      <p></p>
+                      <p></p>
+                    </div>
+                    <div class="col-9">
+                      <h5>{{newTestInfo?.title}}</h5>
+                    </div>
+                    <div class="col-3">
+                      <button mat-raised-button (click)="showModalPopup(newTestInfo._id)">Start</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h3>Last Test Performance</h3>
+              <div class="result-card" *ngIf="lastTestResultInfo && lastTestInfo">
+                <h3>Test Result</h3>
+                <p>Hi, {{studentUserInfo.name | titlecase}} congrats your test performance is good.</p>
+                <div class="row">
+                  <div class="col-5 col-lg-4 offset-lg-1">
+                    <h4>Score</h4>
+                    <h5>Your score {{lastTestResultInfo[0].correctAnswer}}</h5>
+                    <round-progress [current]="percentile" [max]="100" [color]="'#9a60ff'" [background]="'#ccbcffc1'"
+                      [radius]="40" [stroke]="5" [rounded]="true" [clockwise]="true" [duration]="800"
+                      [animation]="'easeInOutQuart'" [animationDelay]="0"></round-progress>
+                    <h4>Percentile</h4>
+                  </div>
+                  <div class="col-7 col-lg-4 offset-lg-3">
+                    <img src="../../../../../assets/icons8-quiz-66.png" alt="">
+                    <h5>Maximum marks {{lastTestInfo.totalQuestion}}</h5>
+                    <div class="row">
+                      <div class="col-2">
+                        <mat-icon class="done">done</mat-icon>
+                        <mat-icon class="close">close</mat-icon>
+                        <mat-icon class="unchecked">radio_button_unchecked</mat-icon>
+                      </div>
+                      <div class="col-10">
+                        <h5>{{lastTestResultInfo[0].correctAnswer}} Correct</h5>
+                        <h5>{{lastTestResultInfo[0]?.inCorrectAnswer}} Incorrect</h5>
+                        <h5>{{lastTestResultInfo[0]?.unAttempted}} Unanswered</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <h6>Your marks is {{percentile}}% out of 100% marks</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade show" [class.show]="showModal" *ngIf="!testAccessMsg">
+  <div class="modal-dialog modal-dialog-top" role="document">
+    <div class="modal-content">
+      <div style="background: #fff;border-radius: 15px;">
+        <div class="modal-header" style="height:10vh;">
+          <h2 style="color: #8d6dff;">Class 12</h2>
+        </div>
+        <div style="padding-top: 2vh;padding-left: 2%;background: #fff;">
+          <h3 style="color: #3a3256;">Instructions</h3>
+          <div style="color:#6f5fa9;padding-left: 2%;">
+            <h3>1.0 mark is awarded for correct attempts</h3>
+            <h3>0.0 marks for incorrect attempts.</h3>
+            <h3>Tap on options to select the correct answer.</h3>
+          </div>
+        </div>
+        <div class="modal-footer" style="height:60px;">
+          <button mat-raised-button routerLink="/test/start/{{id}}"
+            style="background-color: #8d6dff;color: #ededff;box-shadow: none;">Test</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

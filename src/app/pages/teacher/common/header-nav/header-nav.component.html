@@ -1,0 +1,37 @@
+<mat-toolbar class="header">
+  <button mat-flat-button class="logo">
+    <span>zoclass</span>
+  </button>
+  <button mat-flat-button >
+  </button>
+  <button mat-flat-button>
+  </button>
+  <button mat-icon-button>
+    <mat-icon style="color: #8d6dff;" (click)="openMenu(true)" class="openMenu">more_vert</mat-icon>
+  </button>
+</mat-toolbar>
+<div [ngClass]="{'top-navbar' : false==nav}">
+    <mat-toolbar class="navbar">
+      <mat-icon class="close-icon" (click)="openMenu(false)">close</mat-icon>
+      <button mat-button class="menu-button" routerLink="/teacher/dashboard" routerLinkActive="active-link" (click)="openMenu(true)">
+        <mat-icon>home</mat-icon>
+        <span>Dashboard</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/teacher/student" routerLinkActive="active-link">
+        <mat-icon>person</mat-icon>
+        <span>Student</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/teacher/subject" routerLinkActive="active-link">
+        <mat-icon>books</mat-icon>
+        <span>Subject</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/teacher/test" routerLinkActive="active-link">
+        <mat-icon>assignment</mat-icon>
+        <span>Test</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="/teacher/study-material" routerLinkActive="active-link">
+        <mat-icon>post_add</mat-icon>
+        <span>Study Material</span>
+      </button>
+  </mat-toolbar>
+</div>

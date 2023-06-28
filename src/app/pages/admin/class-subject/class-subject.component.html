@@ -1,0 +1,130 @@
+<app-header-navbar></app-header-navbar>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-lg-2">
+      <app-side-navbar></app-side-navbar>
+    </div>
+    <div class="col-12 col-lg-10">
+      <div class="row">
+        <div class="col-12 big-container">
+          <div class="col-lg-12 offset-lg-0">
+            <div class="main-card">
+              <div class="row pt-4 pb-2">
+                <div class="col-8 col-lg-5">
+                  <input type="text" class="form-control" placeholder="Class Subject Combination Search..." id="searchText"
+                    name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
+                    (keyup)="getClassSubject({page : 1, limit : 0})">
+                </div>
+                <div class="col-4 col-lg-2 offset-lg-5">
+                  <button class="submit-button" mat-raised-button (click)="addClassSubjectModel()"><mat-icon style="font-size: 20px;">add</mat-icon>Create</button>
+                </div>
+              </div>
+              <table class="table table-hover align-middle mt-1 mb-0 bg-white">
+                <thead class="bg-light">
+                  <tr class="text-muted">
+                    <th>No.</th>
+                    <th>Class</th>
+                    <th style="color: transparent;">Class</th>
+                    <th>Subject</th>
+                    <th style="color: transparent;">Subject</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="classSubjectInfo && classSubjectInfo.length>0">
+                  <tr *ngFor="let classSubject of classSubjectInfo,let i=index">
+                    <td>
+                      <p class="mb-0">{{number*10+i+1-10}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{classSubject.class}}</p>
+                    </td>
+                    <td></td>
+                    <td>
+                      <p class="fw-normal mb-1" style="color: #7d719bc7;">{{classSubject.subject}}</p>
+                    </td>
+                    <td></td>
+                    <td class="mb-0">
+                      <mat-icon (click)="updateClassSubjectModel(classSubject)" style="cursor: pointer;">edit_note</mat-icon>
+                      <mat-icon (click)="deleteClassSubjectModel(classSubject._id)"
+                        style="cursor: pointer;">delete</mat-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pagination">
+                <app-pagination [paginationValues]="paginationValues" (onChange)="getClassSubject($event)">
+                </app-pagination>
+              </div>
+              <div class="modal fade show" [class.show]="showModal">
+                <div class="modal-dialog modal-dialog-top" role="document">
+                  <div class="modal-content" *ngIf="successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title" style="color: transparent;">Class Subject</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p class="success-message">{{successMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <mat-icon></mat-icon>
+                    </div>
+                  </div>
+                  <div class="modal-content" *ngIf="!successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete':'Create New'}} Class And Subject
+                        Combination</h5>
+                      <mat-icon matRipple (click)="closeModal()" style="cursor: pointer;">close</mat-icon>
+                    </div>
+                    <div class="modal-body">
+                      <div *ngIf="errorCheck">
+                        <p class="error-message">{{errorMsg}}</p>
+                      </div>
+                      <form [formGroup]="classSubjectForm" (ngSubmit)="classSubjectAddUpdate()" *ngIf="!deleteMode">
+
+                        <mat-form-field appearance="outline">
+                          <mat-label>Select class</mat-label>
+                          <mat-select type="number" matInput formControlName="class">
+                            <div *ngFor="let classInfo of classInfo">
+                              <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                            </div>
+                          </mat-select>
+                          <mat-hint
+                            *ngIf="!classSubjectForm.get('class')?.valid && classSubjectForm.get('class')?.touched"
+                            class="form-text text-danger">Class is required</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                          <mat-label>Select subject</mat-label>
+                          <mat-select type="text" matInput formControlName="subject">
+                            <div *ngFor="let subjectInfo of subjectInfo">
+                              <mat-option value="{{subjectInfo.subject}}">{{subjectInfo.subject}}</mat-option>
+                            </div>
+                          </mat-select>
+                          <mat-hint
+                            *ngIf="!classSubjectForm.get('subject')?.valid && classSubjectForm.get('subject')?.touched"
+                            class="form-text text-danger">Subject is required</mat-hint>
+                        </mat-form-field>
+
+
+                        <div class="modal-footer">
+                          <button type="submit" mat-raised-button [disabled]="!classSubjectForm.valid"
+                            class="submit-button">Submit</button>
+                        </div>
+                      </form>
+                      <div *ngIf="deleteMode">
+                        <h4>To delete class, click ok to confirm.</h4>
+                        <div class="modal-footer">
+                          <button class="delete-button" mat-raised-button type="button"
+                            (click)="classSubjectDelete(deleteById)">Ok</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
