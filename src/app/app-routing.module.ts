@@ -35,6 +35,11 @@ const routes: Routes = [
   { path: 'admin/test/results/:id', loadChildren: () => import('src/app/pages/admin/admin-test-results/admin-test-results.module').then((module) => module.AdminTestResultsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/result/class', loadChildren: () => import('src/app/pages/admin/admin-student-result-cls/admin-student-result-cls.module').then((module) => module.AdminStudentResultClsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/result/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-result/admin-student-result.module').then((module) => module.AdminStudentResultModule), canActivate: [AdminAuthGuard] },
+  { path: 'admin/students/fees/class', loadChildren: () => import('src/app/pages/admin/admin-student-fees-cls/admin-student-fees-cls.module').then((module) => module.AdminStudentFeesClsModule), canActivate: [AdminAuthGuard] },
+  { path: 'admin/students/fees/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-fees/admin-student-fees.module').then((module) => module.AdminStudentFeesModule), canActivate: [AdminAuthGuard] },
+  { path: 'admin/students/fees/class/structure/:id', loadChildren: () => import('src/app/pages/admin/admin-student-fees-structure/admin-student-fees-structure.module').then((module) => module.AdminStudentFeesStructureModule), canActivate: [AdminAuthGuard] },
+
+  
   { path: 'admin/teacher', loadChildren: () => import('src/app/pages/admin/teacher/teacher.module').then((module) => module.TeacherModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/student', loadChildren: () => import('src/app/pages/admin/student/student.module').then((module) => module.StudentModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/class', loadChildren: () => import('src/app/pages/admin/class/class.module').then((module) => module.ClassModule), canActivate: [AdminAuthGuard] },

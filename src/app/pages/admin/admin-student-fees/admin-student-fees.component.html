@@ -1,0 +1,238 @@
+<app-header-navbar></app-header-navbar>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-2">
+            <app-side-navbar></app-side-navbar>
+        </div>
+        <div class="col-12 col-lg-10">
+            <div class="row">
+                <div class="col-12 big-container">
+                    <div class="col-lg-12 offset-lg-0">
+                        <div class="main-card">
+                            <div class="row pt-4 pb-2">
+                                <div class="row pb-3">
+                                    <div class="col-12 col-lg-2">
+                                        <a routerLink="/admin/students/fees/class/structure/10">Fees Structure {{cls.class}}</a>
+                                    </div>
+                                    <div class="col-12 col-lg-10">
+                                        <mat-radio-group (change)="onChange($event)">
+                                            <mat-radio-button [value]="0" [checked]="selectedValue==0"
+                                                style="color: #7d719bc7; ">Bulk Result
+                                                Create</mat-radio-button>
+                                            <mat-radio-button [value]="1" [checked]="selectedValue==1"
+                                                style="color: #7d719bc7;margin-left: 40px;">Single Result
+                                                Create</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <div class="col-8 col-lg-5">
+                                    <input type="text" class="form-control" placeholder="Result Search..."
+                                        id="searchText" name="searchText" #searchText="ngModel"
+                                        [(ngModel)]="filters.searchText"
+                                        (keyup)="getFees({page : 1, limit : 0})">
+                                </div>
+                                <div class="col-4 col-lg-2 offset-lg-5 pb-3">
+                                    <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
+                                        (click)="addBulkFeesModel()"><mat-icon
+                                            style="font-size: 20px;">add</mat-icon>Create</button>
+                                    <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
+                                        (click)="addFeesModel()"><mat-icon
+                                            style="font-size: 20px;">add</mat-icon>Create</button>
+                                </div>
+                            </div>
+                            <table class="table table-hover align-middle mt-1 mb-0 bg-white">
+                                <thead class="bg-light">
+                                    <tr class="text-muted">
+                                        <th>No.</th>
+                                        <th>Fee Payment</th>
+                                        <th>Student Name</th>
+                                        <th>Roll Number</th>
+                                        <th>Paid Fee</th>
+                                        <th>Due Fee</th>
+                                        <th>Total Fee</th>
+                                    </tr>
+                                </thead>
+
+
+
+                                <tbody *ngFor="let fees of feesInfo,let i=index">
+                                    <tr>
+                                        <td>
+                                            <p class="mb-0">1</p>
+                                        </td>
+                                        <th>
+                                            <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
+                                        (click)="addFeesModel()">Pay Fee</button>
+                                        </th>
+                                        <td>
+                                            <p class="mb-0">Abhishek Dhakad</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">12345</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{5000 | currency:'INR'}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{5000 | currency:'INR'}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{10000 | currency:'INR'}}</p>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="pagination">
+                                <app-pagination [paginationValues]="paginationValues"
+                                    (onChange)="getFees($event)">
+                                </app-pagination>
+                            </div>
+
+                            
+                            <div class="modal fade show" [class.show]="showModal">
+                                <div class="modal-dialog modal-dialog-top" role="document">
+
+                                    <div class="modal-content" *ngIf="successMsg">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="success-message">{{successMsg}}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <mat-icon></mat-icon>
+                                        </div>
+                                    </div>
+                                    <div class="modal-content" *ngIf="!successMsg">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete'
+                                                :'Create New'}} Exam Result
+                                                Class - {{cls}}
+                                            </h5>
+                                            <mat-icon matRipple (click)="closeModal()"
+                                                style="cursor: pointer;">close</mat-icon>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div *ngIf="errorCheck">
+                                                <p class="error-message">{{errorMsg}}</p>
+                                            </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <h3>Name : Abhishek Dhakad</h3>
+                                                    <h3>Father Name : Mahesh Dhakad</h3>
+                                                    <h3>Roll Number - 12345</h3>
+                                                </div>
+                                                <div class="col-lg-3"><h3>Class : 10th</h3></div>
+                                            </div>
+
+
+
+
+
+
+
+                                            <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
+                                                *ngIf="!deleteMode">
+
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" formControlName="feesAmount">
+                                                    <mat-hint
+                                                      *ngIf="!feesForm.get('feesAmount')?.valid && feesForm.get('feesAmount')?.touched"
+                                                      class="form-text text-danger">Amount is required</mat-hint>
+                                                  </mat-form-field>
+                                                
+                                                <div class="modal-footer">
+                                                    <button class="submit-button" mat-raised-button type="submit"
+                                                        [disabled]="!feesForm.valid">Submit</button>
+                                                </div>
+                                            </form>
+                                            <div *ngIf="deleteMode">
+                                                <h4>To delete fees detail, click ok to confirm.</h4>
+                                                <div class="modal-footer">
+                                                    <button class="delete-button" mat-raised-button type="button"
+                                                        (click)="feesDelete(deleteById)">Ok</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- <div class="modal fade show" [class.show]="showBulkResultModal">
+                                <div class="modal-dialog modal-dialog-top" role="document">
+
+                                    <div class="modal-content" *ngIf="successMsg">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="success-message">{{successMsg}}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <mat-icon></mat-icon>
+                                        </div>
+                                    </div>
+                                    <div class="modal-content" *ngIf="!successMsg">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title">File Choose xlsx/csv
+                                            </h6>
+                                            <mat-icon matRipple (click)="closeModal()"
+                                                style="cursor: pointer;">close</mat-icon>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div *ngIf="errorCheck">
+                                                <p class="error-message">{{errorMsg}} <span
+                                                        *ngFor="let feesAmount of existRollnumber,let i = index">{{feesAmount}}
+                                                        , </span> Result
+                                                    already exist !</p>
+                                            </div>
+                                            <main>
+                                                <div class="row mb-2 mt-5">
+                                                    <div class="col-12">
+                                                        <div class="row">
+                                                            <div class="col-8">
+                                                                <div class="input-group">
+                                                                    <div class="custom-file">
+                                                                        <input type="file" name="file"
+                                                                            class="custom-file-input"
+                                                                            id="inputGroupFile" required
+                                                                            (change)="handleImport($event)"
+                                                                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4">
+
+                                                                <button [disabled]="!fileChoose"
+                                                                    (click)="addBulkFees()" class="submit-button"
+                                                                    mat-raised-button>
+                                                                    Upload
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

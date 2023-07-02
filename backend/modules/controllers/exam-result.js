@@ -10,7 +10,7 @@ let GetExamResultPagination = async (req, res, next) => {
             ? {
                 $or: [{ rollNumber: searchText }],
             }
-            : { name: new RegExp(`${searchText.toString().trim()}`, 'i') };
+            : { studentName: new RegExp(`${searchText.toString().trim()}`, 'i') };
     }
 
     try {

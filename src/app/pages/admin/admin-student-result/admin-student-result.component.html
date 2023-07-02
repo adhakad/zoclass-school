@@ -34,6 +34,7 @@
                 <thead class="bg-light">
                   <tr class="text-muted">
                     <th>No.</th>
+                    <!-- <th>Student Name</th> -->
                     <th>Roll Number</th>
                     <th>Class</th>
                     <th *ngFor="let subject of classSubject,let i = index">{{subject.subject}}</th>
@@ -47,21 +48,17 @@
                       <p class="mb-0">{{number*10+i+1-10}}</p>
                     </td>
                     <td>
+                      <!-- <p class="mb-0">{{examResults.studentName}}</p> -->
+                    </td>
+                    <td>
                       <p class="mb-0">{{examResults.rollNumber}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{examResults.className}}</p>
+                      <p class="mb-0">{{examResults.class}}</p>
                     </td>
-                    <td *ngFor="let marks of examResults.subjectMarks,let i = index">
+                    <td *ngFor="let marks of examResults.marks,let i = index">
                       <p class="mb-0">{{marks}}</p>
                     </td>
-                    <!-- <td>
-                        <p class="mb-0">{{examResults.subjectMarks[0]}}</p>
-                      </td> -->
-                    <!-- <td>
-                        <a class="mb-0 status-active" (click)="changeStatus(examResults._id,0)" *ngIf="examResults.status == 'Active'" href="javascript:void(0)">&nbsp;&nbsp;&nbsp;{{examResults.status}}</a>
-                        <a class="mb-0 status-inactive" (click)="changeStatus(examResults._id,1)" *ngIf="examResults.status == 'Inactive'" href="javascript:void(0)">{{examResults.status}}</a>
-                      </td> -->
                     <td class="mb-0">
                       <mat-icon (click)="updateExamResultModel(examResults)"
                         style="cursor: pointer;">edit_note</mat-icon>
@@ -171,13 +168,15 @@
                     </div>
                     <div class="modal-body">
                       <div *ngIf="errorCheck">
-                        <p class="error-message">{{errorMsg}} <span *ngFor="let rollNumber of existRollnumber,let i = index">{{rollNumber}} , </span> Result already exist !</p>
+                        <p class="error-message">{{errorMsg}} <span
+                            *ngFor="let rollNumber of existRollnumber,let i = index">{{rollNumber}} , </span> Result
+                          already exist !</p>
                       </div>
                       <main>
                         <div class="row mb-2 mt-5">
                           <div class="col-12">
                             <div class="row">
-                               <div class="col-8">
+                              <div class="col-8">
                                 <div class="input-group">
                                   <div class="custom-file">
                                     <input type="file" name="file" class="custom-file-input" id="inputGroupFile"
@@ -185,13 +184,13 @@
                                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                   </div>
                                 </div>
-                               </div>
+                              </div>
                               <div class="col-4">
-                                
-                                <button [disabled]="!fileChoose" (click)="addBulkExamResult()"
-                                      class="submit-button" mat-raised-button>
-                                      Upload
-                                    </button>
+
+                                <button [disabled]="!fileChoose" (click)="addBulkExamResult()" class="submit-button"
+                                  mat-raised-button>
+                                  Upload
+                                </button>
                               </div>
 
                             </div>

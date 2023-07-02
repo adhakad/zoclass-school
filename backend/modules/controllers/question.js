@@ -1,5 +1,4 @@
 const QuestionModel = require('../models/question');
-const SaveAnswerModel = require('../models/userAnswerSave');
 
 let GetSingleTestQuestion = async (req, res, next) => {
   try {
@@ -38,27 +37,10 @@ let UpdateQuestion = async (req, res, next) => {
 let DeleteQuestion = async (req, res, next) => {
 
 }
-let CreateSaveAnswer = async (req, res, next) => {
-  try {
-    for (var i = 0; i < req.body.length; i++) {
-      let createData =
-      {
-        questionNo: req.body[i].queNo,
-        selectAnswer: req.body[i].selectAnswer,
-        ansId: req.body[i].ansId,
-      }
-      await SaveAnswerModel.create(createData);
-    }
-    return res.status(200).json('Answer add successfuly');
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 module.exports = {
   GetSingleTestQuestion,
   CreateQuestion,
   UpdateQuestion,
   DeleteQuestion,
-  CreateSaveAnswer,
 }

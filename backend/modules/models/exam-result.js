@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const ExamResultModel = mongoose.model('result', {
+  studentName: { type: String },
+  rollNumber: { type: Number },
+  class: { type: Number },
+  subject: [],
+  marks: [],
+});
 
-let result = new Schema({
-    studentName: {type: String},
-    rollNumber: {type: Number},
-    class: {type: Number},
-    subject:[],
-    marks:[],
-  },{strict:false} ,{
-    collection: 'result'
-  })
-   
-  module.exports = mongoose.model('result', result);
+module.exports = ExamResultModel;

@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClassService } from 'src/app/services/class.service';
 
-
 @Component({
-  selector: 'app-admin-student-result-cls',
-  templateUrl: './admin-student-result-cls.component.html',
-  styleUrls: ['./admin-student-result-cls.component.css']
+  selector: 'app-admin-student-fees-cls',
+  templateUrl: './admin-student-fees-cls.component.html',
+  styleUrls: ['./admin-student-fees-cls.component.css']
 })
-export class AdminStudentResultClsComponent implements OnInit {
+export class AdminStudentFeesClsComponent implements OnInit {
   classInfo:any;
   constructor(public activatedRoute:ActivatedRoute,private classService:ClassService) { }
 
@@ -22,5 +21,4 @@ export class AdminStudentResultClsComponent implements OnInit {
       }
     })
   }
-
 }
