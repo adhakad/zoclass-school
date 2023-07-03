@@ -18,6 +18,9 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   showModal: boolean = false;
   selectedFees: any[] = [];
   feesMode: boolean = false;
+  errorCheck: Boolean = false;
+  errorNullMsg: String = 'Please fill all fields';
+  errorMsg:String = '';
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute) {
     this.feesForm = this.fb.group({
 
@@ -32,19 +35,17 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     
   }
 
+
   feesType(key: any, value: any) {
-    console.log(value)
     if (value === false) {
       this.selectedFees.push(key)
     }
     if (value === true) {
-      console.log(key)
       const index = this.selectedFees.indexOf(key);
       if (index > -1) {
         this.selectedFees.splice(index, 1);
       }
     }
-    console.log(this.selectedFees)
   }
   addFeesModel() {
     this.showModal = true;
@@ -58,24 +59,31 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   }
   patch() {
     const control = <FormArray>this.feesForm.get('type.options');
-    // this.classSubjectService.getSubjectByClass(this.cls).subscribe(res => {
-    //   this.fields = res;
-    // this.abc = res
     this.selectedFees.forEach((x: any) => {
-      console.log(x)
       control.push(this.patchValues(x))
       this.feesForm.reset();
     })
-    // })
+
   }
 
-  patchValues(marks: any) {
+  patchValues(selectedFees: any) {
     return this.fb.group({
-      [marks]: [marks]
+      [selectedFees]: [selectedFees]
     })
   }
   feesStructureAddUpdate() {
-    console.log(this.feesForm.value)
+    let object = this.feesForm.value.type.options;
+    let containsNull = object.some((item:any) => Object.values(item).includes(null));
+    if(containsNull){
+      this.errorCheck = true;
+      console.log(object)
+    }
+    if(!containsNull){
+      this.errorCheck = false;
+      this.showModal = false;
+      console.log(object)
+    }
+    
   }
 
 }

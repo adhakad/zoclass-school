@@ -60,6 +60,10 @@
                                             <form [formGroup]="feesForm" (ngSubmit)="feesStructureAddUpdate()"
                                                 *ngIf="feesMode">
 
+                                                <div *ngIf="errorCheck">
+                                                    <p class="error-message">{{errorNullMsg}}</p>
+                                                </div>
+
                                                 <div formGroupName="type">
                                                     <div formArrayName="options">
                                                         <div *ngFor="let selectedFee of selectedFees; let i = index">
@@ -75,7 +79,7 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button class="submit-button" mat-raised-button [disabled]="!feesForm.valid"
+                                                    <button class="submit-button" mat-raised-button
                                                         type="submit">Submit</button>
                                                 </div>
                                             </form>
