@@ -19,4 +19,5 @@ module.exports = app => {
     app.use('/api/teacher-user', require('./modules/routes/users/teacher-user'));
     app.use('/api/exam-result', require('./modules/routes/exam-result'));
     app.use('/api/fees', require('./modules/routes/fees-collection'));
+    app.use('/api/fees-structure', require('./modules/routes/fees-structure'));
 };
