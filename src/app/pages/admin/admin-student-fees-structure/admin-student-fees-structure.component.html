@@ -10,169 +10,79 @@
                     <div class="col-lg-12 offset-lg-0">
                         <div class="main-card">
 
-
-                            <mat-card>
-                                <mat-card-content>
-                                  <h2 class="example-h2">Checkbox configuration</h2>
-                              
-                                  <section class="example-section">
-                                    <mat-checkbox class="example-margin" [(ngModel)]="checked">Checked</mat-checkbox>
-                                    <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
-                                  </section>
-                              
-                                  <section class="example-section">
-                                    <label class="example-margin">Align:</label>
-                                    <mat-radio-group [(ngModel)]="labelPosition">
-                                      <mat-radio-button class="example-margin" value="after">After</mat-radio-button>
-                                      <mat-radio-button class="example-margin" value="before">Before</mat-radio-button>
-                                    </mat-radio-group>
-                                  </section>
-                              
-                                </mat-card-content>
-                              </mat-card>
-                              
-                              <mat-card class="result">
-                                <mat-card-content>
-                                  <h2 class="example-h2">Result</h2>
-                              
-                                  <section class="example-section">
-                                    <mat-checkbox
-                                        class="example-margin"
-                                        [(ngModel)]="checked"
-                                        [(indeterminate)]="indeterminate"
-                                        [labelPosition]="labelPosition"
-                                        [disabled]="disabled">
-                                      I'm a checkbox
-                                    </mat-checkbox>
-                                  </section>
-                                </mat-card-content>
-                              </mat-card>
-
-
-
                             <div class="row pt-4 pb-2">
                                 <div class="col-4 col-lg-2 offset-lg-5 pb-3">
-                                    <button  class="submit-button" mat-raised-button
-                                        ><mat-icon
-                                            style="font-size: 20px;">add</mat-icon>Create</button>
+                                    <button class="submit-button" mat-raised-button (click)="addFeesModel()"><mat-icon
+                                            style="font-size: 20px;">add</mat-icon>Create Fee Structure</button>
                                 </div>
                             </div>
-                            <table class="table table-hover align-middle mt-1 mb-0 bg-white">
-                                <thead class="bg-light">
-                                    <tr class="text-muted">
-                                        <th>No.</th>
-                                        <th>Fee Payment</th>
-                                        <th>Student Name</th>
-                                        <th>Roll Number</th>
-                                        <th>Paid Fee</th>
-                                        <th>Due Fee</th>
-                                        <th>Total Fee</th>
-                                    </tr>
-                                </thead>
 
 
 
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <p class="mb-0">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">Abhishek Dhakad</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">12345</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{5000 | currency:'INR'}}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{5000 | currency:'INR'}}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{10000 | currency:'INR'}}</p>
-                                        </td>
-                                    </tr>
 
-                                </tbody>
-                            </table>
-
-
-                            
-
-                            
-                            <!-- <div class="modal fade show" [class.show]="showModal">
+                            <div class="modal fade show" [class.show]="showModal">
                                 <div class="modal-dialog modal-dialog-top" role="document">
 
-                                    <div class="modal-content" *ngIf="successMsg">
+                                    <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p class="success-message">{{successMsg}}</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <mat-icon></mat-icon>
-                                        </div>
-                                    </div>
-                                    <div class="modal-content" *ngIf="!successMsg">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete'
-                                                :'Create New'}} Exam Result
-                                                Class - {{cls}}
+                                            <h5 class="modal-title" style="color: #433c53c7;">Select Fees Structure 10th
                                             </h5>
                                             <mat-icon matRipple (click)="closeModal()"
                                                 style="cursor: pointer;">close</mat-icon>
                                         </div>
                                         <div class="modal-body">
-                                            <div *ngIf="errorCheck">
-                                                <p class="error-message">{{errorMsg}}</p>
-                                            </div>
-
-
-
-                                            <div class="row">
-                                                <div class="col-lg-9">
-                                                    <h3>Name : Abhishek Dhakad</h3>
-                                                    <h3>Father Name : Mahesh Dhakad</h3>
-                                                    <h3>Roll Number - 12345</h3>
+                                            <div class="row" *ngIf="!feesMode">
+                                                <div class="col-6">
+                                                    <mat-checkbox class="example-margin" [(ngModel)]="admission"
+                                                        (click)="feesType('admission',admission)">Admission
+                                                        Fees</mat-checkbox>
+                                                    <mat-checkbox class="example-margin" [(ngModel)]="books"
+                                                        (click)="feesType('books',books)">Books
+                                                        Fees</mat-checkbox>
                                                 </div>
-                                                <div class="col-lg-3"><h3>Class : 10th</h3></div>
+                                                <div class="col-6">
+                                                    <mat-checkbox class="example-margin" [(ngModel)]="tution"
+                                                        (click)="feesType('tution',tution)">Tution
+                                                        Fees</mat-checkbox>
+                                                    <mat-checkbox class="example-margin" [(ngModel)]="uniform"
+                                                        (click)="feesType('uniform',uniform)">Uniform
+                                                        Fees</mat-checkbox>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="submit-button" mat-raised-button
+                                                        [disabled]="selectedFees.length==0"
+                                                        (click)="selectFeesStructure()">Save</button>
+                                                </div>
                                             </div>
 
 
 
+                                            <form [formGroup]="feesForm" (ngSubmit)="feesStructureAddUpdate()"
+                                                *ngIf="feesMode">
 
+                                                <div formGroupName="type">
+                                                    <div formArrayName="options">
+                                                        <div *ngFor="let selectedFee of selectedFees; let i = index">
+                                                            <div [formGroupName]="i">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>{{selectedFee}} Fees</mat-label>
+                                                                    <input matInput type="number"
+                                                                        [formControlName]="selectedFee">
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-
-
-                                            <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
-                                                *ngIf="!deleteMode">
-
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Amount</mat-label>
-                                                    <input matInput type="number" formControlName="feesAmount">
-                                                    <mat-hint
-                                                      *ngIf="!feesForm.get('feesAmount')?.valid && feesForm.get('feesAmount')?.touched"
-                                                      class="form-text text-danger">Amount is required</mat-hint>
-                                                  </mat-form-field>
-                                                
                                                 <div class="modal-footer">
-                                                    <button class="submit-button" mat-raised-button type="submit"
-                                                        [disabled]="!feesForm.valid">Submit</button>
+                                                    <button class="submit-button" mat-raised-button [disabled]="!feesForm.valid"
+                                                        type="submit">Submit</button>
                                                 </div>
                                             </form>
-                                            <div *ngIf="deleteMode">
-                                                <h4>To delete fees detail, click ok to confirm.</h4>
-                                                <div class="modal-footer">
-                                                    <button class="delete-button" mat-raised-button type="button"
-                                                        (click)="feesDelete(deleteById)">Ok</button>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,6 +90,3 @@
         </div>
     </div>
 </div>
-
-
-

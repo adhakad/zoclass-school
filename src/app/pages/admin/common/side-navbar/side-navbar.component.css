@@ -57,7 +57,7 @@ li > button.active {background-color: #8c88ff;color: #fff; border-radius: 50%;} 
 
 
   li button {
-    color: #8c88ff;
+    color: #8d6dff;
     width: 100%;
     padding: 5px;
     margin-top: 10px;
@@ -78,9 +78,9 @@ li > button.active {background-color: #8c88ff;color: #fff; border-radius: 50%;} 
   }
 
   li button.active-link {
-    background: #f3f2ff;
+    background: #8d6dff;
     /* background-color: #e7e6f8; */
-    color: #8c88ff;
+    color: #f9f6ff;
   }
 
   /* button:hover,

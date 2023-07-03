@@ -43,8 +43,9 @@
  .submit-button {
     height: 42px;
     background: #8d6dff;
-    color: #dedeff;
+    color:#dedeff;
     border: none;
+    box-shadow: none;
  }
  
  .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
@@ -168,6 +169,31 @@
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
  background-color: rgba(0, 0, 0, 0.1) !important; /* change click effect color */
 }
+
+
+
+
+
+
+
+.mat-checkbox{
+   color: #7d719bc7;
+}
+::ng-deep .mat-checkbox-frame { 
+   border-color: #7d719bc7 !important;
+}
+::ng-deep .mat-checkbox-ripple .mat-ripple-element {
+   background-color: #8c88ff !important;
+ }
+ 
+ ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+   background-color: #8c88ff !important;
+ }
+ 
+ ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+   background-color: #8c88ff !important;
+ }
+ 
 
  @media (min-width: 576px) and (max-width:991.98px) {
     .container-fluid {

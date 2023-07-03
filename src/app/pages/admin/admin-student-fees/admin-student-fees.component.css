@@ -45,6 +45,7 @@
     background: #8d6dff;
     color: #dedeff;
     border: none;
+    box-shadow: none;
  }
  
  .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
