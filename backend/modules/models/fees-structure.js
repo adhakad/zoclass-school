@@ -6,6 +6,7 @@ const FeesModel = mongoose.model('fees-structure', {
   // stallmentTwo:{type:Number},
   // stallmentThree:{type:Number},
   feesType: {},
+  stallment:{}
   // year: { type: String },
   // feesDueDate: { dateOne: { type: Number }, dateTwo: { type: Number }, dateThree: { type: Number } }
 });

@@ -18,7 +18,8 @@ let CreateFeesStructure = async (req, res, next) => {
         let feesStructureData = {
             class: className,
             totalFees: totalFees,
-            feesType:req.body.type.options,
+            feesType:req.body.type.feesType,
+            stallment:req.body.type.feesPayType,
         }
         let feesStructure = await FeesStructureModel.create(feesStructureData);
         // console.log(feesStructure)

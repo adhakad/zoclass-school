@@ -32,7 +32,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="modal-content">
+                                    <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-title" style="color: #7d719bc7;">Select Fees Structure 10th
                                             </h5>
@@ -40,7 +40,7 @@
                                                 style="cursor: pointer;">close</mat-icon>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="row" *ngIf="!feesMode">
+                                            <div class="row" *ngIf="feesTypeMode">
                                                 <div class="col-10 mb-4 example-margin">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Total

@@ -10,13 +10,12 @@ import { FeesStructureService } from 'src/app/services/fees-structure.service';
 })
 export class AdminStudentFeesStructureComponent implements OnInit {
   disabled = true;
-  stallment:boolean=false;
-  monthly:boolean=false;
-  labelPosition: 'monthly' | 'stallment' = 'stallment';
+  stallment: boolean = false;
+  monthly: boolean = false;
 
-  one: boolean = true;
-  two: boolean = true;
-  three: boolean = true;
+  one: boolean = false;
+  two: boolean = false;
+  three: boolean = false;
   july: boolean = false;
   august: boolean = false;
   september: boolean = false;
@@ -49,7 +48,8 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   uniform = false;
   selectedFeesType: any[] = [];
   selectedFeesPayType: any[] = [];
-  checkFeesPayType:boolean=false;
+  checkFeesPayType: boolean = false;
+  feesTypeMode: boolean = false;
   feesMode: boolean = false;
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private feesStructureService: FeesStructureService) {
@@ -66,7 +66,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
 
   }
   stallmentPayment() {
-    this.checkFeesPayType=true;
+    this.checkFeesPayType = true;
     this.monthly = false;
     this.stallment = true;
     this.one = true;
@@ -84,11 +84,11 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.april = false;
     this.selectedFeesPayType = [];
     console.log(this.selectedFeesPayType)
-    this.selectedFeesPayType = ['one','two','three'];
+    this.selectedFeesPayType = ['one', 'two', 'three'];
     console.log(this.selectedFeesPayType)
   }
   monthlyPayment() {
-    this.checkFeesPayType=true;
+    this.checkFeesPayType = true;
     this.stallment = false;
     this.monthly = true;
     this.one = false;
@@ -106,22 +106,55 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.april = true;
     this.selectedFeesPayType = [];
     console.log(this.selectedFeesPayType)
-    this.selectedFeesPayType = ['july','august','september','october','november','december','january','fabruary','march','april'];
+    this.selectedFeesPayType = ['july', 'august', 'september', 'october', 'november', 'december', 'january', 'fabruary', 'march', 'april'];
     console.log(this.selectedFeesPayType)
   }
   addFeesModel() {
     this.showModal = true;
+    this.feesTypeMode = true;
     this.feesForm.reset();
   }
 
   selectFeesStructure() {
+    this.feesTypeMode = false;
     this.feesMode = true;
     this.patch();
   }
 
-  closeModal() {
-    this.showModal = false;
+  falseAllValue() {
+    this.stallment= false;
+    this.monthly = false;
+
+    this.one= false;
+    this.two = false;
+    this.three = false;
+    this.july = false;
+    this.august = false;
+    this.september = false;
+    this.october = false;
+    this.november = false;
+    this.december = false;
+    this.january = false;
+    this.fabruary= false;
+    this.march = false;
+    this.april = false;
+
+    this.totalFees = 0;
+    this.admission = false;
+    this.tution = false;
+    this.books = false;
+    this.uniform = false;
+    this.selectedFeesType = [];
+    this.selectedFeesPayType= [];
+    this.checkFeesPayType= false;
+    this.feesTypeMode = false;
     this.feesMode = false;
+
+  }
+
+  closeModal() {
+    this.falseAllValue()
+    this.showModal = false;
     this.errorMsg = '';
   }
 
@@ -179,7 +212,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     let feesPayTypeObj = this.feesForm.value.type.feesPayType;
     let containsFeesTypeNull = feesTypeObj.some((item: any) => Object.values(item).includes(null));
     let containsFeesPayTypeNull = feesPayTypeObj.some((item: any) => Object.values(item).includes(null));
-    if (containsFeesTypeNull && containsFeesPayTypeNull) {
+    if (containsFeesTypeNull || containsFeesPayTypeNull) {
       this.errorCheck = true;
       this.errorMsg = 'Please fill all fields';
     }
