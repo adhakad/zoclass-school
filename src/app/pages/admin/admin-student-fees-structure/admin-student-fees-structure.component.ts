@@ -13,19 +13,19 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   stallment: boolean = false;
   monthly: boolean = false;
 
-  one: boolean = false;
-  two: boolean = false;
-  three: boolean = false;
-  july: boolean = false;
-  august: boolean = false;
-  september: boolean = false;
-  october: boolean = false;
-  november: boolean = false;
-  december: boolean = false;
-  january: boolean = false;
-  fabruary: boolean = false;
-  march: boolean = false;
-  april: boolean = false;
+  First: boolean = false;
+  Second: boolean = false;
+  Third: boolean = false;
+  July: boolean = false;
+  August: boolean = false;
+  September: boolean = false;
+  October: boolean = false;
+  November: boolean = false;
+  December: boolean = false;
+  January: boolean = false;
+  Fabruary: boolean = false;
+  March: boolean = false;
+  April: boolean = false;
 
 
 
@@ -69,45 +69,45 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.checkFeesPayType = true;
     this.monthly = false;
     this.stallment = true;
-    this.one = true;
-    this.two = true;
-    this.three = true;
-    this.july = false;
-    this.august = false;
-    this.september = false;
-    this.october = false;
-    this.november = false;
-    this.december = false;
-    this.january = false;
-    this.fabruary = false;
-    this.march = false;
-    this.april = false;
+    this.First = true;
+    this.Second = true;
+    this.Third = true;
+    this.July = false;
+    this.August = false;
+    this.September = false;
+    this.October = false;
+    this.November = false;
+    this.December = false;
+    this.January = false;
+    this.Fabruary = false;
+    this.March = false;
+    this.April = false;
     this.selectedFeesPayType = [];
-    console.log(this.selectedFeesPayType)
-    this.selectedFeesPayType = ['one', 'two', 'three'];
-    console.log(this.selectedFeesPayType)
+    // console.log(this.selectedFeesPayType)
+    this.selectedFeesPayType = ['First', 'Second', 'Third'];
+    // console.log(this.selectedFeesPayType)
   }
   monthlyPayment() {
     this.checkFeesPayType = true;
     this.stallment = false;
     this.monthly = true;
-    this.one = false;
-    this.two = false;
-    this.three = false;
-    this.july = true;
-    this.august = true;
-    this.september = true;
-    this.october = true;
-    this.november = true;
-    this.december = true;
-    this.january = true;
-    this.fabruary = true;
-    this.march = true;
-    this.april = true;
+    this.First= false;
+    this.Second = false;
+    this.Third = false;
+    this.July = true;
+    this.August = true;
+    this.September = true;
+    this.October = true;
+    this.November = true;
+    this.December = true;
+    this.January = true;
+    this.Fabruary = true;
+    this.March = true;
+    this.April = true;
     this.selectedFeesPayType = [];
-    console.log(this.selectedFeesPayType)
-    this.selectedFeesPayType = ['july', 'august', 'september', 'october', 'november', 'december', 'january', 'fabruary', 'march', 'april'];
-    console.log(this.selectedFeesPayType)
+    // console.log(this.selectedFeesPayType)
+    this.selectedFeesPayType = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'Fabruary', 'March', 'April'];
+    // console.log(this.selectedFeesPayType)
   }
   addFeesModel() {
     this.showModal = true;
@@ -125,19 +125,19 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.stallment= false;
     this.monthly = false;
 
-    this.one= false;
-    this.two = false;
-    this.three = false;
-    this.july = false;
-    this.august = false;
-    this.september = false;
-    this.october = false;
-    this.november = false;
-    this.december = false;
-    this.january = false;
-    this.fabruary= false;
-    this.march = false;
-    this.april = false;
+    this.First= false;
+    this.Second = false;
+    this.Third = false;
+    this.July = false;
+    this.August = false;
+    this.September = false;
+    this.October = false;
+    this.November = false;
+    this.December = false;
+    this.January = false;
+    this.Fabruary= false;
+    this.March = false;
+    this.April = false;
 
     this.totalFees = 0;
     this.admission = false;

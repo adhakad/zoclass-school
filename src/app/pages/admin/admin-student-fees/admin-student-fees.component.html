@@ -12,7 +12,8 @@
                             <div class="row pt-4 pb-2">
                                 <div class="row pb-3">
                                     <div class="col-12 col-lg-2">
-                                        <a routerLink="/admin/students/fees/class/structure/10">Fees Structure {{cls.class}}</a>
+                                        <a routerLink="/admin/students/fees/class/structure/{{cls}}">Fees Structure
+                                            {{cls}}</a>
                                     </div>
                                     <div class="col-12 col-lg-10">
                                         <mat-radio-group (change)="onChange($event)">
@@ -28,16 +29,15 @@
                                 <div class="col-8 col-lg-5">
                                     <input type="text" class="form-control" placeholder="Result Search..."
                                         id="searchText" name="searchText" #searchText="ngModel"
-                                        [(ngModel)]="filters.searchText"
-                                        (keyup)="getFees({page : 1, limit : 0})">
+                                        [(ngModel)]="filters.searchText" (keyup)="getFees({page : 1, limit : 0})">
                                 </div>
                                 <div class="col-4 col-lg-2 offset-lg-5 pb-3">
                                     <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
                                         (click)="addBulkFeesModel()"><mat-icon
                                             style="font-size: 20px;">add</mat-icon>Create</button>
-                                    <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
+                                    <!-- <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
                                         (click)="addFeesModel()"><mat-icon
-                                            style="font-size: 20px;">add</mat-icon>Create</button>
+                                            style="font-size: 20px;">add</mat-icon>Create</button> -->
                                 </div>
                             </div>
                             <table class="table table-hover align-middle mt-1 mb-0 bg-white">
@@ -55,41 +55,39 @@
 
 
 
-                                <tbody *ngFor="let fees of feesInfo,let i=index">
+                                <tbody *ngFor="let student of studentList,let i=index">
                                     <tr>
                                         <td>
-                                            <p class="mb-0">1</p>
+                                            <p class="mb-0">{{i+1}}</p>
                                         </td>
                                         <th>
                                             <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
-                                        (click)="addFeesModel()">Pay Fee</button>
+                                                (click)="studentFeesPay(student)">Pay Fee</button>
                                         </th>
                                         <td>
-                                            <p class="mb-0">Abhishek Dhakad</p>
+                                            <p class="mb-0">{{student.name}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">12345</p>
+                                            <p class="mb-0">{{student.rollNumber}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{5000 | currency:'INR'}}</p>
+                                            <p class="mb-0"> &#8377; {{student.paidFees}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{5000 | currency:'INR'}}</p>
+                                            <p class="mb-0"> &#8377; {{student.dueFees}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{10000 | currency:'INR'}}</p>
+                                            <p class="mb-0"> &#8377; {{student.totalFees}}</p>
                                         </td>
                                     </tr>
 
                                 </tbody>
                             </table>
                             <div class="pagination">
-                                <app-pagination [paginationValues]="paginationValues"
-                                    (onChange)="getFees($event)">
+                                <app-pagination [paginationValues]="paginationValues" (onChange)="getFees($event)">
                                 </app-pagination>
                             </div>
 
-                            
                             <div class="modal fade show" [class.show]="showModal">
                                 <div class="modal-dialog modal-dialog-top" role="document">
 
@@ -120,35 +118,33 @@
 
 
 
-                                            <div class="row">
+                                            <div class="row" *ngIf="singleStudent" style="color: #7d719bc7;">
                                                 <div class="col-lg-9">
-                                                    <h3>Name : Abhishek Dhakad</h3>
-                                                    <h3>Father Name : Mahesh Dhakad</h3>
-                                                    <h3>Roll Number - 12345</h3>
+                                                    <h3>Name : {{singleStudent.name}}</h3>
+                                                    <h3>Roll Number - {{singleStudent.rollNumber}}</h3>
+                                                    <h3>Total Fees - &#8377; {{singleStudent.totalFees}}</h3>
+                                                    <h3>Paid Fees - &#8377; {{singleStudent.paidFees}}</h3>
+                                                    <h3>Due Fees - &#8377; {{singleStudent.dueFees}}</h3>
                                                 </div>
-                                                <div class="col-lg-3"><h3>Class : 10th</h3></div>
+                                                <div class="col-lg-3">
+                                                    <h3>Class : {{singleStudent.class}}th</h3>
+                                                </div>
+                                                <div class="col-6" *ngFor="let stallments of singleStudent.stallment">
+                                                    <h3><span
+                                                            *ngFor="let stallment of stallments | keyvalue,let i=index">{{stallment.key}} Stallment
+                                                            - &#8377; {{stallment.value}}</span></h3>
+                                                </div>
                                             </div>
-
-
-
-
 
 
 
                                             <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
                                                 *ngIf="!deleteMode">
 
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Amount</mat-label>
-                                                    <input matInput type="number" formControlName="feesAmount">
-                                                    <mat-hint
-                                                      *ngIf="!feesForm.get('feesAmount')?.valid && feesForm.get('feesAmount')?.touched"
-                                                      class="form-text text-danger">Amount is required</mat-hint>
-                                                  </mat-form-field>
                                                 
-                                                <div class="modal-footer">
-                                                    <button class="submit-button" mat-raised-button type="submit"
-                                                        [disabled]="!feesForm.valid">Submit</button>
+
+                                                <div class="modal-footer" *ngIf="paybleStallment">
+                                                    <button class="submit-button" style="width: 100%;" mat-raised-button type="button" (click)="feesAddUpdate()">Pay {{paybleStallment[0][0]}} Stallment &#8377; {{paybleStallment[0][1]}}</button>
                                                 </div>
                                             </form>
                                             <div *ngIf="deleteMode">
@@ -233,6 +229,3 @@
         </div>
     </div>
 </div>
-
-
-

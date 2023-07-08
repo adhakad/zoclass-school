@@ -13,6 +13,10 @@ export class FeesStructureService {
     console.log(feesForm)
     return this.http.post(`${this.url}`,feesForm);
   }
+  feesStructureByClass(cls: any) {
+    return this.http.get(`${this.url}/${cls}`);
+  }
+
   addBulkFees(feesBulkResult:any) {
     return this.http.post(`${this.url}/bulk-fees`,feesBulkResult);
   }
@@ -22,9 +26,7 @@ export class FeesStructureService {
   // updateFees(feesForm:any){
   //   return this.http.put(`${this.url}`,feesForm);
   // }
-  // resultsByClass(cls: any) {
-  //   return this.http.get(`${this.url}/student-results/${cls}`);
-  // }
+  
   // deleteFees(id:any){
   //   return this.http.delete(`${this.url}/${id}`);
   // }

@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { read, utils,writeFile } from 'xlsx';
+import { read, utils, writeFile } from 'xlsx';
 import { ClassService } from 'src/app/services/class.service';
 import { ClassSubjectService } from 'src/app/services/class-subject.service';
 import { FeesService } from 'src/app/services/fees.service';
 import { MatRadioChange } from '@angular/material/radio';
+import { FeesStructureService } from 'src/app/services/fees-structure.service';
+import { StudentService } from 'src/app/services/student.service';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class AdminStudentFeesComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  feesInfo: any[] = [1,2,3,4,5];
+  feesInfo: any[] = [1, 2, 3, 4, 5];
   recordLimit: number = 10;
   filters: any = {};
   number: number = 0;
@@ -33,28 +35,44 @@ export class AdminStudentFeesComponent implements OnInit {
   classSubject: any;
   fields: any;
   abc: any;
-  subjectName:any[]=[];
-
-  showBulkFeesModal:boolean = false;
+  subjectName: any[] = [];
+  showBulkFeesModal: boolean = false;
   movies: any[] = [];
-  selectedValue:number=0;
-  fileChoose:boolean=false;
-  existRollnumber:number[]=[];
+  selectedValue: number = 0;
+  fileChoose: boolean = false;
+  existRollnumber: number[] = [];
+  clsFeesStructure: any;
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private feesService: FeesService) {
+  studentList:any[]=[];
+  singleStudent:any;
+  paybleStallment:any;
+  obj:any[]=[];
+
+
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService,private studentService:StudentService) {
     this.feesForm = this.fb.group({
-      feesAmount: ['', Validators.required],
+      class:[''],
+      rollNumber:[''],
+      feesAmount: [''],
+      feesStallment:['']
     });
   }
 
 
 
   ngOnInit(): void {
-    this.getFees({page : 1});
+    this.getFees({ page: 1 });
 
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.getClassSubject(this.cls);
+    this.feesStructureByClass(this.cls);
+    // this.singleStudentFeesCollection(this.cls,12345);
+    // this.getStudentByClass(this.cls);
+    this.getAllStudentFeesCollectionByClass(this.cls);
   }
+
+  
+
   getClassSubject(cls: any) {
     this.classSubjectService.getSubjectByClass(cls).subscribe(res => {
       if (res) {
@@ -63,6 +81,39 @@ export class AdminStudentFeesComponent implements OnInit {
       }
     })
   }
+
+  // getStudentByClass(cls:any){
+  //   this.studentService.getStudentByClass(cls).subscribe((res:any) => {
+  //     if(res){
+  //       this.studentList = res;
+  //     }
+  //   })
+  // }
+
+  getAllStudentFeesCollectionByClass(cls:any){
+    this.feesService.getAllStudentFeesCollectionByClass(cls).subscribe((res:any) => {
+      if(res){
+        this.studentList = res;
+      }
+    })
+  }
+
+  // singleStudentFeesCollection(cls:any,rollNumber:any){
+  //   this.feesService.singleStudentFeesCollection(cls,rollNumber).subscribe((res:any) => {
+  //     if(res){
+  //       console.log(res)
+  //     }
+  //   })
+  // }
+
+  feesStructureByClass(cls:any) {
+    this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
+      this.clsFeesStructure = res;
+      // console.log(this.clsFeesStructure)
+    })
+  }
+
+
   closeModal() {
     this.showModal = false;
     this.showBulkFeesModal = false;
@@ -70,7 +121,68 @@ export class AdminStudentFeesComponent implements OnInit {
     this.deleteMode = false;
     this.errorMsg = '';
   }
-  addFeesModel() {
+  studentFeesPay(student:any) {
+    this.singleStudent = student;
+    const stallment = this.singleStudent.stallment;
+    // console.log(this.clsFeesStructure);
+
+    const result = stallment.find((stallment:any) => {
+      const [key, value] = Object.entries(stallment)[0];
+      return value === 0;
+    });
+    
+    if (result) {
+      const [key, value] = Object.entries(result)[0];
+
+
+      this.paybleStallment = this.clsFeesStructure.stallment.flatMap((item:any) => Object.entries(item).filter(([keys, values]) => keys === key));
+
+      
+      for(let i=0;i<this.paybleStallment.length;i++){
+        console.log(this.paybleStallment[0][0])
+      }
+
+      console.log(`First key with value zero ${key} : ${value}`);
+    } else {
+      console.log("No key with value zero found.");
+    }
+
+//     let obj = [{one: 1}, {two: 2}, {three: 3}];
+
+//     let arr = [];
+
+// for (let i = 0; i < obj.length; i++) {
+//   const item = obj[i];
+//   console.log("Object", i + 1);
+//   for (let [key, value] of Object.entries(item)) {
+//     arr.push({key:value})
+//   }
+//   console.log("---------for-of------------");
+// }
+// console.log(arr)
+
+
+
+
+// let obj = [{one: 1}, {two: 2}, {three: 3},{four: 4}, {five: 5}, {six: 6},{seven:7},{eight:8}];
+
+// const result = obj.find(obj => {
+//   const [key, value] = Object.entries(obj)[0];
+//   return value === 0;
+// });
+
+// if (result) {
+//   const [key, value] = Object.entries(result)[0];
+//   console.log(`First key with value zero ${key} : ${value}`);
+// } else {
+//   console.log("No key with value zero found.");
+// }
+
+
+
+
+
+
     this.showModal = true;
     this.deleteMode = false;
     this.updateMode = false;
@@ -94,21 +206,21 @@ export class AdminStudentFeesComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getFees({page : this.page});
+      this.getFees({ page: this.page });
     }, 1000)
   }
 
-  getFees($event:any) {
+  getFees($event: any) {
     this.page = $event.page
     return new Promise((resolve, reject) => {
-      let params:any = {
+      let params: any = {
         filters: {},
         page: $event.page,
         limit: $event.limit ? $event.limit : this.recordLimit,
-        class:this.cls
+        class: this.cls
       };
       this.recordLimit = params.limit;
-      if(this.filters.searchText) {
+      if (this.filters.searchText) {
         params["filters"]["searchText"] = this.filters.searchText.trim();
       }
 
@@ -136,8 +248,10 @@ export class AdminStudentFeesComponent implements OnInit {
           this.errorMsg = err.error;
         })
       } else {
-        this.feesForm.value.class = 10;
-        this.feesForm.value.rollNumber = 12345;
+        this.feesForm.value.class = this.singleStudent.class;
+        this.feesForm.value.rollNumber = this.singleStudent.rollNumber;
+        this.feesForm.value.feesStallment = this.paybleStallment[0][0]
+        this.feesForm.value.feesAmount = this.paybleStallment[0][1]
         this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();
@@ -167,43 +281,43 @@ export class AdminStudentFeesComponent implements OnInit {
 
   handleImport($event: any) {
     console.log("xlsx file")
-    this.fileChoose=true;
+    this.fileChoose = true;
     const files = $event.target.files;
     if (files.length) {
-        const file = files[0];
-        const reader = new FileReader();
-        reader.onload = (event: any) => {
-            const wb = read(event.target.fees);
-            const sheets = wb.SheetNames;
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        const wb = read(event.target.fees);
+        const sheets = wb.SheetNames;
 
-            if (sheets.length) {
-                const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-                this.movies = rows;
-            }
+        if (sheets.length) {
+          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
+          this.movies = rows;
         }
-        reader.readAsArrayBuffer(file);
+      }
+      reader.readAsArrayBuffer(file);
     }
-    
-}
 
-onChange(event:MatRadioChange){
-  this.selectedValue = event.value;
-}
-addBulkFeesModel(){
-  this.showBulkFeesModal = true;
-}
-addBulkFees(){
-  this.feesService.addBulkFees(this.movies).subscribe((res:any)=> {
-    if(res){
-      this.successDone();
-      this.successMsg = res;
-    }
-  },err => {
-    this.errorCheck = true;
-    this.errorMsg = err.error.errMsg;
-    this.existRollnumber = err.error.existRollnumber;
-  })
-}
+  }
+
+  onChange(event: MatRadioChange) {
+    this.selectedValue = event.value;
+  }
+  addBulkFeesModel() {
+    this.showBulkFeesModal = true;
+  }
+  addBulkFees() {
+    this.feesService.addBulkFees(this.movies).subscribe((res: any) => {
+      if (res) {
+        this.successDone();
+        this.successMsg = res;
+      }
+    }, err => {
+      this.errorCheck = true;
+      this.errorMsg = err.error.errMsg;
+      this.existRollnumber = err.error.existRollnumber;
+    })
+  }
 
 
 }

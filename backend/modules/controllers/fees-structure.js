@@ -1,6 +1,17 @@
 const FeesStructureModel = require('../models/fees-structure');
 const classModel = require('../models/class');
 
+
+let GetSingleClassFeesStructure = async(req,res,next) => {
+    let className = req.params.id;
+    try{
+        const singleFeesStr = await FeesStructureModel.findOne({class:className});
+        return res.status(200).json(singleFeesStr);
+    }catch(error){
+        console.log(error);
+    }
+}
+
 let CreateFeesStructure = async (req, res, next) => {
     let className = req.body.class;
     let { totalFees } = req.body;
@@ -33,6 +44,7 @@ let CreateFeesStructure = async (req, res, next) => {
 
 
 module.exports = {
+    GetSingleClassFeesStructure,
     CreateFeesStructure
 
 }
