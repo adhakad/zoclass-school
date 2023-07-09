@@ -83,9 +83,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.March = false;
     this.April = false;
     this.selectedFeesPayType = [];
-    // console.log(this.selectedFeesPayType)
     this.selectedFeesPayType = ['First', 'Second', 'Third'];
-    // console.log(this.selectedFeesPayType)
   }
   monthlyPayment() {
     this.checkFeesPayType = true;
@@ -105,9 +103,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.March = true;
     this.April = true;
     this.selectedFeesPayType = [];
-    // console.log(this.selectedFeesPayType)
     this.selectedFeesPayType = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'Fabruary', 'March', 'April'];
-    // console.log(this.selectedFeesPayType)
   }
   addFeesModel() {
     this.showModal = true;
@@ -146,6 +142,10 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.uniform = false;
     this.selectedFeesType = [];
     this.selectedFeesPayType= [];
+    const controlOne = <FormArray>this.feesForm.get('type.feesType');
+    const controlSecond = <FormArray>this.feesForm.get('type.feesPayType');
+    controlOne.clear();
+    controlSecond.clear();
     this.checkFeesPayType= false;
     this.feesTypeMode = false;
     this.feesMode = false;
@@ -153,9 +153,10 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   }
 
   closeModal() {
-    this.falseAllValue()
+    this.falseAllValue();
     this.showModal = false;
     this.errorMsg = '';
+    this.feesForm.reset();
   }
 
 
@@ -217,7 +218,6 @@ export class AdminStudentFeesStructureComponent implements OnInit {
       this.errorMsg = 'Please fill all fields';
     }
     if (!containsFeesTypeNull && !containsFeesPayTypeNull) {
-      console.log(this.feesForm.value)
       this.feesStructureService.addFeesStructure(this.feesForm.value).subscribe((res: any) => {
         if (res) {
           this.successDone();
