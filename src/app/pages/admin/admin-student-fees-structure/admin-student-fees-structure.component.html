@@ -48,7 +48,6 @@
                                                         <input matInput type="number" [(ngModel)]="totalFees">
                                                     </mat-form-field>
                                                 </div>
-
                                                 <section class="example-section">
                                                     <div class="col-6">
                                                         <mat-checkbox class="example-margin" [(ngModel)]="admission"
@@ -190,6 +189,7 @@
                                                 </div>
                                                 <p style="color: #7d719bc7;">Total Fees : {{totalFees | currency:'INR'}}
                                                 </p>
+                                                <h3 style="color: #8c88ff;">School Fees Type</h3>
                                                 <div formGroupName="type">
                                                     <div formArrayName="feesType">
                                                         <div *ngFor="let singleFeesType of selectedFeesType; let i = index">
@@ -203,6 +203,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <!-- <h3>Fees Type</h3> -->
                                                     <div formArrayName="feesPayType">
                                                         <div *ngFor="let singleFeesPayType of selectedFeesPayType; let i = index">
                                                             <div [formGroupName]="i">

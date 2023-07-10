@@ -109,7 +109,6 @@ export class AdminStudentFeesComponent implements OnInit {
   feesStructureByClass(cls:any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       this.clsFeesStructure = res;
-      // console.log(this.clsFeesStructure)
     })
   }
 
@@ -120,11 +119,12 @@ export class AdminStudentFeesComponent implements OnInit {
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
+    this.paybleStallment = [];
+    this.paybleStallment = [0,0];
   }
   studentFeesPay(student:any) {
     this.singleStudent = student;
     const stallment = this.singleStudent.stallment;
-    // console.log(this.clsFeesStructure);
 
     const result = stallment.find((stallment:any) => {
       const [key, value] = Object.entries(stallment)[0];
@@ -133,55 +133,11 @@ export class AdminStudentFeesComponent implements OnInit {
     
     if (result) {
       const [key, value] = Object.entries(result)[0];
-
-
       this.paybleStallment = this.clsFeesStructure.stallment.flatMap((item:any) => Object.entries(item).filter(([keys, values]) => keys === key));
-
-      
-      for(let i=0;i<this.paybleStallment.length;i++){
-        console.log(this.paybleStallment[0][0])
-      }
-
-      console.log(`First key with value zero ${key} : ${value}`);
     } else {
-      console.log("No key with value zero found.");
+      this.paybleStallment = [0,0];
+      console.log(this.paybleStallment)
     }
-
-//     let obj = [{one: 1}, {two: 2}, {three: 3}];
-
-//     let arr = [];
-
-// for (let i = 0; i < obj.length; i++) {
-//   const item = obj[i];
-//   console.log("Object", i + 1);
-//   for (let [key, value] of Object.entries(item)) {
-//     arr.push({key:value})
-//   }
-//   console.log("---------for-of------------");
-// }
-// console.log(arr)
-
-
-
-
-// let obj = [{one: 1}, {two: 2}, {three: 3},{four: 4}, {five: 5}, {six: 6},{seven:7},{eight:8}];
-
-// const result = obj.find(obj => {
-//   const [key, value] = Object.entries(obj)[0];
-//   return value === 0;
-// });
-
-// if (result) {
-//   const [key, value] = Object.entries(result)[0];
-//   console.log(`First key with value zero ${key} : ${value}`);
-// } else {
-//   console.log("No key with value zero found.");
-// }
-
-
-
-
-
 
     this.showModal = true;
     this.deleteMode = false;
@@ -206,7 +162,8 @@ export class AdminStudentFeesComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getFees({ page: this.page });
+      // this.getFees({ page: this.page });
+      this.getAllStudentFeesCollectionByClass(this.cls)
     }, 1000)
   }
 
@@ -252,6 +209,7 @@ export class AdminStudentFeesComponent implements OnInit {
         this.feesForm.value.rollNumber = this.singleStudent.rollNumber;
         this.feesForm.value.feesStallment = this.paybleStallment[0][0]
         this.feesForm.value.feesAmount = this.paybleStallment[0][1]
+        console.log(this.feesForm.value)
         this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();

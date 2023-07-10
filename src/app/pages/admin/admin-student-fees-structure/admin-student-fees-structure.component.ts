@@ -89,7 +89,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.checkFeesPayType = true;
     this.stallment = false;
     this.monthly = true;
-    this.First= false;
+    this.First = false;
     this.Second = false;
     this.Third = false;
     this.July = true;
@@ -118,10 +118,10 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   }
 
   falseAllValue() {
-    this.stallment= false;
+    this.stallment = false;
     this.monthly = false;
 
-    this.First= false;
+    this.First = false;
     this.Second = false;
     this.Third = false;
     this.July = false;
@@ -131,7 +131,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.November = false;
     this.December = false;
     this.January = false;
-    this.Fabruary= false;
+    this.Fabruary = false;
     this.March = false;
     this.April = false;
 
@@ -141,12 +141,12 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.books = false;
     this.uniform = false;
     this.selectedFeesType = [];
-    this.selectedFeesPayType= [];
+    this.selectedFeesPayType = [];
     const controlOne = <FormArray>this.feesForm.get('type.feesType');
     const controlSecond = <FormArray>this.feesForm.get('type.feesPayType');
     controlOne.clear();
     controlSecond.clear();
-    this.checkFeesPayType= false;
+    this.checkFeesPayType = false;
     this.feesTypeMode = false;
     this.feesMode = false;
 

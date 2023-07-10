@@ -38,6 +38,7 @@ const routes: Routes = [
   { path: 'admin/students/fees/class', loadChildren: () => import('src/app/pages/admin/admin-student-fees-cls/admin-student-fees-cls.module').then((module) => module.AdminStudentFeesClsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-fees/admin-student-fees.module').then((module) => module.AdminStudentFeesModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class/structure/:id', loadChildren: () => import('src/app/pages/admin/admin-student-fees-structure/admin-student-fees-structure.module').then((module) => module.AdminStudentFeesStructureModule), canActivate: [AdminAuthGuard] },
+  { path: 'admin/students/fees/class/statement/:id/:rollnumber', loadChildren: () => import('src/app/pages/admin/admin-student-fees-statement/admin-student-fees-statement.module').then((module) => module.AdminStudentFeesStatementModule), canActivate: [AdminAuthGuard] },
 
   
   { path: 'admin/teacher', loadChildren: () => import('src/app/pages/admin/teacher/teacher.module').then((module) => module.TeacherModule), canActivate: [AdminAuthGuard] },

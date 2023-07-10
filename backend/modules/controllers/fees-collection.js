@@ -59,7 +59,7 @@ let CreateFeesCollection = async (req, res, next) => {
             { $set: { [`stallment.$.${feesStallment}`]: feesAmount, paidFees: paidFees, dueFees: dueFees } },
             { new: true }
         );
-        return res.status(200).json(`Roll number ${rollNumber} fees payment successfuly`);
+        return res.status(200).json(`Fees payment successfuly`);
     } catch (error) {
         console.log(error);
     }

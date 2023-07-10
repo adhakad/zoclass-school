@@ -16,9 +16,6 @@
     width: 100%;
     background-color: transparent;
  }
- a{
-   color: #8c88ff;font: 1.1em sans-serif;text-decoration: none;
- }
  
  .form-control {
     height: 45px;
@@ -35,8 +32,7 @@
     border-color: #d2d0dfe0;
     box-shadow: 0 0 0 1px #e1dfee66
  }
- 
- .text-danger {
+ .text-danger{
     font-size: 12px;
  }
  
@@ -44,8 +40,7 @@
     height: 42px;
     background: #8d6dff;
     color: #dedeff;
-    border: none;
-    box-shadow: none;
+    
  }
  
  .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
@@ -59,18 +54,6 @@
     width: 100%;
     overflow-y: auto;
     overflow-x: auto;
- }
- 
- .status-active {
-    color: #8d6dff;
-    cursor: pointer;
-    text-decoration: none;
- }
- 
- .status-inactive {
-    color: #7d719bc7;
-    cursor: pointer;
-    text-decoration: none;
  }
  
  .table mat-icon,
@@ -147,31 +130,9 @@
  ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
     color: #8c88ff !important;
  }
-
-
-
-
  
- ::ng-deep
- .mat-radio-button.mat-accent.mat-radio-checked
- .mat-radio-outer-circle {
- border-color: #8c88ff; /*change radio button color when selected*/
-}
-
-::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
- background-color: #8c88ff; /*change radio button inner circle color */
-}
-
-::ng-deep .mat-radio-outer-circle {
- border: 1px solid #d5d3e0d7; /*change radio button not checked border */
-}
-
-::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
- background-color: rgba(0, 0, 0, 0.1) !important; /* change click effect color */
-}
-
- @media (min-width: 576px) and (max-width:991.98px) {
-    .container-fluid {
+ @media (min-width: 576px) and (max-width:991.98px){
+    .container-fluid{
        display: none;
     }
  }
@@ -213,7 +174,7 @@
     }
  
     .submit-button {
-       background: #8c88ff;
+       background: #8d6dff;
        color: #dedeff;
     }
  

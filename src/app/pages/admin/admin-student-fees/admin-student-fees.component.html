@@ -45,6 +45,7 @@
                                     <tr class="text-muted">
                                         <th>No.</th>
                                         <th>Fee Payment</th>
+                                        <th>Fee Statement</th>
                                         <th>Student Name</th>
                                         <th>Roll Number</th>
                                         <th>Paid Fee</th>
@@ -61,11 +62,17 @@
                                             <p class="mb-0">{{i+1}}</p>
                                         </td>
                                         <th>
-                                            <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
+                                            <button *ngIf="student.paidFees !== student.totalFees" class="submit-button" mat-raised-button
                                                 (click)="studentFeesPay(student)">Pay Fee</button>
+                                                <button *ngIf="student.paidFees === student.totalFees" class="submit-button" mat-raised-button
+                                                 [disabled]="student.paidFees === student.totalFees">Pay Fee</button>
                                         </th>
+                                        <td class="mb-0">
+                                            <mat-icon routerLink="/admin/students/fees/class/statement/{{student.class}}/{{student.rollNumber}}"
+                                                style="cursor: pointer;">launch</mat-icon>
+                                        </td>
                                         <td>
-                                            <p class="mb-0">{{student.name}}</p>
+                                            <p class="mb-0">{{student.name | titlecase}}</p>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{student.rollNumber}}</p>
@@ -104,8 +111,8 @@
                                     </div>
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete'
-                                                :'Create New'}} Exam Result
+                                            <h5 class="modal-title" style="color: #7d719bc7;">{{updateMode?'Update': deleteMode ? 'Delete'
+                                                :'Create'}}
                                                 Class - {{cls}}
                                             </h5>
                                             <mat-icon matRipple (click)="closeModal()"
@@ -119,19 +126,27 @@
 
 
                                             <div class="row" *ngIf="singleStudent" style="color: #7d719bc7;">
-                                                <div class="col-lg-9">
-                                                    <h3>Name : {{singleStudent.name}}</h3>
+                                                <h3 style="color: #8c88ff;">Student Detail</h3>
+                                                <div class="col-lg-6">
+                                                    <h3>{{singleStudent.name | titlecase}}</h3>
+                                                </div>
+                                                <div class="col-lg-6">
                                                     <h3>Roll Number - {{singleStudent.rollNumber}}</h3>
-                                                    <h3>Total Fees - &#8377; {{singleStudent.totalFees}}</h3>
+                                                </div>
+
+
+                                                <h3 style="color: #8c88ff;">Fees Status</h3>
+                                                <div class="col-6">
                                                     <h3>Paid Fees - &#8377; {{singleStudent.paidFees}}</h3>
+                                                    <h3>Total Fees - &#8377; {{singleStudent.totalFees}}</h3>
+                                                </div>
+                                                <div class="col-6">
                                                     <h3>Due Fees - &#8377; {{singleStudent.dueFees}}</h3>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <h3>Class : {{singleStudent.class}}th</h3>
-                                                </div>
+                                                <h3 style="color: #8c88ff;">All Stallment's</h3>
                                                 <div class="col-6" *ngFor="let stallments of singleStudent.stallment">
                                                     <h3><span
-                                                            *ngFor="let stallment of stallments | keyvalue,let i=index">{{stallment.key}} Stallment
+                                                            *ngFor="let stallment of stallments | keyvalue,let i=index">{{stallment.key}}
                                                             - &#8377; {{stallment.value}}</span></h3>
                                                 </div>
                                             </div>
@@ -139,11 +154,10 @@
 
 
                                             <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
-                                                *ngIf="!deleteMode">
+                                                *ngIf="!deleteMode && paybleStallment">
 
-                                                
 
-                                                <div class="modal-footer" *ngIf="paybleStallment">
+                                                <div class="modal-footer" *ngIf="paybleStallment[0][1]>0">
                                                     <button class="submit-button" style="width: 100%;" mat-raised-button type="button" (click)="feesAddUpdate()">Pay {{paybleStallment[0][0]}} Stallment &#8377; {{paybleStallment[0][1]}}</button>
                                                 </div>
                                             </form>
