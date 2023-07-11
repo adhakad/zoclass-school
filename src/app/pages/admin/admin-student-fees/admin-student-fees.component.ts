@@ -66,7 +66,6 @@ export class AdminStudentFeesComponent implements OnInit {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.getClassSubject(this.cls);
     this.feesStructureByClass(this.cls);
-    // this.singleStudentFeesCollection(this.cls,12345);
     // this.getStudentByClass(this.cls);
     this.getAllStudentFeesCollectionByClass(this.cls);
   }
@@ -98,14 +97,6 @@ export class AdminStudentFeesComponent implements OnInit {
     })
   }
 
-  // singleStudentFeesCollection(cls:any,rollNumber:any){
-  //   this.feesService.singleStudentFeesCollection(cls,rollNumber).subscribe((res:any) => {
-  //     if(res){
-  //       console.log(res)
-  //     }
-  //   })
-  // }
-
   feesStructureByClass(cls:any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       this.clsFeesStructure = res;
@@ -136,7 +127,6 @@ export class AdminStudentFeesComponent implements OnInit {
       this.paybleStallment = this.clsFeesStructure.stallment.flatMap((item:any) => Object.entries(item).filter(([keys, values]) => keys === key));
     } else {
       this.paybleStallment = [0,0];
-      console.log(this.paybleStallment)
     }
 
     this.showModal = true;
@@ -207,9 +197,8 @@ export class AdminStudentFeesComponent implements OnInit {
       } else {
         this.feesForm.value.class = this.singleStudent.class;
         this.feesForm.value.rollNumber = this.singleStudent.rollNumber;
-        this.feesForm.value.feesStallment = this.paybleStallment[0][0]
-        this.feesForm.value.feesAmount = this.paybleStallment[0][1]
-        console.log(this.feesForm.value)
+        this.feesForm.value.feesStallment = this.paybleStallment[0][0];
+        this.feesForm.value.feesAmount = this.paybleStallment[0][1];
         this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();

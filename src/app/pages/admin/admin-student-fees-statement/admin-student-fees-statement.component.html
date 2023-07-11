@@ -7,33 +7,58 @@
         <div class="col-12 col-lg-10">
             <div class="row">
                 <div class="col-12 big-container">
-                    <div class="col-lg-12 offset-lg-0">
-                        <div class="main-card">
-                        
-                            <table class="table table-hover align-middle mt-1 mb-0 bg-white">
+                    <div class="row mt-2">
+                        <div class="col-5">
+                            <table class="table table-hover align-middle mt-5 mb-0 bg-white">
                                 <thead class="bg-light">
                                     <tr class="text-muted">
-                                        <th>No.</th>
-                                        <th>Ads Title</th>
-                                        <th style="color: transparent;">Ads Title</th>
-                                        <th>Image</th>
-                                        
+                                        <th>S.No.</th>
+                                        <th>Particulars</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                        <td>
+                                            <p class="mb-0">{{i+1}}</p>
+                                        </td> 
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0">{{ fee.key}}</p>
+                                        </td>
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0">&#8377; {{ fee.value }}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    <!-- </div> -->
+                    <!-- <div class="row mt-5"> -->
+                        <div class="col-6 offset-1">
+                            <table class="table table-hover align-middle mt-5 mb-0 bg-white">
+                                <thead class="bg-light">
+                                    <tr class="text-muted">
+                                        <th>S.No.</th>
+                                        <th>Fee Collection</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr *ngFor="let item of studentFeesCollection?.stallment,let i = index">
                                         <td>
-                                            <p class="mb-0">1</p>
+                                            <p class="mb-0">{{i+1}}</p>
+                                        </td> 
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0">{{ fee.key}}</p>
                                         </td>
-                                        <td>
-                                            <p class="mb-0">abc</p>
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0">&#8377; {{ fee.value }}</p>
                                         </td>
-                                        <td></td>
-                                        <td>
-                                            <p class="mb-0">abc</p>
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0" *ngIf="fee.value==0">Panding</p>
+                                            <p class="mb-0" *ngIf="fee.value !==0">Paid</p>
                                         </td>
-                                        <td></td>
-                                        
                                     </tr>
                                 </tbody>
                             </table>

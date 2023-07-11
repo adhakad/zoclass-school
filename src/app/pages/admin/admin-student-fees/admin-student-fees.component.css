@@ -49,8 +49,8 @@
  }
  
  .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
-    background: #e7e6f897;
-    color: #8d6dff9a;
+   background: #b7b1ff;
+  color: #faf7ff;
  }
  
  .table {
@@ -214,12 +214,12 @@
  
     .submit-button {
        background: #8c88ff;
-       color: #dedeff;
+       color: #efeffe;
     }
  
     .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
-       background: #e7e6f897;
-       color: #8d6dff9a;
+      background: #d2cefd;
+      color: #f3f2ff;
     }
  
     .table {

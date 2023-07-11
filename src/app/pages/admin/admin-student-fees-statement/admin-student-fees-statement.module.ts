@@ -5,10 +5,9 @@ import { AdminStudentFeesStatementRoutingModule } from './admin-student-fees-sta
 import { AdminStudentFeesStatementComponent } from './admin-student-fees-statement.component';
 import { AdminSharedModule } from '../admin-shared/admin-shared.module';
 
-
 @NgModule({
   declarations: [
-    AdminStudentFeesStatementComponent
+    AdminStudentFeesStatementComponent,
   ],
   imports: [
     CommonModule,

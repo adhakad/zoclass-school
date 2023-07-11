@@ -15,6 +15,16 @@ let GetSingleClassFeesStructure = async(req,res,next) => {
 let CreateFeesStructure = async (req, res, next) => {
     let className = req.body.class;
     let { totalFees } = req.body;
+    let feesType = req.body.type.feesType;
+    let feesPayType = req.body.type.feesPayType;
+    let feesTypeTotal = feesType.reduce((total, obj) => {
+        let value = Object.values(obj)[0];
+        return total + value;
+      }, 0);
+      let feesPayTypeTotal = feesPayType.reduce((total, obj) => {
+        let value = Object.values(obj)[0];
+        return total + value;
+      }, 0);
 
     try {
         const checkClassExist = await classModel.findOne({ class: className });
@@ -25,12 +35,19 @@ let CreateFeesStructure = async (req, res, next) => {
         if (checkFeesStructure) {
             return res.status(400).json(`Class ${className} fees structure already exist`);
         }
+        if (totalFees!==feesTypeTotal) {
+            return res.status(400).json(`Class ${className} total fees not equal to fees type total`);
+        }
+        if (totalFees!==feesPayTypeTotal) {
+            return res.status(400).json(`Class ${className} total fees not equal to fees payement type total`);
+        }
+        
         
         let feesStructureData = {
             class: className,
             totalFees: totalFees,
-            feesType:req.body.type.feesType,
-            stallment:req.body.type.feesPayType,
+            feesType:feesType,
+            stallment:feesPayType,
         }
         let feesStructure = await FeesStructureModel.create(feesStructureData);
         // console.log(feesStructure)

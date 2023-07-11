@@ -218,6 +218,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
       this.errorMsg = 'Please fill all fields';
     }
     if (!containsFeesTypeNull && !containsFeesPayTypeNull) {
+      console.log(this.feesForm.value.type)
       this.feesStructureService.addFeesStructure(this.feesForm.value).subscribe((res: any) => {
         if (res) {
           this.successDone();
