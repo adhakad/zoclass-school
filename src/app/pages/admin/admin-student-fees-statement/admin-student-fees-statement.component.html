@@ -8,8 +8,67 @@
             <div class="row">
                 <div class="col-12 big-container">
                     <div class="row mt-2">
-                        <div class="col-5">
-                            <table class="table table-hover align-middle mt-5 mb-0 bg-white">
+                        <div class="col-12">
+                            <table class="table align-middle mt-5 mb-0 bg-white abc">
+                                <thead class="bg-light">
+                                    <tr class="text-muted">
+                                        <th>Receipt No.</th>
+                                        <th style="font-weight: 400;">956544</th>
+                                        <th>Class</th>
+                                        <th style="font-weight: 400;">{{studentFeesCollection?.class}}th</th>
+                                        <th>Roll Numer</th>
+                                        <th style="font-weight: 400;">{{studentFeesCollection?.rollNumber}}</th>
+                                    </tr>
+                                    <tr class="text-muted">
+                                        <th>Student Name</th>
+                                        <th style="font-weight: 400;">{{studentFeesCollection?.name | titlecase}}</th>
+                                        <th>Father Name</th>
+                                        <th style="font-weight: 400;">Narendra Dhakad</th>
+                                        <th>Mother Name</th>
+                                        <th style="font-weight: 400;">Kavita Dhakad</th>
+                                    </tr>
+                                    <tr class="text-muted">
+                                        <th>Total Fee</th>
+                                        <th style="font-weight: 400;">&#8377; {{studentFeesCollection?.totalFees}}</th>
+                                        <th>Paid Fee</th>
+                                        <th style="font-weight: 400;">&#8377; {{studentFeesCollection?.paidFees}}</th>
+                                        <th>Due Fee</th>
+                                        <th style="font-weight: 400;">&#8377; {{studentFeesCollection?.dueFees}}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <table class="table table-hover mt-4 align-middle mb-0 bg-white">
+                                <thead class="bg-light">
+                                    <tr class="text-muted">
+                                        <th>S.No.</th>
+                                        <th>Fee Stallment</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of studentFeesCollection?.stallment,let i = index">
+                                        <td>
+                                            <p class="mb-0">{{i+1}}</p>
+                                        </td> 
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0">{{ fee.key}}</p>
+                                        </td>
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0">&#8377; {{ fee.value }}</p>
+                                        </td>
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <p class="mb-0" *ngIf="fee.value !==0" style="color: #8c88ff;">Paid</p>
+                                            <p class="mb-0" *ngIf="fee.value==0">Panding</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <table class="table table-hover mt-4 align-middle mb-0 bg-white">
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>S.No.</th>
@@ -27,37 +86,6 @@
                                         </td>
                                         <td *ngFor="let fee of item | keyvalue">
                                             <p class="mb-0">&#8377; {{ fee.value }}</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    <!-- </div> -->
-                    <!-- <div class="row mt-5"> -->
-                        <div class="col-6 offset-1">
-                            <table class="table table-hover align-middle mt-5 mb-0 bg-white">
-                                <thead class="bg-light">
-                                    <tr class="text-muted">
-                                        <th>S.No.</th>
-                                        <th>Fee Collection</th>
-                                        <th>Amount</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of studentFeesCollection?.stallment,let i = index">
-                                        <td>
-                                            <p class="mb-0">{{i+1}}</p>
-                                        </td> 
-                                        <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0">{{ fee.key}}</p>
-                                        </td>
-                                        <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0">&#8377; {{ fee.value }}</p>
-                                        </td>
-                                        <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0" *ngIf="fee.value==0">Panding</p>
-                                            <p class="mb-0" *ngIf="fee.value !==0">Paid</p>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -1,23 +1,31 @@
+/* styles.css or styles.scss */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+/* Choose the theme that you prefer (e.g., indigo-pink, deeppurple-amber, etc.) */
+
+
 .container-fluid {
    background-color: transparent;
-   min-height: 100vh;
+   height: 90vh;
    width: 100%;
 }
 
 .big-container {
-  background-color: #fff;
-  width: 100%;
-  min-height: 100vh;
-  margin-top: 1vh;
-}
-.main-card {
-  width: 100%;
-  min-height: 100vh;
-  background-color: transparent;
+   background-color: #fff;
+   width: 100%;
+   height: 70vh;
+   margin-top: 1vh;
 }
 
-a{
-  color: #8c88ff;font: 1.1em sans-serif;text-decoration: none;
+.main-card {
+   height: 70vh;
+   width: 100%;
+   background-color: transparent;
+}
+
+a {
+   color: #8c88ff;
+   font: 1.1em sans-serif;
+   text-decoration: none;
 }
 
 .form-control {
@@ -36,6 +44,9 @@ a{
    box-shadow: 0 0 0 1px #e1dfee66
 }
 
+
+
+
 .text-danger {
    font-size: 12px;
 }
@@ -49,22 +60,16 @@ a{
 }
 
 .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
-  background: #b7b1ff;
- color: #faf7ff;
+   background: #e7e6f897;
+   color: #8d6dff9a;
 }
 
 .table {
-   min-width: 100%;
-   height: auto;
+   height: 72vh;
    display: block;
+   width: 100%;
    overflow-y: auto;
    overflow-x: auto;
-}
-th {
-   white-space: nowrap;
-}
-.abc tbody, td, tfoot, th, thead, tr{
-   border-bottom: none;
 }
 
 .status-active {
@@ -88,11 +93,35 @@ p {
    display: flex;
    justify-content: center;
 }
-
 .modal.fade.show {
    display: block;
    z-index: 10 !important;
    background: rgba(0, 0, 0, 0.5);
+}
+
+
+.modal-dialog {
+  height: 80vh; /* Adjust the height as needed */
+  overflow-x: auto;
+}
+
+.modal-header{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #ffffff;
+}
+.modal-footer {
+  padding-bottom: 500px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #ffffff;
+}
+
+.modal-body {
+  overflow-y: auto;
+  max-height: calc(80vh - 2.3 * 3.5rem);/* Subtract header and footer heights */
 }
 
 .modal-title {
@@ -120,7 +149,7 @@ p {
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-   color: #8c88ff !important;
+   color: #7d719bc7 !important;
 
 }
 
@@ -143,7 +172,7 @@ p {
 }
 
 ::ng-deep .mat-form-field-label {
-   color: #8c88ff !important;
+   color: #7d719bc7 !important;
 }
 
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
@@ -158,23 +187,52 @@ p {
 
 
 
-::ng-deep
-.mat-radio-button.mat-accent.mat-radio-checked
-.mat-radio-outer-circle {
-border-color: #8c88ff; /*change radio button color when selected*/
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+   border-color: #8c88ff;
+   /*change radio button color when selected*/
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-background-color: #8c88ff; /*change radio button inner circle color */
+   background-color: #8c88ff;
+   /*change radio button inner circle color */
 }
 
 ::ng-deep .mat-radio-outer-circle {
-border: 1px solid #d5d3e0d7; /*change radio button not checked border */
+   border: 1px solid #d5d3e0d7;
+   /*change radio button not checked border */
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-background-color: rgba(0, 0, 0, 0.1) !important; /* change click effect color */
+   background-color: rgba(0, 0, 0, 0.1) !important;
+   /* change click effect color */
 }
+
+
+
+
+
+
+
+.mat-checkbox {
+   color: #7d719bc7;
+}
+
+::ng-deep .mat-checkbox-frame {
+   border-color: #7d719bc7 !important;
+}
+
+::ng-deep .mat-checkbox-ripple .mat-ripple-element {
+   background-color: #8c88ff !important;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+   background-color: #8c88ff !important;
+}
+
+::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+   background-color: #8c88ff !important;
+}
+
 
 @media (min-width: 576px) and (max-width:991.98px) {
    .container-fluid {
@@ -186,17 +244,17 @@ background-color: rgba(0, 0, 0, 0.1) !important; /* change click effect color */
 @media (min-width: 992px) {
    .container-fluid {
       background-color: #d1ceee3e;
-      padding-bottom: 2vh;
    }
 
    .big-container {
       background-color: #fff;
-      min-height: 86.5vh;
+      height: 86.5vh;
       width: 98%;
       margin-top: 1.75vh;
       margin-left: 1%;
       border-radius: 10px;
    }
+
    .main-card {
       padding-left: 2px;
       padding-right: 2px;
@@ -219,18 +277,18 @@ background-color: rgba(0, 0, 0, 0.1) !important; /* change click effect color */
    }
 
    .submit-button {
-      background: #8c88ff;
-      color: #efeffe;
+      background: #8d6dff;
+      color: #dedeff;
    }
 
    .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
-     background: #d2cefd;
-     color: #f3f2ff;
+      background: #e7e6f897;
+      color: #8d6dff9a;
    }
 
    .table {
       display: inline-table;
-      min-width: 100%;
+      width: 100%;
       height: auto;
    }
 
@@ -269,4 +327,26 @@ background-color: rgba(0, 0, 0, 0.1) !important; /* change click effect color */
    .error-message {
       color: rgb(228, 64, 154);
    }
+}
+
+
+
+
+
+
+
+
+.example-h2 {
+   margin: 10px;
+}
+
+.example-section {
+   display: flex;
+   align-content: center;
+   align-items: center;
+   height: 60px;
+}
+
+.example-margin {
+   margin: 0 10px;
 }

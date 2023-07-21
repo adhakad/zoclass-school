@@ -1,0 +1,327 @@
+<app-header-navbar></app-header-navbar>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-lg-2">
+      <app-side-navbar></app-side-navbar>
+    </div>
+    <div class="col-12 col-lg-10">
+      <div class="row">
+        <div class="col-12 big-container">
+          <div class="col-lg-12 offset-lg-0">
+            <div class="main-card">
+              <div class="row pt-4 pb-2">
+                <div class="col-8 col-lg-5">
+                  <input type="text" class="form-control" placeholder="Admission Search..." id="searchText"
+                    name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
+                    (keyup)="getAdmissions({page : 1, limit : 0})">
+                </div>
+                <div class="col-4 col-lg-2 offset-lg-5">
+                  <button class="submit-button" mat-raised-button (click)="addAdmissionModel()"><mat-icon
+                      style="font-size: 20px;">add</mat-icon>Create</button>
+                </div>
+              </div>
+              <!-- <table class="table table-hover align-middle mt-1 mb-0 bg-white">
+                <thead class="bg-light">
+                  <tr class="text-muted">
+                    <th>No.</th>
+                    <th>Admission</th>
+                    <th>Class</th>
+                    <th>Roll Number</th>
+                    <th>Otp</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="admissionInfo && admissionInfo.length>0">
+                    <tr *ngFor="let admissions of admissionInfo,let i=index">
+                      <td><p class="mb-0">{{number*10+i+1-10}}</p></td>
+                      <td>
+                        <p class="mb-0">{{admissions.name}}</p>
+                      </td>
+                      <td>
+                        <p class="mb-0">{{admissions.class}}</p>
+                      </td>
+                      <td>
+                        <p class="mb-0">{{admissions.rollNumber}}</p>
+                      </td>
+                      <td>
+                        <p class="mb-0">{{admissions.otp}}</p>
+                      </td>
+                      <td>
+                        <a class="mb-0 status-active" (click)="changeStatus(admissions._id,0)" *ngIf="admissions.status == 'Active'" href="javascript:void(0)">&nbsp;&nbsp;&nbsp;{{admissions.status}}</a>
+                        <a class="mb-0 status-inactive" (click)="changeStatus(admissions._id,1)" *ngIf="admissions.status == 'Inactive'" href="javascript:void(0)">{{admissions.status}}</a>
+                      </td>
+                      <td class="mb-0">
+                        <mat-icon (click)="updateAdmissionModel(admissions)" style="cursor: pointer;">edit_note</mat-icon>
+                        <mat-icon (click)="deleteAdmissionModel(admissions._id)" style="cursor: pointer;">delete</mat-icon>
+                      </td>
+                    </tr>
+                  
+                </tbody>
+              </table> -->
+              <!-- <div class="pagination">
+                <app-pagination [paginationValues]="paginationValues" (onChange)="getAdmissions($event)">
+                </app-pagination>
+              </div> -->
+
+              <div class="modal fade show" [class.show]="showModal">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+
+                  <div class="modal-content" *ngIf="successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p class="success-message">{{successMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <mat-icon></mat-icon>
+                    </div>
+                  </div>
+
+                  <div class="modal-content" *ngIf="!successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Admission'}}</h5>
+                      <mat-icon matRipple (click)="closeModal()" style="cursor: pointer;">close</mat-icon>
+                    </div>
+
+                    <form [formGroup]="admissionForm" (ngSubmit)="admissionAddUpdate()" *ngIf="!deleteMode">
+
+                    <div class="modal-body">
+
+                      <div *ngIf="errorCheck">
+                        <p class="error-message">{{errorMsg}}</p>
+                      </div>
+
+                      <div class="container">
+                        
+                          <div class="row">
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Name</mat-label>
+                                <input matInput type="text" formControlName="name">
+                                <mat-hint *ngIf="!admissionForm.get('name')?.valid && admissionForm.get('name')?.touched"
+                                  class="form-text text-danger">Name is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>class</mat-label>
+                                <mat-select type="number" matInput formControlName="class">
+                                  <div *ngFor="let classInfo of classInfo">
+                                    <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint *ngIf="!admissionForm.get('class')?.valid && admissionForm.get('class')?.touched"
+                                  class="form-text text-danger">Class is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Session</mat-label>
+                                <mat-select type="text" matInput formControlName="session">
+                                  <div *ngFor="let session of sessions">
+                                    <mat-option value="{{session.year}}">{{session.year}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('session')?.valid && admissionForm.get('session')?.touched"
+                                  class="form-text text-danger">Session is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Date of birth</mat-label>
+                                <input matInput readonly [matDatepicker]="picker" formControlName="dob" />
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Gender</mat-label>
+                                <mat-select type="text" matInput formControlName="gender">
+                                  <div>
+                                    <mat-option value="Male">Male</mat-option>
+                                    <mat-option value="Female">Female</mat-option>
+                                    <mat-option value="Other">Other</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('gender')?.valid && admissionForm.get('gender')?.touched"
+                                  class="form-text text-danger">Gender is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Category</mat-label>
+                                <mat-select type="text" matInput formControlName="category">
+                                  <div *ngFor="let category of categorys">
+                                    <mat-option value="{{category.category}}">{{category.category}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('category')?.valid && admissionForm.get('category')?.touched"
+                                  class="form-text text-danger">Category is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Religion</mat-label>
+                                <mat-select type="text" matInput formControlName="religion">
+                                  <div *ngFor="let religion of religions">
+                                    <mat-option value="{{religion.religion}}">{{religion.religion}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('religion')?.valid && admissionForm.get('religion')?.touched"
+                                  class="form-text text-danger">Religion is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Nationality</mat-label>
+                                <mat-select type="text" matInput formControlName="nationality">
+                                  <div>
+                                    <mat-option value="Indian">Indian</mat-option>
+                                    <mat-option value="Other">Other</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('nationality')?.valid && admissionForm.get('nationality')?.touched"
+                                  class="form-text text-danger">Nationality is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Contact</mat-label>
+                                <input matInput type="text" formControlName="contact">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('contact')?.valid && admissionForm.get('contact')?.touched"
+                                  class="form-text text-danger">Contact is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Address</mat-label>
+                                <input matInput type="text" formControlName="address">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('address')?.valid && admissionForm.get('address')?.touched"
+                                  class="form-text text-danger">Address is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="co-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Father Name</mat-label>
+                                <input matInput type="text" formControlName="fatherName">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('fatherName')?.valid && admissionForm.get('fatherName')?.touched"
+                                  class="form-text text-danger">Father name is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Father Qualification</mat-label>
+                                <mat-select type="text" matInput formControlName="fatherQualification">
+                                  <div *ngFor="let qualification of qualifications">
+                                    <mat-option value="{{qualification.qualification}}">{{qualification.qualification}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('fatherQualification')?.valid && admissionForm.get('fatherQualification')?.touched"
+                                  class="form-text text-danger">Father qualification is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Father Occupation</mat-label>
+                                <mat-select type="text" matInput formControlName="fatherOccupation">
+                                  <div *ngFor="let occupation of occupations">
+                                    <mat-option value="{{occupation.occupation}}">{{occupation.occupation}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('fatherOccupation')?.valid && admissionForm.get('fatherOccupation')?.touched"
+                                  class="form-text text-danger">Father occupation is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Father Contact</mat-label>
+                                <input matInput type="text" formControlName="fatherContact">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('fatherContact')?.valid && admissionForm.get('fatherContact')?.touched"
+                                  class="form-text text-danger">Father contact is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Father Annual Income</mat-label>
+                                <input matInput type="text" formControlName="fatherAnnualIncome">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('fatherAnnualIncome')?.valid && admissionForm.get('fatherAnnualIncome')?.touched"
+                                  class="form-text text-danger">Father annual income is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="co-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Mother Name</mat-label>
+                                <input matInput type="text" formControlName="motherName">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('motherName')?.valid && admissionForm.get('motherName')?.touched"
+                                  class="form-text text-danger">Mother name is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Mother Qualification</mat-label>
+                                <mat-select type="text" matInput formControlName="motherQualification">
+                                  <div *ngFor="let qualification of qualifications">
+                                    <mat-option value="{{qualification.qualification}}">{{qualification.qualification}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('motherQualification')?.valid && admissionForm.get('motherQualification')?.touched"
+                                  class="form-text text-danger">Mother qualification is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Mother Occupation</mat-label>
+                                <mat-select type="text" matInput formControlName="motherOccupation">
+                                  <div *ngFor="let occupation of occupations">
+                                    <mat-option value="{{occupation.occupation}}">{{occupation.occupation}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('motherOccupation')?.valid && admissionForm.get('motherOccupation')?.touched"
+                                  class="form-text text-danger">Mother occupation is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Mother Contact</mat-label>
+                                <input matInput type="text" formControlName="motherContact">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('motherContact')?.valid && admissionForm.get('motherContact')?.touched"
+                                  class="form-text text-danger">Mother contact is required</mat-hint>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline">
+                                <mat-label>Mother Annual Income</mat-label>
+                                <input matInput type="text" formControlName="motherAnnualIncome">
+                                <mat-hint
+                                  *ngIf="!admissionForm.get('motherAnnualIncome')?.valid && admissionForm.get('motherAnnualIncome')?.touched"
+                                  class="form-text text-danger">Mother annual income is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer" *ngIf="!deleteMode">
+                      <button class="submit-button" mat-raised-button type="submit"
+                        [disabled]="!admissionForm.valid">Submit</button>
+                    </div>
+                    <div *ngIf="deleteMode">
+                      <h4>To delete admission detail, click ok to confirm.</h4>
+                      <div class="modal-footer">
+                        <button class="delete-button" mat-raised-button type="button"
+                          (click)="admissionDelete(deleteById)">Ok</button>
+                      </div>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

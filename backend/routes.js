@@ -20,4 +20,5 @@ module.exports = app => {
     app.use('/api/exam-result', require('./modules/routes/exam-result'));
     app.use('/api/fees', require('./modules/routes/fees-collection'));
     app.use('/api/fees-structure', require('./modules/routes/fees-structure'));
+    app.use('/api/admission', require('./modules/routes/admission'));
 };
