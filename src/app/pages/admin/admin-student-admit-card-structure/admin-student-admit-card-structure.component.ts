@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { FeesStructureService } from 'src/app/services/fees-structure.service';
 import { ClassSubjectService } from 'src/app/services/class-subject.service';
-
+import { AdmitCardStructureService } from 'src/app/services/admit-card-structure.service';
 
 @Component({
   selector: 'app-admin-student-admit-card-structure',
@@ -20,29 +19,16 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-
-  totalFees: number = 0;
-  admission = false;
-  tution = false;
-  books = false;
-  uniform = false;
-
-  feesTypeMode: boolean = false;
-  feesMode: boolean = false;
+  examType: any[] = ["quarterly", "half yearly", "final"];
   examTime: any[] = ["8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM"];
   classSubject: any[] = [];
 
-
-  selectedDate: any;
-  selectedTime: any; // We'll store the time as a string in the format 'HH:mm A'
-
-
-
-
-
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private admitCardStructureService: AdmitCardStructureService) {
     this.admitcardForm = this.fb.group({
+      class:[''],
+      examType:['',Validators.required],
       type: this.fb.group({
+        examDate: this.fb.array([], [Validators.required]),
         startTime: this.fb.array([], [Validators.required]),
         endTime: this.fb.array([], [Validators.required]),
       }),
@@ -55,15 +41,13 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   }
 
 
-
-
   getClassSubject(cls: any) {
     this.classSubjectService.getSubjectByClass(cls).subscribe((res: any) => {
       if (res) {
         this.classSubject = res.map((item: any) => {
           return item.subject;
         })
-        if(this.classSubject){
+        if (this.classSubject) {
           this.patch();
         }
       }
@@ -71,8 +55,30 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   }
 
 
-  addFeesModel() {
+  addAdmitCardModel() {
     this.showModal = true;
+
+    // const examDate = [
+    //   { Mathematics: '2023-10-23' },
+    //   { 'Environment science': '2023-12-24' },
+    //   { Geography: '2023-07-05' },
+    //   { 'Home science': '2023-07-27' },
+    //   { Economics: '2023-11-08' }
+    // ];
+
+    // const formattedDates = examDate.map((exam:any) => {
+    //   const subject = Object.keys(exam)[0];
+    //   const dateStr = exam[subject];
+    //   const dateObj = new Date(dateStr);
+    //   const day = String(dateObj.getDate()).padStart(2, '0');
+    //   const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    //   const year = dateObj.getFullYear();
+    //   const formattedDate = `${day}.${month}.${year}`;
+    //   return { [subject]: formattedDate };
+    // });
+
+    // console.log(formattedDates);
+
   }
 
 
@@ -94,18 +100,29 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
 
 
   patch() {
-    const controlOne = <FormArray>this.admitcardForm.get('type.startTime');
+    const controlOne = <FormArray>this.admitcardForm.get('type.examDate');
     this.classSubject.forEach((x: any) => {
-      controlOne.push(this.patchStartTime(x))
+      controlOne.push(this.patchExamDate(x))
       this.admitcardForm.reset();
     })
-    const controlTwo = <FormArray>this.admitcardForm.get('type.endTime');
+
+    const controlTwo = <FormArray>this.admitcardForm.get('type.startTime');
     this.classSubject.forEach((x: any) => {
-      controlTwo.push(this.patchEndTime(x))
+      controlTwo.push(this.patchStartTime(x))
+      this.admitcardForm.reset();
+    })
+    const controlThree = <FormArray>this.admitcardForm.get('type.endTime');
+    this.classSubject.forEach((x: any) => {
+      controlThree.push(this.patchEndTime(x))
       this.admitcardForm.reset();
     })
   }
-
+  patchExamDate(examDate: any) {
+    console.log(examDate)
+    return this.fb.group({
+      [examDate]: [examDate],
+    })
+  }
   patchStartTime(startTime: any) {
     return this.fb.group({
       [startTime]: [startTime],
@@ -119,29 +136,40 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   }
 
   admitcardAddUpdate() {
-    console.log(this.admitcardForm.value)
     // this.admitcardForm.value.class = this.cls;
-    // this.admitcardForm.value.totalFees = this.totalFees;
-    // let feesTypeObj = this.admitcardForm.value.type.feesType;
-    // let feesPayTypeObj = this.admitcardForm.value.type.feesPayType;
-    // let containsFeesTypeNull = feesTypeObj.some((item: any) => Object.values(item).includes(null));
-    // let containsFeesPayTypeNull = feesPayTypeObj.some((item: any) => Object.values(item).includes(null));
-    // if (containsFeesTypeNull || containsFeesPayTypeNull) {
-    //   this.errorCheck = true;
-    //   this.errorMsg = 'Please fill all fields';
-    // }
-    // if (!containsFeesTypeNull && !containsFeesPayTypeNull) {
-    //   console.log(this.admitcardForm.value.type)
-    //   this.feesStructureService.addFeesStructure(this.admitcardForm.value).subscribe((res: any) => {
-    //     if (res) {
-    //       this.successDone();
-    //       this.successMsg = res;
-    //     }
-    //   }, err => {
-    //     this.errorCheck = true;
-    //     this.errorMsg = err.error;
-    //   })
-    // }
+    this.admitcardForm.value.type.examDate = this.admitcardForm.value.type.examDate.map((exam: any) => {
+      const subject = Object.keys(exam)[0];
+      const dateStr = exam[subject];
+      const dateObj = new Date(dateStr);
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const year = dateObj.getFullYear();
+      const formattedDate = `${day}.${month}.${year}`;
+      return { [subject]: formattedDate };
+    });
+    console.log(this.admitcardForm.value)
+    this.admitcardForm.value.class = this.cls;
+    let examDateObj = this.admitcardForm.value.type.examDate;
+    let startTimeObj = this.admitcardForm.value.type.startTime;
+    let endTimeObj = this.admitcardForm.value.type.endTime;
+    let containsExamDateNull = examDateObj.some((item: any) => Object.values(item).includes(null));
+    let containsStartTimeNull = startTimeObj.some((item: any) => Object.values(item).includes(null));
+    let containsEndTimeNull = endTimeObj.some((item: any) => Object.values(item).includes(null));
+    if (containsExamDateNull || containsStartTimeNull || containsEndTimeNull) {
+      this.errorCheck = true;
+      this.errorMsg = 'Please fill all fields';
+    }
+    if (!containsExamDateNull && !containsStartTimeNull && !containsEndTimeNull) {
+    this.admitCardStructureService.addAdmitCardStructure(this.admitcardForm.value).subscribe((res: any) => {
+      if (res) {
+        this.successDone();
+        this.successMsg = res;
+      }
+    }, err => {
+      this.errorCheck = true;
+      this.errorMsg = err.error;
+    })
+    }
 
   }
 

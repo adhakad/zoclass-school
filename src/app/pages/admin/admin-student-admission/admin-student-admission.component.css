@@ -83,9 +83,8 @@
 
 
  .modal-dialog {
-   height: 80vh; /* Adjust the height as needed */
+   height: 80vh;
  }
- 
  .modal-header{
    position: sticky;
    top: 0;
@@ -102,7 +101,7 @@
  
  .modal-body {
    overflow-y: auto;
-   max-height: calc(80vh - 2.3 * 3.5rem);/* Subtract header and footer heights */
+   max-height: calc(80vh - 2.3 * 3.5rem);
  }
 
  .modal-title {
