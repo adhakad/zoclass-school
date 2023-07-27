@@ -1,16 +1,29 @@
 const AdmitCardStructureModel = require('../models/admit-card-structure');
-const classModel = require('../models/class');
+const AdmitCardModel = require("../models/admit-card");
+const StudentModel = require('../models/student');
 
-
+let GetSingleClassAdmitCardStructure = async (req, res, next) => {
+    let className = req.params.id;
+    try {
+        const singleAdmitCardStr = await AdmitCardStructureModel.find({ class: className });
+        return res.status(200).json(singleAdmitCardStr);
+    } catch (error) {
+        console.log(error);
+    }
+}
 let CreateAdmitCardStructure = async (req, res, next) => {
     let className = req.body.class;
     let examType = req.body.examType;
     let { examDate, startTime, endTime } = req.body.type;
-    
+
     try {
         const checkExamExist = await AdmitCardStructureModel.findOne({ class: className, examType: examType });
         if (checkExamExist) {
             return res.status(404).json(`This class ${examType} exam admit card already created`);
+        }
+        const checkAdmitCardExist = await AdmitCardModel.findOne({ class: className });
+        if (checkAdmitCardExist) {
+            return res.status(404).json(`This class ${examType} exam admit card already exist`);
         }
         let admitCardStructureData = {
             class: className,
@@ -19,8 +32,24 @@ let CreateAdmitCardStructure = async (req, res, next) => {
             examStartTime: startTime,
             examEndTime: endTime,
         }
+        const studentData = await StudentModel.find({ class: className });
+
+        let studentAdmitCardData = [];
+        for (const student of studentData) {
+            let admitCardNo = Math.floor(Math.random() * 899999 + 100000);
+            studentAdmitCardData.push({
+                studentId:student._id,
+                admitCardNo: admitCardNo,
+                name: student.name,
+                class: student.class,
+                rollNumber: student.rollNumber,
+                examType: examType,
+            });
+        }
+
         let admitCardStructure = await AdmitCardStructureModel.create(admitCardStructureData);
-        if (admitCardStructure) {
+        let studentAdmitCard = await AdmitCardModel.create(studentAdmitCardData);
+        if (admitCardStructure && studentAdmitCard) {
             return res.status(200).json('Admit card structure add successfuly');
         }
 
@@ -32,5 +61,6 @@ let CreateAdmitCardStructure = async (req, res, next) => {
 
 
 module.exports = {
+    GetSingleClassAdmitCardStructure,
     CreateAdmitCardStructure
 }

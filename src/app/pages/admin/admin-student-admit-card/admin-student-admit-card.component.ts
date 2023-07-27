@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { StudentService } from 'src/app/services/student.service';
-import { ClassService } from 'src/app/services/class.service';
-import { Student } from 'src/app/modal/student.modal';
-import { Class } from 'src/app/modal/class.model';
-
+import { AdmitCardService } from 'src/app/services/admit-card.service';
 
 @Component({
   selector: 'app-admin-student-admit-card',
@@ -15,150 +9,53 @@ import { Class } from 'src/app/modal/class.model';
 })
 export class AdminStudentAdmitCardComponent implements OnInit {
 
-  studentForm: FormGroup;
-  showModal: boolean = false;
-  updateMode: boolean = false;
-  deleteMode: boolean = false;
-  deleteById: String = '';
-  successMsg: String = '';
-  errorMsg: String = '';
-  errorCheck: Boolean = false;
-  classInfo: Class[] = [];
-  studentInfo: any[] = [];
-  recordLimit: number = 10;
-  filters:any = {};
-  number:number=0;
-  paginationValues: Subject<any> = new Subject();
-  page:Number=0;
+  studentAdmitCardInfo: any[] = [];
   cls:any;
 
-  constructor(public activatedRoute: ActivatedRoute,private fb: FormBuilder, private classService: ClassService, private studentService: StudentService) {
-    this.studentForm = this.fb.group({
-      _id: [''],
-      name: ['', Validators.required],
-      class: ['', Validators.required],
-      rollNumber: ['', Validators.required],
-    })
+  constructor(public activatedRoute: ActivatedRoute,private admitCardService:AdmitCardService) {
+    
   }
 
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
 
     console.log(this.cls)
+    this.getAdmitCardStudentByClass(this.cls);
 
-    this.getStudents({page : 1});
-    this.getClass();
-  }
-  closeModal() {
-    this.showModal = false;
-    this.updateMode = false;
-    this.deleteMode = false;
-    this.errorMsg = '';
-  }
-  addStudentModel() {
-    this.showModal = true;
-    this.deleteMode = false;
-    this.updateMode = false;
-    this.studentForm.reset();
-  }
-  updateStudentModel(student: any) {
-    this.showModal = true;
-    this.deleteMode = false;
-    this.updateMode = true;
-    this.studentForm.patchValue(student);
-  }
-  deleteStudentModel(id: String) {
-    this.showModal = true;
-    this.updateMode = false;
-    this.deleteMode = true;
-    this.deleteById = id;
+    
   }
 
-  getClass() {
-    this.classService.getClassList().subscribe((res: Class[]) => {
-      if (res) {
-        this.classInfo = res;
+
+
+  getAdmitCardStudentByClass(cls:any){
+    this.admitCardService.admitCardStudentByClass(cls).subscribe((res:any) => {
+      if(res){
+        this.studentAdmitCardInfo = res;
+
+        let dateTime = new Date();
+        console.log(dateTime)
+
       }
     })
   }
-  successDone() {
-    setTimeout(() => {
-      this.closeModal();
-      this.successMsg = '';
-      this.getStudents({page : this.page});
-    }, 1000)
-  }
 
-  getStudents($event:any) {
-    this.page = $event.page
-    return new Promise((resolve, reject) => {
-      let params:any = {
-        filters: {},
-        page: $event.page,
-        limit: $event.limit ? $event.limit : this.recordLimit
-      };
-      this.recordLimit = params.limit;
-      if(this.filters.searchText) {
-        params["filters"]["searchText"] = this.filters.searchText.trim();
-      }
-      
-      this.studentService.studentPaginationList(params).subscribe((res: any) => {
-        if (res) {
-          this.studentInfo = res.studentList;
-          this.number = params.page;
-          this.paginationValues.next({ type: 'page-init', page: params.page, totalTableRecords: res.countStudent });
-          return resolve(true);
-        }
-      });
-    });
-  }
 
-  studentAddUpdate() {
-    if (this.studentForm.valid) {
-      if (this.updateMode) {
-        this.studentService.updateStudent(this.studentForm.value).subscribe((res: any) => {
-          if (res) {
-            this.successDone();
-            this.successMsg = res;
-          }
-        }, err => {
-          this.errorCheck = true;
-          this.errorMsg = err.error;
-        })
-      } else {
-        this.studentService.addStudent(this.studentForm.value).subscribe((res: any) => {
-          if (res) {
-            this.successDone();
-            this.successMsg = res;
-          }
-        }, err => {
-          this.errorCheck = true;
-          this.errorMsg = err.error;
-        })
-      }
-    }
-  }
+  
+    
+
+  
   changeStatus(id:any, statusValue:any) {
     if(id) {
       let params = {
         id : id,
         statusValue: statusValue,
       }
-      console.log(this.paginationValues)
-      this.studentService.changeStatus(params).subscribe((res: any) => {
-        if(res){
-          this.getStudents({page : this.page});
-        }
-      })
+      // console.log(this.paginationValues)
+      // this.studentService.changeStatus(params).subscribe((res: any) => {
+      //   if(res){
+      //     this.getStudents({page : this.page});
+      //   }
+      // })
     }
-  }
-  studentDelete(id: String) {
-    this.studentService.deleteStudent(id).subscribe((res: any) => {
-      if (res) {
-        this.successDone();
-        this.successMsg = res;
-        this.deleteById = '';
-      }
-    })
   }
 }

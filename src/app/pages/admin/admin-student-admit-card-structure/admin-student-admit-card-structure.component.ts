@@ -22,11 +22,12 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   examType: any[] = ["quarterly", "half yearly", "final"];
   examTime: any[] = ["8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM"];
   classSubject: any[] = [];
+  examAdmitCard: any[] = [];
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private admitCardStructureService: AdmitCardStructureService) {
     this.admitcardForm = this.fb.group({
-      class:[''],
-      examType:['',Validators.required],
+      class: [''],
+      examType: ['', Validators.required],
       type: this.fb.group({
         examDate: this.fb.array([], [Validators.required]),
         startTime: this.fb.array([], [Validators.required]),
@@ -38,6 +39,7 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.getClassSubject(this.cls);
+    this.getAdmitCardStructureByClass(this.cls);
   }
 
 
@@ -54,31 +56,82 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     })
   }
 
+  getAdmitCardStructureByClass(cls: any) {
+    this.admitCardStructureService.admitCardStructureByClass(cls).subscribe((res: any) => {
+      if (res) {
+        this.examAdmitCard = res;
+
+
+
+        let date = new Date();
+
+        let examDate: any = [
+          { 'Environment Science': '26.07.2020' },
+          { 'Geography': '23.07.2023' },
+          { 'Economics': '01.07.2020' },
+          { 'Home Science': '09.07.2020' },
+        ];
+
+        // Convert the date strings to Date objects
+        const datesAsObjects = examDate.map((entry: any) => {
+          const subject = Object.keys(entry)[0];
+          const dateParts = entry[subject].split('.');
+          const dateObject = new Date(
+            parseInt(dateParts[2], 10),
+            parseInt(dateParts[1], 10) - 1,
+            parseInt(dateParts[0], 10)
+          );
+          return { subject, date: dateObject };
+        });
+
+        // Sort the dates in ascending order
+        datesAsObjects.sort((a: any, b: any) => a.date - b.date);
+
+        // Get the last date
+        const lastDate = datesAsObjects[datesAsObjects.length - 1];
+
+
+
+        console.log(lastDate)
+        console.log(date)
+
+
+        const date1 = lastDate;
+        const date2 = date;
+        
+        // Set the time components of both dates to zero
+        const newDate1 = new Date(date1);
+        newDate1.setHours(0, 0, 0, 0);
+        
+        const newDate2 = new Date(date2);
+        newDate2.setHours(0, 0, 0, 0);
+        
+        // Compare the dates
+        if (newDate1.getTime() === newDate2.getTime()) {
+          console.log('The dates are equal.');
+        } else if (newDate1.getTime() < newDate2.getTime()) {
+          console.log('date1 is before date2.');
+        } else {
+          console.log('date1 is after date2.');
+        }
+
+
+
+
+        // const dateString: string = "20.07.2023";
+        // const [day, month, year]: number[] = dateString.split(".").map(Number);
+        // const dateObject: Date = new Date(year, month - 1, day);
+        // const timestamp: number = Math.floor(dateObject.getTime() / 1000);
+
+        // console.log(timestamp);
+
+      }
+    })
+  }
+
 
   addAdmitCardModel() {
     this.showModal = true;
-
-    // const examDate = [
-    //   { Mathematics: '2023-10-23' },
-    //   { 'Environment science': '2023-12-24' },
-    //   { Geography: '2023-07-05' },
-    //   { 'Home science': '2023-07-27' },
-    //   { Economics: '2023-11-08' }
-    // ];
-
-    // const formattedDates = examDate.map((exam:any) => {
-    //   const subject = Object.keys(exam)[0];
-    //   const dateStr = exam[subject];
-    //   const dateObj = new Date(dateStr);
-    //   const day = String(dateObj.getDate()).padStart(2, '0');
-    //   const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    //   const year = dateObj.getFullYear();
-    //   const formattedDate = `${day}.${month}.${year}`;
-    //   return { [subject]: formattedDate };
-    // });
-
-    // console.log(formattedDates);
-
   }
 
 
@@ -93,11 +146,9 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
+      this.getAdmitCardStructureByClass(this.cls)
     }, 1000)
   }
-
-
-
 
   patch() {
     const controlOne = <FormArray>this.admitcardForm.get('type.examDate');
@@ -160,15 +211,15 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
       this.errorMsg = 'Please fill all fields';
     }
     if (!containsExamDateNull && !containsStartTimeNull && !containsEndTimeNull) {
-    this.admitCardStructureService.addAdmitCardStructure(this.admitcardForm.value).subscribe((res: any) => {
-      if (res) {
-        this.successDone();
-        this.successMsg = res;
-      }
-    }, err => {
-      this.errorCheck = true;
-      this.errorMsg = err.error;
-    })
+      this.admitCardStructureService.addAdmitCardStructure(this.admitcardForm.value).subscribe((res: any) => {
+        if (res) {
+          this.successDone();
+          this.successMsg = res;
+        }
+      }, err => {
+        this.errorCheck = true;
+        this.errorMsg = err.error;
+      })
     }
 
   }
