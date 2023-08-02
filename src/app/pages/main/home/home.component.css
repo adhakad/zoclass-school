@@ -1,15 +1,11 @@
-.container-fluid {
-   background-color: #ffffff;
+.home {
+   background-color: #fff;
 }
 
 /************************Banner*************************/
-.padding-top {
-   padding-top: 1.75vh;
-}
 
 .banner-card {
    height: 25vh;
-   border-radius: 15px;
 }
 
 .main-card {
@@ -17,7 +13,7 @@
 }
 
 .main-card h3 {
-   color: #7d719bc7;
+   color: #5e5eb0;
    margin-top: 2vh;
    letter-spacing: .6px;
    font-size: 18px;
@@ -36,7 +32,7 @@
    margin-right: 20px;
    margin-bottom: 8px;
    border-radius: 15px;
-   background: #f3f2ff;
+   background: #fff;
 }
 
 .main-card .subject-card img {
@@ -171,7 +167,7 @@
 }
 
 @media (min-width: 576px) and (max-width:991.98px){
-   .container-fluid{
+   .home{
       display: none;
    }
 }
@@ -181,7 +177,7 @@
 
    /************************Banner*************************/
    .banner-card {
-      height: 35vh;
+      height: 45vh !important;
       width: 100% !important;
    }
 

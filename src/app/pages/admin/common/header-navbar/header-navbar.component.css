@@ -1,4 +1,6 @@
-.header{
+@import'../../../../../styles.css';
+
+/* .header{
   height: 10vh;
   position: fixed;
   left: 0;
@@ -11,9 +13,10 @@
   box-shadow: 0 0 1px -10px rgb(215, 203, 255), 
   0 0 0 1px rgb(235, 230, 255), 
   0 0 3px 0 rgb(215, 203, 255);
-}
+} */
 .logo{
-  color: #8D6DFF;
+  background-color: transparent;
+  color: #DAF2F9;
   font: 1.2em sans-serif;
   letter-spacing: 1px;
 }

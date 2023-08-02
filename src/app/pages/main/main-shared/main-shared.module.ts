@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderModule } from 'src/app/common/header/header.module';
-import { NavbarModule } from 'src/app/common/navbar/navbar.module';
 import { MaterialUiModule } from 'src/app/material/material-ui/material-ui.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from '../../pagination/pagination.module';
@@ -21,7 +20,6 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
   ],
   exports:[
     HeaderModule,
-    NavbarModule,
     MaterialUiModule,
     ReactiveFormsModule,
     FormsModule,

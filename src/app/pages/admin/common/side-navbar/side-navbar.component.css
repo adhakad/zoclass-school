@@ -80,7 +80,7 @@ li > button.active {background-color: #8c88ff;color: #fff; border-radius: 50%;} 
   li button.active-link {
     background: #8d6dff;
     /* background-color: #e7e6f8; */
-    color: #f9f6ff;
+    color: #DAF2F9;
   }
 
   /* button:hover,

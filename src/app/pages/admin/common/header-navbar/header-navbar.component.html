@@ -1,16 +1,16 @@
 <mat-toolbar class="header">
   <button mat-flat-button class="logo">
-    <span>zoclass</span>
+    <span>Vandana Convent School</span>
   </button>
   <button mat-flat-button>
   </button>
   <button mat-flat-button>
   </button>
   <button mat-icon-button>
-    <mat-icon style="color: #8d6dff;" (click)="openMenu(true)" class="openMenu">more_vert</mat-icon>
+    <mat-icon style="color: #8d6dff;" (click)="openMenu(true)" class="openMenu">menu</mat-icon>
   </button>
 </mat-toolbar>
-<div [ngClass]="{'top-navbar' : false==nav}">
+<div [ngClass]="{'top-navbar' : false==nav}" style="margin-top: 10vh;">
   <mat-toolbar class="navbar">
     <mat-icon class="close-icon" (click)="openMenu(false)">close</mat-icon>
     <button mat-button class="menu-button" routerLink="/admin/dashboard" routerLinkActive="active-link"

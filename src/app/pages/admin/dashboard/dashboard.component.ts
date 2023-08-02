@@ -7,10 +7,8 @@ import { ClassSubjectService } from 'src/app/services/class-subject.service';
 import { ClassService } from 'src/app/services/class.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { StudentService } from 'src/app/services/student.service';
-import { StudyMaterialService } from 'src/app/services/study-material.service';
 import { SubjectService } from 'src/app/services/subject.service';
 import { TeacherService } from 'src/app/services/teacher.service';
-import { TestService } from 'src/app/services/test.service';
 import { TestimonialService } from 'src/app/services/testimonial.service';
 import { TopperService } from 'src/app/services/topper.service';
 
@@ -35,7 +33,7 @@ export class DashboardComponent implements OnInit {
   testimonialCountInfo:any;
   topperCountInfo:any;
   classList:any[]=[];
-  constructor(private adminAuthService:AdminAuthService,private adsService:AdsService,private bannerService:BannerService,private classSubjectService:ClassSubjectService,private classService:ClassService,private notificationService:NotificationService,private studentService:StudentService,private studyMaterialService:StudyMaterialService,private subjectService:SubjectService,private teacherService:TeacherService,private testService:TestService,private testimonialService:TestimonialService,private topperService:TopperService) {}
+  constructor(private adminAuthService:AdminAuthService,private adsService:AdsService,private bannerService:BannerService,private classSubjectService:ClassSubjectService,private classService:ClassService,private notificationService:NotificationService,private studentService:StudentService,private subjectService:SubjectService,private teacherService:TeacherService,private testimonialService:TestimonialService,private topperService:TopperService) {}
   
   ngOnInit(): void {
     console.log(this.adminAuthService.getLoggedInAdminInfo());
@@ -45,10 +43,8 @@ export class DashboardComponent implements OnInit {
     this.classCount();
     this.notificationCount();
     this.studentCount();
-    this.studyMaterialCount();
     this.subjectCount();
     this.teacherCount();
-    this.testCount();
     this.testimonialCount();
     this.topperCount();
   }
@@ -80,11 +76,6 @@ export class DashboardComponent implements OnInit {
       this.studentCountInfo = res.countStudent;
     })
   }
-  studyMaterialCount(){
-    this.studyMaterialService.getStudyMaterialCount().subscribe((res:any)=> {
-      this.studyMaterialCountInfo = res.countStudyMaterial;
-    })
-  }
   notificationCount(){
     this.notificationService.getNotificationCount().subscribe((res:any)=> {
       this.notificationCountInfo = res.countNotification;
@@ -98,11 +89,6 @@ export class DashboardComponent implements OnInit {
   teacherCount(){
     this.teacherService.getTeacherCount().subscribe((res:any)=> {
       this.teacherCountInfo = res.countTeacher;
-    })
-  }
-  testCount(){
-    this.testService.getTestCount().subscribe((res:any)=> {
-      this.testCountInfo = res.countTest;
     })
   }
   testimonialCount(){

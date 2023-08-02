@@ -27,27 +27,22 @@ export class HomeComponent implements OnInit {
   private isBrowser: boolean = isPlatformBrowser(this.platformId);
   currentYear:any;
   bannerInfo: Banner[] = [];
-  subjectInfo: any[] = [];
-  classSubjectInfo: ClassSubject[] = [];
   teacherInfo: Teacher[] = [];
   adsInfo: Ads[] = [];
   topperInfo: Topper[] = [];
   testimonialInfo: Testimonial[] = [];
-  subjectArray: any[] = [];
   cls: Number = 0;
   loggedInStudentInfo: any;
   no: number = 0;
   loadTitle=false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private bannerService: BannerService, private subjectService: SubjectService, private classSubjectService: ClassSubjectService, private teacherService: TeacherService, private topperService: TopperService, private testimonialService: TestimonialService, private adsService: AdsService, private studentAuthService: StudentAuthService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private bannerService: BannerService, private topperService: TopperService, private testimonialService: TestimonialService, private adsService: AdsService, private studentAuthService: StudentAuthService) { }
 
   async ngOnInit() {
     this.getLoggedInStudentInfo();
     this.getBanner();
-    this.getClassSubject()
     this.getAds()
     this.getTestimonial();
     this.getTopper();
-    this.getSubject();
     
     this.currentYear = (new Date()).getFullYear()
   }
@@ -71,28 +66,6 @@ export class HomeComponent implements OnInit {
           margin: 0,
           nav: false,
           responsiveClass: true,
-        });
-        jQuery('.subject-carousel').owlCarousel({
-          stagePadding: 5,
-          items: 3,
-          loop: false,
-          dots: false,
-          nav: false,
-          responsiveClass: true,
-          responsive: {
-            0: {
-              stagePadding: 10,
-              items: 3,
-            },
-            600: {
-              stagePadding: 10,
-              items: 3,
-            },
-            1500: {
-              stagePadding: 30,
-              items: 4,
-            },
-          }
         });
         jQuery('.topper-carousel').owlCarousel({
           stagePadding: 30,
@@ -162,31 +135,6 @@ export class HomeComponent implements OnInit {
     this.bannerService.getBannerList().subscribe((res: Banner[]) => {
       if (res) {
         this.bannerInfo = res;
-      }
-    })
-  }
-
-  getSubject() {
-    this.subjectService.getSubjectList().subscribe((res: Subject[]) => {
-      if (res) {
-        if (this.classSubjectInfo.length > 0) {
-          let subjectData = res.filter(({ subject: subject1 }: any) => this.classSubjectInfo.some(({ subject: subject2 }: any) => subject1 == subject2))
-          this.subjectInfo = subjectData;
-          return;
-        }
-        this.subjectInfo = res;
-      }
-    })
-  }
-  getClassSubject() {
-    this.classSubjectService.getClassSubjectList().subscribe((res: ClassSubject[]) => {
-      if (res) {
-        if (this.cls) {
-          let classSubject = res.filter((item) => {
-            return item.class == this.cls;
-          })
-          this.classSubjectInfo = classSubject;
-        }
       }
     })
   }

@@ -1,52 +1,92 @@
-<mat-toolbar class="toolbar">
-    <button mat-flat-button class="logo">
-    <span>zoclass</span>
-      <!-- <span style="font-size: 25px;color: #8d6dff;font-weight: 400;letter-spacing: .025em;height: 25px;">z<span style="font-size: 25px;color: #fff;background: #8d6dff;">o</span>class</span> -->
+<header class="header">
+  <div class="col-4 offset-1 mt-3 logo">
+    <button mat-flat-button style="background-color: transparent;">
+      <span style="font: 2em sans-serif;letter-spacing: .75px;">Vandana Convent School</span>
     </button>
-    <button mat-flat-button>
+  </div>
+  <div class="col-6 mt-3 main-menu">
+    <button #button mat-button [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger"
+      (mouseenter)="buttonEnter(levelOneTrigger)" (mouseleave)="buttonLeave(levelOneTrigger, button)"
+      style="z-index:1050">
+      <span style="font: 1.25em sans-serif;letter-spacing: 1px;letter-spacing: 1px;">Home</span>
     </button>
-    <button mat-flat-button>
+    <button #button mat-button [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger"
+      (mouseenter)="buttonEnter(levelOneTrigger)" (mouseleave)="buttonLeave(levelOneTrigger, button)"
+      style="z-index:1050">
+      <span style="font: 1.25em sans-serif;letter-spacing: 1px;">About</span>
     </button>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon style="color: #8d6dff;">more_vert</mat-icon>
+    <button #button mat-button [matMenuTriggerFor]="levelTwo" #levelTwoTrigger="matMenuTrigger"
+      (mouseenter)="buttonEnter(levelTwoTrigger)" (mouseleave)="buttonLeave(levelTwoTrigger, button)"
+      style="z-index:1050">
+      <span style="font: 1.25em sans-serif;letter-spacing: 1px;">Contact</span>
     </button>
-  </mat-toolbar>
-  <mat-menu #menu="matMenu" class="custom-style">
-    <!-- <img src="../../../../assets/icons8-assessment-64.png" alt=""> -->
-    <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated" routerLink="/admin/login">
+    <button #button mat-button [matMenuTriggerFor]="levelThree" #levelThreeTrigger="matMenuTrigger"
+      (mouseenter)="buttonEnter(levelThreeTrigger)" (mouseleave)="buttonLeave(levelThreeTrigger, button)"
+      style="z-index:1050">
+      <span style="font: 1.25em sans-serif;letter-spacing: 1px;">Account</span><mat-icon
+        >keyboard_arrow_down</mat-icon>
+    </button>
+    <button #button mat-button [matMenuTriggerFor]="levelThree" #levelThreeTrigger="matMenuTrigger"
+      (mouseenter)="buttonEnter(levelThreeTrigger)" (mouseleave)="buttonLeave(levelThreeTrigger, button)"
+      style="z-index:1050">
+      <span style="font: 1.25em sans-serif;letter-spacing: 1px;">Account</span><mat-icon
+        >keyboard_arrow_down</mat-icon>
+    </button>
+  </div>
+  <div class="col-1 mt-4 notification">
+    <button mat-button>
+      <mat-icon class="material-icons mat-badge-small" [matBadge]="1" matBadgeColor="accent"
+        matBadgeSize="small">notifications</mat-icon>
+    </button>
+  </div>
+</header>
+
+<mat-menu #levelOne="matMenu" direction="down" yPosition="below" class="menu-panel">
+  <span (mouseenter)="menuenter()" (mouseleave)="menuLeave(levelOneTrigger, button)">
+    <li class="p-0" mat-menu-item>
       <mat-icon>account_box</mat-icon>
       <span>Admin Login</span>
-    </button>
-    <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated" routerLink="/teacher/login">
-      <mat-icon>account_box</mat-icon>
-      <span>Teacher Login</span>
-    </button>
-    <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated" routerLink="/student/login">
-      <mat-icon>account_box</mat-icon>
-      <span>Student Login</span>
-    </button>
-    <button mat-menu-item *ngIf="isAdminAuthenticated" routerLink="/admin/dashboard">
-      <mat-icon>dialpad</mat-icon>
-      <span>Admin Dashboard</span>
-    </button>
-    <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
-      <mat-icon>dialpad</mat-icon>
-      <span>Teacher Dashboard</span>
-    </button>
-    <button mat-menu-item *ngIf="isStudentAuthenticated" routerLink="/student/dashboard">
-      <mat-icon>dialpad</mat-icon>
-      <span>Student Dashboard</span>
-    </button>
-    <button mat-menu-item *ngIf="isAdminAuthenticated" (click)="onLogout('admin')">
-      <mat-icon>dialpad</mat-icon>
-      <span>Logout</span>
-    </button>
-    <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
-      <mat-icon>dialpad</mat-icon>
-      <span>Logout</span>
-    </button>
-    <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">
-      <mat-icon>dialpad</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
+    </li>
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">2
+      </a>
+    </li>
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">3
+      </a>
+    </li>
+  </span>
+</mat-menu>
+<mat-menu #levelTwo="matMenu" direction="down" yPosition="below" class="menu-panel">
+  <span (mouseenter)="menuenter()" (mouseleave)="menuLeave(levelTwoTrigger, button)">
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">11
+      </a>
+    </li>
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">22
+      </a>
+    </li>
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">33
+      </a>
+    </li>
+  </span>
+</mat-menu>
+
+<mat-menu #levelThree="matMenu" direction="down" yPosition="below" class="menu-panel">
+  <span (mouseenter)="menuenter()" (mouseleave)="menuLeave(levelThreeTrigger, button)">
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">111
+      </a>
+    </li>
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">222
+      </a>
+    </li>
+    <li class="p-0" mat-menu-item>
+      <a class="nav-link">333
+      </a>
+    </li>
+  </span>
+</mat-menu>

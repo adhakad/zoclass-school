@@ -13,11 +13,11 @@
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>Student Name</th>
-                                        <th style="font-weight: 400;">Abhishek Dhakad</th>
+                                        <th style="font-weight: 400;">{{studentAdmitCardInfo.name | titlecase}}</th>
                                         <th>Roll Number</th>
                                         <th style="font-weight: 400;">{{studentAdmitCardInfo.rollNumber}}</th>
                                         <th>Class</th>
-                                        <th style="font-weight: 400;">10th</th>
+                                        <th style="font-weight: 400;">{{studentAdmitCardInfo.class}}</th>
                                     </tr>
                                     <tr class="text-muted">
                                         <th>Admit Card No.</th>
@@ -29,10 +29,10 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <table class="table table-hover align-middle mt-2 mb-0 bg-white">
+                            <table class="table table-hover align-middle mt-4 mb-0 bg-white">
                                 <thead class="bg-light">
                                     <tr class="text-muted">
-                                        <th>No.</th>
+                                   <th>No.</th>
                                         <th>Subject</th>
                                         <th>Exam Date</th>
                                         <th>Exam Timing</th>

@@ -3,12 +3,56 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
-  .basic-container {
-    padding: 30px;
+:host {
+  --common-color: #8b69f2;
+  --header-height:11vh;
+
+}
+/* 
+**Header section styling
+ */
+ .header {
+  background-color: var(--common-color);
+  height: var(--header-height);
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  padding: 0 !important;
+  display: flex;
+  justify-content: space-around;
+}
+
+.header button span{
+  color: #DAF2F9;
+}
+
+
+::ng-deep  .cdk-overlay-pane .menu-panel {
+  width: 200px;
+  padding: 20px;
+}
+::ng-deep  .mat-button-focus-overlay {
+  display: none; 
+}
+
+::ng-deep  .mat-button:hover {
+  background-color: inherit;
+  color: inherit;
+  cursor: default;
+}
+
+/* .main-menu button span{
+  
+} */
+
+
+@media (min-width: 576px) and (max-width:991.98px){
+  .header{
+     display: none;
   }
-  .version-info {
-    font-size: 8pt;
-    float: right;
-    margin: 8px;
-  }
+}
+
+@media (min-width: 992px){
+  
+}
 

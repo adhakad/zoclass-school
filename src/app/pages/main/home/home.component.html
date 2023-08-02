@@ -1,27 +1,10 @@
 <app-header></app-header>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 col-lg-1">
-            <app-navbar></app-navbar>
-        </div>
-        <div class="col-12 col-lg-11 padding-top">
+    <div class="row home">
+        <div class="col-12">
             <div class="owl-carousel banner-carousel">
                 <div *ngFor="let bannerInfo of bannerInfo">
-                    <img class="banner-card" src="http://localhost:3000/public/banner-image/{{bannerInfo.image}}"
+                    <img class="banner-card" src="http://localhost:3000/public/banner-image/banner2.jpg"
                         alt="">
-                </div>
-            </div>
-            <div class="main-card">
-                <h3 *ngIf="loadTitle">Learning</h3>
-                <div class="owl-carousel subject-carousel">
-                    <div *ngFor="let subjectInfo of subjectInfo">
-                        <div class="subject-card" matRipple routerLink="/subject/category/{{subjectInfo._id}}">
-                            <img src="http://localhost:3000/public/subject-image/{{subjectInfo.image}}" alt="">
-                        </div>
-                        <div class="subject-text-card">
-                            <p>{{subjectInfo.subject}}</p>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="main-card">
@@ -107,5 +90,4 @@
                 <p>&copy; {{currentYear}} | All rights reserve zoclass.in</p>
             </div>
         </div>
-    </div>
 </div>
