@@ -1,17 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 :host {
   --common-color: #8b69f2;
-  --header-height:11vh;
+  --header-height: 11vh;
 
 }
+
 /* 
-**Header section styling
+Header section styling
  */
- .header {
+.header {
   background-color: var(--common-color);
   height: var(--header-height);
   left: 0;
@@ -21,21 +29,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   display: flex;
   justify-content: space-around;
 }
-
-.header button span{
+.header button span {
   color: #DAF2F9;
 }
-
-
-::ng-deep  .cdk-overlay-pane .menu-panel {
-  width: 200px;
-  padding: 20px;
+.header .logo button{
+  background-color: transparent;
 }
-::ng-deep  .mat-button-focus-overlay {
-  display: none; 
+.header .logo button span{
+  font: 1.5em sans-serif;letter-spacing: .5px;
 }
 
-::ng-deep  .mat-button:hover {
+.header .main-menu button {
+  margin-left: 20px;
+}
+.header .main-menu .menu-item {
+  font: 1.20em sans-serif;
+  letter-spacing: .85px;
+}
+
+
+::ng-deep .cdk-overlay-pane .menu-panel {
+  width: 250px;
+  /* padding: 20px; */
+}
+
+::ng-deep .mat-button-focus-overlay {
+  display: none;
+}
+
+::ng-deep .mat-button:hover {
   background-color: inherit;
   color: inherit;
   cursor: default;
@@ -46,13 +68,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 } */
 
 
-@media (min-width: 576px) and (max-width:991.98px){
-  .header{
-     display: none;
+@media (min-width: 576px) and (max-width:991.98px) {
+  .header {
+    display: none;
   }
 }
 
-@media (min-width: 992px){
-  
-}
-
+@media (min-width: 992px) {}
