@@ -1,5 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-
 html,
 /* body {
   width: 100%;
@@ -39,7 +37,7 @@ body {
   }
 .hamburger-icon {
   color: #DAF2F9;
-  font-size: 26px;
+  font-size: 30px;
   line-height: 15px;
 }
 
@@ -58,42 +56,39 @@ body {
   0 0 3px 0 rgb(215, 203, 255);
   margin-top: -11vh;
 }
-.hamburger-menu button {
-  width: 100%;
-  padding: 5px;
-  margin-top: 10px;
-  display: block;
-  flex-direction: column;
+.hamburger-menu button{
+  font-size:large;
+  color: #3e345b;
 }
-.hamburger-menu button .mat-icon {
-  background: linear-gradient(to left, #835FDF,#8D6DFF,#BB9FFF);
-    color: transparent;
-    background-clip: text;
-    display: inline-block;
-    margin-left: 10px;
+.hamburger-menu .mat-icon{
+  color: #3e345b;
 }
-.hamburger-menu button span {
-  background: linear-gradient(to left,#8D6DFF,#8D6DFF);
-  color: transparent;
-  background-clip: text;
-  display: inline-block;
-  font: 1.15em sans-serif;
-  margin-top: 5px;
-  margin-left: 25px;
-}
-/* button:hover,
-.active-link {
-  background: #f3f2ff;
-} */
 .close-icon{
+  color: #3e345b !important;
+  font-size: 25px;
   margin-left: 90%;
 }
 .top-hamburger-menu{
   display: none;
 }
 
+.hamburger-menu .mat-accordion {
+  background-color: #fff !important;
+  padding: 10px;
+}
+.mat-expansion-panel {
+  background-color: #fff !important;
+  box-shadow: none;
+  margin-bottom: 5px;
+}
 
-
+/* Styles for the mat-expansion-panel-header */
+.mat-expansion-panel-header {
+  /* Add your desired styles for the expansion panel header here */
+  /* For example, you can set a background color and font size */
+  background-color: #ddd;
+  font-size: 16px;
+}
 
 @media (min-width: 576px) and (max-width:991.98px) {
   .header {

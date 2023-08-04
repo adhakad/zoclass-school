@@ -12,13 +12,13 @@
     <button mat-button>
       <span class="menu-item" routerLink="/">Home</span>
     </button>
-    <button #button mat-button [matMenuTriggerFor]="aboutMenu" aria-label="Example icon-button with a menu">
+    <button #button mat-button [matMenuTriggerFor]="aboutMenu">
       <span class="menu-item">About</span><mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-    <button #button mat-button [matMenuTriggerFor]="examMenu" aria-label="Example icon-button with a menu">
+    <button #button mat-button [matMenuTriggerFor]="examMenu">
       <span class="menu-item">Exam</span><mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-    <button mat-button [matMenuTriggerFor]="accountMenu" aria-label="Example icon-button with a menu">
+    <button mat-button [matMenuTriggerFor]="accountMenu">
       <span class="menu-item">Account</span><mat-icon>keyboard_arrow_down</mat-icon>
     </button>
     <button #button mat-button>
@@ -102,61 +102,71 @@
 </mat-menu>
 
 
-<div [ngClass]="{'top-hamburger-menu' : false==nav}" >
+<div [ngClass]="{'top-hamburger-menu' : false==nav}">
   <mat-toolbar class="hamburger-menu">
     <mat-icon class="close-icon" (click)="hamburgerMenu(false)">close</mat-icon>
-    <button mat-button class="menu-button" routerLink="/" routerLinkActive="active-link"
-      (click)="hamburgerMenu(true)">
-      <mat-icon>home</mat-icon>
-      <span>Dashboard</span>
+    <button mat-menu-item routerLink="/" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
+      <mat-icon>dialpad</mat-icon>
+      <span>Home</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/teacher" routerLinkActive="active-link">
-      <mat-icon>person_add</mat-icon>
-      <span>Teacher</span>
+    <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span>About School</span>
     </button>
-    <button mat-button class="menu-button" [routerLink]="['/admin/student']" routerLinkActive="active-link">
-      <mat-icon>person</mat-icon>
-      <span>Student</span>
+    <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span>Our Mission</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/test" routerLinkActive="active-link">
-      <mat-icon>assignment</mat-icon>
-      <span>Test</span>
+    <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span>Our Vission</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/notification" routerLinkActive="active-link">
-      <mat-icon>notifications</mat-icon>
-      <span>Notification</span>
+    <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span>Admit Card</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/class" routerLinkActive="active-link">
-      <mat-icon>note_add</mat-icon>
-      <span>Class</span>
+    <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span>Exam Result</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/subject" routerLinkActive="active-link">
-      <mat-icon>books</mat-icon>
-      <span>Subject</span>
+    <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
+      routerLink="/admin/login">
+      <mat-icon>dialpad</mat-icon>
+      <span>Admin Login</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/class-subject" routerLinkActive="active-link">
-      <mat-icon>bookmark</mat-icon>
-      <span>Class Subject</span>
+    <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
+      routerLink="/teacher/login">
+      <mat-icon>dialpad</mat-icon>
+      <span>Teacher Login</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/study-material" routerLinkActive="active-link">
-      <mat-icon>post_add</mat-icon>
-      <span>Study Material</span>
+    <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
+      routerLink="/student/login">
+      <mat-icon>dialpad</mat-icon>
+      <span>Student Login</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/banner" routerLinkActive="active-link">
-      <mat-icon>pages</mat-icon>
-      <span>Banner</span>
+    <button mat-menu-item *ngIf="isAdminAuthenticated" routerLink="/admin/dashboard">
+      <mat-icon>dialpad</mat-icon>
+      <span>Admin Dashboard</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/ads" routerLinkActive="active-link">
-      <mat-icon>info</mat-icon>
-      <span>Ads</span>
+    <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
+      <mat-icon>dialpad</mat-icon>
+      <span>Teacher Dashboard</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/topper" routerLinkActive="active-link">
-      <mat-icon>library_add</mat-icon>
-      <span>Topper</span>
+    <button mat-menu-item *ngIf="isStudentAuthenticated" routerLink="/student/dashboard">
+      <mat-icon>dialpad</mat-icon>
+      <span>Student Dashboard</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/admin/testimonial" routerLinkActive="active-link">
-      <mat-icon>verified_user</mat-icon>
-      <span>Testimonial</span>
+    <button mat-menu-item *ngIf="isAdminAuthenticated" (click)="onLogout('admin')">
+      <mat-icon>dialpad</mat-icon>
+      <span>Logout</span>
+    </button>
+    <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
+      <mat-icon>dialpad</mat-icon>
+      <span>Logout</span>
+    </button>
+    <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">
+      <mat-icon>dialpad</mat-icon>
+      <span>Logout</span>
     </button>
   </mat-toolbar>
 </div>

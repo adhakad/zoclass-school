@@ -14,7 +14,7 @@
   0 0 0 1px rgb(235, 230, 255), 
   0 0 3px 0 rgb(215, 203, 255);
 } */
-.navbar {
+/* .navbar {
   height: 100vh;
   width: 100%;
   position: fixed;
@@ -67,10 +67,10 @@ button:hover,
   .header{
      display: none;
   }
-}
+} */
 
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   .header{
     box-shadow: 0 0 1px -10px rgb(226, 223, 236),
      0 0 0 0 rgb(226, 223, 236),
@@ -82,5 +82,5 @@ button:hover,
 .openMenu{
   display: none;
 }
-}
+} */
 

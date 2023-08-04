@@ -12,6 +12,7 @@ import { StudentAuthService } from "src/app/services/auth/student-auth.service";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   nav:boolean = false;
+  panelOpenState:boolean = false
 
   token: string = '';
   isAdminAuthenticated = false;

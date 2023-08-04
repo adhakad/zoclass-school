@@ -13,7 +13,7 @@ export class HeaderNavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openMenu(val:boolean){
+  hamburgerMenu(val:boolean){
     if(val==true){
       this.nav = true;
     }else if(val==false){
