@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isStudentAuthenticated = isStudentAuthenticated;
       });
   }
-  openMenu(val:boolean){
+  hamburgerMenu(val:boolean){
     if(val==true){
       this.nav = true;
     }else if(val==false){
