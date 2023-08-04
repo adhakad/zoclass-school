@@ -14,12 +14,6 @@
   0 0 0 1px rgb(235, 230, 255), 
   0 0 3px 0 rgb(215, 203, 255);
 } */
-.logo{
-  background-color: transparent;
-  color: #DAF2F9;
-  font: 1.2em sans-serif;
-  letter-spacing: 1px;
-}
 .navbar {
   height: 100vh;
   width: 100%;
@@ -82,12 +76,6 @@ button:hover,
      0 0 0 0 rgb(226, 223, 236),
      0 0 10px 0 rgb(226, 223, 236);
   }
-.logo{
-  color: #8c88ff;
-  font: 1.2em sans-serif;
-  letter-spacing: .5px;
-  margin-left: -5%;
-}
 .navbar{
   display: none;
 }

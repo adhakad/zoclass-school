@@ -1,14 +1,13 @@
 <mat-toolbar class="header">
-  <button mat-flat-button class="logo">
+  <div class="col-9 col-lg-4 offset-lg-1 logo" style="display: inline-block;">
+    <img src="../../../assets/logo.png" alt="">
     <span>Vandana Convent School</span>
-  </button>
-  <button mat-flat-button>
-  </button>
-  <button mat-flat-button>
-  </button>
+  </div>
+  <div class="col-3 col-lg-7 main-menu" style="text-align: center;">
   <button mat-icon-button>
     <mat-icon style="color: #8d6dff;" (click)="openMenu(true)" class="openMenu">menu</mat-icon>
   </button>
+  </div>
 </mat-toolbar>
 <div [ngClass]="{'top-navbar' : false==nav}" style="margin-top: 10vh;">
   <mat-toolbar class="navbar">
