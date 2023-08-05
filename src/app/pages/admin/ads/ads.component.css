@@ -145,7 +145,7 @@ p {
 
    .big-container {
       background-color: #fff;
-      height: 86.5vh;
+      min-height: 86.5vh;
       width: 98%;
       margin-top: 1.75vh;
       margin-left: 1%;

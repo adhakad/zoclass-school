@@ -1,5 +1,5 @@
 <app-header-navbar></app-header-navbar>
-<div class="container-fluid">
+<div class="container-fluid dashboard-container">
   <div class="row">
     <div class="col-12 col-lg-2">
       <app-side-navbar></app-side-navbar>
@@ -11,7 +11,7 @@
             <div class="main-card">
               <div class="row pt-4 pb-2">
                 <div class="col-8 col-lg-5">
-                  <input type="text" class="form-control" placeholder="Student Search..." id="searchText" name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText" (keyup)="getStudents({page : 1, limit : 0})">
+                  <input type="text" class="form-control search-input" placeholder="Student Search..." id="searchText" name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText" (keyup)="getStudents({page : 1, limit : 0})">
                 </div>
                 <div class="col-4 col-lg-2 offset-lg-5">
                   <button class="submit-button" mat-raised-button

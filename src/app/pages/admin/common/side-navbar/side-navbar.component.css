@@ -26,9 +26,6 @@ li > button.active {background-color: #8c88ff;color: #fff; border-radius: 50%;} 
     display: block;
     justify-content: space-around;
     background-color: white;
-    box-shadow: 0 0 1px -10px rgb(226, 223, 236),
-      0 0 0 0 rgb(226, 223, 236),
-      0 0 10px 0 rgb(226, 223, 236);
     overflow-x: auto;
   }
 
@@ -39,19 +36,18 @@ li > button.active {background-color: #8c88ff;color: #fff; border-radius: 50%;} 
   
   /* Track */
   ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 2px #e9e8ed; 
     border-radius: 10px;
   }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #d7d6db; 
+    background: #cdcad6; 
     border-radius: 10px;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #d7d6db; 
+    background:  #ada9bb; 
   }
 
 

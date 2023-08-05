@@ -6,8 +6,7 @@ body {
 
 :host {
   --common-color: #8b69f2;
-  --header-height: 11vh;
-
+  --header-height: 10vh;
 }
 
 /* 
@@ -20,7 +19,7 @@ Header section
   left: 0;
   top: 0;
   position: fixed;
-  z-index: 1000;
+  z-index: 2;
   padding: 0 !important;
   display: flex;
   justify-content: space-around;
@@ -56,20 +55,20 @@ Header section
   display: block;
   justify-content: space-around;
   background-color: white;
-  margin-top: -11vh;
+  margin-top: -10vh;
 }
 
 .hamburger-menu button {
   font-size: large;
-  color: #3e345b;
+  color: #8265cbfb !important;
 }
 
 .hamburger-menu .mat-icon {
-  color: #3e345b;
+  color: #8265cbfb !important;
 }
 
 .close-icon {
-  color: #3e345b !important;
+  color: #8265cbfb !important;
   font-size: 25px;
   margin-left: 90%;
 }
@@ -78,8 +77,76 @@ Header section
   display: none;
 }
 
+/* 
+Dashboard section
+ */
+.dashboard-container {
+  background-color: transparent;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.big-container {
+  background-color: #fff;
+  width: 100%;
+  min-height: 100vh;
+  margin-top: 1vh;
+}
+
+.main-card {
+  width: 100%;
+  min-height: 100vh;
+  background-color: transparent;
+}
+
+.main-card h3 {
+  color: #8265cbfb;
+  margin-top: 2vh;
+  margin-left: 5%;
+  letter-spacing: .6px;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.category-card {
+  height: 200px;
+  border-radius: 15px;
+  background: linear-gradient(to bottom right, #ededff, #c2c2ff);
+}
+.category-title{
+  text-align: center;
+}
+.submit-button {
+  height: 42px;
+  background: #8d6dff;
+  color: #dedeff;
+}
+
+.submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
+  background: #e7e6f897;
+  color: #8d6dff9a;
+}
+
+.search-input {
+  height: 45px;
+  color: #7d719bc7;
+  border: 2px solid #e1dfeed7;
+}
+
+.search-input::placeholder {
+  color: #b7b5c5f7;
+  font-size: 15px;
+}
+
+.search-input:focus {
+  border-color: #d2d0dfe0;
+  box-shadow: 0 0 0 1px #e1dfee66
+}
 @media (min-width: 576px) and (max-width:991.98px) {
   .header {
+    display: none;
+  }
+
+  .dashboard-container {
     display: none;
   }
 }
@@ -124,5 +191,31 @@ Header section
 
   .hamburger-icon {
     display: none;
+  }
+
+  /* 
+ Dashboard section 
+  */
+  .dashboard-container {
+    background-color: #9f98d43e;
+    padding-bottom: 1.5vh;
+  }
+
+  .big-container {
+    background-color: #fff;
+    min-height: 87vh;
+    width: 98.5%;
+    margin-top: 1.5vh;
+    margin-left: .75%;
+    border-radius: 10px;
+  }
+
+  .main-card {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .main-card h3 {
+    margin-left: 2%;
   }
 }
