@@ -1,17 +1,18 @@
 html,
-/* body {
-  width: 100%;
-  height: 100%;
-} */
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
 :host {
   --common-color: #8b69f2;
   --header-height: 11vh;
 
 }
+
+/* 
+Header section
+ */
 .header {
   background-color: var(--common-color);
   width: 100%;
@@ -24,17 +25,21 @@ body {
   display: flex;
   justify-content: space-around;
 }
-.header .logo img{
+
+.header .logo img {
   height: 60px;
 }
-.header .logo span{
+
+.header .logo span {
   color: #DAF2F9;
   font: 1em sans-serif;
   letter-spacing: .5px;
 }
-.main-menu{
+
+.main-menu {
   display: none;
-  }
+}
+
 .hamburger-icon {
   color: #DAF2F9;
   font-size: 30px;
@@ -51,43 +56,26 @@ body {
   display: block;
   justify-content: space-around;
   background-color: white;
-  box-shadow: 0 0 1px -10px rgb(215, 203, 255), 
-  0 0 0 1px rgb(235, 230, 255), 
-  0 0 3px 0 rgb(215, 203, 255);
   margin-top: -11vh;
 }
-.hamburger-menu button{
-  font-size:large;
+
+.hamburger-menu button {
+  font-size: large;
   color: #3e345b;
 }
-.hamburger-menu .mat-icon{
+
+.hamburger-menu .mat-icon {
   color: #3e345b;
 }
-.close-icon{
+
+.close-icon {
   color: #3e345b !important;
   font-size: 25px;
   margin-left: 90%;
 }
-.top-hamburger-menu{
+
+.top-hamburger-menu {
   display: none;
-}
-
-.hamburger-menu .mat-accordion {
-  background-color: #fff !important;
-  padding: 10px;
-}
-.mat-expansion-panel {
-  background-color: #fff !important;
-  box-shadow: none;
-  margin-bottom: 5px;
-}
-
-/* Styles for the mat-expansion-panel-header */
-.mat-expansion-panel-header {
-  /* Add your desired styles for the expansion panel header here */
-  /* For example, you can set a background color and font size */
-  background-color: #ddd;
-  font-size: 16px;
 }
 
 @media (min-width: 576px) and (max-width:991.98px) {
@@ -97,40 +85,43 @@ body {
 }
 
 @media (min-width: 992px) {
-  .header .logo img{
+
+  /* 
+Header section
+ */
+  .dashbord-logo-margin {
+    margin-left: 10px;
+  }
+
+  .header .logo img {
     height: 61px;
   }
-  .header .logo span{
+
+  .header .logo span {
     color: #DAF2F9;
     font: 1.5em sans-serif;
     letter-spacing: .5px;
   }
-  .header .main-menu{
+
+  .header .main-menu {
     display: inline-block;
-    }
+  }
+
   .header .main-menu button {
     color: #DAF2F9;
     margin-left: 20px;
     cursor: pointer;
   }
+
   .header .main-menu .menu-item {
     font: 1.20em sans-serif;
     letter-spacing: .85px;
   }
-  /* ::ng-deep .cdk-overlay-pane .menu-panel {
-    width: 250px;
-  }
-  ::ng-deep .mat-button-focus-overlay {
+
+  .hamburger-menu {
     display: none;
   }
-  ::ng-deep .mat-button:hover {
-    background-color: inherit;
-    color: inherit;
-    cursor: default;
-  } */
-  .hamburger-menu{
-    display: none;
-  }
+
   .hamburger-icon {
     display: none;
   }
