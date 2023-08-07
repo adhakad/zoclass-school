@@ -1,11 +1,4 @@
 @import'../../../../styles.css';
-.modal-header{
-    background-color: #8b69f2;
-    /* height: 10vh; */
-}
-.modal-header .modal-title{
-    color: #DAF2F9;
-}
 h4{
     color:#8b69f2;
     margin-top: 0 !important;margin-bottom: 0 !important;

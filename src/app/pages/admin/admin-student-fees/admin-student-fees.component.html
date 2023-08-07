@@ -107,8 +107,7 @@
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Student Fee Payment</h5>
-                                            <mat-icon matRipple (click)="closeModal()"
-                                                style="cursor: pointer;color: #DAF2F9;">close</mat-icon>
+                                            <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
                                         <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
                                             *ngIf="!deleteMode && paybleStallment && singleStudent">

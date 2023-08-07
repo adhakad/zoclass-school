@@ -219,17 +219,23 @@ Dashboard section
   display: block;
   z-index: 10 !important;
   background: rgba(0, 0, 0, 0.5);
-}
+} 
 
 .modal-header {
-  position: sticky;
+  background-color: #8b69f2;
   top: 0;
+  position: sticky;
   z-index: 1;
-  background-color: #ffffff;
+}
+.modal-header .modal-title{
+  color: #DAF2F9;
+}
+.modal-header .mat-icon{
+  cursor: pointer;
+  color: #DAF2F9;
 }
 
 .modal-footer {
-  /* padding-bottom: 500px; */
   position: sticky;
   top: 0;
   z-index: 1;
