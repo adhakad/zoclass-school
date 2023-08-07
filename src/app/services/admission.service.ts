@@ -12,4 +12,22 @@ export class AdmissionService {
     console.log(feesForm)
     return this.http.post(`${this.url}`,feesForm);
   }
+  getAdmissionList() {
+    return this.http.get<any>(this.url);
+  }
+  getAdmissionCount() {
+    return this.http.get(`${this.url}/admission-count`);
+  }
+  admissionPaginationList(admissionData:any){
+    return this.http.post(`${this.url}/admission-pagination`,admissionData);
+  }
+  updateAdmission(admissionData:any){
+    return this.http.put(`${this.url}/${admissionData._id}`, admissionData);
+  }
+  changeStatus(params:any){
+    return this.http.put(`${this.url}/status/${params.id}`,params);
+  }
+  deleteAdmission(id:String){
+    return this.http.delete(`${this.url}/${id}`);
+  }
 }

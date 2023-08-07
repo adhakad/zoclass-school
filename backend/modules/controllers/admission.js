@@ -5,34 +5,34 @@ const AdmissionModel = require('../models/admission');
 //     return res.status(200).json({countAdmission});
 // }
 
-// let GetAdmissionPagination = async(req,res,next) => {
-//     let searchText = req.body.filters.searchText;
-//     let searchObj = {};
-//     if (searchText) {
-//         searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText)
-//           ? {
-//               $or: [{ discount: searchText }, { price: searchText }],
-//             }
-//           : { title: new RegExp(`${searchText.toString().trim()}`, 'i') };
-//       }
+let GetAdmissionPagination = async(req,res,next) => {
+    let searchText = req.body.filters.searchText;
+    let searchObj = {};
+    if (searchText) {
+        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText)
+          ? {
+              $or: [{ class: searchText }, { price: searchText }],
+            }
+          : { name: new RegExp(`${searchText.toString().trim()}`, 'i') };
+      }
 
-//     try {
-//       let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
-//       let page = req.body.page || 1;
-//         const admissionList = await AdmissionModel.find(searchObj)
-//           .limit(limit * 1)
-//           .skip((page - 1) * limit)
-//           .exec();
-//         const countAdmission = await AdmissionModel.count();
+    try {
+      let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
+      let page = req.body.page || 1;
+        const admissionList = await AdmissionModel.find(searchObj)
+          .limit(limit * 1)
+          .skip((page - 1) * limit)
+          .exec();
+        const countAdmission = await AdmissionModel.count();
 
-//         let admissionData = { countAdmission: 0 };
-//         admissionData.admissionList = admissionList;
-//         admissionData.countAdmission = countAdmission;
-//         return res.json(admissionData);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+        let admissionData = { countAdmission: 0 };
+        admissionData.admissionList = admissionList;
+        admissionData.countAdmission = countAdmission;
+        return res.json(admissionData);
+    } catch (error) {
+        console.log(error);
+    }
+}
 // let GetAllAdmission = async(req,res,next) => {
 //     try{
 //         const admissionList = await AdmissionModel.find({});
@@ -99,7 +99,7 @@ let CreateAdmission = async (req, res, next) => {
 
 module.exports = {
     // countAdmission,
-    // GetAdmissionPagination,
+    GetAdmissionPagination,
     // GetAllAdmission,
     // GetSingleAdmission,
     CreateAdmission,

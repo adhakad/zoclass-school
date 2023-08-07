@@ -476,9 +476,9 @@ Side navigation section
     padding-right: 2px;
   }
 
-  .main-card h3 {
-    /* margin-left: 2%; */
-  }
+  /* .main-card h3 {
+    margin-left: 2%;
+  } */
 
   .table {
     display: inline-table;

@@ -115,27 +115,27 @@ export class AdminStudentAdmissionComponent implements OnInit {
   }
 
   getAdmissions($event:any) {
-    // this.page = $event.page
-    // return new Promise((resolve, reject) => {
-    //   let params:any = {
-    //     filters: {},
-    //     page: $event.page,
-    //     limit: $event.limit ? $event.limit : this.recordLimit
-    //   };
-    //   this.recordLimit = params.limit;
-    //   if(this.filters.searchText) {
-    //     params["filters"]["searchText"] = this.filters.searchText.trim();
-    //   }
+    this.page = $event.page
+    return new Promise((resolve, reject) => {
+      let params:any = {
+        filters: {},
+        page: $event.page,
+        limit: $event.limit ? $event.limit : this.recordLimit
+      };
+      this.recordLimit = params.limit;
+      if(this.filters.searchText) {
+        params["filters"]["searchText"] = this.filters.searchText.trim();
+      }
       
-    //   this.admissionService.admissionPaginationList(params).subscribe((res: any) => {
-    //     if (res) {
-    //       this.admissionInfo = res.admissionList;
-    //       this.number = params.page;
-    //       this.paginationValues.next({ type: 'page-init', page: params.page, totalTableRecords: res.countAdmission });
-    //       return resolve(true);
-    //     }
-    //   });
-    // });
+      this.admissionService.admissionPaginationList(params).subscribe((res: any) => {
+        if (res) {
+          this.admissionInfo = res.admissionList;
+          this.number = params.page;
+          this.paginationValues.next({ type: 'page-init', page: params.page, totalTableRecords: res.countAdmission });
+          return resolve(true);
+        }
+      });
+    });
   }
 
   admissionAddUpdate() {
