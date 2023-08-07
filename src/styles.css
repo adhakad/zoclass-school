@@ -431,21 +431,20 @@ Side navigation section
     color: #8d6dff;
     width: 100%;
     padding: 5px;
-    margin-top: 10px;
     display: block;
     flex-direction: column;
   }
 
   .side-navbar li button .mat-icon {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
   }
 
   .side-navbar li button span {
     display: inline-block;
     font-size: 18px;
     font-weight: 400;
-    margin-top: 5px;
+    margin-top: 2px;
     margin-left: 10px;
   }
 
