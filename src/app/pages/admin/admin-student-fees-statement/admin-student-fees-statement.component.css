@@ -1,8 +1,4 @@
 @import'../../../../styles.css';
-
-a{
-  color: #8c88ff;font: 1.1em sans-serif;text-decoration: none;
-}
 .table {
    min-width: 100%;
    height: auto;
@@ -10,13 +6,12 @@ a{
    overflow-y: auto;
    overflow-x: auto;
 }
-th {
+/* th {
    white-space: nowrap;
-}
-.abc tbody, td, tfoot, th, thead, tr{
+} */
+/* .abc tbody,.abc td,.abc tfoot,.abc th,.abc thead,.abc tr{
    border-bottom: none;
-}
-
+} */
 
 @media (min-width: 992px) {
    

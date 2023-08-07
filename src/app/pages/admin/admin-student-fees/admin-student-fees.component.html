@@ -1,31 +1,15 @@
 <app-header-navbar></app-header-navbar>
 <div class="container-fluid dashboard-container">
-  <div class="row">
-    <div class="col-12 col-lg-2">
-      <app-side-navbar></app-side-navbar>
-    </div>
-    <div class="col-12 col-lg-10">
-      <div class="row">
-        <div class="col-12 big-container">
-          <div class="col-lg-12 offset-lg-0">
-            <div class="main-card">
-              <div class="row mt-4 mb-2">
-                                <div class="row pb-3">
-                                    <div class="col-12 col-lg-2">
-                                        <a routerLink="/admin/students/fees/class/structure/{{cls}}">Fees Structure
-                                            {{cls}}</a>
-                                    </div>
-                                    <div class="col-12 col-lg-10">
-                                        <mat-radio-group (change)="onChange($event)">
-                                            <mat-radio-button [value]="0" [checked]="selectedValue==0"
-                                                style="color: #7d719bc7; ">Bulk Result
-                                                Create</mat-radio-button>
-                                            <mat-radio-button [value]="1" [checked]="selectedValue==1"
-                                                style="color: #7d719bc7;margin-left: 40px;">Single Result
-                                                Create</mat-radio-button>
-                                        </mat-radio-group>
-                                    </div>
-                                </div>
+    <div class="row">
+        <div class="col-12 col-lg-2">
+            <app-side-navbar></app-side-navbar>
+        </div>
+        <div class="col-12 col-lg-10">
+            <div class="row">
+                <div class="col-12 big-container">
+                    <div class="col-lg-12 offset-lg-0">
+                        <div class="main-card pt-2 pb-4">
+                            <div class="row mt-4 mb-2">
                                 <div class="col-8 col-lg-5">
                                     <input type="text" class="form-control" placeholder="Result Search..."
                                         id="searchText" name="searchText" #searchText="ngModel"
@@ -35,9 +19,21 @@
                                     <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
                                         (click)="addBulkFeesModel()"><mat-icon
                                             style="font-size: 20px;">add</mat-icon>Create</button>
-                                    <!-- <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
-                                        (click)="addFeesModel()"><mat-icon
-                                            style="font-size: 20px;">add</mat-icon>Create</button> -->
+                                </div>
+                                <div class="row pt-2 pb-1">
+                                    <div class="col-12 col-lg-2">
+                                        <a routerLink="/admin/students/fees/class/structure/{{cls}}">Fee Structure
+                                            {{cls}}</a>
+                                    </div>
+                                    <div class="col-12 col-lg-10">
+                                        <mat-radio-group (change)="onChange($event)">
+                                            <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result
+                                                Create</mat-radio-button>
+                                            <mat-radio-button [value]="1" [checked]="selectedValue==1"
+                                                style="margin-left: 40px;">Single Result
+                                                Create</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
                                 </div>
                             </div>
                             <table class="table table-hover align-middle mt-2 mb-1 bg-white">
@@ -53,22 +49,22 @@
                                         <th>Total Fee</th>
                                     </tr>
                                 </thead>
-
-
-
                                 <tbody *ngFor="let student of studentList,let i=index">
                                     <tr>
                                         <td>
                                             <p class="mb-0">{{i+1}}</p>
                                         </td>
                                         <th>
-                                            <button *ngIf="student.paidFees !== student.totalFees" class="submit-button" mat-raised-button
-                                                (click)="studentFeesPay(student)">Pay Fee</button>
-                                                <button *ngIf="student.paidFees === student.totalFees" class="submit-button" mat-raised-button
-                                                 [disabled]="student.paidFees === student.totalFees" style="background-color: transparent;color: #8c88ff;">Fee Paid</button>
+                                            <button *ngIf="student.paidFees !== student.totalFees" class="submit-button"
+                                                mat-raised-button (click)="studentFeesPay(student)">Pay Fee</button>
+                                            <button *ngIf="student.paidFees === student.totalFees" class="submit-button"
+                                                mat-raised-button [disabled]="student.paidFees === student.totalFees"
+                                                style="background-color: transparent;color: #7c7698fb;">Fee
+                                                Paid</button>
                                         </th>
                                         <td class="mb-0">
-                                            <mat-icon routerLink="/admin/students/fees/class/statement/{{student.class}}/{{student.rollNumber}}"
+                                            <mat-icon
+                                                routerLink="/admin/students/fees/class/statement/{{student.class}}/{{student.rollNumber}}"
                                                 style="cursor: pointer;">launch</mat-icon>
                                         </td>
                                         <td>
@@ -94,9 +90,8 @@
                                 <app-pagination [paginationValues]="paginationValues" (onChange)="getFees($event)">
                                 </app-pagination>
                             </div>
-
                             <div class="modal fade show" [class.show]="showModal">
-                                <div class="modal-dialog modal-dialog-top" role="document">
+                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
 
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
@@ -111,131 +106,63 @@
                                     </div>
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" style="color: #7d719bc7;">{{updateMode?'Update': deleteMode ? 'Delete'
-                                                :'Create'}}
-                                                Class - {{cls}}
-                                            </h5>
+                                            <h5 class="modal-title">Student Fee Payment</h5>
                                             <mat-icon matRipple (click)="closeModal()"
-                                                style="cursor: pointer;">close</mat-icon>
+                                                style="cursor: pointer;color: #DAF2F9;">close</mat-icon>
                                         </div>
-                                        <div class="modal-body">
-                                            <div *ngIf="errorCheck">
-                                                <p class="error-message">{{errorMsg}}</p>
-                                            </div>
-
-
-
-                                            <div class="row" *ngIf="singleStudent" style="color: #7d719bc7;">
-                                                <h3 style="color: #8c88ff;">Student Detail</h3>
-                                                <div class="col-lg-6">
-                                                    <h3>{{singleStudent.name | titlecase}}</h3>
+                                        <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
+                                            *ngIf="!deleteMode && paybleStallment && singleStudent">
+                                            <div class="modal-body">
+                                                <div *ngIf="errorCheck">
+                                                    <p class="error-message">{{errorMsg}}</p>
                                                 </div>
-                                                <div class="col-lg-6">
-                                                    <h3>Roll Number - {{singleStudent.rollNumber}}</h3>
-                                                </div>
-
-
-                                                <h3 style="color: #8c88ff;">Fees Status</h3>
-                                                <div class="col-6">
-                                                    <h3>Paid Fees - &#8377; {{singleStudent.paidFees}}</h3>
-                                                    <h3>Total Fees - &#8377; {{singleStudent.totalFees}}</h3>
-                                                </div>
-                                                <div class="col-6">
-                                                    <h3>Due Fees - &#8377; {{singleStudent.dueFees}}</h3>
-                                                </div>
-                                                <h3 style="color: #8c88ff;">All Stallment's</h3>
-                                                <div class="col-6" *ngFor="let stallments of singleStudent.stallment">
-                                                    <h3><span
-                                                            *ngFor="let stallment of stallments | keyvalue,let i=index">{{stallment.key}}
-                                                            - &#8377; {{stallment.value}}</span></h3>
-                                                </div>
-                                            </div>
-
-
-
-                                            <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
-                                                *ngIf="!deleteMode && paybleStallment">
-
-
-                                                <div class="modal-footer" *ngIf="paybleStallment[0][1]>0">
-                                                    <button class="submit-button" style="width: 100%;" mat-raised-button type="button" (click)="feesAddUpdate()">Pay {{paybleStallment[0][0]}} Stallment &#8377; {{paybleStallment[0][1]}}</button>
-                                                </div>
-                                            </form>
-                                            <div *ngIf="deleteMode">
-                                                <h4>To delete fees detail, click ok to confirm.</h4>
-                                                <div class="modal-footer">
-                                                    <button class="delete-button" mat-raised-button type="button"
-                                                        (click)="feesDelete(deleteById)">Ok</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <!-- <div class="modal fade show" [class.show]="showBulkResultModal">
-                                <div class="modal-dialog modal-dialog-top" role="document">
-
-                                    <div class="modal-content" *ngIf="successMsg">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p class="success-message">{{successMsg}}</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <mat-icon></mat-icon>
-                                        </div>
-                                    </div>
-                                    <div class="modal-content" *ngIf="!successMsg">
-                                        <div class="modal-header">
-                                            <h6 class="modal-title">File Choose xlsx/csv
-                                            </h6>
-                                            <mat-icon matRipple (click)="closeModal()"
-                                                style="cursor: pointer;">close</mat-icon>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div *ngIf="errorCheck">
-                                                <p class="error-message">{{errorMsg}} <span
-                                                        *ngFor="let feesAmount of existRollnumber,let i = index">{{feesAmount}}
-                                                        , </span> Result
-                                                    already exist !</p>
-                                            </div>
-                                            <main>
-                                                <div class="row mb-2 mt-5">
-                                                    <div class="col-12">
-                                                        <div class="row">
-                                                            <div class="col-8">
-                                                                <div class="input-group">
-                                                                    <div class="custom-file">
-                                                                        <input type="file" name="file"
-                                                                            class="custom-file-input"
-                                                                            id="inputGroupFile" required
-                                                                            (change)="handleImport($event)"
-                                                                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                                                                    </div>
-                                                                </div>
+                                                <div class="container">
+                                                    <div class="row pt-4">
+                                                        <h4 class="modal-title">Student Info</h4>
+                                                        <div class="row pt-3">
+                                                            <div class="col-12 col-lg-6 ">
+                                                                <h3>Student Name - {{singleStudent.name | titlecase}}
+                                                                </h3>
                                                             </div>
-                                                            <div class="col-4">
-
-                                                                <button [disabled]="!fileChoose"
-                                                                    (click)="addBulkFees()" class="submit-button"
-                                                                    mat-raised-button>
-                                                                    Upload
-                                                                </button>
+                                                            <div class="col-12 col-lg-6 ">
+                                                                <h3>Roll Number - {{singleStudent.rollNumber}}</h3>
                                                             </div>
-
+                                                        </div>
+                                                        <h4 class="modal-title">Fee Status</h4>
+                                                        <div class="row pt-3">
+                                                            <div class="col-12 col-lg-6 ">
+                                                                <h3>Paid Fees - &#8377; {{singleStudent.paidFees}}</h3>
+                                                            </div>
+                                                            <div class="col-12 col-lg-6 ">
+                                                                <h3>Due Fees - &#8377; {{singleStudent.dueFees}}</h3>
+                                                            </div>
+                                                            <div class="col-12 col-lg-6 ">
+                                                                <h3>Total Fees - &#8377; {{singleStudent.totalFees}}
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <h4 class="modal-title">Fee Stallment Status</h4>
+                                                        <div class="row pt-3">
+                                                            <div class="col-12 col-lg-6 "
+                                                                *ngFor="let stallments of singleStudent.stallment">
+                                                                <h3><span
+                                                                        *ngFor="let stallment of stallments | keyvalue,let i=index">{{stallment.key}}
+                                                                        - &#8377; {{stallment.value}}</span></h3>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </main>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer" *ngIf="paybleStallment[0][1]>0">
+                                                <button class="submit-button" mat-raised-button type="button"
+                                                    (click)="feesAddUpdate()">Pay
+                                                    {{paybleStallment[0][0]}} Stallment &#8377;
+                                                    {{paybleStallment[0][1]}}</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
