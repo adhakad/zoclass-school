@@ -88,13 +88,12 @@
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
 
-                    <div class="modal-body">
-                      <div *ngIf="errorCheck">
-                        <p class="error-message">{{errorMsg}}</p>
-                      </div>
 
-                      <form [formGroup]="notificationForm" (ngSubmit)="notificationAddUpdate()" *ngIf="!deleteMode">
-
+                    <form [formGroup]="notificationForm" (ngSubmit)="notificationAddUpdate()" *ngIf="!deleteMode">
+                      <div class="modal-body">
+                        <div *ngIf="errorCheck">
+                          <p class="error-message">{{errorMsg}}</p>
+                        </div>
                         <mat-form-field appearance="outline">
                           <mat-label>Select role</mat-label>
                           <mat-select type="text" matInput formControlName="role">
@@ -132,18 +131,17 @@
                             *ngIf="!notificationForm.get('message')?.valid && notificationForm.get('message')?.touched"
                             class="form-text text-danger">Notification is required</mat-hint>
                         </mat-form-field>
-
-                        <div class="modal-footer">
-                          <button class="submit-button" mat-raised-button type="submit"
-                            [disabled]="!notificationForm.valid">Submit</button>
-                        </div>
-                      </form>
-                      <div *ngIf="deleteMode">
-                        <h4>To delete notification detail, click ok to confirm.</h4>
-                        <div class="modal-footer">
-                          <button class="delete-button" mat-raised-button type="button"
-                            (click)="notificationDelete(deleteById)">Ok</button>
-                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="submit-button" mat-raised-button type="submit"
+                          [disabled]="!notificationForm.valid">Submit</button>
+                      </div>
+                    </form>
+                    <div *ngIf="deleteMode">
+                      <h4>To delete notification detail, click ok to confirm.</h4>
+                      <div class="modal-footer">
+                        <button class="delete-button" mat-raised-button type="button"
+                          (click)="notificationDelete(deleteById)">Ok</button>
                       </div>
                     </div>
                   </div>

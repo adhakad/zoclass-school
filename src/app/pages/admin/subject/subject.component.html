@@ -16,7 +16,8 @@
                     (keyup)="getSubject({page : 1, limit : 0})">
                 </div>
                 <div class="col-4 col-lg-2 offset-lg-5">
-                  <button class="submit-button" mat-raised-button (click)="addSubjectModel()"><mat-icon style="font-size: 20px;">add</mat-icon>Create</button>
+                  <button class="submit-button" mat-raised-button (click)="addSubjectModel()"><mat-icon
+                      style="font-size: 20px;">add</mat-icon>Create</button>
                 </div>
               </div>
               <table class="table table-hover align-middle mt-2 mb-1 bg-white">
@@ -73,12 +74,12 @@
                       <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete':'Create New'}} Subject</h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
-                    <div class="modal-body">
-                      <div *ngIf="errorCheck">
-                        <p class="error-message">{{errorMsg}}</p>
-                      </div>
-                      <form [formGroup]="subjectForm" (ngSubmit)="subjectAddUpdate()" *ngIf="!deleteMode">
 
+                    <form [formGroup]="subjectForm" (ngSubmit)="subjectAddUpdate()" *ngIf="!deleteMode">
+                      <div class="modal-body">
+                        <div *ngIf="errorCheck">
+                          <p class="error-message">{{errorMsg}}</p>
+                        </div>
                         <mat-form-field appearance="outline">
                           <mat-label>Subject</mat-label>
                           <input matInput type="text" formControlName="subject">
@@ -92,18 +93,17 @@
                             <mat-icon ngxMatFileInputIcon style="color: #8d6dff;">cloud_upload</mat-icon>
                           </ngx-mat-file-input>
                         </mat-form-field>
-
-                        <div class="modal-footer">
-                          <button type="submit" mat-raised-button [disabled]="!subjectForm.valid"
-                            class="submit-button">Submit</button>
-                        </div>
-                      </form>
-                      <div *ngIf="deleteMode">
-                        <h4>To delete class, click ok to confirm.</h4>
-                        <div class="modal-footer">
-                          <button class="delete-button" mat-raised-button type="button"
-                            (click)="subjectDelete(deleteById)">Ok</button>
-                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" mat-raised-button [disabled]="!subjectForm.valid"
+                          class="submit-button">Submit</button>
+                      </div>
+                    </form>
+                    <div *ngIf="deleteMode">
+                      <h4>To delete class, click ok to confirm.</h4>
+                      <div class="modal-footer">
+                        <button class="delete-button" mat-raised-button type="button"
+                          (click)="subjectDelete(deleteById)">Ok</button>
                       </div>
                     </div>
                   </div>

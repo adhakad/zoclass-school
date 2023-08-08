@@ -14,8 +14,7 @@
                   <mat-radio-group (change)="onChange($event)">
                     <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result
                       Create</mat-radio-button>
-                    <mat-radio-button [value]="1" [checked]="selectedValue==1"
-                      >Single Result Create</mat-radio-button>
+                    <mat-radio-button [value]="1" [checked]="selectedValue==1">Single Result Create</mat-radio-button>
                   </mat-radio-group>
                 </div>
                 <div class="col-8 col-lg-5">
@@ -64,17 +63,14 @@
                       <mat-icon (click)="deleteExamResultModel(examResults._id)">delete</mat-icon>
                     </td>
                   </tr>
-
                 </tbody>
               </table>
               <div class="pagination">
                 <app-pagination [paginationValues]="paginationValues" (onChange)="getExamResults($event)">
                 </app-pagination>
               </div>
-
               <div class="modal fade show" [class.show]="showModal">
-                <div class="modal-dialog modal-dialog-top" role="document">
-
+                <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content" *ngIf="successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -93,56 +89,56 @@
                       </h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
-                    <div class="modal-body">
-                      <div *ngIf="errorCheck">
-                        <p class="error-message">{{errorMsg}}</p>
-                      </div>
-                      <form [formGroup]="examResultForm" (ngSubmit)="examResultAddUpdate()" *ngIf="!deleteMode">
-                        <mat-form-field appearance="outline">
-                          <mat-label>Roll Number</mat-label>
-                          <input matInput type="number" formControlName="rollNumber">
-                          <mat-hint
-                            *ngIf="!examResultForm.get('rollNumber')?.valid && examResultForm.get('rollNumber')?.touched"
-                            class="form-text text-danger">Roll number is required</mat-hint>
-                        </mat-form-field>
-
-
-                        <div formGroupName="type">
-                          <div formArrayName="options">
-                            <div *ngFor="let clsSubject of classSubject; let i = index">
-                              <div [formGroupName]="i">
-                                <mat-form-field appearance="outline">
-                                  <mat-label>{{clsSubject.subject}} Marks</mat-label>
-                                  <input matInput type="number" formControlName="marks">
-                                  <mat-hint
-                                    *ngIf="!examResultForm.get('marks')?.valid && examResultForm.get('marks')?.touched"
-                                    class="form-text text-danger">{{clsSubject.subject}} marks is required</mat-hint>
-                                </mat-form-field>
-                              </div>
+                    <form [formGroup]="examResultForm" (ngSubmit)="examResultAddUpdate()" *ngIf="!deleteMode">
+                      <div class="modal-body">
+                        <div *ngIf="errorCheck">
+                          <p class="error-message">{{errorMsg}}</p>
+                        </div>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Roll Number</mat-label>
+                                <input matInput type="number" formControlName="rollNumber">
+                                <mat-hint
+                                  *ngIf="!examResultForm.get('rollNumber')?.valid && examResultForm.get('rollNumber')?.touched"
+                                  class="form-text text-danger">Roll number is required</mat-hint>
+                              </mat-form-field>
                             </div>
+                            <ng-container formGroupName="type">
+                              <ng-container formArrayName="options">
+                                <div class="col-12 col-lg-6" *ngFor="let clsSubject of classSubject; let i = index">
+                                  <div [formGroupName]="i">
+                                    <mat-form-field appearance="outline">
+                                      <mat-label>{{clsSubject.subject}} Marks</mat-label>
+                                      <input matInput type="number" formControlName="marks">
+                                      <mat-hint
+                                        *ngIf="!examResultForm.get('marks')?.valid && examResultForm.get('marks')?.touched"
+                                        class="form-text text-danger">{{clsSubject.subject}} marks is
+                                        required</mat-hint>
+                                    </mat-form-field>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </ng-container>
                           </div>
                         </div>
-                        <div class="modal-footer">
-                          <button class="submit-button" mat-raised-button type="submit"
-                            [disabled]="!examResultForm.valid">Submit</button>
-                        </div>
-                      </form>
-                      <div *ngIf="deleteMode">
-                        <h4>To delete examResult detail, click ok to confirm.</h4>
-                        <div class="modal-footer">
-                          <button class="delete-button" mat-raised-button type="button"
-                            (click)="examResultDelete(deleteById)">Ok</button>
-                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="submit-button" mat-raised-button type="submit"
+                          [disabled]="!examResultForm.valid">Submit</button>
+                      </div>
+                    </form>
+                    <div *ngIf="deleteMode">
+                      <h4>To delete examResult detail, click ok to confirm.</h4>
+                      <div class="modal-footer">
+                        <button class="delete-button" mat-raised-button type="button"
+                          (click)="examResultDelete(deleteById)">Ok</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-
-
-
-
 
               <div class="modal fade show" [class.show]="showBulkResultModal">
                 <div class="modal-dialog modal-dialog-top" role="document">
@@ -231,28 +227,9 @@
                   </div>
                 </div>
               </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

@@ -83,16 +83,14 @@
                                             <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete':'Create
                                                 New'}}
                                                 Testimonial</h5>
-                                            <mat-icon matRipple (click)="closeModal()"
-                                            >close</mat-icon>
+                                            <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
-                                        <div class="modal-body">
-                                            <div *ngIf="errorCheck">
-                                                <p class="error-message">{{errorMsg}}</p>
-                                            </div>
-                                            <form [formGroup]="testimonialForm" (ngSubmit)="testimonialAddUpdate()"
-                                                *ngIf="!deleteMode">
-
+                                        <form [formGroup]="testimonialForm" (ngSubmit)="testimonialAddUpdate()"
+                                            *ngIf="!deleteMode">
+                                            <div class="modal-body">
+                                                <div *ngIf="errorCheck">
+                                                    <p class="error-message">{{errorMsg}}</p>
+                                                </div>
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Name</mat-label>
                                                     <input matInput type="text" formControlName="name">
@@ -124,19 +122,18 @@
                                                             style="color: #8d6dff;">cloud_upload</mat-icon>
                                                     </ngx-mat-file-input>
                                                 </mat-form-field>
-
-                                                <div class="modal-footer">
-                                                    <button type="submit" mat-raised-button
-                                                        [disabled]="!testimonialForm.valid"
-                                                        class="submit-button">Submit</button>
-                                                </div>
-                                            </form>
-                                            <div *ngIf="deleteMode">
-                                                <h4>To delete testimonial detail, click ok to confirm.</h4>
-                                                <div class="modal-footer">
-                                                    <button class="delete-button" mat-raised-button type="button"
-                                                        (click)="testimonialDelete(deleteById)">Ok</button>
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" mat-raised-button
+                                                    [disabled]="!testimonialForm.valid"
+                                                    class="submit-button">Submit</button>
+                                            </div>
+                                        </form>
+                                        <div *ngIf="deleteMode">
+                                            <h4>To delete testimonial detail, click ok to confirm.</h4>
+                                            <div class="modal-footer">
+                                                <button class="delete-button" mat-raised-button type="button"
+                                                    (click)="testimonialDelete(deleteById)">Ok</button>
                                             </div>
                                         </div>
                                     </div>

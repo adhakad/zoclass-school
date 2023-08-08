@@ -75,12 +75,12 @@
                         Combination</h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
-                    <div class="modal-body">
-                      <div *ngIf="errorCheck">
-                        <p class="error-message">{{errorMsg}}</p>
-                      </div>
-                      <form [formGroup]="classSubjectForm" (ngSubmit)="classSubjectAddUpdate()" *ngIf="!deleteMode">
 
+                    <form [formGroup]="classSubjectForm" (ngSubmit)="classSubjectAddUpdate()" *ngIf="!deleteMode">
+                      <div class="modal-body">
+                        <div *ngIf="errorCheck">
+                          <p class="error-message">{{errorMsg}}</p>
+                        </div>
                         <mat-form-field appearance="outline">
                           <mat-label>Select class</mat-label>
                           <mat-select type="number" matInput formControlName="class">
@@ -104,19 +104,18 @@
                             *ngIf="!classSubjectForm.get('subject')?.valid && classSubjectForm.get('subject')?.touched"
                             class="form-text text-danger">Subject is required</mat-hint>
                         </mat-form-field>
+                      </div>
 
-
-                        <div class="modal-footer">
-                          <button type="submit" mat-raised-button [disabled]="!classSubjectForm.valid"
-                            class="submit-button">Submit</button>
-                        </div>
-                      </form>
-                      <div *ngIf="deleteMode">
-                        <h4>To delete class, click ok to confirm.</h4>
-                        <div class="modal-footer">
-                          <button class="delete-button" mat-raised-button type="button"
-                            (click)="classSubjectDelete(deleteById)">Ok</button>
-                        </div>
+                      <div class="modal-footer">
+                        <button type="submit" mat-raised-button [disabled]="!classSubjectForm.valid"
+                          class="submit-button">Submit</button>
+                      </div>
+                    </form>
+                    <div *ngIf="deleteMode">
+                      <h4>To delete class, click ok to confirm.</h4>
+                      <div class="modal-footer">
+                        <button class="delete-button" mat-raised-button type="button"
+                          (click)="classSubjectDelete(deleteById)">Ok</button>
                       </div>
                     </div>
                   </div>
