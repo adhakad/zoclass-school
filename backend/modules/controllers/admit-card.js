@@ -10,16 +10,18 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
         console.log(error);
     }
 }
-let GetSingleClassAdmitCard = async(req,res,next) => {
+let GetAllStudentAdmitCardByClass = async (req, res, next) => {
     let className = req.params.id;
+    console.log(className)
     try{
-        const singleAdmitCard = await AdmitCardModel.find({class:className});
-        return res.status(200).json(singleAdmitCard);
+        const admitCards = await AdmitCardModel.find({class:className});
+        return res.status(200).json(admitCards);
     }catch(error){
         console.log(error);
     }
 }
+
 module.exports = {
     GetSingleStudentAdmitCard,
-    GetSingleClassAdmitCard,
+    GetAllStudentAdmitCardByClass,
 }

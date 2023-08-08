@@ -11,6 +11,9 @@ export class AdmitCardService {
   admitCardStudentByClass(cls: any) {
     return this.http.get(`${this.url}/${cls}`);
   }
+  getAllStudentAdmitCardByClass(cls:any){
+    return this.http.get(`${this.url}/class/${cls}`);
+  }
   singleStudentAdmitCard(id: any) {
     return this.http.get(`${this.url}/student/${id}`);
   }

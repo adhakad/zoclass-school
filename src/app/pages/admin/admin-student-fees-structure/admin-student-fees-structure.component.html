@@ -15,6 +15,66 @@
                                         (click)="addFeesModel()"><mat-icon>add</mat-icon>Create Fee Structure</button>
                                 </div>
                             </div>
+
+
+                            <div class="col-12 col-lg-6">
+                                <table class="table table-hover mt-4 align-middle mb-0 bg-white">
+                                    <thead class="bg-light">
+                                        <tr class="text-muted">
+                                            <th>S.No.</th>
+                                            <th>Fee Stallment</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of  clsFeesStructure?.stallment,let i = index">
+                                            <td>
+                                                <p class="mb-0">{{i+1}}</p>
+                                            </td>
+                                            <td *ngFor="let fee of item | keyvalue">
+                                                <p class="mb-0">{{ fee.key}}</p>
+                                            </td>
+                                            <td *ngFor="let fee of item | keyvalue">
+                                                <p class="mb-0">&#8377; {{ fee.value }}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <table class="table table-hover mt-4 align-middle mb-0 bg-white">
+                                    <thead class="bg-light">
+                                        <tr class="text-muted">
+                                            <th>S.No.</th>
+                                            <th>Particulars</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                            <td>
+                                                <p class="mb-0">{{i+1}}</p>
+                                            </td>
+                                            <td *ngFor="let fee of item | keyvalue">
+                                                <p class="mb-0">{{ fee.key}}</p>
+                                            </td>
+                                            <td *ngFor="let fee of item | keyvalue">
+                                                <p class="mb-0">&#8377; {{ fee.value }}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+
+
+
+
+
+
+
                             <div class="modal fade show" [class.show]="showModal">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content" *ngIf="successMsg">

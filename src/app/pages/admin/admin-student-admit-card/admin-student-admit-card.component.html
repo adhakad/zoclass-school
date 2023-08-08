@@ -19,17 +19,20 @@
                   <thead class="bg-light">
                     <tr class="text-muted">
                       <th>No.</th>
+                      <th>Admit Card No.</th>
                       <th>Student</th>
                       <th>Roll Number</th>
                       <th>Class</th>
-                      <th>Admit Card No.</th>
                       <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="studentAdmitCardInfo && studentAdmitCardInfo.length>0">
-                    <tr *ngFor="let students of studentAdmitCardInfo,let i=index">
+                  <tbody *ngIf="allAdmitCards && allAdmitCards.length>0">
+                    <tr *ngFor="let students of allAdmitCards,let i=index">
                       <td>
                         <p class="mb-0">{{i+1}}</p>
+                      </td>
+                      <td>
+                        <p class="mb-0">{{students.admitCardNo}}</p>
                       </td>
                       <td>
                         <p class="mb-0">{{students.name}}</p>
@@ -39,9 +42,6 @@
                       </td>
                       <td>
                         <p class="mb-0">{{students.class}}</p>
-                      </td>
-                      <td>
-                        <p class="mb-0">{{students.admitCardNo}}</p>
                       </td>
                       <!-- <td>
                         <a class="mb-0 status-active" (click)="changeStatus(students._id,0)"

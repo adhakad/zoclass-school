@@ -51,6 +51,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   checkFeesPayType: boolean = false;
   feesTypeMode: boolean = false;
   feesMode: boolean = false;
+  clsFeesStructure: any;
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
@@ -63,7 +64,15 @@ export class AdminStudentFeesStructureComponent implements OnInit {
 
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
+    this.getFeesStructureByClass(this.cls);
 
+  }
+  getFeesStructureByClass(cls: any) {
+    this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
+      if (res) {
+        this.clsFeesStructure = res;
+      }
+    })
   }
   stallmentPayment() {
     this.checkFeesPayType = true;

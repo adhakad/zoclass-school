@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {GetSingleClassAdmitCard,GetSingleStudentAdmitCard} = require('../controllers/admit-card');
+const {GetAllStudentAdmitCardByClass,GetSingleStudentAdmitCard} = require('../controllers/admit-card');
 
-router.get('/:id',GetSingleClassAdmitCard);
-router.get('/student/:id',GetSingleStudentAdmitCard);
+router.get('/class/:id',GetAllStudentAdmitCardByClass);
+// router.get('/student/:id',GetSingleStudentAdmitCard);
 
 module.exports = router;
