@@ -61,15 +61,15 @@ Header section
 
 .hamburger-menu button {
   font-size: large;
-  color: #8265cbfb !important;
+  color: #7c7698fb !important;
 }
 
 .hamburger-menu .mat-icon {
-  color: #8265cbfb !important;
+  color: #7c7698fb !important;
 }
 
 .close-icon {
-  color: #8265cbfb !important;
+  color: #7c7698fb !important;
   font-size: 25px;
   margin-left: 90%;
 }
@@ -195,7 +195,7 @@ Dashboard section
 }
 
 .table {
-  height: 72vh;
+  height: auto;
   display: block;
   width: 100%;
   overflow-y: auto;
@@ -446,13 +446,12 @@ Side navigation section
 
   .side-navbar li button .mat-icon {
     display: inline-block;
-    margin-top: 15px;
     margin-left: 5px;
   }
 
   .side-navbar li button span {
     display: inline-block;
-    font-size: 18px;
+    font-size: 1.12em;
     font-weight: 400;
     /* margin-top: 2px; */
     margin-left: 10px;
@@ -494,7 +493,6 @@ Side navigation section
   .table {
     display: inline-table;
     width: 100%;
-    height: auto
   }
 
   .scroll-content {

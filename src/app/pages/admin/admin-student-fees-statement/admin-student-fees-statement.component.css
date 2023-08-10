@@ -1,1 +1,8 @@
 @import'../../../../styles.css';
+.table{
+    height: auto;
+}
+.fee-table{
+    height: auto;
+    display: inline-table;
+}

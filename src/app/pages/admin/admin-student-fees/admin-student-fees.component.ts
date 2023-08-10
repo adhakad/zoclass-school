@@ -46,6 +46,7 @@ export class AdminStudentFeesComponent implements OnInit {
   singleStudent:any;
   paybleStallment:any;
   obj:any[]=[];
+  payNow:boolean=false;
 
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService,private studentService:StudentService) {
@@ -112,9 +113,18 @@ export class AdminStudentFeesComponent implements OnInit {
     this.paybleStallment = [];
     this.paybleStallment = [0,0];
   }
+  feesPay(pay:any){
+    if(pay===false){
+      this.payNow=true;
+    }
+    if(pay===true){
+      this.payNow=false;
+    }
+  }
   studentFeesPay(student:any) {
     this.singleStudent = student;
     const stallment = this.singleStudent.stallment;
+    console.log(this.singleStudent.stallment)
 
     const result = stallment.find((stallment:any) => {
       const [key, value] = Object.entries(stallment)[0];

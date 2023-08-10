@@ -6,3 +6,9 @@ h4{
 h3{
     color: #7c7698fb !important;
 }
+
+.abc tbody,.abc td,.abc tfoot,.abc th,.abc thead,.abc tr{
+    /* border-bottom: none; */
+    border: 2px solid rgb(226, 226, 226);
+    border-radius: 5px;
+ }
