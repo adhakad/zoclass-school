@@ -38,13 +38,11 @@
       </div>
     </div>
     <div class="container" *ngIf="admitCardInfo && studentAdmitCardInfo">
-
       <div class="row bg-light">
-        <div class="col-10 offset-1">
+        <div class="col-8 offset-2">
           <table class="table align-middle mb-0 bg-white abc">
             <thead class="bg-light">
-              <p class="m-3" style="white-space: nowrap;">* Student
-                Detail's</p>
+              <p class="m-2 pt-3 pb-3 text-muted" style="white-space: nowrap;font-weight: 500;color: #7c7698fb;">{{studentAdmitCardInfo?.examType | titlecase}} Exam Admit Card</p>
               <tr class="text-muted">
                 <th>Admit Card No.</th>
                 <th style="font-weight: 400;">{{studentAdmitCardInfo?.admitCardNo}}</th>
@@ -63,7 +61,7 @@
                 <th>Mother Name</th>
                 <th style="font-weight: 400;">Manisha Dhakad</th>
               </tr>
-              <p class="m-3" style="white-space: nowrap;">* Time Table</p>
+              <br><br>
               <tr class="text-muted">
                   <th>S.No.</th>
                   <th>Subject Code</th>
@@ -75,26 +73,23 @@
           <tbody *ngIf="processedData && processedData.length > 0">
               <tr *ngFor="let exam of processedData; let i = index">
                   <td>
-                      <p class="mb-0">{{ i + 1 }}</p>
+                      {{ i + 1 }}
                   </td>
                   <td>
-                    <p class="mb-0">100</p>
+                    100
                 </td>
                   <td>
-                      <p class="mb-0">{{ exam.subject | titlecase}}</p>
+                      {{ exam.subject | titlecase}}
                   </td>
                   <td>
-                      <p class="mb-0">{{ exam.date }}</p>
+                      {{ exam.date }}
                   </td>
                   <td>
-                      <p class="mb-0">{{ exam.timing }}</p>
+                      {{ exam.timing }}
                   </td>
               </tr>
           </tbody>
           </table>
-          <!-- <table class="table table-hover align-middle mt-4 mb-0 bg-white">
-            
-        </table> -->
         </div>
       </div>
     </div>
