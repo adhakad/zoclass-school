@@ -61,16 +61,10 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
       if (res) {
         this.examAdmitCard = res;
 
-
-
+        console.log(this.examAdmitCard)
+      
         let date = new Date();
-
-        let examDate: any = [
-          { 'Environment Science': '26.07.2020' },
-          { 'Geography': '23.07.2023' },
-          { 'Economics': '01.07.2020' },
-          { 'Home Science': '09.07.2020' },
-        ];
+        let examDate: any = this.examAdmitCard[0].examDate
 
         // Convert the date strings to Date objects
         const datesAsObjects = examDate.map((entry: any) => {

@@ -1,26 +1,19 @@
 <app-header></app-header>
 <div class="container-fluid">
   <div class="row">
-    <!-- <div class="col-12 col-lg-1">
-      <app-navbar></app-navbar>
-    </div> -->
-    <div class="col-12 col-lg-11" style="padding-top: 1.75vh;">
-      <div class="row">
-        <div class="col-12 col-lg-7 offset-lg-2 big-container">
-          <div class="col-lg-8 offset-lg-2">
-            <div class="main-card">
-              <h3 style="text-align: center;" *ngIf="notifications.length<=0">No new notifications</h3>
-              <h3 *ngIf="notifications.length>0">Notifications</h3>
-              <mat-accordion>
-                <mat-expansion-panel class="notice-card" *ngFor="let notification of notifications">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>{{notification.title}}</mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <p>{{notification.message}}</p>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-          </div>
+    <div class="col-12 col-lg-8 offset-lg-2 big-container">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="main-card">
+          <h3 style="text-align: center;" *ngIf="notifications.length<=0">No new notifications</h3>
+          <h3 *ngIf="notifications.length>0">Notifications</h3>
+          <mat-accordion>
+            <mat-expansion-panel class="notice-card" *ngFor="let notification of notifications">
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{notification.title}}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <p>{{notification.message}}</p>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
       </div>
     </div>

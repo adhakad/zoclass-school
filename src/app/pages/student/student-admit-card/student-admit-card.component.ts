@@ -22,7 +22,7 @@ export class StudentAdmitCardComponent implements OnInit {
   paginationValues: Subject<any> = new Subject();
   studentAdmitCardInfo:any;
   admitCardInfo:any;
-  examData:any;
+  
 
 
   // admitCardInfo = [
@@ -52,7 +52,7 @@ export class StudentAdmitCardComponent implements OnInit {
   ngOnInit(): void {
     this.studentInfo = this.studentAuthService.getLoggedInStudentInfo();
     let studentId = this.studentInfo?.id;
-    this.singleStudentAdmitCard(studentId);
+    this.singleStudentAdmitCardById(studentId);
     this.getAdmitCardByClass();
   }
 
@@ -85,8 +85,8 @@ export class StudentAdmitCardComponent implements OnInit {
       }
     }
   
-  singleStudentAdmitCard(id:any){
-    this.admitCardService.singleStudentAdmitCard(id).subscribe((res:any) => {
+  singleStudentAdmitCardById(id:any){
+    this.admitCardService.singleStudentAdmitCardById(id).subscribe((res:any) => {
       if(res){
         this.studentAdmitCardInfo = res;
         console.log(res)

@@ -10,7 +10,7 @@
   </div>
   <div class="main-menu" style="text-align: center;">
     <button mat-button>
-      <span class="menu-item" routerLink="/">Home</span>
+      <span class="menu-item" [routerLink]="['/']">Home</span>
     </button>
     <button #button mat-button [matMenuTriggerFor]="aboutMenu">
       <span class="menu-item">About</span><mat-icon>keyboard_arrow_down</mat-icon>
@@ -24,7 +24,7 @@
     <button #button mat-button>
       <span class="menu-item">Contact</span>
     </button>
-    <button mat-button>
+    <button mat-button routerLink="/notice">
       <mat-icon class="material-icons mat-badge-small" [matBadge]="1" matBadgeColor="accent"
         matBadgeSize="small">notifications</mat-icon>
     </button>
@@ -48,11 +48,11 @@
 </mat-menu>
 
 <mat-menu #examMenu="matMenu">
-  <button mat-menu-item routerLink="/admin/login">
+  <button mat-menu-item routerLink="/result">
     <mat-icon>account_box</mat-icon>
     <span>Exam Results</span>
   </button>
-  <button mat-menu-item routerLink="/teacher/login">
+  <button mat-menu-item routerLink="/admit-card">
     <mat-icon>account_box</mat-icon>
     <span>Admit Card</span>
   </button>
@@ -121,11 +121,11 @@
       <mat-icon>dialpad</mat-icon>
       <span>Our Vission</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/admit-card">
       <mat-icon>dialpad</mat-icon>
       <span>Admit Card</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/result">
       <mat-icon>dialpad</mat-icon>
       <span>Exam Result</span>
     </button>

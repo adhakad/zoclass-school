@@ -115,7 +115,7 @@
                                                 <div *ngIf="errorCheck">
                                                     <p class="error-message">{{errorMsg}}</p>
                                                 </div>
-                                                                                                <div class="row bg-light">
+                                                <div class="row bg-light">
                                                     <table class="table align-middle mb-0 bg-white abc">
                                                         <thead class="bg-light">
                                                             <p class="m-3" style="white-space: nowrap;">* Student
@@ -176,8 +176,8 @@
                                             </div>
                                             <div class="modal-footer" *ngIf="paybleStallment[0][1]>0">
                                                 <mat-checkbox style="margin-right: 10px;" class="example-margin"
-                                                (click)="feesPay(payNow)"  >Allow Payment</mat-checkbox>
-                                                
+                                                    (click)="feesPay(payNow)">Allow Payment</mat-checkbox>
+
                                                 <button class="submit-button" mat-raised-button type="button"
                                                     (click)="feesAddUpdate()" [disabled]="!payNow">Pay
                                                     {{paybleStallment[0][0]}} Stallment &#8377;
