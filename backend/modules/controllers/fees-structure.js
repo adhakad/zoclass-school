@@ -36,10 +36,10 @@ let CreateFeesStructure = async (req, res, next) => {
             return res.status(400).json(`Class ${className} fees structure already exist`);
         }
         if (totalFees!==feesTypeTotal) {
-            return res.status(400).json(`Class ${className} total fees not equal to fees type total`);
+            return res.status(400).json(`Class ${className} total fees is not equal to all fees particulars total`);
         }
         if (totalFees!==feesPayTypeTotal) {
-            return res.status(400).json(`Class ${className} total fees not equal to fees payement type total`);
+            return res.status(400).json(`Class ${className} total fees is not equal to all fees stallment total`);
         }
         
         

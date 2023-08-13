@@ -13,23 +13,6 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   stallment: boolean = false;
   monthly: boolean = false;
 
-  First: boolean = false;
-  Second: boolean = false;
-  Third: boolean = false;
-  July: boolean = false;
-  August: boolean = false;
-  September: boolean = false;
-  October: boolean = false;
-  November: boolean = false;
-  December: boolean = false;
-  January: boolean = false;
-  Fabruary: boolean = false;
-  March: boolean = false;
-  April: boolean = false;
-
-
-
-
 
   cls: any;
   feesForm: FormGroup;
@@ -42,10 +25,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   errorCheck: Boolean = false;
 
   totalFees: number = 0;
-  admission = false;
-  tution = false;
-  books = false;
-  uniform = false;
+
   selectedFeesType: any[] = [];
   selectedFeesPayType: any[] = [];
   checkFeesPayType: boolean = false;
@@ -78,19 +58,6 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.checkFeesPayType = true;
     this.monthly = false;
     this.stallment = true;
-    this.First = true;
-    this.Second = true;
-    this.Third = true;
-    this.July = false;
-    this.August = false;
-    this.September = false;
-    this.October = false;
-    this.November = false;
-    this.December = false;
-    this.January = false;
-    this.Fabruary = false;
-    this.March = false;
-    this.April = false;
     this.selectedFeesPayType = [];
     this.selectedFeesPayType = ['First', 'Second', 'Third'];
   }
@@ -98,19 +65,6 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.checkFeesPayType = true;
     this.stallment = false;
     this.monthly = true;
-    this.First = false;
-    this.Second = false;
-    this.Third = false;
-    this.July = true;
-    this.August = true;
-    this.September = true;
-    this.October = true;
-    this.November = true;
-    this.December = true;
-    this.January = true;
-    this.Fabruary = true;
-    this.March = true;
-    this.April = true;
     this.selectedFeesPayType = [];
     this.selectedFeesPayType = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'Fabruary', 'March', 'April'];
   }
@@ -130,25 +84,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.stallment = false;
     this.monthly = false;
 
-    this.First = false;
-    this.Second = false;
-    this.Third = false;
-    this.July = false;
-    this.August = false;
-    this.September = false;
-    this.October = false;
-    this.November = false;
-    this.December = false;
-    this.January = false;
-    this.Fabruary = false;
-    this.March = false;
-    this.April = false;
-
     this.totalFees = 0;
-    this.admission = false;
-    this.tution = false;
-    this.books = false;
-    this.uniform = false;
     this.selectedFeesType = [];
     this.selectedFeesPayType = [];
     const controlOne = <FormArray>this.feesForm.get('type.feesType');
@@ -177,15 +113,12 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   }
 
 
-  feesType(key: any, value: any) {
-    if (value === false) {
-      this.selectedFeesType.push(key)
-    }
-    if (value === true) {
-      const index = this.selectedFeesType.indexOf(key);
-      if (index > -1) {
-        this.selectedFeesType.splice(index, 1);
-      }
+  feesType(option: any) {
+    const index = this.selectedFeesType.indexOf(option);
+    if (index > -1) {
+      this.selectedFeesType.splice(index, 1);
+    } else {
+      this.selectedFeesType.push(option)
     }
   }
 

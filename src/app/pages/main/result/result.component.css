@@ -1,1 +1,15 @@
-@import'../../auth/teacher-auth/teacher-login/teacher-login.component.css';
+@import'../../../pages/auth/teacher-auth/teacher-login/teacher-login.component.css';
+h4{
+    color:#8b69f2;
+    margin-top: 0 !important;margin-bottom: 0 !important;
+}
+h3{
+    color: #7c7698fb !important;
+}
+
+.abc tbody,.abc td,.abc tfoot,.abc th,.abc thead,.abc tr{
+    /* border-bottom: none; */
+    color: #7c7698fb;
+    border: 2px solid rgb(226, 226, 226);
+    border-radius: 5px;
+ }

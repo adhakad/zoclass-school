@@ -11,11 +11,17 @@
             <div class="main-card">
               <div class="row mt-4 mb-2">
                 <div class="row pb-3">
-                  <mat-radio-group (change)="onChange($event)">
-                    <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result
-                      Create</mat-radio-button>
-                    <mat-radio-button [value]="1" [checked]="selectedValue==1">Single Result Create</mat-radio-button>
-                  </mat-radio-group>
+                  <div class="col-12 col-lg-2">
+                    <a routerLink="/admin/students/result/class/structure/{{cls}}">Result Structure
+                        {{cls}}</a>
+                    </div>
+                    <div class="col-12 col-lg-10">
+                      <mat-radio-group (change)="onChange($event)">
+                        <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result
+                          Create</mat-radio-button>
+                        <mat-radio-button [value]="1" [checked]="selectedValue==1">Single Result Create</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
                 </div>
                 <div class="col-8 col-lg-5">
                   <input type="text" class="form-control" placeholder="Result Search..." id="searchText"

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdmitCardService } from 'src/app/services/admit-card.service';
+import { ClassService } from 'src/app/services/class.service';
+
 
 @Component({
   selector: 'app-result',
@@ -9,33 +12,55 @@ import { Router } from '@angular/router';
 })
 export class ResultComponent implements OnInit {
   errorMsg: string = '';
-  resultForm: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.resultForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+  admitCardForm: FormGroup;
+  classInfo: any;
+  studentAdmitCardInfo: any;
+  admitCardInfo: any;
+  processedData: any[] = [];
+
+  constructor(private fb: FormBuilder, private router: Router, private admitCardService: AdmitCardService, private classService: ClassService) {
+    this.admitCardForm = this.fb.group({
+      admitCardNo: ['', Validators.required],
+      class: ['', Validators.required],
+      rollNumber: ['', Validators.required],
     })
   }
   ngOnInit(): void {
+    this.getClass();
   }
-  result() {
-    // if (this.resultForm.valid) {
-    //   if(this.adminAuthService.getAccessToken() || this.studentAuthService.getAccessToken()){
-    //     this.errorMsg = "Login not valid";
-    //     return
-    //   }
-    //   this.teacherAuthService.result(this.resultForm.value).subscribe((res:any) => {
-    //     if(res){
-    //       const accessToken = res.accessToken;
-    //       const refreshToken = res.refreshToken;
-    //       this.teacherAuthService.storeAccessToken(accessToken);
-    //       this.teacherAuthService.storeRefreshToken(refreshToken);
-    //       this.router.navigate(["/teacher/dashboard"], { replaceUrl: true });
-    //     }
-    //   },err => {
-    //     this.errorMsg = err.error.errorMsg;
-    //   })
-    // }
+
+  getClass() {
+    this.classService.getClassList().subscribe((res: any) => {
+      if (res) {
+        this.classInfo = res;
+      }
+    })
+  }
+  admitCard() {
+    this.admitCardService.singleStudentAdmitCard(this.admitCardForm.value).subscribe((res: any) => {
+      if (res) {
+        this.studentAdmitCardInfo = res.admitCard;
+        this.admitCardInfo = res.admitCardStructure;
+        console.log(res)
+        this.processData();
+      }
+    }, err => {
+      this.errorMsg = err.error.errorMsg;
+    })
+  }
+  processData() {
+    for (let i = 0; i < this.admitCardInfo.examDate.length; i++) {
+      const subject = Object.keys(this.admitCardInfo.examDate[i])[0];
+      const date = Object.values(this.admitCardInfo.examDate[i])[0];
+      const startTime = Object.values(this.admitCardInfo.examStartTime[i])[0];
+      const endTime = Object.values(this.admitCardInfo.examEndTime[i])[0];
+
+      this.processedData.push({
+        subject,
+        date,
+        timing: `${startTime} to ${endTime}`
+      });
+    }
   }
 
 

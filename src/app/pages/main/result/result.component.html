@@ -1,37 +1,95 @@
 <app-header></app-header>
 <div class="container">
   <div class="row">
-    <div class="col-12 col-lg-6 offset-lg-3 login-card">
+    <div class="col-12 col-lg-6 offset-lg-3 login-card" *ngIf="!studentAdmitCardInfo">
       <div class="row">
         <div class="col-12 col-lg-10 offset-lg-1 padding">
-          <h3>Exam Result</h3>
+          <h3>Admit Card</h3>
           <div class="col-12">
             <h2>{{errorMsg}}</h2>
-            <form [formGroup]="resultForm" (ngSubmit)="result()">
+            <form [formGroup]="admitCardForm" (ngSubmit)="admitCard()">
               <mat-form-field appearance="outline">
-                <mat-label>Result No.</mat-label>
-                <input matInput type="text" formControlName="email">
-                <mat-hint *ngIf="!resultForm.get('email')?.valid && resultForm.get('email')?.touched"
-                  class="form-text text-danger">Please enter email.</mat-hint>
+                <mat-label>Admit Card No.</mat-label>
+                <input matInput type="text" formControlName="admitCardNo">
+                <mat-hint *ngIf="!admitCardForm.get('admitCardNo')?.valid && admitCardForm.get('admitCardNo')?.touched"
+                  class="form-text text-danger">Please enter admit card number.</mat-hint>
               </mat-form-field>
               <mat-form-field appearance="outline">
-                <mat-label>Class</mat-label>
-                <input matInput type="text" formControlName="email">
-                <mat-hint *ngIf="!resultForm.get('email')?.valid && resultForm.get('email')?.touched"
-                  class="form-text text-danger">Please enter email.</mat-hint>
+                <mat-label>class</mat-label>
+                <mat-select type="number" matInput formControlName="class">
+                  <div *ngFor="let classInfo of classInfo">
+                    <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                  </div>
+                </mat-select>
+                <mat-hint *ngIf="!admitCardForm.get('class')?.valid && admitCardForm.get('class')?.touched"
+                  class="form-text text-danger">Class is required</mat-hint>
               </mat-form-field>
               <mat-form-field appearance="outline">
                 <mat-label>Roll Number</mat-label>
-                <input matInput type="text" formControlName="password">
-                <mat-hint *ngIf="!resultForm.get('password')?.valid && resultForm.get('password')?.touched"
-                  class="form-text text-danger">Please enter password.</mat-hint>
+                <input matInput type="text" formControlName="rollNumber">
+                <mat-hint *ngIf="!admitCardForm.get('rollNumber')?.valid && admitCardForm.get('rollNumber')?.touched"
+                  class="form-text text-danger">Please enter roll number.</mat-hint>
               </mat-form-field>
-
-
-              <button type="submit" mat-raised-button [disabled]="!resultForm.valid" class="submit-button">Submit</button>
+              <button type="submit" mat-raised-button [disabled]="!admitCardForm.valid"
+                class="submit-button">Submit</button>
             </form>
-            <!-- <p>Don't have an account yet? <a routerLink="/teacher/signup">Register now</a></p> -->
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" *ngIf="admitCardInfo && studentAdmitCardInfo">
+      <div class="row bg-light">
+        <div class="col-8 offset-2">
+          <table class="table align-middle mb-0 bg-white abc">
+            <thead class="bg-light">
+              <p class="m-2 pt-3 pb-3 text-muted" style="white-space: nowrap;font-weight: 500;color: #7c7698fb;">{{studentAdmitCardInfo?.examType | titlecase}} Exam Admit Card</p>
+              <tr class="text-muted">
+                <th>Admit Card No.</th>
+                <th style="font-weight: 400;">{{studentAdmitCardInfo?.admitCardNo}}</th>
+                <th>Roll Number</th>
+                <th style="font-weight: 400;">
+                  {{studentAdmitCardInfo?.rollNumber}}</th>
+                <th>Class</th>
+                <th style="font-weight: 400;">{{studentAdmitCardInfo?.class}}th
+                </th>
+              </tr>
+              <tr class="text-muted">
+                <th>Student Name</th>
+                <th style="font-weight: 400;">{{studentAdmitCardInfo?.name | titlecase}}</th>
+                <th>Father Name</th>
+                <th style="font-weight: 400;">Narendra Dhakad</th>
+                <th>Mother Name</th>
+                <th style="font-weight: 400;">Manisha Dhakad</th>
+              </tr>
+              <br><br>
+              <tr class="text-muted">
+                  <th>S.No.</th>
+                  <th>Subject Code</th>
+                  <th>Subject</th>
+                  <th>Exam Date</th>
+                  <th>Exam Timing</th>
+              </tr>
+          </thead>
+          <tbody *ngIf="processedData && processedData.length > 0">
+              <tr *ngFor="let exam of processedData; let i = index">
+                  <td>
+                      {{ i + 1 }}
+                  </td>
+                  <td>
+                    100
+                </td>
+                  <td>
+                      {{ exam.subject | titlecase}}
+                  </td>
+                  <td>
+                      {{ exam.date }}
+                  </td>
+                  <td>
+                      {{ exam.timing }}
+                  </td>
+              </tr>
+          </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -105,19 +105,19 @@
                                             </div>
                                             <section class="example-section">
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="admission"
-                                                        (click)="feesType('admission',admission)">Admission
+                                                    <mat-checkbox class="example-margin"
+                                                        (click)="feesType('admission')">Admission
                                                         Fees</mat-checkbox>
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="books"
-                                                        (click)="feesType('books',books)">Books
+                                                    <mat-checkbox class="example-margin"
+                                                        (click)="feesType('books')">Books
                                                         Fees</mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="tution"
-                                                        (click)="feesType('tution',tution)">Tution
+                                                    <mat-checkbox class="example-margin"
+                                                        (click)="feesType('tution')">Tution
                                                         Fees</mat-checkbox>
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="uniform"
-                                                        (click)="feesType('uniform',uniform)">Uniform
+                                                    <mat-checkbox class="example-margin" 
+                                                        (click)="feesType('uniform')">Uniform
                                                         Fees</mat-checkbox>
                                                 </div>
                                             </section>
@@ -136,18 +136,15 @@
                                             </section>
                                             <div class="row" *ngIf="stallment">
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="First"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         Stallment First
                                                     </mat-checkbox>
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="Second"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         Stallment Second
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="Third"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         Stallment Third
                                                     </mat-checkbox>
                                                 </div>
@@ -155,62 +152,52 @@
 
                                             <div class="row" *ngIf="monthly">
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="July"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         July
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="August"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         August
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="September"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         September
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="October"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         October
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="November"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         November
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="December"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         December
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="January"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         January
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="Fabruary"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         February
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="March"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         March
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" [(ngModel)]="April"
-                                                        [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
                                                         April
                                                     </mat-checkbox>
                                                 </div>

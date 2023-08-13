@@ -23,19 +23,18 @@ const routes: Routes = [
 
   { path: 'admin/login', loadChildren: () => import('src/app/pages/auth/admin-auth/admin-login/admin-login.module').then((module) => module.AdminLoginModule) },
   { path: 'admin/dashboard', loadChildren: () => import('src/app/pages/admin/dashboard/dashboard.module').then((module) => module.DashboardModule), canActivate: [AdminAuthGuard] },
-  { path: 'admin/students/result/class', loadChildren: () => import('src/app/pages/admin/admin-student-result-cls/admin-student-result-cls.module').then((module) => module.AdminStudentResultClsModule), canActivate: [AdminAuthGuard] },
-  { path: 'admin/students/result/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-result/admin-student-result.module').then((module) => module.AdminStudentResultModule), canActivate: [AdminAuthGuard] },
+  
+  { path: 'admin/students/admission', loadChildren: () => import('src/app/pages/admin/admin-student-admission/admin-student-admission.module').then((module) => module.AdminStudentAdmissionModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class', loadChildren: () => import('src/app/pages/admin/admin-student-fees-cls/admin-student-fees-cls.module').then((module) => module.AdminStudentFeesClsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-fees/admin-student-fees.module').then((module) => module.AdminStudentFeesModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class/structure/:id', loadChildren: () => import('src/app/pages/admin/admin-student-fees-structure/admin-student-fees-structure.module').then((module) => module.AdminStudentFeesStructureModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class/statement/:id/:rollnumber', loadChildren: () => import('src/app/pages/admin/admin-student-fees-statement/admin-student-fees-statement.module').then((module) => module.AdminStudentFeesStatementModule), canActivate: [AdminAuthGuard] },
-  { path: 'admin/students/admission', loadChildren: () => import('src/app/pages/admin/admin-student-admission/admin-student-admission.module').then((module) => module.AdminStudentAdmissionModule), canActivate: [AdminAuthGuard] },
-
-
+  { path: 'admin/students/result/class', loadChildren: () => import('src/app/pages/admin/admin-student-result-cls/admin-student-result-cls.module').then((module) => module.AdminStudentResultClsModule), canActivate: [AdminAuthGuard] },
+  { path: 'admin/students/result/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-result/admin-student-result.module').then((module) => module.AdminStudentResultModule), canActivate: [AdminAuthGuard] },
+  { path: 'admin/students/result/class/structure/:id', loadChildren: () => import('src/app/pages/admin/admin-student-result-structure/admin-student-result-structure.module').then((module) => module.AdminStudentResultStructureModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/admit-card/class', loadChildren: () => import('src/app/pages/admin/admin-student-admit-card-cls/admin-student-admit-card-cls.module').then((module) => module.AdminStudentAdmitCardClsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/admit-card/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-admit-card/admin-student-admit-card.module').then((module) => module.AdminStudentAdmitCardModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/admit-card/class/structure/:id', loadChildren: () => import('src/app/pages/admin/admin-student-admit-card-structure/admin-student-admit-card-structure.module').then((module) => module.AdminStudentAdmitCardStructureModule), canActivate: [AdminAuthGuard] },
-
 
   { path: 'admin/teacher', loadChildren: () => import('src/app/pages/admin/teacher/teacher.module').then((module) => module.TeacherModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/student', loadChildren: () => import('src/app/pages/admin/student/student.module').then((module) => module.StudentModule), canActivate: [AdminAuthGuard] },
