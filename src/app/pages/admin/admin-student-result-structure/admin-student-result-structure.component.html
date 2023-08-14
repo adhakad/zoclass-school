@@ -44,7 +44,6 @@
 
                             <div class="modal fade show" [class.show]="showModal">
                                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
-
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -56,17 +55,79 @@
                                             <mat-icon></mat-icon>
                                         </div>
                                     </div>
-
                                     <div class="modal-content" *ngIf="!successMsg && classSubject">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Exam Result Structure'}}</h5>
+                                            <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Exam
+                                                Result Structure'}}</h5>
                                             <mat-icon matRipple (click)="closeModal()"
                                                 style="cursor: pointer;">close</mat-icon>
                                         </div>
 
-                                        <form [formGroup]="examResultForm" (ngSubmit)="examResultAddUpdate()"
-                                            *ngIf="!deleteMode && classSubject">
+                                        <ng-container *ngIf="marksTypeMode">
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <mat-checkbox checked="true" [disabled]="disabled">Theory
+                                                            Marks</mat-checkbox>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <mat-checkbox (click)="practical(practicalMarks)" >Practical Marks</mat-checkbox>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <mat-checkbox (click)="grade(gradeRange)">Grades</mat-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-4" *ngIf="gradeRange">
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            A+
+                                                        </mat-checkbox>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            A
+                                                        </mat-checkbox>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            B+
+                                                        </mat-checkbox>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            B
+                                                        </mat-checkbox>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            C+
+                                                        </mat-checkbox>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            C
+                                                        </mat-checkbox>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            D
+                                                        </mat-checkbox>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                            E
+                                                        </mat-checkbox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="submit-button" mat-raised-button
+                                                    (click)="selectExamResultStructure()">Save</button>
+                                            </div>
+                                        </ng-container>
 
+                                        <ng-container *ngIf="marksMode">
+                                            <form [formGroup]="examResultForm" (ngSubmit)="examResultAddUpdate()">
                                             <div class="modal-body">
                                                 <div *ngIf="errorCheck">
                                                     <p class="error-message">{{errorMsg}}</p>
@@ -92,144 +153,143 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="scroll-content">
                                                     <div class="wide-content">
                                                         <div class="container">
                                                             <div class="row">
-                                                                <div class="col-12 p-4 pt-0 pb-0">
-                                                                    <h3>Exam Theory Marks</h3>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div
-                                                                        *ngFor="let subjects of classSubject; let i = index">
-                                                                        <button mat-raised-button class="pt-2 pb-2 mb-4"
-                                                                            style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects}}</button>
+                                                                <ng-container *ngIf="theoryMarks">
+                                                                    <div class="col-12 p-4 pt-0 pb-0">
+                                                                        <h3>Exam Theory Marks</h3>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div formGroupName="type">
-                                                                        <div formArrayName="theoryMaxMarks">
-                                                                            <div
-                                                                                *ngFor="let subjects of classSubject; let i = index">
-                                                                                <div [formGroupName]="i">
-                                                                                    <mat-form-field
-                                                                                        appearance="outline">
-                                                                                        <mat-label>Theory Maximum
-                                                                                            Marks</mat-label>
-                                                                                        <mat-select type="text" matInput
-                                                                                            [formControlName]="subjects">
-                                                                                            <div
-                                                                                                *ngFor="let maxMark of theoryMaxMarks">
-                                                                                                <mat-option
-                                                                                                    value="{{maxMark}}">{{maxMark}}</mat-option>
-                                                                                            </div>
-                                                                                        </mat-select>
-                                                                                    </mat-form-field>
+                                                                    <div class="col-4">
+                                                                        <div
+                                                                            *ngFor="let subjects of classSubject; let i = index">
+                                                                            <button mat-raised-button class="pt-2 pb-2 mb-4"
+                                                                                style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects}}</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div formGroupName="type">
+                                                                            <div formArrayName="theoryMaxMarks">
+                                                                                <div
+                                                                                    *ngFor="let subjects of classSubject; let i = index">
+                                                                                    <div [formGroupName]="i">
+                                                                                        <mat-form-field
+                                                                                            appearance="outline">
+                                                                                            <mat-label>Theory Maximum
+                                                                                                Marks</mat-label>
+                                                                                            <mat-select type="text" matInput
+                                                                                                [formControlName]="subjects">
+                                                                                                <div
+                                                                                                    *ngFor="let maxMark of theoryMaxMarks">
+                                                                                                    <mat-option
+                                                                                                        value="{{maxMark}}">{{maxMark}}</mat-option>
+                                                                                                </div>
+                                                                                            </mat-select>
+                                                                                        </mat-form-field>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div formGroupName="type">
-                                                                        <div formArrayName="theoryPassMarks">
-                                                                            <div
-                                                                                *ngFor="let subjects of classSubject; let i = index">
-                                                                                <div [formGroupName]="i">
-                                                                                    <mat-form-field
-                                                                                        appearance="outline">
-                                                                                        <mat-label>Theory Passing
-                                                                                            Marks</mat-label>
-                                                                                        <mat-select type="text" matInput
-                                                                                            [formControlName]="subjects">
-                                                                                            <div
-                                                                                                *ngFor="let passMark of theoryPassMarks">
-                                                                                                <mat-option
-                                                                                                    value="{{passMark}}">{{passMark}}</mat-option>
-                                                                                            </div>
-                                                                                        </mat-select>
-                                                                                    </mat-form-field>
+                                                                    <div class="col-4">
+                                                                        <div formGroupName="type">
+                                                                            <div formArrayName="theoryPassMarks">
+                                                                                <div
+                                                                                    *ngFor="let subjects of classSubject; let i = index">
+                                                                                    <div [formGroupName]="i">
+                                                                                        <mat-form-field
+                                                                                            appearance="outline">
+                                                                                            <mat-label>Theory Passing
+                                                                                                Marks</mat-label>
+                                                                                            <mat-select type="text" matInput
+                                                                                                [formControlName]="subjects">
+                                                                                                <div
+                                                                                                    *ngFor="let passMark of theoryPassMarks">
+                                                                                                    <mat-option
+                                                                                                        value="{{passMark}}">{{passMark}}</mat-option>
+                                                                                                </div>
+                                                                                            </mat-select>
+                                                                                        </mat-form-field>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-12 p-4 pt-0 pb-0">
-                                                                    <h3>Exam Practical Marks</h3>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div
-                                                                        *ngFor="let subjects of classSubject; let i = index">
-                                                                        <button mat-raised-button class="pt-2 pb-2 mb-4"
-                                                                            style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects}}</button>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="practicalMarks">
+                                                                    <div class="col-12 p-4 pt-0 pb-0">
+                                                                        <h3>Exam Practical Marks</h3>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div formGroupName="type">
-                                                                        <div formArrayName="practicalMaxMarks">
-                                                                            <div
-                                                                                *ngFor="let subjects of classSubject; let i = index">
-                                                                                <div [formGroupName]="i">
-                                                                                    <mat-form-field
-                                                                                        appearance="outline">
-                                                                                        <mat-label>Practical Maximum
-                                                                                            Marks</mat-label>
-                                                                                        <mat-select type="text" matInput
-                                                                                            [formControlName]="subjects">
-                                                                                            <div
-                                                                                                *ngFor="let maxMark of practicalMaxMarks">
-                                                                                                <mat-option
-                                                                                                    value="{{maxMark}}">{{maxMark}}</mat-option>
-                                                                                            </div>
-                                                                                        </mat-select>
-                                                                                    </mat-form-field>
+                                                                    <div class="col-4">
+                                                                        <div
+                                                                            *ngFor="let subjects of classSubject; let i = index">
+                                                                            <button mat-raised-button class="pt-2 pb-2 mb-4"
+                                                                                style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects}}</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div formGroupName="type">
+                                                                            <div formArrayName="practicalMaxMarks">
+                                                                                <div
+                                                                                    *ngFor="let subjects of classSubject; let i = index">
+                                                                                    <div [formGroupName]="i">
+                                                                                        <mat-form-field
+                                                                                            appearance="outline">
+                                                                                            <mat-label>Practical Maximum
+                                                                                                Marks</mat-label>
+                                                                                            <mat-select type="text" matInput
+                                                                                                [formControlName]="subjects">
+                                                                                                <div
+                                                                                                    *ngFor="let maxMark of practicalMaxMarks">
+                                                                                                    <mat-option
+                                                                                                        value="{{maxMark}}">{{maxMark}}</mat-option>
+                                                                                                </div>
+                                                                                            </mat-select>
+                                                                                        </mat-form-field>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div formGroupName="type">
-                                                                        <div formArrayName="practicalPassMarks">
-                                                                            <div
-                                                                                *ngFor="let subjects of classSubject; let i = index">
-                                                                                <div [formGroupName]="i">
-                                                                                    <mat-form-field
-                                                                                        appearance="outline">
-                                                                                        <mat-label>Practical Passing
-                                                                                            Marks</mat-label>
-                                                                                        <mat-select type="text" matInput
-                                                                                            [formControlName]="subjects">
-                                                                                            <div
-                                                                                                *ngFor="let passMark of practicalPassMarks">
-                                                                                                <mat-option
-                                                                                                    value="{{passMark}}">{{passMark}}</mat-option>
-                                                                                            </div>
-                                                                                        </mat-select>
-                                                                                    </mat-form-field>
+                                                                    <div class="col-4">
+                                                                        <div formGroupName="type">
+                                                                            <div formArrayName="practicalPassMarks">
+                                                                                <div
+                                                                                    *ngFor="let subjects of classSubject; let i = index">
+                                                                                    <div [formGroupName]="i">
+                                                                                        <mat-form-field
+                                                                                            appearance="outline">
+                                                                                            <mat-label>Practical Passing
+                                                                                                Marks</mat-label>
+                                                                                            <mat-select type="text" matInput
+                                                                                                [formControlName]="subjects">
+                                                                                                <div
+                                                                                                    *ngFor="let passMark of practicalPassMarks">
+                                                                                                    <mat-option
+                                                                                                        value="{{passMark}}">{{passMark}}</mat-option>
+                                                                                                </div>
+                                                                                            </mat-select>
+                                                                                        </mat-form-field>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </ng-container>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer" *ngIf="!deleteMode">
+                                            <div class="modal-footer">
                                                 <button class="submit-button" mat-raised-button
                                                     [disabled]="!examResultForm.valid" type="submit">Submit</button>
                                             </div>
-                                            <!-- <div *ngIf="deleteMode">
-                                                <h4>To delete examResult detail, click ok to confirm.</h4>
-                                                <div class="modal-footer">
-                                                    <button class="delete-button" mat-raised-button type="button"
-                                                        (click)="examResultDelete(deleteById)">Ok</button>
-                                                </div>
-                                            </div> -->
                                         </form>
+                                        </ng-container>
+
+                                        
                                     </div>
                                 </div>
                             </div>

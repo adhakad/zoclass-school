@@ -13,6 +13,7 @@ import { ExamResultStructureService } from 'src/app/services/exam-result-structu
 export class AdminStudentResultStructureComponent implements OnInit {
   cls: any;
   examResultForm: FormGroup;
+  disabled = true;
   showModal: boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
@@ -27,6 +28,11 @@ export class AdminStudentResultStructureComponent implements OnInit {
   practicalPassMarks: any[] = [6,8,10];
   classSubject: any[] = [];
   examResult: any[] = [];
+  marksTypeMode:boolean = true;
+  marksMode:boolean=false;
+  theoryMarks:boolean = true;
+  practicalMarks:boolean = false;
+  gradeRange:boolean = false;
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
@@ -69,6 +75,27 @@ export class AdminStudentResultStructureComponent implements OnInit {
     })
   }
 
+  practical(practicalMarks:boolean){
+    if(practicalMarks===false){
+      this.practicalMarks=true;
+    }
+    if(practicalMarks===true){
+      this.practicalMarks=false;
+    }
+  }
+  grade(gradeRange:boolean){
+    if(gradeRange===false){
+      this.gradeRange=true;
+    }
+    if(gradeRange===true){
+      this.gradeRange=false;
+    }
+  }
+  selectExamResultStructure(){
+    this.marksTypeMode = false;
+    this.marksMode = true;
+    console.log(this.marksTypeMode)
+  }
 
   addExamResultModel() {
     this.showModal = true;

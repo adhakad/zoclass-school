@@ -113,7 +113,7 @@ export class AdminStudentFeesComponent implements OnInit {
     this.paybleStallment = [];
     this.paybleStallment = [0,0];
   }
-  feesPay(pay:any){
+  feesPay(pay:boolean){
     if(pay===false){
       this.payNow=true;
     }
