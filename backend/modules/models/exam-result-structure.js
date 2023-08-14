@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const AdmitCardStructureModel = mongoose.model('admitCardStructure', {
+const ExamResultStructureModel = mongoose.model('examResultStructure', {
   class: { type: Number }, // 12th
   examType:{type:String}, // final exam
-  examTheoryMaxMarks:{}, // hindi:100
-  examPracticalMaxMarks:{}, // 
-  examTheoryMinPassMarks: {}, // hindi:33
-  examPracticalMinPassMarks: {}, // hindi:33
+  theoryMaxMarks:{}, // hindi:100
+  theoryPassMarks: {}, // hindi:33
+  practicalMaxMarks:{}, // 
+  practicalPassMarks: {}, // hindi:33
   examGrade: {}, // C:33-59,B:60-79,A:80-89,A+:90-100
 });
 
-module.exports = AdmitCardStructureModel;
+module.exports = ExamResultStructureModel;

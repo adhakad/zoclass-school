@@ -12,7 +12,7 @@
                             <div class="row mt-4 mb-2">
                                 <div class="col-8 col-lg-5">
                                     <button class="submit-button" mat-raised-button
-                                        (click)="addAdmitCardModel()"><mat-icon>add</mat-icon>Create Admit Card
+                                        (click)="addExamResultModel()"><mat-icon>add</mat-icon>Create Exam Result
                                         Structure</button>
                                 </div>
                             </div>
@@ -26,16 +26,16 @@
                                         <th>Class</th>
                                     </tr>
                                 </thead>
-                                <tbody *ngIf="examAdmitCard && examAdmitCard.length>0">
-                                    <tr *ngFor="let examAdmitCard of examAdmitCard,let i=index">
+                                <tbody *ngIf="examResult && examResult.length>0">
+                                    <tr *ngFor="let examResult of examResult,let i=index">
                                         <td>
                                             <p class="mb-0">{{i+1}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{examAdmitCard.examType}}</p>
+                                            <p class="mb-0">{{examResult.examType}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{examAdmitCard.class}}</p>
+                                            <p class="mb-0">{{examResult.class}}</p>
                                         </td>
                                     </tr>
 
@@ -59,13 +59,12 @@
 
                                     <div class="modal-content" *ngIf="!successMsg && classSubject">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Admit
-                                                Card'}}</h5>
+                                            <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Exam Result Structure'}}</h5>
                                             <mat-icon matRipple (click)="closeModal()"
                                                 style="cursor: pointer;">close</mat-icon>
                                         </div>
 
-                                        <form [formGroup]="admitcardForm" (ngSubmit)="admitcardAddUpdate()"
+                                        <form [formGroup]="examResultForm" (ngSubmit)="examResultAddUpdate()"
                                             *ngIf="!deleteMode && classSubject">
 
                                             <div class="modal-body">
@@ -86,7 +85,7 @@
                                                                     </div>
                                                                 </mat-select>
                                                                 <mat-hint
-                                                                    *ngIf="!admitcardForm.get('examType')?.valid && admitcardForm.get('examType')?.touched"
+                                                                    *ngIf="!examResultForm.get('examType')?.valid && examResultForm.get('examType')?.touched"
                                                                     class="form-text text-danger">Exam type is
                                                                     required</mat-hint>
                                                             </mat-form-field>
@@ -221,13 +220,13 @@
                                             </div>
                                             <div class="modal-footer" *ngIf="!deleteMode">
                                                 <button class="submit-button" mat-raised-button
-                                                    [disabled]="!admitcardForm.valid" type="submit">Submit</button>
+                                                    [disabled]="!examResultForm.valid" type="submit">Submit</button>
                                             </div>
                                             <!-- <div *ngIf="deleteMode">
-                                                <h4>To delete admitcard detail, click ok to confirm.</h4>
+                                                <h4>To delete examResult detail, click ok to confirm.</h4>
                                                 <div class="modal-footer">
                                                     <button class="delete-button" mat-raised-button type="button"
-                                                        (click)="admitcardDelete(deleteById)">Ok</button>
+                                                        (click)="examResultDelete(deleteById)">Ok</button>
                                                 </div>
                                             </div> -->
                                         </form>

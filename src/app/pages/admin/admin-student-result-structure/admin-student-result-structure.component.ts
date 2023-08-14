@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ClassSubjectService } from 'src/app/services/class-subject.service';
-import { AdmitCardStructureService } from 'src/app/services/admit-card-structure.service';
+import { ExamResultStructureService } from 'src/app/services/exam-result-structure.service';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { AdmitCardStructureService } from 'src/app/services/admit-card-structure
 })
 export class AdminStudentResultStructureComponent implements OnInit {
   cls: any;
-  admitcardForm: FormGroup;
+  examResultForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
@@ -26,10 +26,10 @@ export class AdminStudentResultStructureComponent implements OnInit {
   practicalMaxMarks: any[] = [20,25,30];
   practicalPassMarks: any[] = [6,8,10];
   classSubject: any[] = [];
-  examAdmitCard: any[] = [];
+  examResult: any[] = [];
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private admitCardStructureService: AdmitCardStructureService) {
-    this.admitcardForm = this.fb.group({
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultStructureService: ExamResultStructureService) {
+    this.examResultForm = this.fb.group({
       class: [''],
       examType: ['', Validators.required],
       type: this.fb.group({
@@ -44,7 +44,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.getClassSubject(this.cls);
-    this.getAdmitCardStructureByClass(this.cls);
+    this.getExamResultStructureByClass(this.cls);
   }
 
 
@@ -61,17 +61,16 @@ export class AdminStudentResultStructureComponent implements OnInit {
     })
   }
 
-  getAdmitCardStructureByClass(cls: any) {
-    this.admitCardStructureService.admitCardStructureByClass(cls).subscribe((res: any) => {
+  getExamResultStructureByClass(cls: any) {
+    this.examResultStructureService.examResultStructureByClass(cls).subscribe((res: any) => {
       if (res) {
-        this.examAdmitCard = res;
-        console.log(this.examAdmitCard)
+        this.examResult = res;
       }
     })
   }
 
 
-  addAdmitCardModel() {
+  addExamResultModel() {
     this.showModal = true;
   }
 
@@ -79,7 +78,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.errorMsg = '';
-    this.admitcardForm.reset();
+    this.examResultForm.reset();
   }
 
 
@@ -87,35 +86,34 @@ export class AdminStudentResultStructureComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getAdmitCardStructureByClass(this.cls)
+      this.getExamResultStructureByClass(this.cls)
     }, 1000)
   }
 
   patch() {
-    const controlOne = <FormArray>this.admitcardForm.get('type.theoryMaxMarks');
+    const controlOne = <FormArray>this.examResultForm.get('type.theoryMaxMarks');
     this.classSubject.forEach((x: any) => {
       controlOne.push(this.patchTheoryMaxMarks(x))
-      this.admitcardForm.reset();
+      this.examResultForm.reset();
     })
 
-    const controlTwo = <FormArray>this.admitcardForm.get('type.theoryPassMarks');
+    const controlTwo = <FormArray>this.examResultForm.get('type.theoryPassMarks');
     this.classSubject.forEach((x: any) => {
       controlTwo.push(this.patchTheoryPassMarks(x))
-      this.admitcardForm.reset();
+      this.examResultForm.reset();
     })
-    const controlThree = <FormArray>this.admitcardForm.get('type.practicalMaxMarks');
+    const controlThree = <FormArray>this.examResultForm.get('type.practicalMaxMarks');
     this.classSubject.forEach((x: any) => {
       controlThree.push(this.patchPracticalMaxMarks(x))
-      this.admitcardForm.reset();
+      this.examResultForm.reset();
     })
-    const controlFour = <FormArray>this.admitcardForm.get('type.practicalPassMarks');
+    const controlFour = <FormArray>this.examResultForm.get('type.practicalPassMarks');
     this.classSubject.forEach((x: any) => {
       controlFour.push(this.patchPracticalPassMarks(x))
-      this.admitcardForm.reset();
+      this.examResultForm.reset();
     })
   }
   patchTheoryMaxMarks(theoryMaxMarks: any) {
-    console.log(theoryMaxMarks)
     return this.fb.group({
       [theoryMaxMarks]: [theoryMaxMarks],
     })
@@ -137,13 +135,13 @@ export class AdminStudentResultStructureComponent implements OnInit {
     })
   }
 
-  admitcardAddUpdate() {
+  examResultAddUpdate() {
     
-    this.admitcardForm.value.class = this.cls;
-    let theoryMaxMarksObj = this.admitcardForm.value.type.theoryMaxMarks;
-    let theoryPassMarksObj = this.admitcardForm.value.type.theoryPassMarks;
-    let practicalMaxMarksObj = this.admitcardForm.value.type.practicalMaxMarks;
-    let practicalPassMarksObj = this.admitcardForm.value.type.practicalPassMarks;
+    this.examResultForm.value.class = this.cls;
+    let theoryMaxMarksObj = this.examResultForm.value.type.theoryMaxMarks;
+    let theoryPassMarksObj = this.examResultForm.value.type.theoryPassMarks;
+    let practicalMaxMarksObj = this.examResultForm.value.type.practicalMaxMarks;
+    let practicalPassMarksObj = this.examResultForm.value.type.practicalPassMarks;
     let containsTheoryMaxMarksNull = theoryMaxMarksObj.some((item: any) => Object.values(item).includes(null));
     let containsTheoryPassMarksNull = theoryPassMarksObj.some((item: any) => Object.values(item).includes(null));
     let containsPracticalMaxMarksNull = practicalMaxMarksObj.some((item: any) => Object.values(item).includes(null));
@@ -153,7 +151,10 @@ export class AdminStudentResultStructureComponent implements OnInit {
       this.errorMsg = 'Please fill all fields';
     }
     if (!containsTheoryMaxMarksNull && !containsTheoryPassMarksNull && !containsPracticalMaxMarksNull && !containsPracticalPassMarksNull) {
-      this.admitCardStructureService.addAdmitCardStructure(this.admitcardForm.value).subscribe((res: any) => {
+      
+      // console.log(this.examResultForm.value);
+
+      this.examResultStructureService.addExamResultStructure(this.examResultForm.value).subscribe((res: any) => {
         if (res) {
           this.successDone();
           this.successMsg = res;
