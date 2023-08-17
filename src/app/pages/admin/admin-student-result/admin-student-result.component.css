@@ -1,1 +1,7 @@
 @import'../../../../styles.css';
+.file-input {
+    height: 50px;
+    color: #7c7698fb;
+    border: 1px solid #7c7698fb;
+    border-radius: 5px;
+  }

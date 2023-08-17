@@ -40,7 +40,6 @@ export class AdmitCardComponent implements OnInit {
       if (res) {
         this.studentAdmitCardInfo = res.admitCard;
         this.admitCardInfo = res.admitCardStructure;
-        console.log(res)
         this.processData();
       }
     }, err => {

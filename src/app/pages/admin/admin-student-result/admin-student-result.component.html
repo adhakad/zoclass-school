@@ -13,15 +13,15 @@
                 <div class="row pb-3">
                   <div class="col-12 col-lg-2">
                     <a routerLink="/admin/students/result/class/structure/{{cls}}">Result Structure
-                        {{cls}}</a>
-                    </div>
-                    <div class="col-12 col-lg-10">
-                      <mat-radio-group (change)="onChange($event)">
-                        <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result
-                          Create</mat-radio-button>
-                        <mat-radio-button [value]="1" [checked]="selectedValue==1">Single Result Create</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
+                      {{cls}}</a>
+                  </div>
+                  <div class="col-12 col-lg-10">
+                    <mat-radio-group (change)="onChange($event)">
+                      <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result
+                        Create</mat-radio-button>
+                      <mat-radio-button [value]="1" [checked]="selectedValue==1">Single Result Create</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
                 </div>
                 <div class="col-8 col-lg-5">
                   <input type="text" class="form-control" placeholder="Result Search..." id="searchText"
@@ -90,7 +90,7 @@
                   </div>
                   <div class="modal-content" *ngIf="!successMsg">
                     <div class="modal-header">
-                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Create New'}} Exam Result
+                      <h5 class="modal-title mt-2">{{updateMode?'Update': deleteMode ? 'Delete' :'Create'}} Exam Result
                         Class - {{cls}}
                       </h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
@@ -100,33 +100,50 @@
                         <div *ngIf="errorCheck">
                           <p class="error-message">{{errorMsg}}</p>
                         </div>
-                        <div class="container">
-                          <div class="row">
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Roll Number</mat-label>
-                                <input matInput type="number" formControlName="rollNumber">
-                                <mat-hint
-                                  *ngIf="!examResultForm.get('rollNumber')?.valid && examResultForm.get('rollNumber')?.touched"
-                                  class="form-text text-danger">Roll number is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <ng-container formGroupName="type">
-                              <ng-container formArrayName="options">
-                                <div class="col-12 col-lg-6" *ngFor="let clsSubject of classSubject; let i = index">
-                                  <div [formGroupName]="i">
-                                    <mat-form-field appearance="outline">
-                                      <mat-label>{{clsSubject.subject}} Marks</mat-label>
-                                      <input matInput type="number" formControlName="marks">
-                                      <mat-hint
-                                        *ngIf="!examResultForm.get('marks')?.valid && examResultForm.get('marks')?.touched"
-                                        class="form-text text-danger">{{clsSubject.subject}} marks is
-                                        required</mat-hint>
-                                    </mat-form-field>
-                                  </div>
+                        <div class="scroll-content">
+                          <div class="wide-content">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-6">
+                                  <mat-form-field appearance="outline">
+                                    <mat-label>Exam Type</mat-label>
+                                    <mat-select type="text" matInput formControlName="examType">
+                                      <div *ngFor="let exam of examType">
+                                        <mat-option value="{{exam}}">{{exam |
+                                          titlecase}}
+                                          Exam</mat-option>
+                                      </div>
+                                    </mat-select>
+                                    <mat-hint
+                                      *ngIf="!examResultForm.get('examType')?.valid && examResultForm.get('examType')?.touched"
+                                      class="form-text text-danger">Exam type is
+                                      required</mat-hint>
+                                  </mat-form-field>
                                 </div>
-                              </ng-container>
-                            </ng-container>
+                                <div class="col-6">
+                                  <mat-form-field appearance="outline">
+                                    <mat-label>Roll Number</mat-label>
+                                    <input matInput type="number" formControlName="rollNumber">
+                                    <mat-hint
+                                      *ngIf="!examResultForm.get('rollNumber')?.valid && examResultForm.get('rollNumber')?.touched"
+                                      class="form-text text-danger">Roll number is required</mat-hint>
+                                  </mat-form-field>
+                                </div>
+
+                                <ng-container formGroupName="type">
+                                  <ng-container formArrayName="theoryMarks">
+                                    <div class="col-6" *ngFor="let subjects of classSubject; let i = index">
+                                      <div [formGroupName]="i">
+                                        <mat-form-field appearance="outline">
+                                          <mat-label>{{subjects | titlecase}} Marks</mat-label>
+                                          <input matInput type="text" [formControlName]="subjects">
+                                        </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </ng-container>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -174,26 +191,20 @@
                       </div>
                       <main>
                         <div class="row mb-2 mt-5">
-                          <div class="col-12">
-                            <div class="row">
-                              <div class="col-8">
-                                <div class="input-group">
-                                  <div class="custom-file">
-                                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile"
-                                      required (change)="handleImport($event)"
-                                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                                  </div>
-                                </div>
+                          <mat-form-field appearance="outline">
+                            <mat-label>Exam Type</mat-label>
+                            <mat-select #examSelect matInput>
+                              <div *ngFor="let exam of examType">
+                                <mat-option (click)="selectExam(examSelect.value)" value="{{exam}}">
+                                  {{exam | titlecase}} Exam
+                                </mat-option>
                               </div>
-                              <div class="col-4">
-
-                                <button [disabled]="!fileChoose" (click)="addBulkExamResult()" class="submit-button"
-                                  mat-raised-button>
-                                  Upload
-                                </button>
-                              </div>
-
-                            </div>
+                            </mat-select>
+                          </mat-form-field>
+                          <div class="custom-file">
+                            <input type="file" name="file" class="form-control file-input" id="inputGroupFile" required
+                              (change)="handleImport($event)"
+                              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                           </div>
                         </div>
                         <!-- <div class="row">
@@ -229,6 +240,12 @@
                             </div>
                         </div> -->
                       </main>
+                    </div>
+                    <div class="modal-footer">
+                      <button [disabled]="!fileChoose" (click)="addBulkExamResult()" class="submit-button"
+                        mat-raised-button>
+                        Upload
+                      </button>
                     </div>
                   </div>
                 </div>

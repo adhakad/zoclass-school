@@ -32,7 +32,6 @@ let GetSingleStudentAdmitCardById = async(req,res,next) => {
 
 let GetAllStudentAdmitCardByClass = async (req, res, next) => {
     let className = req.params.id;
-    console.log(className)
     try{
         const admitCards = await AdmitCardModel.find({class:className});
         return res.status(200).json(admitCards);

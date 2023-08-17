@@ -9,6 +9,7 @@ export class ExamResultService {
   constructor(private http: HttpClient) { }
 
   addExamResult(userForm:any) {
+    // console.log(userForm);
     return this.http.post(`${this.url}`,userForm);
   }
   addBulkExamResult(examBulkResult:any) {

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const ExamResultModel = mongoose.model('result', {
-  studentName: { type: String },
   rollNumber: { type: Number },
   class: { type: Number },
-  subject: [],
-  marks: [],
+  resultNo: { type: Number },
+  examType: { type: String },
+  theoryMarks: {},
+  practicalObtainMarks: {},
 });
 
 module.exports = ExamResultModel;

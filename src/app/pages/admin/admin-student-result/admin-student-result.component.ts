@@ -36,16 +36,19 @@ export class AdminStudentResultComponent implements OnInit {
   subjectName:any[]=[];
 
   showBulkResultModal:boolean = false;
-  movies: any[] = [];
+  bulkResult: any[] = [];
   selectedValue:number=0;
   fileChoose:boolean=false;
   existRollnumber:number[]=[];
+  examType: any[] = ["quarterly", "half yearly", "final"];
+  selectedExam:any = '';
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultService: ExamResultService) {
     this.examResultForm = this.fb.group({
       rollNumber: ['', Validators.required],
+      examType: ['', Validators.required],
       type: this.fb.group({
-        options: this.fb.array([]),
+        theoryMarks: this.fb.array([]),
       }),
     });
   }
@@ -61,9 +64,15 @@ export class AdminStudentResultComponent implements OnInit {
   getClassSubject(cls: any) {
     this.classSubjectService.getSubjectByClass(cls).subscribe(res => {
       if (res) {
-        // this.showModal=true;
-        this.classSubject = res;
-        this.patch()
+        if (res) {
+          this.classSubject = res.map((item: any) => {
+            return item.subject;
+          })
+          console.log(this.classSubject)
+          if (this.classSubject) {
+            this.patch();
+          }
+        }
       }
     })
   }
@@ -142,9 +151,6 @@ export class AdminStudentResultComponent implements OnInit {
         })
       } else {
         this.examResultForm.value.class = this.cls;
-        for (let i = 0; i < this.classSubject.length; i++) {
-          this.examResultForm.value.type.options[i].subject = this.classSubject[i].subject;
-        }
         this.examResultService.addExamResult(this.examResultForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();
@@ -160,20 +166,16 @@ export class AdminStudentResultComponent implements OnInit {
 
 
   patch() {
-    const control = <FormArray>this.examResultForm.get('type.options');
-    // this.classSubjectService.getSubjectByClass(this.cls).subscribe(res => {
-    //   this.fields = res;
-    // this.abc = res
+    const controlOne = <FormArray>this.examResultForm.get('type.theoryMarks');
     this.classSubject.forEach((x: any) => {
-      control.push(this.patchValues(x.marks))
+      controlOne.push(this.patchValues(x))
       this.examResultForm.reset();
     })
-    // })
   }
 
-  patchValues(marks: any) {
+  patchValues(theoryMarks: any) {
     return this.fb.group({
-      marks: [marks]
+      [theoryMarks]: [theoryMarks],
     })
   }
 
@@ -188,6 +190,11 @@ export class AdminStudentResultComponent implements OnInit {
   }
 
 
+  selectExam(selectedExam: string) {
+    if(selectedExam){
+      this.selectedExam = selectedExam;
+    }
+  }
 
   handleImport($event: any) {
     console.log("xlsx file")
@@ -202,7 +209,7 @@ export class AdminStudentResultComponent implements OnInit {
 
             if (sheets.length) {
                 const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-                this.movies = rows;
+                this.bulkResult = rows;
             }
         }
         reader.readAsArrayBuffer(file);
@@ -217,7 +224,12 @@ addBulkExamResultModel(){
   this.showBulkResultModal = true;
 }
 addBulkExamResult(){
-  this.examResultService.addBulkExamResult(this.movies).subscribe((res:any)=> {
+  let resultData = {
+    examType:this.selectedExam,
+    bulkResult:this.bulkResult
+  }
+
+  this.examResultService.addBulkExamResult(resultData).subscribe((res:any)=> {
     if(res){
       this.successDone();
       this.successMsg = res;
@@ -242,7 +254,7 @@ handleExport() {
     const wb = utils.book_new();
     const ws: any = utils.json_to_sheet([]);
     utils.sheet_add_aoa(ws, headings);
-    utils.sheet_add_json(ws, this.movies, { origin: 'A2', skipHeader: true });
+    utils.sheet_add_json(ws, this.bulkResult, { origin: 'A2', skipHeader: true });
     utils.book_append_sheet(wb, ws, 'Report');
     writeFile(wb, 'Result.xlsx');
 }

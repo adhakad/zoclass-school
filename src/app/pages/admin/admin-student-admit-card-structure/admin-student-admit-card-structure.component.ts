@@ -163,7 +163,6 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     })
   }
   patchExamDate(examDate: any) {
-    console.log(examDate)
     return this.fb.group({
       [examDate]: [examDate],
     })
@@ -192,7 +191,6 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
       const formattedDate = `${day}.${month}.${year}`;
       return { [subject]: formattedDate };
     });
-    console.log(this.admitcardForm.value)
     this.admitcardForm.value.class = this.cls;
     let examDateObj = this.admitcardForm.value.type.examDate;
     let startTimeObj = this.admitcardForm.value.type.startTime;
