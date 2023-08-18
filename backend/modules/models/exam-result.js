@@ -5,7 +5,7 @@ const ExamResultModel = mongoose.model('result', {
   resultNo: { type: Number },
   examType: { type: String },
   theoryMarks: {},
-  practicalObtainMarks: {},
+  practicalMarks: {},
 });
 
 module.exports = ExamResultModel;

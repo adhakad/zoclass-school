@@ -107,17 +107,13 @@
                                 <div class="col-6">
                                   <mat-form-field appearance="outline">
                                     <mat-label>Exam Type</mat-label>
-                                    <mat-select type="text" matInput formControlName="examType">
+                                    <mat-select #examSelect matInput>
                                       <div *ngFor="let exam of examType">
-                                        <mat-option value="{{exam}}">{{exam |
-                                          titlecase}}
-                                          Exam</mat-option>
+                                        <mat-option (click)="getExamResultStructureByClass(examSelect.value)" value="{{exam}}">
+                                          {{exam | titlecase}} Exam
+                                        </mat-option>
                                       </div>
                                     </mat-select>
-                                    <mat-hint
-                                      *ngIf="!examResultForm.get('examType')?.valid && examResultForm.get('examType')?.touched"
-                                      class="form-text text-danger">Exam type is
-                                      required</mat-hint>
                                   </mat-form-field>
                                 </div>
                                 <div class="col-6">
@@ -129,19 +125,35 @@
                                       class="form-text text-danger">Roll number is required</mat-hint>
                                   </mat-form-field>
                                 </div>
-
+                                <h3>Theory marks</h3>
                                 <ng-container formGroupName="type">
                                   <ng-container formArrayName="theoryMarks">
                                     <div class="col-6" *ngFor="let subjects of classSubject; let i = index">
                                       <div [formGroupName]="i">
                                         <mat-form-field appearance="outline">
-                                          <mat-label>{{subjects | titlecase}} Marks</mat-label>
+                                          <mat-label>{{subjects | titlecase}} Theory Marks</mat-label>
                                           <input matInput type="text" [formControlName]="subjects">
                                         </mat-form-field>
                                       </div>
                                     </div>
                                   </ng-container>
                                 </ng-container>
+                                <ng-container *ngIf="practicalSubjects.length > 0">
+                                  <h3>Practical marks</h3>
+                                  <ng-container formGroupName="type">
+                                    <ng-container formArrayName="practicalMarks">
+                                      <div class="col-6" *ngFor="let subjects of practicalSubjects; let i = index">
+                                        <div [formGroupName]="i">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>{{subjects | titlecase}} Prac. Marks</mat-label>
+                                            <input matInput type="text" [formControlName]="subjects">
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                    </ng-container>
+                                  </ng-container>
+                                </ng-container>
+
                               </div>
                             </div>
                           </div>
@@ -149,7 +161,7 @@
                       </div>
                       <div class="modal-footer">
                         <button class="submit-button" mat-raised-button type="submit"
-                          [disabled]="!examResultForm.valid">Submit</button>
+                          >Submit</button>
                       </div>
                     </form>
                     <div *ngIf="deleteMode">

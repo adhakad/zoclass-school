@@ -15,6 +15,9 @@ export class ExamResultService {
   addBulkExamResult(examBulkResult:any) {
     return this.http.post(`${this.url}/bulk-exam-result`,examBulkResult);
   }
+  singleStudentExamResult(examResultFormData: any) {
+    return this.http.post(`${this.url}/result`,examResultFormData);
+  }
   examResultPaginationList(examResultData:any){
     return this.http.post(`${this.url}/exam-result-pagination`,examResultData);
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AdmitCardService } from 'src/app/services/admit-card.service';
+import { ExamResultService } from 'src/app/services/exam-result.service';
 import { ClassService } from 'src/app/services/class.service';
 
 
@@ -12,15 +12,16 @@ import { ClassService } from 'src/app/services/class.service';
 })
 export class ResultComponent implements OnInit {
   errorMsg: string = '';
-  admitCardForm: FormGroup;
+  examResultForm: FormGroup;
   classInfo: any;
-  studentAdmitCardInfo: any;
-  admitCardInfo: any;
+  studentInfo: any[]=[];
+  examResultInfo: any;
+  resultStructureInfo: any;
   processedData: any[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private admitCardService: AdmitCardService, private classService: ClassService) {
-    this.admitCardForm = this.fb.group({
-      admitCardNo: ['', Validators.required],
+  constructor(private fb: FormBuilder, private router: Router, private examResultService: ExamResultService, private classService: ClassService) {
+    this.examResultForm = this.fb.group({
+      resultNo: ['', Validators.required],
       class: ['', Validators.required],
       rollNumber: ['', Validators.required],
     })
@@ -36,12 +37,36 @@ export class ResultComponent implements OnInit {
       }
     })
   }
-  admitCard() {
-    this.admitCardService.singleStudentAdmitCard(this.admitCardForm.value).subscribe((res: any) => {
+  examResult() {
+    this.examResultService.singleStudentExamResult(this.examResultForm.value).subscribe((res: any) => {
       if (res) {
-        this.studentAdmitCardInfo = res.admitCard;
-        this.admitCardInfo = res.admitCardStructure;
-        console.log(res)
+        this.studentInfo = res.studentInfo;
+        let examResult = res.examResult;
+        this.resultStructureInfo = res.examResultStructure;
+
+        this.examResultInfo = {
+          rollNumber: examResult.rollNumber,
+          class: examResult.class,
+          resultNo: examResult.resultNo,
+          examType: examResult.examType,
+          theoryMarks: examResult.theoryMarks.map((subjectMarks:any) => {
+            const subjectName = Object.keys(subjectMarks)[0];
+            const maxMarksObject = this.resultStructureInfo.theoryMaxMarks.find((maxMark:any) => Object.keys(maxMark)[0] === subjectName);
+            const maxMarks = maxMarksObject ? maxMarksObject[subjectName] : 'N/A';
+            return {
+              subject: subjectName,
+              marksObtained: subjectMarks[subjectName],
+              maxMarks: maxMarks
+            };
+
+          })
+        };
+
+        console.log(this.examResultInfo)
+
+        
+        
+
         this.processData();
       }
     }, err => {
@@ -49,11 +74,11 @@ export class ResultComponent implements OnInit {
     })
   }
   processData() {
-    for (let i = 0; i < this.admitCardInfo.examDate.length; i++) {
-      const subject = Object.keys(this.admitCardInfo.examDate[i])[0];
-      const date = Object.values(this.admitCardInfo.examDate[i])[0];
-      const startTime = Object.values(this.admitCardInfo.examStartTime[i])[0];
-      const endTime = Object.values(this.admitCardInfo.examEndTime[i])[0];
+    for (let i = 0; i < this.resultStructureInfo.examDate.length; i++) {
+      const subject = Object.keys(this.resultStructureInfo.examDate[i])[0];
+      const date = Object.values(this.resultStructureInfo.examDate[i])[0];
+      const startTime = Object.values(this.resultStructureInfo.examStartTime[i])[0];
+      const endTime = Object.values(this.resultStructureInfo.examEndTime[i])[0];
 
       this.processedData.push({
         subject,

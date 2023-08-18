@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { read, utils,writeFile } from 'xlsx';
+import { read, utils, writeFile } from 'xlsx';
 import { ClassService } from 'src/app/services/class.service';
 import { ClassSubjectService } from 'src/app/services/class-subject.service';
 import { ExamResultService } from 'src/app/services/exam-result.service';
 import { MatRadioChange } from '@angular/material/radio';
+import { ExamResultStructureService } from 'src/app/services/exam-result-structure.service';
 
 
 @Component({
@@ -33,22 +34,25 @@ export class AdminStudentResultComponent implements OnInit {
   classSubject: any;
   fields: any;
   abc: any;
-  subjectName:any[]=[];
+  subjectName: any[] = [];
 
-  showBulkResultModal:boolean = false;
+  showBulkResultModal: boolean = false;
   bulkResult: any[] = [];
-  selectedValue:number=0;
-  fileChoose:boolean=false;
-  existRollnumber:number[]=[];
+  selectedValue: number = 0;
+  fileChoose: boolean = false;
+  existRollnumber: number[] = [];
   examType: any[] = ["quarterly", "half yearly", "final"];
-  selectedExam:any = '';
+  selectedExam: any = '';
+  examResultStr: any;
+  practicalSubjects: any[]=[];
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultService: ExamResultService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultService: ExamResultService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
       rollNumber: ['', Validators.required],
-      examType: ['', Validators.required],
+      examType: ['',],
       type: this.fb.group({
         theoryMarks: this.fb.array([]),
+        practicalMarks: this.fb.array([]),
       }),
     });
   }
@@ -56,7 +60,7 @@ export class AdminStudentResultComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getExamResults({page : 1});
+    this.getExamResults({ page: 1 });
 
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.getClassSubject(this.cls);
@@ -68,7 +72,6 @@ export class AdminStudentResultComponent implements OnInit {
           this.classSubject = res.map((item: any) => {
             return item.subject;
           })
-          console.log(this.classSubject)
           if (this.classSubject) {
             this.patch();
           }
@@ -76,12 +79,48 @@ export class AdminStudentResultComponent implements OnInit {
       }
     })
   }
+
+  getExamResultStructureByClass(selectedExam: string) {
+    if (selectedExam) {
+      this.selectedExam = selectedExam;
+
+      this.examResultStructureService.examResultStructureByClass(this.cls).subscribe((res: any) => {
+        if (res) {
+          let examResultStr = res.find((exam: any) => exam.examType === selectedExam);
+
+          let subjectData = examResultStr.practicalMaxMarks;
+
+          const practicalSubjects = [];
+
+          for (const key in subjectData) {
+            if (typeof subjectData[key] === 'object' && subjectData[key] !== null) {
+              const subjectName = Object.keys(subjectData[key])[0];
+              const subjectMarks = subjectData[key][subjectName];
+
+              if (subjectMarks !== null && subjectMarks !== '') {
+                practicalSubjects.push(subjectName);
+              }
+            }
+          }
+          this.practicalSubjects = practicalSubjects;
+          if (this.practicalSubjects) {
+            this.patchPractical();
+          }
+        }
+      })
+    }
+  }
+
   closeModal() {
+    this.examResultStr = '';
+    this.practicalSubjects = [];
+    this.selectedExam = '';
     this.showModal = false;
     this.showBulkResultModal = false;
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
+    this.examResultForm.reset();
   }
   addExamResultModel() {
     this.showModal = true;
@@ -108,21 +147,21 @@ export class AdminStudentResultComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getExamResults({page : this.page});
+      this.getExamResults({ page: this.page });
     }, 1000)
   }
 
-  getExamResults($event:any) {
+  getExamResults($event: any) {
     this.page = $event.page
     return new Promise((resolve, reject) => {
-      let params:any = {
+      let params: any = {
         filters: {},
         page: $event.page,
         limit: $event.limit ? $event.limit : this.recordLimit,
-        class:this.cls
+        class: this.cls
       };
       this.recordLimit = params.limit;
-      if(this.filters.searchText) {
+      if (this.filters.searchText) {
         params["filters"]["searchText"] = this.filters.searchText.trim();
       }
 
@@ -150,6 +189,12 @@ export class AdminStudentResultComponent implements OnInit {
           this.errorMsg = err.error;
         })
       } else {
+        if(this.practicalSubjects.length ===0){
+         delete this.examResultForm.value.type.practicalMarks;
+        }
+        this.examResultForm.value.examType = this.selectedExam;
+         
+        console.log(this.examResultForm.value)
         this.examResultForm.value.class = this.cls;
         this.examResultService.addExamResult(this.examResultForm.value).subscribe((res: any) => {
           if (res) {
@@ -160,7 +205,7 @@ export class AdminStudentResultComponent implements OnInit {
           this.errorCheck = true;
           this.errorMsg = err.error;
         })
-      }
+        }
     }
   }
 
@@ -172,10 +217,22 @@ export class AdminStudentResultComponent implements OnInit {
       this.examResultForm.reset();
     })
   }
-
+  patchPractical() {
+    const controlOne = <FormArray>this.examResultForm.get('type.practicalMarks');
+    this.practicalSubjects.forEach((x: any) => {
+      controlOne.push(this.patchPracticalValues(x))
+      this.examResultForm.reset();
+    })
+  }
   patchValues(theoryMarks: any) {
     return this.fb.group({
       [theoryMarks]: [theoryMarks],
+    })
+  }
+
+  patchPracticalValues(practicalMarks: any) {
+    return this.fb.group({
+      [practicalMarks]: [practicalMarks],
     })
   }
 
@@ -191,65 +248,65 @@ export class AdminStudentResultComponent implements OnInit {
 
 
   selectExam(selectedExam: string) {
-    if(selectedExam){
+    if (selectedExam) {
       this.selectedExam = selectedExam;
     }
   }
 
   handleImport($event: any) {
     console.log("xlsx file")
-    this.fileChoose=true;
+    this.fileChoose = true;
     const files = $event.target.files;
     if (files.length) {
-        const file = files[0];
-        const reader = new FileReader();
-        reader.onload = (event: any) => {
-            const wb = read(event.target.result);
-            const sheets = wb.SheetNames;
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        const wb = read(event.target.result);
+        const sheets = wb.SheetNames;
 
-            if (sheets.length) {
-                const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-                this.bulkResult = rows;
-            }
+        if (sheets.length) {
+          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
+          this.bulkResult = rows;
         }
-        reader.readAsArrayBuffer(file);
+      }
+      reader.readAsArrayBuffer(file);
     }
-    
-}
 
-onChange(event:MatRadioChange){
-  this.selectedValue = event.value;
-}
-addBulkExamResultModel(){
-  this.showBulkResultModal = true;
-}
-addBulkExamResult(){
-  let resultData = {
-    examType:this.selectedExam,
-    bulkResult:this.bulkResult
   }
 
-  this.examResultService.addBulkExamResult(resultData).subscribe((res:any)=> {
-    if(res){
-      this.successDone();
-      this.successMsg = res;
+  onChange(event: MatRadioChange) {
+    this.selectedValue = event.value;
+  }
+  addBulkExamResultModel() {
+    this.showBulkResultModal = true;
+  }
+  addBulkExamResult() {
+    let resultData = {
+      examType: this.selectedExam,
+      bulkResult: this.bulkResult
     }
-  },err => {
-    this.errorCheck = true;
-    this.errorMsg = err.error.errMsg;
-    this.existRollnumber = err.error.existRollnumber;
-  })
-}
 
-handleExport() {
+    this.examResultService.addBulkExamResult(resultData).subscribe((res: any) => {
+      if (res) {
+        this.successDone();
+        this.successMsg = res;
+      }
+    }, err => {
+      this.errorCheck = true;
+      this.errorMsg = err.error.errMsg;
+      this.existRollnumber = err.error.existRollnumber;
+    })
+  }
+
+  handleExport() {
     const headings = [[
-        'rollNumber',
-        'Class',
-        'Hindi',
-        'English',
-        'Sanskrit',
-        'Maths',
-        'Science'
+      'rollNumber',
+      'Class',
+      'Hindi',
+      'English',
+      'Sanskrit',
+      'Maths',
+      'Science'
     ]];
     const wb = utils.book_new();
     const ws: any = utils.json_to_sheet([]);
@@ -257,5 +314,5 @@ handleExport() {
     utils.sheet_add_json(ws, this.bulkResult, { origin: 'A2', skipHeader: true });
     utils.book_append_sheet(wb, ws, 'Report');
     writeFile(wb, 'Result.xlsx');
-}
+  }
 }
