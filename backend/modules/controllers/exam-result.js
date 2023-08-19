@@ -11,13 +11,18 @@ let GetSingleStudentExamResult = async (req, res, next) => {
         if (!studentInfo) {
             return res.status(404).json(`Roll number not found for class ${className}`);
         }
-        let examResultStructure = await ExamResultStructureModel.findOne({ class: className });
-        if (!examResultStructure) {
+        let examResultStr = await ExamResultStructureModel.findOne({ class: className });
+        if (!examResultStr) {
             return res.status(404).json({ errorMsg: 'This class any exam not exist' });
         }
         let examResult = await ExamResultModel.findOne({ resultNo: resultNo, class: className, rollNumber: rollNumber })
         if (!examResult) {
             return res.status(404).json({ errorMsg: 'Admit card not exist' });
+        }
+        let examType = await examResult.examType;
+        let examResultStructure = await ExamResultStructureModel.findOne({ class: className,examType:examType });
+        if (!examResultStructure) {
+            return res.status(404).json({ errorMsg: 'This class any exam not exist' });
         }
         return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: studentInfo });
     } catch (error) {

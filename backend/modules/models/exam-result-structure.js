@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ExamResultStructureModel = mongoose.model('examResultStructure', {
+const ExamResultStructureModel = mongoose.model('exam-result-structure', {
   class: { type: Number },
   examType:{type:String},
   theoryMaxMarks:{},

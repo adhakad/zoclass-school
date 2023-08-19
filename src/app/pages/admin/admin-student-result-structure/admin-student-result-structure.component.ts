@@ -32,7 +32,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
   marksMode: boolean = false;
   theoryMarks: boolean = true;
   practicalMarks: boolean = false;
-  gradeRange: boolean = false;
+  gradeRange: boolean = true;
   gradeMinMarks: any = [{ "A+": 91 }, { "A": 81 }, { "B+": 71 }, { "B": 61 }, { "C+": 51 }, { "C": 41 }, { "D": 33 }, { "E": 0 }];
   gradeMaxMarks: any = [{ "A+": 100 }, { "A": 90 }, { "B+": 80 }, { "B": 70 }, { "C+": 60 }, { "C": 50 }, { "D": 40 }, { "E": 32 }];
 
@@ -88,14 +88,14 @@ export class AdminStudentResultStructureComponent implements OnInit {
       this.practicalMarks = false;
     }
   }
-  grade(gradeRange: boolean) {
-    if (gradeRange === false) {
-      this.gradeRange = true;
-    }
-    if (gradeRange === true) {
-      this.gradeRange = false;
-    }
-  }
+  // grade(gradeRange: boolean) {
+  //   if (gradeRange === false) {
+  //     this.gradeRange = true;
+  //   }
+  //   if (gradeRange === true) {
+  //     this.gradeRange = false;
+  //   }
+  // }
   selectExamResultStructure() {
     this.marksTypeMode = false;
     this.marksMode = true;
@@ -118,7 +118,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.marksTypeMode = false;
     this.marksMode = false;
     this.practicalMarks = false;
-    this.gradeRange = false;
+    // this.gradeRange = false;
   }
   closeModal() {
     this.falseAllValue();
@@ -198,10 +198,10 @@ export class AdminStudentResultStructureComponent implements OnInit {
       delete this.examResultForm.value.type.practicalMaxMarks;
       delete this.examResultForm.value.type.practicalPassMarks;
     }
-    if (!this.gradeRange) {
-      delete this.examResultForm.value.type.gradeMaxMarks;
-      delete this.examResultForm.value.type.gradeMinMarks;
-    }
+    // if (!this.gradeRange) {
+    //   delete this.examResultForm.value.type.gradeMaxMarks;
+    //   delete this.examResultForm.value.type.gradeMinMarks;
+    // }
     let theoryMaxMarksObj = this.examResultForm.value.type.theoryMaxMarks;
     let theoryPassMarksObj = this.examResultForm.value.type.theoryPassMarks;
     let containsTheoryMaxMarksNull = theoryMaxMarksObj.some((item: any) => Object.values(item).includes(null));
@@ -211,8 +211,6 @@ export class AdminStudentResultStructureComponent implements OnInit {
       this.errorMsg = 'Please fill all fields';
     }
     if (!containsTheoryMaxMarksNull && !containsTheoryPassMarksNull) {
-
-      // console.log(this.examResultForm.value);
 
       this.examResultStructureService.addExamResultStructure(this.examResultForm.value).subscribe((res: any) => {
         if (res) {

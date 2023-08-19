@@ -14,7 +14,7 @@ export class ResultComponent implements OnInit {
   errorMsg: string = '';
   examResultForm: FormGroup;
   classInfo: any;
-  studentInfo: any[]=[];
+  studentInfo: any[] = [];
   examResultInfo: any;
   resultStructureInfo: any;
   processedData: any[] = [];
@@ -43,50 +43,75 @@ export class ResultComponent implements OnInit {
         this.studentInfo = res.studentInfo;
         let examResult = res.examResult;
         this.resultStructureInfo = res.examResultStructure;
+        if(examResult.practicalMarks){
+          this.examResultInfo = {
+            class: examResult.class,
+            examType: examResult.examType,
+            rollNumber: examResult.rollNumber,
+            resultNo: examResult.resultNo,
+            marks: examResult.theoryMarks.map((subjectMarks: any) => {
+              const subjectName = Object.keys(subjectMarks)[0];
+              const theoryMarks = parseFloat(subjectMarks[subjectName]);
+              const practicalMarkObject = examResult.practicalMarks.find((practicalMark: any) => Object.keys(practicalMark)[0] === subjectName);
+              const practicalMark = practicalMarkObject ? parseFloat(practicalMarkObject[subjectName]) : 0;
+              const totalMarks = theoryMarks + practicalMark;
 
-        this.examResultInfo = {
-          rollNumber: examResult.rollNumber,
-          class: examResult.class,
-          resultNo: examResult.resultNo,
-          examType: examResult.examType,
-          theoryMarks: examResult.theoryMarks.map((subjectMarks:any) => {
-            const subjectName = Object.keys(subjectMarks)[0];
-            const maxMarksObject = this.resultStructureInfo.theoryMaxMarks.find((maxMark:any) => Object.keys(maxMark)[0] === subjectName);
-            const maxMarks = maxMarksObject ? maxMarksObject[subjectName] : 'N/A';
-            return {
-              subject: subjectName,
-              marksObtained: subjectMarks[subjectName],
-              maxMarks: maxMarks
-            };
-
-          })
-        };
-
-        console.log(this.examResultInfo)
-
-        
-        
-
-        this.processData();
+              let grade = '';
+              const gradeMaxMarks = this.resultStructureInfo.gradeMaxMarks;
+              const gradeMinMarks = this.resultStructureInfo.gradeMinMarks;
+              for (let i = 0; i < gradeMaxMarks.length; i++) {
+                const gradeRange:any = Object.values(gradeMaxMarks[i])[0];
+                if (totalMarks >= gradeMinMarks[i][Object.keys(gradeMinMarks[i])[0]] &&
+                    totalMarks <= gradeRange) {
+                  grade = Object.keys(gradeMaxMarks[i])[0];
+                  break;
+                }
+              }
+              return {
+                subject: subjectName,
+                theoryMarks: theoryMarks,
+                practicalMarks: practicalMark,
+                totalMarks: totalMarks,
+                grade:grade,
+              };
+            })
+          };
+        }
+        if(!examResult.practicalMarks){
+          this.examResultInfo = {
+            class: examResult.class,
+            examType: examResult.examType,
+            rollNumber: examResult.rollNumber,
+            resultNo: examResult.resultNo,
+            marks: examResult.theoryMarks.map((subjectMarks: any) => {
+              const subjectName = Object.keys(subjectMarks)[0];
+              const theoryMarks = parseFloat(subjectMarks[subjectName])
+              const practicalMark =  0;
+              const totalMarks = theoryMarks + practicalMark;
+              let grade = '';
+              const gradeMaxMarks = this.resultStructureInfo.gradeMaxMarks;
+              const gradeMinMarks = this.resultStructureInfo.gradeMinMarks;
+              for (let i = 0; i < gradeMaxMarks.length; i++) {
+                const gradeRange:any = Object.values(gradeMaxMarks[i])[0];
+                if (totalMarks >= gradeMinMarks[i][Object.keys(gradeMinMarks[i])[0]] &&
+                    totalMarks <= gradeRange) {
+                  grade = Object.keys(gradeMaxMarks[i])[0];
+                  break;
+                }
+              }
+              return {
+                subject: subjectName,
+                theoryMarks: theoryMarks,
+                practicalMarks: practicalMark,
+                totalMarks: totalMarks,
+                grade:grade,
+              };
+            })
+          };
+        }
       }
     }, err => {
       this.errorMsg = err.error.errorMsg;
     })
   }
-  processData() {
-    for (let i = 0; i < this.resultStructureInfo.examDate.length; i++) {
-      const subject = Object.keys(this.resultStructureInfo.examDate[i])[0];
-      const date = Object.values(this.resultStructureInfo.examDate[i])[0];
-      const startTime = Object.values(this.resultStructureInfo.examStartTime[i])[0];
-      const endTime = Object.values(this.resultStructureInfo.examEndTime[i])[0];
-
-      this.processedData.push({
-        subject,
-        date,
-        timing: `${startTime} to ${endTime}`
-      });
-    }
-  }
-
-
 }

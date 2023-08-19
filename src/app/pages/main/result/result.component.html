@@ -42,9 +42,10 @@
         <div class="col-8 offset-2">
           <table class="table align-middle mb-0 bg-white abc">
             <thead class="bg-light">
-              <p class="m-2 pt-3 pb-3 text-muted" style="white-space: nowrap;font-weight: 500;color: #7c7698fb;">{{examResultInfo?.examType | titlecase}} Exam Admit Card</p>
+              <p class="m-2 pt-3 pb-3 text-muted" style="white-space: nowrap;font-weight: 500;color: #7c7698fb;">
+                {{examResultInfo?.examType | titlecase}} Exam Result</p>
               <tr class="text-muted">
-                <th>Admit Card No.</th>
+                <th>Result No.</th>
                 <th style="font-weight: 400;">{{examResultInfo?.resultNo}}</th>
                 <th>Roll Number</th>
                 <th style="font-weight: 400;">
@@ -63,28 +64,37 @@
               </tr>
               <br><br>
               <tr class="text-muted">
-                  <th>S.No.</th>
-                  <th>Subject</th>
-                  <th>Obtined Marks</th>
-                  <th>Maximum Marks</th>
+                <th>S.No.</th>
+                <th>Subject</th>
+                <th>Theory Marks</th>
+                <th>Practical Marks</th>
+                <th>Total Marks</th>
+                <th>Grade</th>
               </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let exam of examResultInfo.theoryMarks; let i = index">
-                  <td>
-                      {{ i + 1 }}
-                  </td>
-                  <td>
-                      {{ exam.subject | titlecase}}
-                  </td>
-                  <td>
-                      {{ exam.marksObtained }}
-                  </td>
-                  <td>
-                      {{ exam.maxMarks }}
-                  </td>
+            </thead>
+            <tbody>
+              <tr *ngFor="let exam of examResultInfo.marks; let i = index">
+                <td>
+                  {{ i + 1 }}
+                </td>
+                <td>
+                  {{ exam.subject | titlecase}}
+                </td>
+                <td>
+                  {{ exam.theoryMarks }}
+                </td>
+                <td>
+                  <span *ngIf="exam.practicalMarks===0">N/A</span>
+                  <span *ngIf="exam.practicalMarks>0">{{ exam.practicalMarks }}</span>
+                </td>
+                <td>
+                  {{ exam.totalMarks }}
+                </td>
+                <td>
+                  {{ exam.grade }}
+                </td>
               </tr>
-          </tbody>
+            </tbody>
           </table>
         </div>
       </div>

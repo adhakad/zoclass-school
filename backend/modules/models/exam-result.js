@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ExamResultModel = mongoose.model('result', {
+const ExamResultModel = mongoose.model('exam-result', {
   rollNumber: { type: Number },
   class: { type: Number },
   resultNo: { type: Number },
