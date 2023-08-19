@@ -37,39 +37,44 @@
         </div>
       </div>
     </div>
-    <div class="container" *ngIf="examResultInfo">
+    <div class="container" *ngIf="examResultInfo && studentInfo">
       <div class="row bg-light">
         <div class="col-8 offset-2">
           <table class="table align-middle mb-0 bg-white abc">
             <thead class="bg-light">
-              <p class="m-2 pt-3 pb-3 text-muted" style="white-space: nowrap;font-weight: 500;color: #7c7698fb;">
-                {{examResultInfo?.examType | titlecase}} Exam Result</p>
+              <tr class="text-muted" style="text-align: center;justify-content: center;height: 50px;">
+                <th class="pt-4 pb-4">{{examResultInfo?.examType | uppercase}} EXAM RESULT - 2023</th>
+              </tr>
+            </thead>
+          </table>
+          <table class="table align-middle mb-0 bg-white abc">
+            <thead class="bg-light">
               <tr class="text-muted">
-                <th>Result No.</th>
+                <th>RESULT NO.</th>
                 <th style="font-weight: 400;">{{examResultInfo?.resultNo}}</th>
-                <th>Roll Number</th>
+                <th>ROLL NUMBER</th>
                 <th style="font-weight: 400;">
                   {{examResultInfo?.rollNumber}}</th>
-                <th>Class</th>
-                <th style="font-weight: 400;">{{examResultInfo?.class}}th
+                <th>CLASS</th>
+                <th style="font-weight: 400;">{{examResultInfo?.class}}TH
                 </th>
               </tr>
               <tr class="text-muted">
-                <th>Student Name</th>
-                <th style="font-weight: 400;">{{examResultInfo?.name | titlecase}}</th>
-                <th>Father Name</th>
-                <th style="font-weight: 400;">Narendra Dhakad</th>
-                <th>Mother Name</th>
-                <th style="font-weight: 400;">Manisha Dhakad</th>
+                <th>STUDENT NAME</th>
+                <th style="font-weight: 400;">{{studentInfo?.name | uppercase}}</th>
+                <th>FATHER NAME</th>
+                <th style="font-weight: 400;">NARENDRA DHAKAD</th>
+                <th>MOTHER NAME</th>
+                <th style="font-weight: 400;">MANISHA DHAKAD</th>
               </tr>
               <br><br>
               <tr class="text-muted">
-                <th>S.No.</th>
-                <th>Subject</th>
-                <th>Theory Marks</th>
-                <th>Practical Marks</th>
-                <th>Total Marks</th>
-                <th>Grade</th>
+                <th>S.NO.</th>
+                <th>SUBJECT</th>
+                <th>THEORY MARKS</th>
+                <th>PRACTICAL MARKS</th>
+                <th>TOTAL MARKS</th>
+                <th>GRADE</th>
               </tr>
             </thead>
             <tbody>
@@ -78,13 +83,14 @@
                   {{ i + 1 }}
                 </td>
                 <td>
-                  {{ exam.subject | titlecase}}
+                  {{ exam.subject | uppercase}}
                 </td>
                 <td>
                   {{ exam.theoryMarks }}
                 </td>
                 <td>
-                  <span *ngIf="exam.practicalMarks===0">N/A</span>
+                  <!-- <span *ngIf="exam.practicalMarks===0">N/A</span>   868950 534724
+ -->
                   <span *ngIf="exam.practicalMarks>0">{{ exam.practicalMarks }}</span>
                 </td>
                 <td>
@@ -95,6 +101,16 @@
                 </td>
               </tr>
             </tbody>
+            <!-- <br><br> -->
+          </table>
+          <table class="table align-middle mb-0 bg-white abc">
+            <thead class="bg-light">
+              <tr class="text-muted" style="text-align: center;justify-content: center;">
+                <th style="font-weight: 400;">OVERALL GRADE : {{examResultInfo?.percentileGrade}}</th>
+                <th style="font-weight: 400;">GRAND TOTAL (THEORY + PRACTICAL/INTERNAL MARKS) : {{ examResultInfo?.grandTotalMarks}}/{{ examResultInfo?.totalMaxMarks}}</th>
+                <th style="font-weight: 400;">PERCENTILE : {{examResultInfo?.percentile}} %</th>
+              </tr>
+            </thead>
           </table>
         </div>
       </div>

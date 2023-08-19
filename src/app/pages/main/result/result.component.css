@@ -10,6 +10,6 @@ h3{
 .abc tbody,.abc td,.abc tfoot,.abc th,.abc thead,.abc tr{
     /* border-bottom: none; */
     color: #7c7698fb;
-    border: 2px solid rgb(226, 226, 226);
+    border: 2px solid rgb(218, 218, 222);
     border-radius: 5px;
  }
