@@ -9,7 +9,6 @@ import { ExamResultService } from 'src/app/services/exam-result.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { ExamResultStructureService } from 'src/app/services/exam-result-structure.service';
 
-
 @Component({
   selector: 'app-admin-student-result',
   templateUrl: './admin-student-result.component.html',
@@ -44,7 +43,7 @@ export class AdminStudentResultComponent implements OnInit {
   examType: any[] = ["quarterly", "half yearly", "final"];
   selectedExam: any = '';
   examResultStr: any;
-  practicalSubjects: any[]=[];
+  practicalSubjects: any[] = [];
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultService: ExamResultService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
@@ -56,7 +55,6 @@ export class AdminStudentResultComponent implements OnInit {
       }),
     });
   }
-
 
 
   ngOnInit(): void {
@@ -189,11 +187,11 @@ export class AdminStudentResultComponent implements OnInit {
           this.errorMsg = err.error;
         })
       } else {
-        if(this.practicalSubjects.length ===0){
-         delete this.examResultForm.value.type.practicalMarks;
+        if (this.practicalSubjects.length === 0) {
+          delete this.examResultForm.value.type.practicalMarks;
         }
         this.examResultForm.value.examType = this.selectedExam;
-         
+
         console.log(this.examResultForm.value)
         this.examResultForm.value.class = this.cls;
         this.examResultService.addExamResult(this.examResultForm.value).subscribe((res: any) => {
@@ -205,7 +203,7 @@ export class AdminStudentResultComponent implements OnInit {
           this.errorCheck = true;
           this.errorMsg = err.error;
         })
-        }
+      }
     }
   }
 
@@ -273,6 +271,11 @@ export class AdminStudentResultComponent implements OnInit {
     }
 
   }
+
+  
+  
+
+
 
   onChange(event: MatRadioChange) {
     this.selectedValue = event.value;

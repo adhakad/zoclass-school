@@ -224,17 +224,17 @@ td{
 } 
 
 .modal-header {
-  background-color: #8b69f2;
+  background-color: #fff;
   top: 0;
   position: sticky;
   z-index: 1;
 }
 .modal-header .modal-title{
-  color: #DAF2F9;
+  color: #7c7698fb;
 }
 .modal-header .mat-icon{
   cursor: pointer;
-  color: #DAF2F9;
+  color: #7c7698fb;
 }
 
 .modal-footer {

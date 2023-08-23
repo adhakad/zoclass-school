@@ -40,6 +40,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.examResultForm = this.fb.group({
       class: [''],
       examType: ['', Validators.required],
+      stream:['',Validators.required],
       type: this.fb.group({
         theoryMaxMarks: this.fb.array([], [Validators.required]),
         theoryPassMarks: this.fb.array([], [Validators.required]),

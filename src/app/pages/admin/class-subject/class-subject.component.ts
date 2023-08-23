@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Class } from 'src/app/modal/class.model';
 // import { Subject } from 'src/app/modal/subject.model';
@@ -14,7 +14,7 @@ import { ClassSubjectService } from 'src/app/services/class-subject.service';
   styleUrls: ['./class-subject.component.css']
 })
 export class ClassSubjectComponent implements OnInit {
-
+  cls:any;
   classSubjectForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;
@@ -25,7 +25,9 @@ export class ClassSubjectComponent implements OnInit {
   errorCheck: Boolean = false;
   classInfo: Class[] = [];
   subjectInfo: any[] = [];
-  classSubjectInfo: ClassSubject[] = [];
+  classSubjectInfo: any[] = [];
+  selectedSubjectGroup: any[] = [];
+  streamMainSubject: any[] = ['Mathematics(Science)','Biology(Science)','History(Arts)','Sociology(Arts)','Political Science(Arts)','Accountancy(Commerce)','Economics(Commerce)'];
 
   recordLimit: number = 5;
   filters:any = {};
@@ -34,8 +36,9 @@ export class ClassSubjectComponent implements OnInit {
   constructor(private fb: FormBuilder,private classService:ClassService, private subjectService: SubjectService,private classSubjectService:ClassSubjectService) {
     this.classSubjectForm = this.fb.group({
       _id: [''],
-      class: ['', Validators.required],
-      subject: ['', Validators.required],
+      class:['',Validators.required],
+      subject:[''],
+      stream:['',Validators.required],
     })
   }
 
@@ -50,18 +53,19 @@ export class ClassSubjectComponent implements OnInit {
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
+    this.selectedSubjectGroup = [];
+    this.classSubjectForm.reset();
   }
   addClassSubjectModel() {
     this.showModal = true;
     this.deleteMode = false;
     this.classSubjectForm.reset();
   }
-  updateClassSubjectModel(classSubject: ClassSubject) {
+  updateClassSubjectModel(classSubject: any) {
     this.showModal = true;
     this.deleteMode = false;
     this.updateMode = true;
     this.classSubjectForm.patchValue(classSubject);
-    console.log(this.classSubjectForm.value)
   }
   deleteClassSubjectModel(id: String) {
     this.showModal = true;
@@ -78,8 +82,22 @@ export class ClassSubjectComponent implements OnInit {
     }, 1000)
   }
 
+  subjectGroup(option: any) {
+    const index = this.selectedSubjectGroup.indexOf(option);
+    if (index > -1) {
+      this.selectedSubjectGroup.splice(index, 1);
+    } else {
+      this.selectedSubjectGroup.push(option)
+    }
+  }
+
+  chooseClass(cls:any){
+    this.cls = cls;
+    console.log(this.cls)
+  }
+
   getClass() {
-    this.classService.getClassList().subscribe((res: Class[]) => {
+    this.classService.getClassList().subscribe((res: any) => {
       if (res) {
         this.classInfo = res;
       }
@@ -129,6 +147,7 @@ export class ClassSubjectComponent implements OnInit {
           this.errorMsg = err.error;
         })
       } else {
+        this.classSubjectForm.value.subject = this.selectedSubjectGroup;
         this.classSubjectService.addClassSubject(this.classSubjectForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();

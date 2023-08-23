@@ -10,10 +10,7 @@ export class SubjectService {
   constructor(private http: HttpClient) { }
 
   addSubject(subjectData: Subject) {
-    var formData: any = new FormData();
-    formData.append('image', subjectData.image);
-    formData.append('subject', subjectData.subject);
-    return this.http.post(this.url, formData);
+    return this.http.post(this.url, subjectData);
   }
   getSubjectList() {
     return this.http.get<Subject[]>(this.url);

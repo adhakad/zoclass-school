@@ -61,7 +61,6 @@ let CreateSubject = async (req, res, next) => {
     const { subject } = req.body;
     const subjectData = {
         subject: subject,
-        image: req.file.filename,
     }
     try {
         const checkSubject = await SubjectModel.findOne({ subject: subject });
@@ -90,9 +89,6 @@ let UpdateSubject = async (req, res, next) => {
 let DeleteSubject = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const singleSubject = await SubjectModel.findOne({ _id: id });
-        const singleImage = await singleSubject.image;
-        await fs.unlinkSync('./public/subject-image/' + singleImage);
         const deleteSubject = await SubjectModel.findByIdAndRemove(id);
         return res.status(200).json('Subject delete succesfully');
     } catch (error) {

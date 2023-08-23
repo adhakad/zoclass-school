@@ -20,7 +20,7 @@ let GetSingleStudentExamResult = async (req, res, next) => {
             return res.status(404).json({ errorMsg: 'Admit card not exist' });
         }
         let examType = await examResult.examType;
-        let examResultStructure = await ExamResultStructureModel.findOne({ class: className,examType:examType });
+        let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType });
         if (!examResultStructure) {
             return res.status(404).json({ errorMsg: 'This class any exam not exist' });
         }
@@ -107,19 +107,49 @@ let CreateExamResult = async (req, res, next) => {
 
 let CreateBulkExamResult = async (req, res, next) => {
     let examType = req.body.examType;
-    let newResult = [];
+    let result = [];
     let newClsRollNumber = [];
-    let result = req.body.bulkResult;
-    newResult = result.map(student => {
-        const { rollNumber, class: studentClass, ...marks } = student;
+    result = req.body.bulkResult.map(entry => {
+        const rollNumber = entry['Roll Number'];
         newClsRollNumber.push(rollNumber);
         let resultNo = Math.floor(Math.random() * 899999 + 100000);
+
+        const studentClass = entry.Class;
         const theoryMarks = [];
-        for (const [subject, score] of Object.entries(marks)) {
-            theoryMarks.push({ [subject]: score });
+        const practicalMarks = [];
+
+        for (const subject in entry) {
+            if (subject !== 'Roll Number' && subject !== 'Class') {
+                const marks = entry[subject];
+                const modifiedSubject = subject.replace(' Practical', '');
+                const marksEntry = { [modifiedSubject]: marks };
+
+                if (subject.includes('Practical')) {
+                    practicalMarks.push(marksEntry);
+                } else {
+                    theoryMarks.push(marksEntry);
+                }
+            }
         }
-        return { examType, rollNumber, class: studentClass, resultNo, theoryMarks };
+
+        const resultEntry = {
+            examType: examType,
+            resultNo: resultNo,
+            rollNumber: rollNumber,
+            class: studentClass,
+            theoryMarks: theoryMarks
+        };
+
+        if (practicalMarks.length > 0) {
+            resultEntry.practicalMarks = practicalMarks;
+        }
+
+        return resultEntry;
     });
+
+    console.log(result);
+
+
     try {
         let existingItems = await ExamResultModel.find({ class: req.body.bulkResult[0].class }).lean();
         let existingClsRollNumber = existingItems.map(item => item.rollNumber);
@@ -127,7 +157,7 @@ let CreateBulkExamResult = async (req, res, next) => {
         if (existRollnumber.length > 0) {
             return res.status(400).json({ existRollnumber, errMsg: 'Roll number - ' });
         }
-        let createExamResult = await ExamResultModel.create(newResult);
+        let createExamResult = await ExamResultModel.create(result);
         return res.status(200).json('Student exam result add successfully');
 
     } catch (error) {

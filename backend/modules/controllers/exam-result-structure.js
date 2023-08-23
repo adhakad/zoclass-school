@@ -14,7 +14,7 @@ let GetSingleClassExamResultStructure = async (req, res, next) => {
 
 let CreateExamResultStructure = async (req, res, next) => {
     let className = req.body.class;
-    let examType = req.body.examType;
+    let {examType,stream} = req.body;
     let { theoryMaxMarks, theoryPassMarks, practicalMaxMarks, practicalPassMarks, gradeMinMarks, gradeMaxMarks } = req.body.type;
     try {
         const checkExamExist = await ExamResultStructureModel.findOne({ class: className, examType: examType });
@@ -26,6 +26,7 @@ let CreateExamResultStructure = async (req, res, next) => {
             examResultStructureData = {
                 class: className,
                 examType: examType,
+                stream:stream,
                 theoryMaxMarks: theoryMaxMarks,
                 theoryPassMarks: theoryPassMarks,
                 practicalMaxMarks: practicalMaxMarks,
@@ -36,6 +37,7 @@ let CreateExamResultStructure = async (req, res, next) => {
             examResultStructureData = {
                 class: className,
                 examType: examType,
+                stream:stream,
                 theoryMaxMarks: theoryMaxMarks,
                 theoryPassMarks: theoryPassMarks,
                 gradeMinMarks: gradeMinMarks,
@@ -46,6 +48,7 @@ let CreateExamResultStructure = async (req, res, next) => {
             examResultStructureData = {
                 class: className,
                 examType: examType,
+                stream:stream,
                 theoryMaxMarks: theoryMaxMarks,
                 theoryPassMarks: theoryPassMarks,
                 practicalMaxMarks: practicalMaxMarks,
@@ -58,6 +61,7 @@ let CreateExamResultStructure = async (req, res, next) => {
             examResultStructureData = {
                 class: className,
                 examType: examType,
+                stream:stream,
                 theoryMaxMarks: theoryMaxMarks,
                 theoryPassMarks: theoryPassMarks,
             }

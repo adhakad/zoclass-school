@@ -28,7 +28,6 @@ export class SubjectComponent implements OnInit {
     this.subjectForm = this.fb.group({
       _id: [''],
       subject: ['', Validators.required],
-      image: ['', Validators.required],
     })
   }
 

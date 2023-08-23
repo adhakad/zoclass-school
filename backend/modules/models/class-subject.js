@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const ClassSubjectModel = mongoose.model('classSubject', {
-    class: {type:Number},
-    subject: {type: String},
+    class: { type: Number },
+    stream: { type: String },
+    subject: {},
 });
 
 module.exports = ClassSubjectModel;
