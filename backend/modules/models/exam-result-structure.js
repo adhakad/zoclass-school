@@ -3,7 +3,7 @@ const ExamResultStructureModel = mongoose.model('exam-result-structure', {
   class: { type: Number },
   examType: { type: String },
   stream: { type: String },
-  theoryMaxMarks: {},
+  theoryMaxMarks: {}, 
   theoryPassMarks: {},
   practicalMaxMarks: {},
   practicalPassMarks: {},

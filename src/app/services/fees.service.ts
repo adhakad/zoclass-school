@@ -10,7 +10,6 @@ export class FeesService {
   constructor(private http: HttpClient) { }
 
   addFees(feesForm:any) {
-    console.log(feesForm)
     return this.http.post(`${this.url}`,feesForm);
   }
   addBulkFees(feesBulkResult:any) {

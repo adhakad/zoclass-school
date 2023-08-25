@@ -40,6 +40,20 @@ let GetAllClassSubject = async (req, res, next) => {
         console.log(error)
     }
 }
+let GetSingleClassSubjectByStream = async (req, res, next) => {
+    let className = req.params.class;
+    let stream = req.params.stream;
+    if(stream==="stream"){
+        stream = "N/A"
+    }
+    try {
+        const classSubjectList = await ClassSubjectModel.findOne({class:className,stream:stream});
+        return res.status(200).json(classSubjectList);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 let GetSubjectByClass = async (req, res, next) => {
     try {
         const subjectList = await ClassSubjectModel.find({ class: req.params.class });
@@ -104,6 +118,7 @@ module.exports = {
     countClassSubject,
     GetClassSubjectPagination,
     GetAllClassSubject,
+    GetSingleClassSubjectByStream,
     GetSubjectByClass,
     GetSingleClassSubject,
     CreateClassSubject,

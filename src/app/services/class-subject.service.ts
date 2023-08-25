@@ -15,6 +15,10 @@ export class ClassSubjectService {
   getClassSubjectList() {
     return this.http.get<ClassSubject[]>(this.url);
   }
+  
+  getSingleClassSubjectByStream(params:any) {
+    return this.http.get(`${this.url}/subject/${params.cls}/stream/${params.stream}`);
+  }
   getClassSubjectCount() {
     return this.http.get(`${this.url}/class-subject-count`);
   }

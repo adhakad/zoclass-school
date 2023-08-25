@@ -22,15 +22,20 @@ export class AdminStudentResultStructureComponent implements OnInit {
   errorMsg: String = '';
   errorCheck: Boolean = false;
   examType: any[] = ["quarterly", "half yearly", "final"];
-  theoryMaxMarks: any[] = [100, 80, 75, 70];
-  theoryPassMarks: any[] = [33, 26, 25, 23];
-  practicalMaxMarks: any[] = [20, 25, 30];
-  practicalPassMarks: any[] = [6, 8, 10];
+  theoryMaxMarks: any[] = [100,75]; // [100, 80, 75, 70];
+  theoryPassMarks: any[] = [33,25]; // [33, 26, 25, 23];
+  practicalMaxMarks: any[] = [25]; // [20, 25, 30];
+  practicalPassMarks: any[] = [8]; // [6, 8, 10];
   classSubject: any[] = [];
+  notApplicable:String = "stream";
+  stream: string = '';
+  streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
+
+
   examResultStr: any;
   marksTypeMode: boolean = false;
   marksMode: boolean = false;
-  theoryMarks: boolean = true;
+  theoryMarks: boolean = false;
   practicalMarks: boolean = false;
   gradeRange: boolean = true;
   gradeMinMarks: any = [{ "A+": 91 }, { "A": 81 }, { "B+": 71 }, { "B": 61 }, { "C+": 51 }, { "C": 41 }, { "D": 33 }, { "E": 0 }];
@@ -40,7 +45,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.examResultForm = this.fb.group({
       class: [''],
       examType: ['', Validators.required],
-      stream:['',Validators.required],
+      stream: [''],
       type: this.fb.group({
         theoryMaxMarks: this.fb.array([], [Validators.required]),
         theoryPassMarks: this.fb.array([], [Validators.required]),
@@ -54,29 +59,48 @@ export class AdminStudentResultStructureComponent implements OnInit {
 
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getClassSubject(this.cls);
     this.getExamResultStructureByClass(this.cls);
-  }
-
-
-  getClassSubject(cls: any) {
-    this.classSubjectService.getSubjectByClass(cls).subscribe((res: any) => {
-      if (res) {
-        this.classSubject = res.map((item: any) => {
-          return item.subject;
-        })
-        if (this.classSubject) {
-          this.patch();
-        }
-      }
-    })
   }
 
   getExamResultStructureByClass(cls: any) {
     this.examResultStructureService.examResultStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.examResultStr = res;
-        console.log(res)
+      }
+    })
+  }
+
+  chooseStream(stream: any) {
+    this.falseFormValue();
+    if (stream) {
+      this.stream = stream;
+      this.theoryMarks = true;
+      let params = {
+        cls: this.cls,
+        stream: stream
+      }
+      if(this.theoryMarks){
+        this.getSingleClassSubjectByStream(params)
+      }
+    }
+  }
+
+  getSingleClassSubjectByStream(params: any) {
+    this.classSubjectService.getSingleClassSubjectByStream(params).subscribe((res: any) => {
+      if (res) {
+        this.classSubject = res.subject;
+        if (this.classSubject) {
+          if(this.theoryMarks){
+            this.patchTheoryMarks();
+          }
+          if(this.practicalMarks){
+            this.patchPracticalMarks();
+          }
+        }
+      }
+      if(!res){
+        this.classSubject = [];
+        this.theoryMarks = false;
       }
     })
   }
@@ -89,14 +113,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
       this.practicalMarks = false;
     }
   }
-  // grade(gradeRange: boolean) {
-  //   if (gradeRange === false) {
-  //     this.gradeRange = true;
-  //   }
-  //   if (gradeRange === true) {
-  //     this.gradeRange = false;
-  //   }
-  // }
+
   selectExamResultStructure() {
     this.marksTypeMode = false;
     this.marksMode = true;
@@ -107,7 +124,8 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.marksTypeMode = true;
     this.examResultForm.reset();
   }
-  falseAllValue() {
+
+  falseFormValue(){
     const controlOne = <FormArray>this.examResultForm.get('type.theoryMaxMarks');
     const controlTwo = <FormArray>this.examResultForm.get('type.theoryPassMarks');
     const controlThree = <FormArray>this.examResultForm.get('type.practicalMaxMarks');
@@ -116,10 +134,16 @@ export class AdminStudentResultStructureComponent implements OnInit {
     controlTwo.clear();
     controlThree.clear();
     controlFour.clear();
+    this.examResultForm.reset();
+  }
+  falseAllValue() {
+    this.falseFormValue();
     this.marksTypeMode = false;
     this.marksMode = false;
     this.practicalMarks = false;
-    // this.gradeRange = false;
+    this.theoryMarks = false;
+    this.stream = '';
+    this.classSubject = [];
   }
   closeModal() {
     this.falseAllValue();
@@ -137,29 +161,36 @@ export class AdminStudentResultStructureComponent implements OnInit {
     }, 1000)
   }
 
-  patch() {
+  patchTheoryMarks() {
     const controlOne = <FormArray>this.examResultForm.get('type.theoryMaxMarks');
     this.classSubject.forEach((x: any) => {
-      controlOne.push(this.patchTheoryMaxMarks(x))
+      controlOne.push(this.patchTheoryMaxMarks(x.subject))
       this.examResultForm.reset();
     })
 
     const controlTwo = <FormArray>this.examResultForm.get('type.theoryPassMarks');
     this.classSubject.forEach((x: any) => {
-      controlTwo.push(this.patchTheoryPassMarks(x))
+      controlTwo.push(this.patchTheoryPassMarks(x.subject))
       this.examResultForm.reset();
     })
+  }
+
+  patchPracticalMarks() {
     const controlThree = <FormArray>this.examResultForm.get('type.practicalMaxMarks');
     this.classSubject.forEach((x: any) => {
-      controlThree.push(this.patchPracticalMaxMarks(x))
+      controlThree.push(this.patchPracticalMaxMarks(x.subject))
       this.examResultForm.reset();
     })
     const controlFour = <FormArray>this.examResultForm.get('type.practicalPassMarks');
     this.classSubject.forEach((x: any) => {
-      controlFour.push(this.patchPracticalPassMarks(x))
+      controlFour.push(this.patchPracticalPassMarks(x.subject))
       this.examResultForm.reset();
     })
   }
+
+
+
+
   patchTheoryMaxMarks(theoryMaxMarks: any) {
     return this.fb.group({
       [theoryMaxMarks]: [theoryMaxMarks],
@@ -183,8 +214,8 @@ export class AdminStudentResultStructureComponent implements OnInit {
   }
 
   examResultAddUpdate() {
-
     this.examResultForm.value.class = this.cls;
+    this.examResultForm.value.stream = this.stream;
     if (this.gradeRange) {
       this.examResultForm.value.type.gradeMinMarks = this.gradeMinMarks;
       this.examResultForm.value.type.gradeMaxMarks = this.gradeMaxMarks;
@@ -199,10 +230,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
       delete this.examResultForm.value.type.practicalMaxMarks;
       delete this.examResultForm.value.type.practicalPassMarks;
     }
-    // if (!this.gradeRange) {
-    //   delete this.examResultForm.value.type.gradeMaxMarks;
-    //   delete this.examResultForm.value.type.gradeMinMarks;
-    // }
+
     let theoryMaxMarksObj = this.examResultForm.value.type.theoryMaxMarks;
     let theoryPassMarksObj = this.examResultForm.value.type.theoryPassMarks;
     let containsTheoryMaxMarksNull = theoryMaxMarksObj.some((item: any) => Object.values(item).includes(null));

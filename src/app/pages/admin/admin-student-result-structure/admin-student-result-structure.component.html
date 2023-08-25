@@ -20,8 +20,9 @@
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>No.</th>
-                                        <th>Exam</th>
                                         <th>Class</th>
+                                        <th>Stream</th>
+                                        <th>Exam</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="examResultStr">
@@ -30,11 +31,15 @@
                                             <p class="mb-0">{{i+1}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{examResultStr.examType | titlecase}} Exam</p>
-                                        </td>
-                                        <td>
                                             <p class="mb-0">{{examResultStr.class}}</p>
                                         </td>
+                                        <td>
+                                            <p class="mb-0">{{examResultStr.stream}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{examResultStr.examType | titlecase}} Exam</p>
+                                        </td>
+
                                     </tr>
 
                                 </tbody>
@@ -90,7 +95,32 @@
                                                     </div>
                                                     <div class="container-fluid mt-3 mb-3">
                                                         <div class="row">
-                                                            <div class="col-12 m-1 mt-0 mb-0 p-3">
+                                                            <div class="col-12 col-lg-6">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Stream</mat-label>
+                                                                    <mat-select type="text" matInput>
+                                                                        <ng-container *ngIf="cls==12 || cls==11">
+                                                                            <div
+                                                                                *ngFor="let subject of streamMainSubject">
+                                                                                <mat-option
+                                                                                    (click)="chooseStream(subject)"
+                                                                                    value="{{subject}}">{{subject}}</mat-option>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="cls<11">
+                                                                            <div>
+                                                                                <mat-option value="notApplicable"
+                                                                                    (click)='chooseStream(notApplicable)'>N/A</mat-option>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </mat-select>
+                                                                    <mat-hint
+                                                                        *ngIf="!examResultForm.get('stream')?.valid && examResultForm.get('stream')?.touched"
+                                                                        class="form-text text-danger">Stream is
+                                                                        required</mat-hint>
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-12 col-lg-6">
                                                                 <mat-form-field appearance="outline">
                                                                     <mat-label>Exam Type</mat-label>
                                                                     <mat-select type="text" matInput
@@ -113,7 +143,7 @@
                                                         <div class="wide-content">
                                                             <div class="container">
                                                                 <div class="row">
-                                                                    <ng-container *ngIf="theoryMarks">
+                                                                    <ng-container *ngIf="theoryMarks && classSubject">
                                                                         <div class="col-12 p-4 pt-0 pb-0">
                                                                             <h3>Exam Theory Marks</h3>
                                                                         </div>
@@ -122,7 +152,7 @@
                                                                                 *ngFor="let subjects of classSubject; let i = index">
                                                                                 <button mat-raised-button
                                                                                     class="pt-2 pb-2 mb-4"
-                                                                                    style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects}}</button>
+                                                                                    style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects.subject}}</button>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-4">
@@ -138,7 +168,7 @@
                                                                                                     Marks</mat-label>
                                                                                                 <mat-select type="text"
                                                                                                     matInput
-                                                                                                    [formControlName]="subjects">
+                                                                                                    [formControlName]="subjects.subject">
                                                                                                     <div
                                                                                                         *ngFor="let maxMark of theoryMaxMarks">
                                                                                                         <mat-option
@@ -164,7 +194,7 @@
                                                                                                     Marks</mat-label>
                                                                                                 <mat-select type="text"
                                                                                                     matInput
-                                                                                                    [formControlName]="subjects">
+                                                                                                    [formControlName]="subjects.subject">
                                                                                                     <div
                                                                                                         *ngFor="let passMark of theoryPassMarks">
                                                                                                         <mat-option
@@ -178,7 +208,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="practicalMarks">
+                                                                    <ng-container
+                                                                        *ngIf="theoryMarks && practicalMarks && classSubject">
                                                                         <div class="col-12 p-4 pt-0 pb-0">
                                                                             <h3>Exam Practical Marks</h3>
                                                                         </div>
@@ -187,7 +218,7 @@
                                                                                 *ngFor="let subjects of classSubject; let i = index">
                                                                                 <button mat-raised-button
                                                                                     class="pt-2 pb-2 mb-4"
-                                                                                    style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects}}</button>
+                                                                                    style="background-color: transparent;box-shadow: none;color: #7c7698fb;">{{subjects.subject}}</button>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-4">
@@ -203,7 +234,7 @@
                                                                                                     Marks</mat-label>
                                                                                                 <mat-select type="text"
                                                                                                     matInput
-                                                                                                    [formControlName]="subjects">
+                                                                                                    [formControlName]="subjects.subject">
                                                                                                     <div
                                                                                                         *ngFor="let maxMark of practicalMaxMarks">
                                                                                                         <mat-option
@@ -229,7 +260,7 @@
                                                                                                     Marks</mat-label>
                                                                                                 <mat-select type="text"
                                                                                                     matInput
-                                                                                                    [formControlName]="subjects">
+                                                                                                    [formControlName]="subjects.subject">
                                                                                                     <div
                                                                                                         *ngFor="let passMark of practicalPassMarks">
                                                                                                         <mat-option
@@ -247,56 +278,56 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <ng-container *ngIf="theoryMarks">
+                                                    <ng-container>
                                                         <div class="col-12 p-4 pt-0 pb-0">
                                                             <h3>Exam Grades</h3>
                                                         </div>
                                                         <div class="row p-4 pt-0" *ngIf="gradeRange">
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     A+ : 91% - 100%
                                                                 </mat-checkbox>
                                                             </div>
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     A : 81% - 90%
                                                                 </mat-checkbox>
                                                             </div>
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     B+ : 71% - 80%
                                                                 </mat-checkbox>
                                                             </div>
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     B : 61% - 70%
                                                                 </mat-checkbox>
                                                             </div>
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     C+ : 51% - 60%
                                                                 </mat-checkbox>
                                                             </div>
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     C : 41% - 50%
                                                                 </mat-checkbox>
                                                             </div>
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     D : 33% - 40%
                                                                 </mat-checkbox>
                                                             </div>
                                                             <div class="col-6 col-lg-3">
-                                                                <mat-checkbox class="example-margin"
-                                                                    checked=“true” [disabled]="disabled">
+                                                                <mat-checkbox class="example-margin" checked=“true”
+                                                                    [disabled]="disabled">
                                                                     E : 00% - 32%
                                                                 </mat-checkbox>
                                                             </div>
@@ -305,7 +336,8 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="submit-button" mat-raised-button
-                                                        [disabled]="!examResultForm.valid" type="submit">Submit</button>
+                                                        [disabled]="!examResultForm.valid || !stream"
+                                                        type="submit">Submit</button>
                                                 </div>
                                             </form>
                                         </ng-container>
