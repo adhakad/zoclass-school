@@ -15,15 +15,25 @@ let CreateAdmitCardStructure = async (req, res, next) => {
     let className = req.body.class;
     let {examType,stream} = req.body;
     let { examDate, startTime, endTime } = req.body.type;
+    if(stream==="stream"){
+        stream = "N/A";
+    }
+    let streamMsg = `${stream} stream`;
 
     try {
         const checkExamExist = await AdmitCardStructureModel.findOne({ class: className, examType: examType,stream:stream });
         if (checkExamExist) {
-            return res.status(404).json(`This class ${examType} exam admit card already created`);
+            if(stream==="N/A"){
+                streamMsg = ``;
+            }
+            return res.status(400).json(`Class ${className} ${streamMsg} ${examType} exam admit card structure already exist`);
         }
         const checkAdmitCardExist = await AdmitCardModel.findOne({ class: className,stream:stream });
         if (checkAdmitCardExist) {
-            return res.status(404).json(`Class ${className} ${stream} stream exam admit card already exist`);
+            if(stream==="N/A"){
+                streamMsg = ``;
+            }
+            return res.status(400).json(`Class ${className} ${streamMsg} exam admit cards already exist`);
         }
         let admitCardStructureData = {
             class: className,

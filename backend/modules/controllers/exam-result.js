@@ -61,10 +61,12 @@ let GetExamResultPagination = async (req, res, next) => {
 
 let CreateExamResult = async (req, res, next) => {
     let className = req.body.class;
-    let { rollNumber, examType } = req.body;
+    let { rollNumber, examType ,stream} = req.body;
     let resultNo = Math.floor(Math.random() * 899999 + 100000);
     let { theoryMarks, practicalMarks } = req.body.type;
-
+    if(stream==="stream"){
+        stream = "N/A";
+    }
     try {
         // const checkRollNumber = await StudentModel.findOne({rollNumber:rollNumber,class: className});
         // if(!checkRollNumber){
@@ -107,6 +109,9 @@ let CreateExamResult = async (req, res, next) => {
 
 let CreateBulkExamResult = async (req, res, next) => {
     let {examType,stream} = req.body;
+    if(stream==="stream"){
+        stream = "N/A";
+    }
     let result = [];
     let newClsRollNumber = [];
     result = req.body.bulkResult.map(entry => {
@@ -147,9 +152,6 @@ let CreateBulkExamResult = async (req, res, next) => {
 
         return resultEntry;
     });
-
-    console.log(result);
-
 
     try {
         let existingItems = await ExamResultModel.find({ class: req.body.bulkResult[0].class }).lean();

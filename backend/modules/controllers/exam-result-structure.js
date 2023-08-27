@@ -31,6 +31,9 @@ let CreateExamResultStructure = async (req, res, next) => {
     let className = req.body.class;
     let { examType, stream } = req.body;
     let { theoryMaxMarks, theoryPassMarks, practicalMaxMarks, practicalPassMarks, gradeMinMarks, gradeMaxMarks } = req.body.type;
+    if(stream==="stream"){
+        stream = "N/A";
+    }
     try {
         const checkExamExist = await ExamResultStructureModel.findOne({ class: className, examType: examType, stream: stream });
         if (checkExamExist) {
