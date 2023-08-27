@@ -11,7 +11,6 @@ import { ExamResultStructureService } from 'src/app/services/exam-result-structu
   styleUrls: ['./admin-student-result-structure.component.css']
 })
 export class AdminStudentResultStructureComponent implements OnInit {
-  cls: any;
   examResultForm: FormGroup;
   disabled = true;
   showModal: boolean = false;
@@ -21,25 +20,24 @@ export class AdminStudentResultStructureComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  examType: any[] = ["quarterly", "half yearly", "final"];
-  theoryMaxMarks: any[] = [100,75]; // [100, 80, 75, 70];
-  theoryPassMarks: any[] = [33,25]; // [33, 26, 25, 23];
-  practicalMaxMarks: any[] = [25]; // [20, 25, 30];
-  practicalPassMarks: any[] = [8]; // [6, 8, 10];
+  cls: any;
   classSubject: any[] = [];
-  notApplicable:String = "stream";
-  stream: string = '';
-  streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
-
-
   examResultStr: any;
   marksTypeMode: boolean = false;
   marksMode: boolean = false;
   theoryMarks: boolean = false;
   practicalMarks: boolean = false;
   gradeRange: boolean = true;
+  stream: string = '';
+  notApplicable: String = "stream";
+  theoryMaxMarks: any[] = [100, 75];
+  theoryPassMarks: any[] = [33, 25];
+  practicalMaxMarks: any[] = [25];
+  practicalPassMarks: any[] = [8];
   gradeMinMarks: any = [{ "A+": 91 }, { "A": 81 }, { "B+": 71 }, { "B": 61 }, { "C+": 51 }, { "C": 41 }, { "D": 33 }, { "E": 0 }];
   gradeMaxMarks: any = [{ "A+": 100 }, { "A": 90 }, { "B+": 80 }, { "B": 70 }, { "C+": 60 }, { "C": 50 }, { "D": 40 }, { "E": 32 }];
+  examType: any[] = ["quarterly", "half yearly", "final"];
+  streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
@@ -62,70 +60,13 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.getExamResultStructureByClass(this.cls);
   }
 
-  getExamResultStructureByClass(cls: any) {
-    this.examResultStructureService.examResultStructureByClass(cls).subscribe((res: any) => {
-      if (res) {
-        this.examResultStr = res;
-      }
-    })
-  }
-
-  chooseStream(stream: any) {
-    this.falseFormValue();
-    if (stream) {
-      this.stream = stream;
-      this.theoryMarks = true;
-      let params = {
-        cls: this.cls,
-        stream: stream
-      }
-      if(this.theoryMarks){
-        this.getSingleClassSubjectByStream(params)
-      }
-    }
-  }
-
-  getSingleClassSubjectByStream(params: any) {
-    this.classSubjectService.getSingleClassSubjectByStream(params).subscribe((res: any) => {
-      if (res) {
-        this.classSubject = res.subject;
-        if (this.classSubject) {
-          if(this.theoryMarks){
-            this.patchTheoryMarks();
-          }
-          if(this.practicalMarks){
-            this.patchPracticalMarks();
-          }
-        }
-      }
-      if(!res){
-        this.classSubject = [];
-        this.theoryMarks = false;
-      }
-    })
-  }
-
-  practical(practicalMarks: boolean) {
-    if (practicalMarks === false) {
-      this.practicalMarks = true;
-    }
-    if (practicalMarks === true) {
-      this.practicalMarks = false;
-    }
-  }
-
-  selectExamResultStructure() {
-    this.marksTypeMode = false;
-    this.marksMode = true;
-  }
-
   addExamResultModel() {
     this.showModal = true;
     this.marksTypeMode = true;
     this.examResultForm.reset();
   }
 
-  falseFormValue(){
+  falseFormValue() {
     const controlOne = <FormArray>this.examResultForm.get('type.theoryMaxMarks');
     const controlTwo = <FormArray>this.examResultForm.get('type.theoryPassMarks');
     const controlThree = <FormArray>this.examResultForm.get('type.practicalMaxMarks');
@@ -151,8 +92,6 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.errorMsg = '';
     this.examResultForm.reset();
   }
-
-
   successDone() {
     setTimeout(() => {
       this.closeModal();
@@ -160,6 +99,64 @@ export class AdminStudentResultStructureComponent implements OnInit {
       this.getExamResultStructureByClass(this.cls)
     }, 1000)
   }
+  getExamResultStructureByClass(cls: any) {
+    this.examResultStructureService.examResultStructureByClass(cls).subscribe((res: any) => {
+      if (res) {
+        this.examResultStr = res;
+      }
+    })
+  }
+
+  chooseStream(stream: any) {
+    this.falseFormValue();
+    if (stream) {
+      this.stream = stream;
+      this.theoryMarks = true;
+      let params = {
+        cls: this.cls,
+        stream: stream
+      }
+      if (this.theoryMarks) {
+        this.getSingleClassSubjectByStream(params)
+      }
+    }
+  }
+
+  getSingleClassSubjectByStream(params: any) {
+    this.classSubjectService.getSingleClassSubjectByStream(params).subscribe((res: any) => {
+      if (res) {
+        this.classSubject = res.subject;
+        if (this.classSubject) {
+          if (this.theoryMarks) {
+            this.patchTheoryMarks();
+          }
+          if (this.practicalMarks) {
+            this.patchPracticalMarks();
+          }
+        }
+      }
+      if (!res) {
+        this.classSubject = [];
+        this.theoryMarks = false;
+      }
+    })
+  }
+
+  practical(practicalMarks: boolean) {
+    if (practicalMarks === false) {
+      this.practicalMarks = true;
+    }
+    if (practicalMarks === true) {
+      this.practicalMarks = false;
+    }
+  }
+
+  selectExamResultStructure() {
+    this.marksTypeMode = false;
+    this.marksMode = true;
+  }
+
+
 
   patchTheoryMarks() {
     const controlOne = <FormArray>this.examResultForm.get('type.theoryMaxMarks');
@@ -223,6 +220,14 @@ export class AdminStudentResultStructureComponent implements OnInit {
     if (this.practicalMarks) {
       let practicalMaxMarksObj = this.examResultForm.value.type.practicalMaxMarks;
       let practicalPassMarksObj = this.examResultForm.value.type.practicalPassMarks;
+      this.examResultForm.value.type.practicalMaxMarks = practicalMaxMarksObj.filter((subject: any) => {
+        const value = Object.values(subject)[0];
+        return value !== null && value !== undefined;
+      });
+      this.examResultForm.value.type.practicalPassMarks = practicalPassMarksObj.filter((subject: any) => {
+        const value = Object.values(subject)[0];
+        return value !== null && value !== undefined;
+      });
       let containsPracticalMaxMarksNull = practicalMaxMarksObj.some((item: any) => Object.values(item).includes(null));
       let containsPracticalPassMarksNull = practicalPassMarksObj.some((item: any) => Object.values(item).includes(null));
     }

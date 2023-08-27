@@ -106,7 +106,7 @@ let CreateExamResult = async (req, res, next) => {
 }
 
 let CreateBulkExamResult = async (req, res, next) => {
-    let examType = req.body.examType;
+    let {examType,stream} = req.body;
     let result = [];
     let newClsRollNumber = [];
     result = req.body.bulkResult.map(entry => {
@@ -134,6 +134,7 @@ let CreateBulkExamResult = async (req, res, next) => {
 
         const resultEntry = {
             examType: examType,
+            stream:stream,
             resultNo: resultNo,
             rollNumber: rollNumber,
             class: studentClass,

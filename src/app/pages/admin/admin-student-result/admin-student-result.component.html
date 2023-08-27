@@ -42,6 +42,7 @@
                     <th>Result No.</th>
                     <th>Roll Number</th>
                     <th>Class</th>
+                    <th>Stream</th>
                     <th *ngFor="let subject of classSubject,let i = index">{{subject.subject}}</th>
                     <th>Action</th>
                   </tr>
@@ -60,6 +61,9 @@
                     </td>
                     <td>
                       <p class="mb-0">{{examResults.class}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{examResults.stream}}</p>
                     </td>
                     <td *ngFor="let marks of examResults.marks,let i = index">
                       <p class="mb-0">{{marks}}</p>
@@ -109,10 +113,29 @@
                                     <mat-label>Exam Type</mat-label>
                                     <mat-select #examSelect matInput>
                                       <div *ngFor="let exam of examType">
-                                        <mat-option (click)="getExamResultStructureByClass(examSelect.value)" value="{{exam}}">
+                                        <mat-option (click)="selectExam(examSelect.value)" value="{{exam}}">
                                           {{exam | titlecase}} Exam
                                         </mat-option>
                                       </div>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-6">
+                                  <mat-form-field appearance="outline">
+                                    <mat-label>Stream</mat-label>
+                                    <mat-select type="text" matInput>
+                                      <ng-container *ngIf="cls==12 || cls==11">
+                                        <div *ngFor="let subject of streamMainSubject">
+                                          <mat-option (click)="chooseStream(subject)"
+                                            value="{{subject}}">{{subject}}</mat-option>
+                                        </div>
+                                      </ng-container>
+                                      <ng-container *ngIf="cls<11">
+                                        <div>
+                                          <mat-option value="notApplicable"
+                                            (click)='chooseStream(notApplicable)'>N/A</mat-option>
+                                        </div>
+                                      </ng-container>
                                     </mat-select>
                                   </mat-form-field>
                                 </div>
@@ -125,20 +148,22 @@
                                       class="form-text text-danger">Roll number is required</mat-hint>
                                   </mat-form-field>
                                 </div>
-                                <h3>Theory marks</h3>
-                                <ng-container formGroupName="type">
-                                  <ng-container formArrayName="theoryMarks">
-                                    <div class="col-6" *ngFor="let subjects of classSubject; let i = index">
-                                      <div [formGroupName]="i">
-                                        <mat-form-field appearance="outline">
-                                          <mat-label>{{subjects | titlecase}} Theory Marks</mat-label>
-                                          <input matInput type="text" [formControlName]="subjects">
-                                        </mat-form-field>
+                                <ng-container *ngIf="classSubject.length>0">
+                                  <h3>Theory marks</h3>
+                                  <ng-container formGroupName="type">
+                                    <ng-container formArrayName="theoryMarks">
+                                      <div class="col-6" *ngFor="let subjects of classSubject; let i = index">
+                                        <div [formGroupName]="i">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>{{subjects | titlecase}} Theory Marks</mat-label>
+                                            <input matInput type="text" [formControlName]="subjects">
+                                          </mat-form-field>
+                                        </div>
                                       </div>
-                                    </div>
+                                    </ng-container>
                                   </ng-container>
                                 </ng-container>
-                                <ng-container *ngIf="practicalSubjects.length > 0">
+                                <ng-container *ngIf="practicalSubjects.length>0">
                                   <h3>Practical marks</h3>
                                   <ng-container formGroupName="type">
                                     <ng-container formArrayName="practicalMarks">
@@ -153,15 +178,14 @@
                                     </ng-container>
                                   </ng-container>
                                 </ng-container>
-
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button class="submit-button" mat-raised-button type="submit"
-                          >Submit</button>
+                        <button class="submit-button" [disabled]="!examResultForm.valid" mat-raised-button
+                          type="submit">Submit</button>
                       </div>
                     </form>
                     <div *ngIf="deleteMode">
@@ -213,6 +237,23 @@
                               </div>
                             </mat-select>
                           </mat-form-field>
+                          <mat-form-field appearance="outline">
+                            <mat-label>Stream</mat-label>
+                            <mat-select type="text" matInput>
+                              <ng-container *ngIf="cls==12 || cls==11">
+                                <div *ngFor="let subject of streamMainSubject">
+                                  <mat-option (click)="chooseStream(subject)"
+                                    value="{{subject}}">{{subject}}</mat-option>
+                                </div>
+                              </ng-container>
+                              <ng-container *ngIf="cls<11">
+                                <div>
+                                  <mat-option value="notApplicable"
+                                    (click)='chooseStream(notApplicable)'>N/A</mat-option>
+                                </div>
+                              </ng-container>
+                            </mat-select>
+                          </mat-form-field>
                           <div class="custom-file">
                             <input type="file" name="file" class="form-control file-input" id="inputGroupFile" required
                               (change)="handleImport($event)"
@@ -254,7 +295,7 @@
                       </main>
                     </div>
                     <div class="modal-footer">
-                      <button [disabled]="!fileChoose" (click)="addBulkExamResult()" class="submit-button"
+                      <button [disabled]="!fileChoose || !selectedExam || !stream" (click)="addBulkExamResult()" class="submit-button"
                         mat-raised-button>
                         Upload
                       </button>

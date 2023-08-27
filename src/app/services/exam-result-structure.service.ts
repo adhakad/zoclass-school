@@ -15,6 +15,9 @@ export class ExamResultStructureService {
   examResultStructureByClass(cls: any) {
     return this.http.get(`${this.url}/${cls}`);
   }
+  getSingleClassResultStrucByStream(params: any) {
+    return this.http.get(`${this.url}/class/${params.cls}/stream/${params.stream}/exam/${params.examType}`);
+  }
 
   // addBulkExamResult(examResultBulkResult:any) {
   //   return this.http.post(`${this.url}/bulk-examResult`,examResultBulkResult);

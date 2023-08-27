@@ -12,6 +12,21 @@ let GetSingleClassExamResultStructure = async (req, res, next) => {
     }
 }
 
+let GetSingleClassExamResultStructureByStream = async (req, res, next) => {
+    let className = req.params.class;
+    let stream = req.params.stream;
+    let examType = req.params.exam;
+    if(stream==="stream"){
+        stream = "N/A";
+    }
+    try {
+        const singleExamResultStructureStr = await ExamResultStructureModel.findOne({ class: className,stream:stream,examType:examType });
+        return res.status(200).json(singleExamResultStructureStr);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 let CreateExamResultStructure = async (req, res, next) => {
     let className = req.body.class;
     let { examType, stream } = req.body;
@@ -75,10 +90,9 @@ let CreateExamResultStructure = async (req, res, next) => {
     }
 }
 
-
-
 module.exports = {
     GetSingleClassExamResultStructure,
+    GetSingleClassExamResultStructureByStream,
     CreateExamResultStructure
 
 }

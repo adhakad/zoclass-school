@@ -3,8 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
-import { ClassService } from 'src/app/services/class.service';
-import { ClassSubjectService } from 'src/app/services/class-subject.service';
 import { ExamResultService } from 'src/app/services/exam-result.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { ExamResultStructureService } from 'src/app/services/exam-result-structure.service';
@@ -17,6 +15,7 @@ import { ExamResultStructureService } from 'src/app/services/exam-result-structu
 export class AdminStudentResultComponent implements OnInit {
   examResultForm: FormGroup;
   showModal: boolean = false;
+  showBulkResultModal: boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
   deleteById: String = '';
@@ -30,25 +29,25 @@ export class AdminStudentResultComponent implements OnInit {
   paginationValues: Subject<any> = new Subject();
   page: Number = 0;
   cls: any;
-  classSubject: any;
-  fields: any;
-  abc: any;
-  subjectName: any[] = [];
-
-  showBulkResultModal: boolean = false;
-  bulkResult: any[] = [];
   selectedValue: number = 0;
+  examResultStr: any;
+  classSubject: any[] = [];
+  practicalSubjects: any[] = [];
   fileChoose: boolean = false;
   existRollnumber: number[] = [];
-  examType: any[] = ["quarterly", "half yearly", "final"];
+  bulkResult: any[] = [];
   selectedExam: any = '';
-  examResultStr: any;
-  practicalSubjects: any[] = [];
+  stream: string = '';
+  notApplicable: String = "stream";
+  examType: any[] = ["quarterly", "half yearly", "final"];
+  streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultService: ExamResultService, private examResultStructureService: ExamResultStructureService) {
+
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private examResultService: ExamResultService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
       rollNumber: ['', Validators.required],
-      examType: ['',],
+      examType: [''],
+      stream: [''],
       type: this.fb.group({
         theoryMarks: this.fb.array([]),
         practicalMarks: this.fb.array([]),
@@ -59,73 +58,18 @@ export class AdminStudentResultComponent implements OnInit {
 
   ngOnInit(): void {
     this.getExamResults({ page: 1 });
-
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getClassSubject(this.cls);
-  }
-  getClassSubject(cls: any) {
-    this.classSubjectService.getSubjectByClass(cls).subscribe(res => {
-      if (res) {
-        if (res) {
-          this.classSubject = res.map((item: any) => {
-            return item.subject;
-          })
-          if (this.classSubject) {
-            this.patch();
-          }
-        }
-      }
-    })
   }
 
-  getExamResultStructureByClass(selectedExam: string) {
-    if (selectedExam) {
-      this.selectedExam = selectedExam;
-
-      this.examResultStructureService.examResultStructureByClass(this.cls).subscribe((res: any) => {
-        if (res) {
-          let examResultStr = res.find((exam: any) => exam.examType === selectedExam);
-
-          let subjectData = examResultStr.practicalMaxMarks;
-
-          const practicalSubjects = [];
-
-          for (const key in subjectData) {
-            if (typeof subjectData[key] === 'object' && subjectData[key] !== null) {
-              const subjectName = Object.keys(subjectData[key])[0];
-              const subjectMarks = subjectData[key][subjectName];
-
-              if (subjectMarks !== null && subjectMarks !== '') {
-                practicalSubjects.push(subjectName);
-              }
-            }
-          }
-          this.practicalSubjects = practicalSubjects;
-          if (this.practicalSubjects) {
-            this.patchPractical();
-          }
-        }
-      })
-    }
-  }
-
-  closeModal() {
-    this.examResultStr = '';
-    this.practicalSubjects = [];
-    this.selectedExam = '';
-    this.showModal = false;
-    this.showBulkResultModal = false;
-    this.updateMode = false;
-    this.deleteMode = false;
-    this.errorMsg = '';
-    this.examResultForm.reset();
-  }
   addExamResultModel() {
     this.showModal = true;
     this.deleteMode = false;
     this.updateMode = false;
     this.examResultForm.reset();
 
+  }
+  addBulkExamResultModel() {
+    this.showBulkResultModal = true;
   }
   updateExamResultModel(examResult: any) {
     this.showModal = true;
@@ -139,7 +83,21 @@ export class AdminStudentResultComponent implements OnInit {
     this.deleteMode = true;
     this.deleteById = id;
   }
-
+  closeModal() {
+    this.examResultStr = '';
+    this.practicalSubjects = [];
+    this.selectedExam = '';
+    this.stream = '';
+    this.showModal = false;
+    this.showBulkResultModal = false;
+    this.updateMode = false;
+    this.deleteMode = false;
+    this.errorMsg = '';
+    this.examResultForm.reset();
+  }
+  onChange(event: MatRadioChange) {
+    this.selectedValue = event.value;
+  }
 
   successDone() {
     setTimeout(() => {
@@ -174,6 +132,83 @@ export class AdminStudentResultComponent implements OnInit {
     });
   }
 
+  
+  selectExam(selectedExam: string) {
+    this.selectedExam = selectedExam;
+    if (this.stream && selectedExam && this.cls) {
+      let params = {
+        cls: this.cls,
+        stream: this.stream,
+        examType: selectedExam,
+      }
+      this.getSingleClassResultStrucByStream(params);
+    }
+  }
+
+  chooseStream(stream: any) {
+    this.stream = stream;
+    if (stream && this.selectedExam && this.cls) {
+      let params = {
+        cls: this.cls,
+        stream: stream,
+        examType: this.selectedExam,
+      }
+      this.getSingleClassResultStrucByStream(params);
+    }
+  }
+
+  getSingleClassResultStrucByStream(params: any) {
+    this.examResultStructureService.getSingleClassResultStrucByStream(params).subscribe((res: any) => {
+      if (res) {
+        if (res.theoryMaxMarks) {
+          this.classSubject = res.theoryMaxMarks.map((item: any) => {
+            const theorySubject = Object.keys(item)[0];
+            return theorySubject;
+          })
+          if (this.classSubject) {
+            this.patchTheory();
+          }
+        }
+
+        if (res.practicalMaxMarks) {
+          this.practicalSubjects = res.practicalMaxMarks.map((item: any) => {
+            const practicalSubject = Object.keys(item)[0];
+            return practicalSubject;
+          })
+          if (this.practicalSubjects) {
+            this.patchPractical();
+          }
+        }
+      }
+    })
+  }
+
+  patchTheory() {
+    const controlOne = <FormArray>this.examResultForm.get('type.theoryMarks');
+    this.classSubject.forEach((x: any) => {
+      controlOne.push(this.patchTheoryValues(x))
+      this.examResultForm.reset();
+    })
+  }
+  patchPractical() {
+    const controlOne = <FormArray>this.examResultForm.get('type.practicalMarks');
+    this.practicalSubjects.forEach((x: any) => {
+      controlOne.push(this.patchPracticalValues(x))
+      this.examResultForm.reset();
+    })
+  }
+  patchTheoryValues(theoryMarks: any) {
+    return this.fb.group({
+      [theoryMarks]: [theoryMarks],
+    })
+  }
+
+  patchPracticalValues(practicalMarks: any) {
+    return this.fb.group({
+      [practicalMarks]: [practicalMarks],
+    })
+  }
+
   examResultAddUpdate() {
     if (this.examResultForm.valid) {
       if (this.updateMode) {
@@ -191,9 +226,9 @@ export class AdminStudentResultComponent implements OnInit {
           delete this.examResultForm.value.type.practicalMarks;
         }
         this.examResultForm.value.examType = this.selectedExam;
-
-        console.log(this.examResultForm.value)
+        this.examResultForm.value.stream = this.stream;
         this.examResultForm.value.class = this.cls;
+        console.log(this.examResultForm.value)
         this.examResultService.addExamResult(this.examResultForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();
@@ -207,33 +242,6 @@ export class AdminStudentResultComponent implements OnInit {
     }
   }
 
-
-  patch() {
-    const controlOne = <FormArray>this.examResultForm.get('type.theoryMarks');
-    this.classSubject.forEach((x: any) => {
-      controlOne.push(this.patchValues(x))
-      this.examResultForm.reset();
-    })
-  }
-  patchPractical() {
-    const controlOne = <FormArray>this.examResultForm.get('type.practicalMarks');
-    this.practicalSubjects.forEach((x: any) => {
-      controlOne.push(this.patchPracticalValues(x))
-      this.examResultForm.reset();
-    })
-  }
-  patchValues(theoryMarks: any) {
-    return this.fb.group({
-      [theoryMarks]: [theoryMarks],
-    })
-  }
-
-  patchPracticalValues(practicalMarks: any) {
-    return this.fb.group({
-      [practicalMarks]: [practicalMarks],
-    })
-  }
-
   examResultDelete(id: String) {
     this.examResultService.deleteExamResult(id).subscribe((res: any) => {
       if (res) {
@@ -244,12 +252,6 @@ export class AdminStudentResultComponent implements OnInit {
     })
   }
 
-
-  selectExam(selectedExam: string) {
-    if (selectedExam) {
-      this.selectedExam = selectedExam;
-    }
-  }
 
   handleImport($event: any) {
     console.log("xlsx file")
@@ -272,20 +274,10 @@ export class AdminStudentResultComponent implements OnInit {
 
   }
 
-  
-  
-
-
-
-  onChange(event: MatRadioChange) {
-    this.selectedValue = event.value;
-  }
-  addBulkExamResultModel() {
-    this.showBulkResultModal = true;
-  }
   addBulkExamResult() {
     let resultData = {
       examType: this.selectedExam,
+      stream: this.stream,
       bulkResult: this.bulkResult
     }
 
@@ -302,8 +294,9 @@ export class AdminStudentResultComponent implements OnInit {
   }
 
   handleExport() {
+    let rollNumber="rollNumber";
     const headings = [[
-      'rollNumber',
+      rollNumber,
       'Class',
       'Hindi',
       'English',

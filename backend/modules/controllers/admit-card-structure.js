@@ -13,26 +13,27 @@ let GetSingleClassAdmitCardStructure = async (req, res, next) => {
 }
 let CreateAdmitCardStructure = async (req, res, next) => {
     let className = req.body.class;
-    let examType = req.body.examType;
+    let {examType,stream} = req.body;
     let { examDate, startTime, endTime } = req.body.type;
 
     try {
-        const checkExamExist = await AdmitCardStructureModel.findOne({ class: className, examType: examType });
+        const checkExamExist = await AdmitCardStructureModel.findOne({ class: className, examType: examType,stream:stream });
         if (checkExamExist) {
             return res.status(404).json(`This class ${examType} exam admit card already created`);
         }
-        const checkAdmitCardExist = await AdmitCardModel.findOne({ class: className });
+        const checkAdmitCardExist = await AdmitCardModel.findOne({ class: className,stream:stream });
         if (checkAdmitCardExist) {
-            return res.status(404).json(`This class ${examType} exam admit card already exist`);
+            return res.status(404).json(`Class ${className} ${stream} stream exam admit card already exist`);
         }
         let admitCardStructureData = {
             class: className,
             examType: examType,
+            stream:stream,
             examDate: examDate,
             examStartTime: startTime,
             examEndTime: endTime,
         }
-        const studentData = await StudentModel.find({ class: className });
+        const studentData = await StudentModel.find({ class: className,stream:stream });
 
         let studentAdmitCardData = [];
         for (const student of studentData) {
@@ -42,6 +43,7 @@ let CreateAdmitCardStructure = async (req, res, next) => {
                 admitCardNo: admitCardNo,
                 name: student.name,
                 class: student.class,
+                stream:stream,
                 rollNumber: student.rollNumber,
                 examType: examType,
             });

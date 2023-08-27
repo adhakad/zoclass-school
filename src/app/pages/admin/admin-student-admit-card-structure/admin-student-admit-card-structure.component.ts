@@ -19,15 +19,19 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  examType: any[] = ["quarterly", "half yearly", "final"];
-  examTime: any[] = ["8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM"];
   classSubject: any[] = [];
   examAdmitCard: any[] = [];
+  stream: string = '';
+  notApplicable: String = "stream";
+  examTypes: any[] = ["quarterly", "half yearly", "final"];
+  streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
+  examTime: any[] = ["8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM"];
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private admitCardStructureService: AdmitCardStructureService) {
     this.admitcardForm = this.fb.group({
       class: [''],
       examType: ['', Validators.required],
+      stream: [''],
       type: this.fb.group({
         examDate: this.fb.array([], [Validators.required]),
         startTime: this.fb.array([], [Validators.required]),
@@ -38,20 +42,47 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
 
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getClassSubject(this.cls);
     this.getAdmitCardStructureByClass(this.cls);
   }
 
+  falseFormValue() {
+    const controlOne = <FormArray>this.admitcardForm.get('type.examDate');
+    const controlTwo = <FormArray>this.admitcardForm.get('type.startTime');
+    const controlThree = <FormArray>this.admitcardForm.get('type.endTime');
+    controlOne.clear();
+    controlTwo.clear();
+    controlThree.clear();
+    this.admitcardForm.reset();
+  }
+  falseAllValue() {
+    this.falseFormValue();
+    this.stream = '';
+    this.classSubject = [];
+    this.admitcardForm.reset();
+  }
+  chooseStream(stream: any) {
+    this.falseFormValue();
+    if (stream) {
+      this.stream = stream;
+      let params = {
+        cls: this.cls,
+        stream: stream
+      }
+      this.getSingleClassSubjectByStream(params)
+    }
+  }
 
-  getClassSubject(cls: any) {
-    this.classSubjectService.getSubjectByClass(cls).subscribe((res: any) => {
+  getSingleClassSubjectByStream(params: any) {
+    this.classSubjectService.getSingleClassSubjectByStream(params).subscribe((res: any) => {
       if (res) {
-        this.classSubject = res.map((item: any) => {
-          return item.subject;
-        })
+        this.classSubject = res.subject;
         if (this.classSubject) {
           this.patch();
+
         }
+      }
+      if (!res) {
+        this.classSubject = [];
       }
     })
   }
@@ -62,12 +93,12 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
         this.examAdmitCard = res;
 
         console.log(this.examAdmitCard)
-      
+
         let date = new Date();
-        let examDate: any = this.examAdmitCard[0].examDate
+        let examDate: any = this.examAdmitCard[0]?.examDate;
 
         // Convert the date strings to Date objects
-        const datesAsObjects = examDate.map((entry: any) => {
+        const datesAsObjects = examDate?.map((entry: any) => {
           const subject = Object.keys(entry)[0];
           const dateParts = entry[subject].split('.');
           const dateObject = new Date(
@@ -79,10 +110,10 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
         });
 
         // Sort the dates in ascending order
-        datesAsObjects.sort((a: any, b: any) => a.date - b.date);
+        datesAsObjects?.sort((a: any, b: any) => a.date - b.date);
 
         // Get the last date
-        const lastDate = datesAsObjects[datesAsObjects.length - 1];
+        const lastDate = datesAsObjects[datesAsObjects?.length - 1];
 
 
 
@@ -92,14 +123,14 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
 
         const date1 = lastDate;
         const date2 = date;
-        
+
         // Set the time components of both dates to zero
         const newDate1 = new Date(date1);
         newDate1.setHours(0, 0, 0, 0);
-        
+
         const newDate2 = new Date(date2);
         newDate2.setHours(0, 0, 0, 0);
-        
+
         // Compare the dates
         if (newDate1.getTime() === newDate2.getTime()) {
           console.log('The dates are equal.');
@@ -132,6 +163,7 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.errorMsg = '';
+    this.falseAllValue();
     this.admitcardForm.reset();
   }
 
@@ -147,18 +179,18 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   patch() {
     const controlOne = <FormArray>this.admitcardForm.get('type.examDate');
     this.classSubject.forEach((x: any) => {
-      controlOne.push(this.patchExamDate(x))
+      controlOne.push(this.patchExamDate(x.subject))
       this.admitcardForm.reset();
     })
 
     const controlTwo = <FormArray>this.admitcardForm.get('type.startTime');
     this.classSubject.forEach((x: any) => {
-      controlTwo.push(this.patchStartTime(x))
+      controlTwo.push(this.patchStartTime(x.subject))
       this.admitcardForm.reset();
     })
     const controlThree = <FormArray>this.admitcardForm.get('type.endTime');
     this.classSubject.forEach((x: any) => {
-      controlThree.push(this.patchEndTime(x))
+      controlThree.push(this.patchEndTime(x.subject))
       this.admitcardForm.reset();
     })
   }
@@ -180,7 +212,6 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   }
 
   admitcardAddUpdate() {
-    // this.admitcardForm.value.class = this.cls;
     this.admitcardForm.value.type.examDate = this.admitcardForm.value.type.examDate.map((exam: any) => {
       const subject = Object.keys(exam)[0];
       const dateStr = exam[subject];
@@ -192,6 +223,7 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
       return { [subject]: formattedDate };
     });
     this.admitcardForm.value.class = this.cls;
+    this.admitcardForm.value.stream = this.stream;
     let examDateObj = this.admitcardForm.value.type.examDate;
     let startTimeObj = this.admitcardForm.value.type.startTime;
     let endTimeObj = this.admitcardForm.value.type.endTime;

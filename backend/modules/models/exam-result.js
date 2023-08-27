@@ -4,6 +4,7 @@ const ExamResultModel = mongoose.model('exam-result', {
   class: { type: Number },
   resultNo: { type: Number },
   examType: { type: String },
+  stream: { type: String },
   theoryMarks: {},
   practicalMarks: {},
 });

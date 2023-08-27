@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ClassSubjectModel = mongoose.model('classSubject', {
+const ClassSubjectModel = mongoose.model('class-subject', {
     class: { type: Number },
     stream: { type: String },
     subject: {},
