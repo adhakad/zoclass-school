@@ -184,7 +184,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button class="submit-button" [disabled]="!examResultForm.valid" mat-raised-button
+                        <button class="submit-button" [disabled]="!examResultForm.valid || !classSubject" mat-raised-button
                           type="submit">Submit</button>
                       </div>
                     </form>

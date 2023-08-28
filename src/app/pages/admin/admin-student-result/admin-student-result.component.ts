@@ -30,7 +30,6 @@ export class AdminStudentResultComponent implements OnInit {
   page: Number = 0;
   cls: any;
   selectedValue: number = 0;
-  examResultStr: any;
   classSubject: any[] = [];
   practicalSubjects: any[] = [];
   fileChoose: boolean = false;
@@ -83,16 +82,29 @@ export class AdminStudentResultComponent implements OnInit {
     this.deleteMode = true;
     this.deleteById = id;
   }
-  closeModal() {
-    this.examResultStr = '';
+
+  falseFormValue() {
+    const controlOne = <FormArray>this.examResultForm.get('type.theoryMarks');
+    const controlTwo = <FormArray>this.examResultForm.get('type.practicalMarks');
+    controlOne.clear();
+    controlTwo.clear();
+    this.examResultForm.reset();
+  }
+  falseAllValue() {
+    this.falseFormValue();
     this.practicalSubjects = [];
-    this.selectedExam = '';
-    this.stream = '';
+    this.classSubject = [];
+  }
+
+  closeModal() {
+    this.falseAllValue();
     this.showModal = false;
     this.showBulkResultModal = false;
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
+    this.selectedExam = '';
+    this.stream = '';
     this.examResultForm.reset();
   }
   onChange(event: MatRadioChange) {
@@ -132,8 +144,11 @@ export class AdminStudentResultComponent implements OnInit {
     });
   }
 
-  
+
   selectExam(selectedExam: string) {
+    if(this.classSubject || this.practicalSubjects){
+      this.falseAllValue();
+    }
     this.selectedExam = selectedExam;
     if (this.stream && selectedExam && this.cls) {
       let params = {
@@ -146,6 +161,9 @@ export class AdminStudentResultComponent implements OnInit {
   }
 
   chooseStream(stream: any) {
+    if(this.classSubject || this.practicalSubjects){
+      this.falseAllValue();
+    }
     this.stream = stream;
     if (stream && this.selectedExam && this.cls) {
       let params = {
@@ -160,6 +178,10 @@ export class AdminStudentResultComponent implements OnInit {
   getSingleClassResultStrucByStream(params: any) {
     this.examResultStructureService.getSingleClassResultStrucByStream(params).subscribe((res: any) => {
       if (res) {
+        this.errorCheck = true;
+        this.errorMsg = '';
+        this.practicalSubjects = [];
+        this.classSubject = [];
         if (res.theoryMaxMarks) {
           this.classSubject = res.theoryMaxMarks.map((item: any) => {
             const theorySubject = Object.keys(item)[0];
@@ -180,6 +202,10 @@ export class AdminStudentResultComponent implements OnInit {
           }
         }
       }
+    }, err => {
+      this.falseAllValue();
+      this.errorCheck = true;
+      this.errorMsg = err.error;
     })
   }
 
@@ -228,7 +254,6 @@ export class AdminStudentResultComponent implements OnInit {
         this.examResultForm.value.examType = this.selectedExam;
         this.examResultForm.value.stream = this.stream;
         this.examResultForm.value.class = this.cls;
-        console.log(this.examResultForm.value)
         this.examResultService.addExamResult(this.examResultForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();
@@ -254,7 +279,6 @@ export class AdminStudentResultComponent implements OnInit {
 
 
   handleImport($event: any) {
-    console.log("xlsx file")
     this.fileChoose = true;
     const files = $event.target.files;
     if (files.length) {
@@ -294,7 +318,7 @@ export class AdminStudentResultComponent implements OnInit {
   }
 
   handleExport() {
-    let rollNumber="rollNumber";
+    let rollNumber = "rollNumber";
     const headings = [[
       rollNumber,
       'Class',

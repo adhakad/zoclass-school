@@ -13,16 +13,16 @@ let GetSingleStudentExamResult = async (req, res, next) => {
         }
         let examResultStr = await ExamResultStructureModel.findOne({ class: className });
         if (!examResultStr) {
-            return res.status(404).json({ errorMsg: 'This class any exam not exist' });
+            return res.status(404).json({ errorMsg: 'This class any exam not found' });
         }
         let examResult = await ExamResultModel.findOne({ resultNo: resultNo, class: className, rollNumber: rollNumber })
         if (!examResult) {
-            return res.status(404).json({ errorMsg: 'Admit card not exist' });
+            return res.status(404).json({ errorMsg: 'Admit card not found' });
         }
         let examType = await examResult.examType;
         let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType });
         if (!examResultStructure) {
-            return res.status(404).json({ errorMsg: 'This class any exam not exist' });
+            return res.status(404).json({ errorMsg: 'This class any exam not found' });
         }
         return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: studentInfo });
     } catch (error) {
@@ -67,11 +67,19 @@ let CreateExamResult = async (req, res, next) => {
     if(stream==="stream"){
         stream = "N/A";
     }
+    let streamMsg = `${stream} stream`;
     try {
         // const checkRollNumber = await StudentModel.findOne({rollNumber:rollNumber,class: className});
         // if(!checkRollNumber){
         //     return res.status(404).json("Roll number not found for this class");
         // }
+        const checkResultStr = await ExamResultStructureModel.findOne({class:className,examType:examType,stream:stream});
+        if(!checkResultStr){
+            if(stream==="N/A"){
+                streamMsg = ``;
+            }
+            return res.status(404).json(`Class ${className} ${streamMsg} ${examType} exam not found`);
+        }
         const resultExist = await ExamResultModel.findOne({ rollNumber: rollNumber, class: className });
         if (resultExist) {
             return res.status(400).json("Result already exist for this roll number");

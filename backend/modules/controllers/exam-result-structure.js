@@ -19,8 +19,15 @@ let GetSingleClassExamResultStructureByStream = async (req, res, next) => {
     if(stream==="stream"){
         stream = "N/A";
     }
+    let streamMsg = `${stream} stream`;
     try {
         const singleExamResultStructureStr = await ExamResultStructureModel.findOne({ class: className,stream:stream,examType:examType });
+        if(!singleExamResultStructureStr){
+            if(stream==="N/A"){
+                streamMsg = ``;
+            }
+            return res.status(404).json(`Class ${className} ${streamMsg} ${examType} exam not found`);
+        }
         return res.status(200).json(singleExamResultStructureStr);
     } catch (error) {
         console.log(error);
