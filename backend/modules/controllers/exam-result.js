@@ -69,10 +69,10 @@ let CreateExamResult = async (req, res, next) => {
     }
     let streamMsg = `${stream} stream`;
     try {
-        // const checkRollNumber = await StudentModel.findOne({rollNumber:rollNumber,class: className});
-        // if(!checkRollNumber){
-        //     return res.status(404).json("Roll number not found for this class");
-        // }
+        const checkRollNumber = await StudentModel.findOne({rollNumber:rollNumber,class: className,stream:stream});
+        if(!checkRollNumber){
+            return res.status(404).json(`Class ${className} ${streamMsg} roll number ${rollNumber} not found`);
+        }
         const checkResultStr = await ExamResultStructureModel.findOne({class:className,examType:examType,stream:stream});
         if(!checkResultStr){
             if(stream==="N/A"){
