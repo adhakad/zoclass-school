@@ -42,42 +42,42 @@
 <div class="container pt-2" *ngIf="examResultInfo && studentInfo">
   <div class="row">
     <div #content class="custom-container">
-      <div style="border: 1px solid #ccc;padding: 25px;margin-left: 10px;margin-top: 2vh;">
-        <table class="custom-table" style="border: none;font-size: 1.3em;margin-top: 2vh;margin-bottom: 5vh;letter-spacing: .5px;">
+      <div class="table-container">
+        <table class="logo-table text-bold">
           <tr>
-            <td style="text-align: center; font-weight: bold;border: none;">
-              Vandana Convent School,Guna
+            <td>
+              <img src="../../../../assets/logo.png" alt="">  Vandana Convent School,Guna
             </td>
           </tr>
         </table>
-        <table class="custom-table" style="border: none;font-size: 1em;letter-spacing: .25px;margin-bottom: 2vh;">
+        <table class="info-table">
           <tr>
-            <td style="text-align: center; font-weight: bold;border: none;">
+            <td>
               School Code : 2832
             </td>
-            <td style="text-align: center; font-weight: bold;border: none;">
+            <td>
               {{examResultInfo?.examType | titlecase}} Exam Result - 2023
             </td>
-            <td style="text-align: center; font-weight: bold;border: none;">
+            <td>
               Affiliation No. : 1050
             </td>
           </tr>
         </table>
         <table class="custom-table">
           <tr>
-            <td style="font-weight: bold;">Result No.</td>
+            <td class="text-bold">Result No.</td>
             <td>{{examResultInfo?.resultNo}}</td>
-            <td style="font-weight: bold;">Roll Number</td>
+            <td class="text-bold">Roll Number</td>
             <td>{{examResultInfo?.rollNumber}}</td>
-            <td style="font-weight: bold;">Class</td>
+            <td class="text-bold">Class</td>
             <td>{{examResultInfo?.class}}th</td>
           </tr>
           <tr>
-            <td style="font-weight: bold;">Student Name</td>
+            <td class="text-bold">Student Name</td>
             <td>{{studentInfo?.name | titlecase}}</td>
-            <td style="font-weight: bold;">Father Name</td>
+            <td class="text-bold">Father Name</td>
             <td>Narendra Dhakad</td>
-            <td style="font-weight: bold;">Mother Name</td>
+            <td class="text-bold">Mother Name</td>
             <td>Manisha Dhakad</td>
           </tr>
         </table>
@@ -88,8 +88,8 @@
             <th>Subject</th>
             <th>Theory Marks</th>
             <th>Practical Marks</th>
-            <th>TOTAL Marks</th>
-            <th>GRADE</th>
+            <th>Total Marks</th>
+            <th>Grade</th>
           </tr>
           <tr *ngFor="let exam of examResultInfo.marks; let i = index">
             <td>{{ i + 1 }}</td>
@@ -104,14 +104,14 @@
         <table class="custom-table">
           <tr>
             <td>
-              <span style="font-weight: bold;">Percentage</span> : {{examResultInfo?.percentile}}%
+              <span class="text-bold">Percentage</span> : {{examResultInfo?.percentile}}%
             </td>
             <td>
-              <span style="font-weight: bold;">Grand Total (Theory + Practical/Internal Marks)</span> : {{
+              <span class="text-bold">Grand Total (Theory + Practical/Internal Marks)</span> : {{
               examResultInfo?.grandTotalMarks }}/{{ examResultInfo?.totalMaxMarks}}
             </td>
             <td>
-              <span style="font-weight: bold;">Overall Grade</span> : {{examResultInfo?.percentileGrade}}
+              <span class="text-bold">Overall Grade</span> : {{examResultInfo?.percentileGrade}}
             </td>
 
           </tr>

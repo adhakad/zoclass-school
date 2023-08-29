@@ -7,8 +7,54 @@ h3{
     color: #7c7698fb !important;
 }
 
-.abc tbody,.abc td,.abc tfoot,.abc th,.abc thead,.abc tr{
+.custom-container {
+    font-family: Arial, sans-serif;
+    overflow: auto;
+  }
+  
+  .custom-table {
+    width: 800px;
+    font-size: 1em;letter-spacing: .25px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    display: inline-table;
+  
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    height: 40px;
     color: #7c7698fb;
-    border: 2px solid rgb(226, 226, 226);
-    border-radius: 5px;
- }
+    border: 1px solid rgb(218, 218, 222);
+    text-align: center;
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  .print-pdf{
+  display: none;
+  }
+  @media (min-width: 576px) and (max-width:991.98px) {
+    .custom-table {
+      width: 100%;
+      font-size: 10px;
+    }
+    .print-pdf{
+      display: inline-block;
+      }
+  }
+  @media (min-width: 992px) {
+    .custom-container {
+      font-family: Arial, sans-serif;
+      overflow: auto;
+    }
+    .custom-table{
+      width: 100%;
+    }
+    
+    .print-pdf{
+      display: inline-block;
+      }
+  }
