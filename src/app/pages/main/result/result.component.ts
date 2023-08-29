@@ -38,7 +38,7 @@ export class ResultComponent implements OnInit {
   }
 
   downloadPDF() {
-    this.printPdfService.generatePDF(this.content.nativeElement);
+    this.printPdfService.generatePDF(this.content.nativeElement,"Result.pdf");
   }
 
   getClass() {

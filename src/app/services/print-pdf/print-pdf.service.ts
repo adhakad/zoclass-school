@@ -21,7 +21,7 @@ export class PrintPdfService {
     });
   }
 
-  generatePDF(element: HTMLElement): void {
+  generatePDF(element: HTMLElement,params:string): void {
     html2canvas(element).then(canvas => {
       var imgWidth = 208;
       var imgHeight = (canvas.height * imgWidth) / canvas.width;
@@ -29,7 +29,7 @@ export class PrintPdfService {
       const doc = new jsPDF("p", "mm", "a4");
       var position = 0;
       doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      doc.save('Result.pdf');
+      doc.save(params);
     });
   }
 }
