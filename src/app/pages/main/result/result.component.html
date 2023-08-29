@@ -43,49 +43,57 @@
   <div class="row">
     <div #content class="custom-container">
       <div style="border: 1px solid #ccc;padding: 25px;margin-left: 10px;margin-top: 2vh;">
-        <table class="custom-table" style="border: none;font-size: .9em;margin-top: 2vh;margin-bottom: 5vh;">
+        <table class="custom-table" style="border: none;font-size: 1.3em;margin-top: 2vh;margin-bottom: 5vh;letter-spacing: .5px;">
           <tr>
             <td style="text-align: center; font-weight: bold;border: none;">
-              VANDANA CONVENT SCHOOL,DITT.-GUNA
+              Vandana Convent School,Guna
             </td>
           </tr>
+        </table>
+        <table class="custom-table" style="border: none;font-size: 1em;letter-spacing: .25px;margin-bottom: 2vh;">
           <tr>
             <td style="text-align: center; font-weight: bold;border: none;">
-              {{examResultInfo?.examType | uppercase}} EXAM RESULT - 2023
+              School Code : 2832
+            </td>
+            <td style="text-align: center; font-weight: bold;border: none;">
+              {{examResultInfo?.examType | titlecase}} Exam Result - 2023
+            </td>
+            <td style="text-align: center; font-weight: bold;border: none;">
+              Affiliation No. : 1050
             </td>
           </tr>
         </table>
         <table class="custom-table">
           <tr>
-            <td style="font-weight: bold;">RESULT NO.</td>
+            <td style="font-weight: bold;">Result No.</td>
             <td>{{examResultInfo?.resultNo}}</td>
-            <td style="font-weight: bold;">ROLL NUMBER</td>
+            <td style="font-weight: bold;">Roll Number</td>
             <td>{{examResultInfo?.rollNumber}}</td>
-            <td style="font-weight: bold;">CLASS</td>
-            <td>{{examResultInfo?.class}}TH</td>
+            <td style="font-weight: bold;">Class</td>
+            <td>{{examResultInfo?.class}}th</td>
           </tr>
           <tr>
-            <td style="font-weight: bold;">STUDENT NAME</td>
-            <td>{{studentInfo?.name | uppercase}}</td>
-            <td style="font-weight: bold;">FATHER NAME</td>
-            <td>NARENDRA DHAKAD</td>
-            <td style="font-weight: bold;">MOTHER NAME</td>
-            <td>MANISHA DHAKAD</td>
+            <td style="font-weight: bold;">Student Name</td>
+            <td>{{studentInfo?.name | titlecase}}</td>
+            <td style="font-weight: bold;">Father Name</td>
+            <td>Narendra Dhakad</td>
+            <td style="font-weight: bold;">Mother Name</td>
+            <td>Manisha Dhakad</td>
           </tr>
         </table>
 
         <table class="custom-table">
           <tr>
-            <th>S.NO.</th>
-            <th>SUBJECT</th>
-            <th>THEORY MARKS</th>
-            <th>PRACTICAL MARKS</th>
-            <th>TOTAL MARKS</th>
+            <th>S.No.</th>
+            <th>Subject</th>
+            <th>Theory Marks</th>
+            <th>Practical Marks</th>
+            <th>TOTAL Marks</th>
             <th>GRADE</th>
           </tr>
           <tr *ngFor="let exam of examResultInfo.marks; let i = index">
             <td>{{ i + 1 }}</td>
-            <td>{{ exam.subject | uppercase }}</td>
+            <td>{{ exam.subject | titlecase }}</td>
             <td>{{ exam.theoryMarks }}</td>
             <td>{{ exam.practicalMarks > 0 ? exam.practicalMarks : '' }}</td>
             <td>{{ exam.totalMarks }}</td>
@@ -96,19 +104,19 @@
         <table class="custom-table">
           <tr>
             <td>
-              <span style="font-weight: bold;">PERCENTILE</span> : {{examResultInfo?.percentile}}%
+              <span style="font-weight: bold;">Percentage</span> : {{examResultInfo?.percentile}}%
             </td>
             <td>
-              <span style="font-weight: bold;">GRAND TOTAL (THEORY + PRACTICAL/INTERNAL MARKS)</span> : {{
+              <span style="font-weight: bold;">Grand Total (Theory + Practical/Internal Marks)</span> : {{
               examResultInfo?.grandTotalMarks }}/{{ examResultInfo?.totalMaxMarks}}
             </td>
             <td>
-              <span style="font-weight: bold;">OVERALL GRADE</span> : {{examResultInfo?.percentileGrade}}
+              <span style="font-weight: bold;">Overall Grade</span> : {{examResultInfo?.percentileGrade}}
             </td>
 
           </tr>
         </table>
-      </div> 
+      </div>
     </div>
   </div>
   <button class="btn btn-primary print-pdf" (click)="downloadPDF()">Download PDF</button>
