@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdmitCardService } from 'src/app/services/admit-card.service';
 import { ClassService } from 'src/app/services/class.service';
+
 
 @Component({
   selector: 'app-admit-card',
@@ -10,6 +11,7 @@ import { ClassService } from 'src/app/services/class.service';
   styleUrls: ['./admit-card.component.css']
 })
 export class AdmitCardComponent implements OnInit {
+
   errorMsg: string = '';
   admitCardForm: FormGroup;
   classInfo: any;
@@ -27,7 +29,7 @@ export class AdmitCardComponent implements OnInit {
   ngOnInit(): void {
     this.getClass();
   }
-
+  
   getClass() {
     this.classService.getClassList().subscribe((res: any) => {
       if (res) {

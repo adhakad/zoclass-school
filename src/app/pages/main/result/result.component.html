@@ -1,6 +1,6 @@
 <app-header></app-header>
-<div class="container">
-  <div class="row">
+<div class="container pt-5 pb-5" *ngIf="!examResultInfo">
+  <div class="row pt-5 pb-5">
     <div class="col-12 col-lg-6 offset-lg-3 login-card" *ngIf="!examResultInfo">
       <div class="row">
         <div class="col-12 col-lg-10 offset-lg-1 padding">
@@ -37,74 +37,81 @@
         </div>
       </div>
     </div>
-    <div class="container" *ngIf="examResultInfo && studentInfo">
-      <div class="row">
-        <div #content class="custom-container">
-          <table class="custom-table">
-            <tr>
-              <td style="text-align: center; font-weight: bold;">
-                {{examResultInfo?.examType | uppercase}} EXAM RESULT - 2023
-              </td>
-            </tr>
-          </table>
-          <table class="custom-table">
-            <tr>
-              <td style="font-weight: bold;">RESULT NO.</td>
-              <td>{{examResultInfo?.resultNo}}</td>
-              <td style="font-weight: bold;">ROLL NUMBER</td>
-              <td>{{examResultInfo?.rollNumber}}</td>
-              <td style="font-weight: bold;">CLASS</td>
-              <td>{{examResultInfo?.class}}TH</td>
-            </tr>
-            <tr>
-              <td style="font-weight: bold;">STUDENT NAME</td>
-              <td>{{studentInfo?.name | uppercase}}</td>
-              <td style="font-weight: bold;">FATHER NAME</td>
-              <td>NARENDRA DHAKAD</td>
-              <td style="font-weight: bold;">MOTHER NAME</td>
-              <td>MANISHA DHAKAD</td>
-            </tr>
-          </table>
+  </div>
+</div>
+<div class="container pt-2" *ngIf="examResultInfo && studentInfo">
+  <div class="row">
+    <div #content class="custom-container">
+      <div style="border: 1px solid #ccc;padding: 25px;margin-left: 10px;margin-top: 2vh;">
+        <table class="custom-table" style="border: none;font-size: .9em;margin-top: 2vh;margin-bottom: 5vh;">
+          <tr>
+            <td style="text-align: center; font-weight: bold;border: none;">
+              VANDANA CONVENT SCHOOL,DITT.-GUNA
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; font-weight: bold;border: none;">
+              {{examResultInfo?.examType | uppercase}} EXAM RESULT - 2023
+            </td>
+          </tr>
+        </table>
+        <table class="custom-table">
+          <tr>
+            <td style="font-weight: bold;">RESULT NO.</td>
+            <td>{{examResultInfo?.resultNo}}</td>
+            <td style="font-weight: bold;">ROLL NUMBER</td>
+            <td>{{examResultInfo?.rollNumber}}</td>
+            <td style="font-weight: bold;">CLASS</td>
+            <td>{{examResultInfo?.class}}TH</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold;">STUDENT NAME</td>
+            <td>{{studentInfo?.name | uppercase}}</td>
+            <td style="font-weight: bold;">FATHER NAME</td>
+            <td>NARENDRA DHAKAD</td>
+            <td style="font-weight: bold;">MOTHER NAME</td>
+            <td>MANISHA DHAKAD</td>
+          </tr>
+        </table>
 
-          <table class="custom-table">
-            <tr>
-              <th>S.NO.</th>
-              <th>SUBJECT</th>
-              <th>THEORY MARKS</th>
-              <th>PRACTICAL MARKS</th>
-              <th>TOTAL MARKS</th>
-              <th>GRADE</th>
-            </tr>
-            <tr *ngFor="let exam of examResultInfo.marks; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ exam.subject | uppercase }}</td>
-              <td>{{ exam.theoryMarks }}</td>
-              <td>{{ exam.practicalMarks > 0 ? exam.practicalMarks : '' }}</td>
-              <td>{{ exam.totalMarks }}</td>
-              <td>{{ exam.grade }}</td>
-            </tr>
-          </table>
+        <table class="custom-table">
+          <tr>
+            <th>S.NO.</th>
+            <th>SUBJECT</th>
+            <th>THEORY MARKS</th>
+            <th>PRACTICAL MARKS</th>
+            <th>TOTAL MARKS</th>
+            <th>GRADE</th>
+          </tr>
+          <tr *ngFor="let exam of examResultInfo.marks; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ exam.subject | uppercase }}</td>
+            <td>{{ exam.theoryMarks }}</td>
+            <td>{{ exam.practicalMarks > 0 ? exam.practicalMarks : '' }}</td>
+            <td>{{ exam.totalMarks }}</td>
+            <td>{{ exam.grade }}</td>
+          </tr>
+        </table>
 
-          <table class="custom-table">
-            <tr>
-              <td>
-                <span style="font-weight: bold;">PERCENTILE</span> : {{examResultInfo?.percentile}}%
-              </td>
-              <td>
-                <span style="font-weight: bold;">GRAND TOTAL (THEORY + PRACTICAL/INTERNAL MARKS)</span> : {{
-                examResultInfo?.grandTotalMarks }}/{{ examResultInfo?.totalMaxMarks}}
-              </td>
-              <td>
-                <span style="font-weight: bold;">OVERALL GRADE</span> : {{examResultInfo?.percentileGrade}}
-              </td>
+        <table class="custom-table">
+          <tr>
+            <td>
+              <span style="font-weight: bold;">PERCENTILE</span> : {{examResultInfo?.percentile}}%
+            </td>
+            <td>
+              <span style="font-weight: bold;">GRAND TOTAL (THEORY + PRACTICAL/INTERNAL MARKS)</span> : {{
+              examResultInfo?.grandTotalMarks }}/{{ examResultInfo?.totalMaxMarks}}
+            </td>
+            <td>
+              <span style="font-weight: bold;">OVERALL GRADE</span> : {{examResultInfo?.percentileGrade}}
+            </td>
 
-            </tr>
-          </table>
-        </div>
-      </div>
-      <button class="btn btn-primary print-pdf" (click)="downloadPDF()">Download PDF</button>
-      <button class="btn btn-primary m-5 print-pdf" (click)="printContent()">Print</button>
-
+          </tr>
+        </table>
+      </div> 
     </div>
   </div>
+  <button class="btn btn-primary print-pdf" (click)="downloadPDF()">Download PDF</button>
+  <button class="btn btn-primary m-5 print-pdf" (click)="printContent()">Print</button>
+
 </div>
