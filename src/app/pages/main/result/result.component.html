@@ -38,82 +38,73 @@
       </div>
     </div>
     <div class="container" *ngIf="examResultInfo && studentInfo">
-      <div class="row bg-light">
-        <div class="col-8 offset-2">
-          <table class="table align-middle mb-0 bg-white abc">
-            <thead class="bg-light">
-              <tr class="text-muted" style="text-align: center;justify-content: center;height: 50px;">
-                <th class="pt-4 pb-4">{{examResultInfo?.examType | uppercase}} EXAM RESULT - 2023</th>
-              </tr>
-            </thead>
+      <div class="row">
+        <div #content class="custom-container">
+          <table class="custom-table">
+            <tr>
+              <td style="text-align: center; font-weight: bold;">
+                {{examResultInfo?.examType | uppercase}} EXAM RESULT - 2023
+              </td>
+            </tr>
           </table>
-          <table class="table align-middle mb-0 bg-white abc">
-            <thead class="bg-light">
-              <tr class="text-muted">
-                <th>RESULT NO.</th>
-                <th style="font-weight: 400;">{{examResultInfo?.resultNo}}</th>
-                <th>ROLL NUMBER</th>
-                <th style="font-weight: 400;">
-                  {{examResultInfo?.rollNumber}}</th>
-                <th>CLASS</th>
-                <th style="font-weight: 400;">{{examResultInfo?.class}}TH
-                </th>
-              </tr>
-              <tr class="text-muted">
-                <th>STUDENT NAME</th>
-                <th style="font-weight: 400;">{{studentInfo?.name | uppercase}}</th>
-                <th>FATHER NAME</th>
-                <th style="font-weight: 400;">NARENDRA DHAKAD</th>
-                <th>MOTHER NAME</th>
-                <th style="font-weight: 400;">MANISHA DHAKAD</th>
-              </tr>
-              <br><br>
-              <tr class="text-muted">
-                <th>S.NO.</th>
-                <th>SUBJECT</th>
-                <th>THEORY MARKS</th>
-                <th>PRACTICAL MARKS</th>
-                <th>TOTAL MARKS</th>
-                <th>GRADE</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let exam of examResultInfo.marks; let i = index">
-                <td>
-                  {{ i + 1 }}
-                </td>
-                <td>
-                  {{ exam.subject | uppercase}}
-                </td>
-                <td>
-                  {{ exam.theoryMarks }}
-                </td>
-                <td>
-                  <!-- <span *ngIf="exam.practicalMarks===0">N/A</span>   868950 534724
- -->
-                  <span *ngIf="exam.practicalMarks>0">{{ exam.practicalMarks }}</span>
-                </td>
-                <td>
-                  {{ exam.totalMarks }}
-                </td>
-                <td>
-                  {{ exam.grade }}
-                </td>
-              </tr>
-            </tbody>
-            <!-- <br><br> -->
+          <table class="custom-table">
+            <tr>
+              <td style="font-weight: bold;">RESULT NO.</td>
+              <td>{{examResultInfo?.resultNo}}</td>
+              <td style="font-weight: bold;">ROLL NUMBER</td>
+              <td>{{examResultInfo?.rollNumber}}</td>
+              <td style="font-weight: bold;">CLASS</td>
+              <td>{{examResultInfo?.class}}TH</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">STUDENT NAME</td>
+              <td>{{studentInfo?.name | uppercase}}</td>
+              <td style="font-weight: bold;">FATHER NAME</td>
+              <td>NARENDRA DHAKAD</td>
+              <td style="font-weight: bold;">MOTHER NAME</td>
+              <td>MANISHA DHAKAD</td>
+            </tr>
           </table>
-          <table class="table align-middle mb-0 bg-white abc">
-            <thead class="bg-light">
-              <tr class="text-muted" style="text-align: center;justify-content: center;">
-                <th style="font-weight: 400;">OVERALL GRADE : {{examResultInfo?.percentileGrade}}</th>
-                <th style="font-weight: 400;">GRAND TOTAL (THEORY + PRACTICAL/INTERNAL MARKS) : {{ examResultInfo?.grandTotalMarks}}/{{ examResultInfo?.totalMaxMarks}}</th>
-                <th style="font-weight: 400;">PERCENTILE : {{examResultInfo?.percentile}} %</th>
-              </tr>
-            </thead>
+
+          <table class="custom-table">
+            <tr>
+              <th>S.NO.</th>
+              <th>SUBJECT</th>
+              <th>THEORY MARKS</th>
+              <th>PRACTICAL MARKS</th>
+              <th>TOTAL MARKS</th>
+              <th>GRADE</th>
+            </tr>
+            <tr *ngFor="let exam of examResultInfo.marks; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ exam.subject | uppercase }}</td>
+              <td>{{ exam.theoryMarks }}</td>
+              <td>{{ exam.practicalMarks > 0 ? exam.practicalMarks : '' }}</td>
+              <td>{{ exam.totalMarks }}</td>
+              <td>{{ exam.grade }}</td>
+            </tr>
+          </table>
+
+          <table class="custom-table">
+            <tr>
+              <td>
+                <span style="font-weight: bold;">PERCENTILE</span> : {{examResultInfo?.percentile}}%
+              </td>
+              <td>
+                <span style="font-weight: bold;">GRAND TOTAL (THEORY + PRACTICAL/INTERNAL MARKS)</span> : {{
+                examResultInfo?.grandTotalMarks }}/{{ examResultInfo?.totalMaxMarks}}
+              </td>
+              <td>
+                <span style="font-weight: bold;">OVERALL GRADE</span> : {{examResultInfo?.percentileGrade}}
+              </td>
+
+            </tr>
           </table>
         </div>
       </div>
+      <button class="btn btn-primary print-pdf" (click)="downloadPDF()">Download PDF</button>
+      <button class="btn btn-primary m-5 print-pdf" (click)="printContent()">Print</button>
+
     </div>
   </div>
 </div>

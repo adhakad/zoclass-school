@@ -2,21 +2,16 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 declare var jQuery: any;
 import { isPlatformBrowser } from '@angular/common';
 import { Banner } from 'src/app/modal/banner.model';
-import { Subject } from 'src/app/modal/subject.model';
 import { Teacher } from 'src/app/modal/teacher.model';
 import { Ads } from 'src/app/modal/ads.model';
 import { Topper } from 'src/app/modal/topper.model';
 import { Testimonial } from 'src/app/modal/testimonial.model';
-import { ClassSubject } from 'src/app/modal/class-subject.model';
-
 import { BannerService } from 'src/app/services/banner.service';
-import { SubjectService } from 'src/app/services/subject.service';
-import { TeacherService } from 'src/app/services/teacher.service';
 import { AdsService } from 'src/app/services/ads.service';
 import { TopperService } from 'src/app/services/topper.service';
 import { TestimonialService } from 'src/app/services/testimonial.service';
-import { ClassSubjectService } from 'src/app/services/class-subject.service';
 import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
+
 
 @Component({
   selector: 'app-home',

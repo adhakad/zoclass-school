@@ -1,15 +1,54 @@
 @import'../../../pages/auth/teacher-auth/teacher-login/teacher-login.component.css';
-h4{
-    color:#8b69f2;
-    margin-top: 0 !important;margin-bottom: 0 !important;
-}
-h3{
-    color: #7c7698fb !important;
+
+h4 {
+  color: #8b69f2;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
-.abc tbody,.abc td,.abc tfoot,.abc th,.abc thead,.abc tr{
-    /* border-bottom: none; */
-    color: #7c7698fb;
-    border: 2px solid rgb(218, 218, 222);
-    border-radius: 5px;
- }
+h3 {
+  color: #7c7698fb !important;
+}
+
+.custom-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  overflow: auto;
+}
+
+.custom-table {
+  width: 1000px;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  display: inline-table;
+
+}
+
+.custom-table th,
+.custom-table td {
+  height: 40px;
+  color: #7c7698fb;
+  border: 2px solid rgb(218, 218, 222);
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.bold {
+  font-weight: bold;
+}
+.print-pdf{
+display: none;
+}
+@media (min-width: 576px) and (max-width:991.98px) {}
+@media (min-width: 992px) {
+  .custom-table {
+    width: 100%;
+  }
+  .print-pdf{
+    display: inline-block;
+    }
+}

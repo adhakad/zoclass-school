@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ExamResultService } from 'src/app/services/exam-result.service';
 import { ClassService } from 'src/app/services/class.service';
+import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { ClassService } from 'src/app/services/class.service';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
+  @ViewChild('content') content!: ElementRef;
   errorMsg: string = '';
   examResultForm: FormGroup;
   classInfo: any;
@@ -18,8 +20,8 @@ export class ResultComponent implements OnInit {
   examResultInfo: any;
   resultStructureInfo: any;
   processedData: any[] = [];
-
-  constructor(private fb: FormBuilder, private router: Router, private examResultService: ExamResultService, private classService: ClassService) {
+  
+  constructor(private fb: FormBuilder, private router: Router,private printPdfService:PrintPdfService, private examResultService: ExamResultService, private classService: ClassService) {
     this.examResultForm = this.fb.group({
       resultNo: ['', Validators.required],
       class: ['', Validators.required],
@@ -28,6 +30,15 @@ export class ResultComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getClass();
+  }
+
+
+  printContent() {
+    this.printPdfService.printElement(this.content.nativeElement);
+  }
+
+  downloadPDF() {
+    this.printPdfService.generatePDF(this.content.nativeElement);
   }
 
   getClass() {

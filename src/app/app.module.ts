@@ -22,7 +22,6 @@ import { TeacherSharedModule } from './pages/teacher/teacher-shared/teacher-shar
 import { StudentSharedModule } from './pages/student/student-shared/student-shared.module';
 import { MainSharedModule } from './pages/main/main-shared/main-shared.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
