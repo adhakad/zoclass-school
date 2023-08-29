@@ -1,4 +1,4 @@
-import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdmitCardService } from 'src/app/services/admit-card.service';
@@ -20,7 +20,7 @@ export class AdmitCardComponent implements OnInit {
   admitCardInfo: any;
   processedData: any[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router,private printPdfService:PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
+  constructor(private fb: FormBuilder, private router: Router, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
     this.admitCardForm = this.fb.group({
       admitCardNo: ['', Validators.required],
       class: ['', Validators.required],
@@ -36,9 +36,9 @@ export class AdmitCardComponent implements OnInit {
   }
 
   downloadPDF() {
-    this.printPdfService.generatePDF(this.content.nativeElement,"Admitcard.pdf");
+    this.printPdfService.generatePDF(this.content.nativeElement, "Admitcard.pdf");
   }
-  
+
   getClass() {
     this.classService.getClassList().subscribe((res: any) => {
       if (res) {
@@ -49,9 +49,12 @@ export class AdmitCardComponent implements OnInit {
   admitCard() {
     this.admitCardService.singleStudentAdmitCard(this.admitCardForm.value).subscribe((res: any) => {
       if (res) {
-        this.studentAdmitCardInfo = res.admitCard;
-        this.admitCardInfo = res.admitCardStructure;
-        this.processData();
+        if (!this.processedData || !this.studentAdmitCardInfo || !this.admitCardInfo) {
+          this.studentAdmitCardInfo = res.admitCard;
+          this.admitCardInfo = res.admitCardStructure;
+          this.processData();
+        }
+
       }
     }, err => {
       this.errorMsg = err.error.errorMsg;
