@@ -32,6 +32,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   feesTypeMode: boolean = false;
   feesMode: boolean = false;
   clsFeesStructure: any;
+  feePerticulars:any[]=['Registration','Admission','Tution', 'Books', 'Uniform','Examination'];
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({

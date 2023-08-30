@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FeesStructureService } from 'src/app/services/fees-structure.service';
 import { FeesService } from 'src/app/services/fees.service';
+import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
 
 @Component({
   selector: 'app-admin-student-fees-statement',
@@ -9,17 +10,26 @@ import { FeesService } from 'src/app/services/fees.service';
   styleUrls: ['./admin-student-fees-statement.component.css']
 })
 export class AdminStudentFeesStatementComponent implements OnInit {
+  @ViewChild('content') content!: ElementRef;
   cls: any;
   clsFeesStructure: any;
   studentFeesCollection:any;
   rollNumber: any;
-  constructor(public activatedRoute: ActivatedRoute, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
+  constructor(public activatedRoute: ActivatedRoute,private printPdfService:PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.rollNumber = this.activatedRoute.snapshot.paramMap.get('rollnumber');
     this.singleStudentFeesCollection(this.cls, this.rollNumber)
     this.feesStructureByClass(this.cls)
+  }
+
+  printContent() {
+    this.printPdfService.printElement(this.content.nativeElement);
+  }
+
+  downloadPDF() {
+    this.printPdfService.generatePDF(this.content.nativeElement, "Fee-statement.pdf");
   }
 
   singleStudentFeesCollection(cls: any, rollNumber: any) {

@@ -95,21 +95,13 @@
                                                 </mat-form-field>
                                             </div>
                                             <section class="example-section">
-                                                <div class="col-6">
-                                                    <mat-checkbox class="example-margin"
-                                                        (click)="feesType('admission')">Admission
-                                                        Fees</mat-checkbox>
-                                                    <mat-checkbox class="example-margin"
-                                                        (click)="feesType('books')">Books
-                                                        Fees</mat-checkbox>
-                                                </div>
-                                                <div class="col-6">
-                                                    <mat-checkbox class="example-margin"
-                                                        (click)="feesType('tution')">Tution
-                                                        Fees</mat-checkbox>
-                                                    <mat-checkbox class="example-margin" 
-                                                        (click)="feesType('uniform')">Uniform
-                                                        Fees</mat-checkbox>
+                                                <div class="row">
+                                                    <div class="col-6"
+                                                        *ngFor="let perticular of feePerticulars,let i=index;">
+                                                        <mat-checkbox class="example-margin"
+                                                            (click)="feesType(perticular)">{{perticular}}
+                                                            Fees</mat-checkbox>
+                                                    </div>
                                                 </div>
                                             </section>
                                             <section class="example-section">
@@ -127,15 +119,18 @@
                                             </section>
                                             <div class="row" *ngIf="stallment">
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         Stallment First
                                                     </mat-checkbox>
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         Stallment Second
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         Stallment Third
                                                     </mat-checkbox>
                                                 </div>
@@ -143,52 +138,62 @@
 
                                             <div class="row" *ngIf="monthly">
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         July
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         August
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         September
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         October
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         November
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         December
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         January
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         February
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         March
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
-                                                    <mat-checkbox class="example-margin" checked=“true” [disabled]="disabled">
+                                                    <mat-checkbox class="example-margin" checked=“true”
+                                                        [disabled]="disabled">
                                                         April
                                                     </mat-checkbox>
                                                 </div>

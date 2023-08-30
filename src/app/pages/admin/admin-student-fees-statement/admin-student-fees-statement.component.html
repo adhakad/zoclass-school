@@ -6,90 +6,107 @@
         </div>
         <div class="col-12 col-lg-10">
             <div class="row">
-                <div class="col-12 big-container">
+                <div class="col-12 big-container pb-4">
                     <div class="row mt-2">
-                        <div class="col-12">
-                            <table class="table table-one align-middle mt-5 mb-0 bg-white abc">
-                                <thead class="bg-light">
-                                    <tr class="text-muted">
-                                        <th>Receipt No.</th>
-                                        <th style="font-weight: 400;">956544</th>
-                                        <th>Class</th>
-                                        <th style="font-weight: 400;">{{studentFeesCollection?.class}}th</th>
-                                        <th>Roll Numer</th>
-                                        <th style="font-weight: 400;">{{studentFeesCollection?.rollNumber}}</th>
+                        <div #content class="custom-container">
+                            <div class="table-container">
+                                <table class="logo-table text-bold">
+                                    <tr>
+                                        <td>
+                                            <img src="../../../../assets/logo.png" alt=""> Vandana Convent School,Guna
+                                        </td>
                                     </tr>
-                                    <tr class="text-muted">
-                                        <th>Student Name</th>
-                                        <th style="font-weight: 400;">{{studentFeesCollection?.name | titlecase}}</th>
-                                        <th>Father Name</th>
-                                        <th style="font-weight: 400;">Narendra Dhakad</th>
-                                        <th>Mother Name</th>
-                                        <th style="font-weight: 400;">Kavita Dhakad</th>
+                                </table>
+                                <table class="info-table">
+                                    <tr>
+                                        <td>
+                                            School Code : 2832
+                                        </td>
+                                        <td>
+                                            School Fee Statement - 2023
+                                        </td>
+                                        <td>
+                                            Affiliation No. : 1050
+                                        </td>
                                     </tr>
-                                    <tr class="text-muted">
-                                        <th>Total Fee</th>
-                                        <th style="font-weight: 400;">&#8377; {{studentFeesCollection?.totalFees}}</th>
-                                        <th>Paid Fee</th>
-                                        <th style="font-weight: 400;">&#8377; {{studentFeesCollection?.paidFees}}</th>
-                                        <th>Due Fee</th>
-                                        <th style="font-weight: 400;">&#8377; {{studentFeesCollection?.dueFees}}</th>
+                                </table>
+                                <table class="custom-table">
+                                    <tr>
+                                        <td class="text-bold">Result No.</td>
+                                        <td>12345</td>
+                                        <td class="text-bold">Roll Number</td>
+                                        <td>{{studentFeesCollection?.rollNumber}}</td>
+                                        <td class="text-bold">Class</td>
+                                        <td>{{studentFeesCollection?.class}}th</td>
                                     </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <table class="table fee-table table-hover mt-4 align-middle mb-0 bg-white">
-                                <thead class="bg-light">
-                                    <tr class="text-muted">
+                                    <tr>
+                                        <td class="text-bold">Student Name</td>
+                                        <td>{{studentFeesCollection?.name | titlecase}}</td>
+                                        <td class="text-bold">Father Name</td>
+                                        <td>Narendra Dhakad</td>
+                                        <td class="text-bold">Mother Name</td>
+                                        <td>Manisha Dhakad</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold">Total Fee</td>
+                                        <td>&#8377; {{studentFeesCollection?.totalFees}}</td>
+                                        <td class="text-bold">Paid Fee</td>
+                                        <td>&#8377; {{studentFeesCollection?.paidFees}}</td>
+                                        <td class="text-bold">Due Fee</td>
+                                        <td>&#8377; {{studentFeesCollection?.dueFees}}</td>
+                                    </tr>
+                                </table>
+                                <table class="custom-table">
+                                    <tr>
+                                        <th>Particulars</th>
+                                        <ng-container *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                            <th style="font-weight: normal;" *ngFor="let fee of item | keyvalue">
+                                                {{ fee.key}} Fee</th>
+                                        </ng-container>
+                                    </tr>
+                                    <tr>
+                                        <th>Fee Amount</th>
+                                        <ng-container *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                            <th style="font-weight: normal;" *ngFor="let fee of item | keyvalue">
+                                                &#8377; {{ fee.value}}</th>
+                                        </ng-container>
+                                    </tr>
+                                </table>
+                                <table class="custom-table">
+                                    <tr>
                                         <th>S.No.</th>
+                                        <th>Receipt No.</th>
                                         <th>Fee Stallment</th>
-                                        <th>Amount</th>
-                                        <th>Status</th>
+                                        <th>Paid Amount</th>
+                                        <th>Fee Receipt</th>
                                     </tr>
-                                </thead>
-                                <tbody>
                                     <tr *ngFor="let item of studentFeesCollection?.stallment,let i = index">
                                         <td>
-                                            <p class="mb-0">{{i+1}}</p>
-                                        </td> 
-                                        <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0">{{ fee.key}}</p>
+                                            {{i+1}}
                                         </td>
                                         <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0">&#8377; {{ fee.value }}</p>
+                                            <p *ngIf="fee.value!==0">12345</p>
+                                            <p *ngIf="fee.value==0">N/A</p>
                                         </td>
                                         <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0" *ngIf="fee.value !==0" style="color: #8c88ff;">Paid</p>
+                                            {{ fee.key}}
+                                        </td>
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            &#8377; {{ fee.value }}
+                                        </td>
+                                        <td *ngFor="let fee of item | keyvalue">
+                                            <mat-icon *ngIf="fee.value !==0">launch</mat-icon>
                                             <p class="mb-0" *ngIf="fee.value==0">Panding</p>
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-12 col-lg-6">
-                            <table class="table fee-table table-hover mt-4 align-middle mb-0 bg-white">
-                                <thead class="bg-light">
-                                    <tr class="text-muted">
-                                        <th>S.No.</th>
-                                        <th>Particulars</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody> 
-                                    <tr *ngFor="let item of clsFeesStructure?.feesType,let i = index">
-                                        <td>
-                                            <p class="mb-0">{{i+1}}</p>
-                                        </td> 
-                                        <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0">{{ fee.key}}</p>
-                                        </td>
-                                        <td *ngFor="let fee of item | keyvalue">
-                                            <p class="mb-0">&#8377; {{ fee.value }}</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-primary print-pdf" (click)="downloadPDF()">Download PDF</button>
+                        <button class="btn btn-primary m-5 print-pdf" (click)="printContent()">Print</button>
                         </div>
                     </div>
                 </div>

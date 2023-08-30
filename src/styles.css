@@ -207,7 +207,10 @@ td{
   white-space: nowrap;
 }
 
-.table mat-icon,
+table mat-icon {
+  color: #7c7698fb;
+  cursor: pointer;
+}
 .table p {
   color: #7c7698fb;
 }
