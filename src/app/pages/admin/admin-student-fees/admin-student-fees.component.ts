@@ -110,6 +110,7 @@ export class AdminStudentFeesComponent implements OnInit {
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
+    this.payNow=false;
     this.paybleStallment = [];
     this.paybleStallment = [0,0];
   }

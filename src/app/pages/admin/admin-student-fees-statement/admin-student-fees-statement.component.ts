@@ -1,4 +1,4 @@
-import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FeesStructureService } from 'src/app/services/fees-structure.service';
 import { FeesService } from 'src/app/services/fees.service';
@@ -13,9 +13,10 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
   cls: any;
   clsFeesStructure: any;
-  studentFeesCollection:any;
+  studentFeesCollection: any;
   rollNumber: any;
-  constructor(public activatedRoute: ActivatedRoute,private printPdfService:PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
+  processedData: any[] = [];
+  constructor(public activatedRoute: ActivatedRoute, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
@@ -23,7 +24,7 @@ export class AdminStudentFeesStatementComponent implements OnInit {
     this.singleStudentFeesCollection(this.cls, this.rollNumber)
     this.feesStructureByClass(this.cls)
   }
-
+  
   printContent() {
     this.printPdfService.printElement(this.content.nativeElement);
   }
@@ -36,7 +37,7 @@ export class AdminStudentFeesStatementComponent implements OnInit {
     this.feesService.singleStudentFeesCollection(cls, rollNumber).subscribe((res: any) => {
       if (res) {
         this.studentFeesCollection = res;
-        console.log(res)
+        this.processData();
       }
     })
   }
@@ -45,9 +46,25 @@ export class AdminStudentFeesStatementComponent implements OnInit {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.clsFeesStructure = res;
-        console.log(res)
+        
       }
     })
+  }
+
+  processData() {
+    for (let i = 0; i < this.studentFeesCollection.stallment.length; i++) {
+      const receiptNo = Object.values(this.studentFeesCollection.receipt[i])[0];
+      const stallment = Object.keys(this.studentFeesCollection.stallment[i])[0];
+      const paidAmount = Object.values(this.studentFeesCollection.stallment[i])[0];
+      const paymentDate = Object.values(this.studentFeesCollection.paymentDate[i])[0];
+
+      this.processedData.push({
+        receiptNo,
+        stallment,
+        paidAmount,
+        paymentDate
+      });
+    }
   }
 
 }

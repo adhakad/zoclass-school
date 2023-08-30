@@ -1,5 +1,6 @@
 const FeesCollectionModel = require('../models/fees-collection');
 const FeesStructureModel = require('../models/fees-structure');
+const { DateTime } = require('luxon');
 
 let GetSingleStudentFeesCollection = async (req, res, next) => {
     let className = req.params.id;
@@ -25,7 +26,9 @@ let GetAllStudentFeesCollectionByClass = async (req, res, next) => {
 let CreateFeesCollection = async (req, res, next) => {
     let className = req.body.class;
     let { rollNumber, feesStallment, feesAmount } = req.body;
-
+    let receiptNo = Math.floor(Math.random() * 899999 + 100000);
+    const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
+    const istDateTimeString = currentDateIst.toFormat('dd-MM-yyyy hh:mm:ss a');
     try {
 
         const checkFeesStructure = await FeesStructureModel.findOne({ class: className });
@@ -55,8 +58,8 @@ let CreateFeesCollection = async (req, res, next) => {
             return res.status(400).json(`All fees stallment already paid`);
         }
         const updatedDocument = await FeesCollectionModel.findOneAndUpdate(
-            { _id: id, 'stallment': { $elemMatch: { [feesStallment]: { $exists: true } } } },
-            { $set: { [`stallment.$.${feesStallment}`]: feesAmount, paidFees: paidFees, dueFees: dueFees } },
+            { _id: id, 'stallment': { $elemMatch: { [feesStallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesStallment]: { $exists: true } } },'paymentDate': { $elemMatch: { [feesStallment]: { $exists: true } } } },
+            { $set: { [`stallment.$.${feesStallment}`]: feesAmount, [`receipt.$.${feesStallment}`]: receiptNo,[`paymentDate.$.${feesStallment}`]: istDateTimeString, paidFees: paidFees, dueFees: dueFees } },
             { new: true }
         );
         return res.status(200).json(`Fees payment successfuly`);

@@ -6,7 +6,9 @@ const FeesCollectionModel = mongoose.model('fees-collection', {
   totalFees:{type:Number,default:10000},
   paidFees:{type:Number}, 
   dueFees:{type:Number},
+  receipt:{},
   stallment:{},
+  paymentDate:{}
 });
 
 module.exports = FeesCollectionModel;

@@ -84,9 +84,11 @@ let CreateStudent = async (req, res, next) => {
             class: className,
             rollNumber: rollNumber,
             totalFees: totalFees,
-            paidFees:0,
-            dueFees:totalFees,
-            stallment:stallment
+            paidFees: 0,
+            dueFees: totalFees,
+            receipt: stallment,
+            stallment: stallment,
+            paymentDate:stallment
         }
         const createStudent = await StudentModel.create(studentData);
         const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
