@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -9,6 +9,7 @@ import { FeesService } from 'src/app/services/fees.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { FeesStructureService } from 'src/app/services/fees-structure.service';
 import { StudentService } from 'src/app/services/student.service';
+import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
 
 @Component({
   selector: 'app-admin-student-fees',
@@ -16,6 +17,7 @@ import { StudentService } from 'src/app/services/student.service';
   styleUrls: ['./admin-student-fees.component.css']
 })
 export class AdminStudentFeesComponent implements OnInit {
+  @ViewChild('receipt') receipt!: ElementRef;
   feesForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;
@@ -32,9 +34,6 @@ export class AdminStudentFeesComponent implements OnInit {
   page: Number = 0;
   cls: any;
   classSubject: any;
-  fields: any;
-  abc: any;
-  subjectName: any[] = [];
   showBulkFeesModal: boolean = false;
   movies: any[] = [];
   selectedValue: number = 0;
@@ -45,11 +44,11 @@ export class AdminStudentFeesComponent implements OnInit {
   studentList:any[]=[];
   singleStudent:any;
   paybleStallment:any;
-  obj:any[]=[];
   payNow:boolean=false;
+  receiptStallment:any[]=[];
+  receiptMode:boolean = false;
 
-
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService,private studentService:StudentService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService,private studentService:StudentService) {
     this.feesForm = this.fb.group({
       class:[''],
       rollNumber:[''],
@@ -70,7 +69,10 @@ export class AdminStudentFeesComponent implements OnInit {
     this.getAllStudentFeesCollectionByClass(this.cls);
   }
 
-  
+  printReceipt() {
+    this.printPdfService.printElement(this.receipt.nativeElement);
+    this.closeModal();
+  }
 
   getClassSubject(cls: any) {
     this.classSubjectService.getSubjectByClass(cls).subscribe(res => {
@@ -108,11 +110,14 @@ export class AdminStudentFeesComponent implements OnInit {
     this.showModal = false;
     this.showBulkFeesModal = false;
     this.updateMode = false;
-    this.deleteMode = false;
+    this.successMsg = '';
     this.errorMsg = '';
     this.payNow=false;
     this.paybleStallment = [];
     this.paybleStallment = [0,0];
+    this.receiptStallment=[];
+    this.receiptMode = false;
+    this.getAllStudentFeesCollectionByClass(this.cls)
   }
   feesPay(pay:boolean){
     if(pay===false){
@@ -125,13 +130,10 @@ export class AdminStudentFeesComponent implements OnInit {
   studentFeesPay(student:any) {
     this.singleStudent = student;
     const stallment = this.singleStudent.stallment;
-    console.log(this.singleStudent.stallment)
-
     const result = stallment.find((stallment:any) => {
       const [key, value] = Object.entries(stallment)[0];
       return value === 0;
     });
-    
     if (result) {
       const [key, value] = Object.entries(result)[0];
       this.paybleStallment = this.clsFeesStructure.stallment.flatMap((item:any) => Object.entries(item).filter(([keys, values]) => keys === key));
@@ -157,15 +159,6 @@ export class AdminStudentFeesComponent implements OnInit {
     this.deleteById = id;
   }
 
-
-  successDone() {
-    setTimeout(() => {
-      this.closeModal();
-      this.successMsg = '';
-      // this.getFees({ page: this.page });
-      this.getAllStudentFeesCollectionByClass(this.cls)
-    }, 1000)
-  }
 
   getFees($event: any) {
     this.page = $event.page
@@ -197,7 +190,7 @@ export class AdminStudentFeesComponent implements OnInit {
       if (this.updateMode) {
         this.feesService.updateFees(this.feesForm.value).subscribe((res: any) => {
           if (res) {
-            this.successDone();
+            this.closeModal();
             this.successMsg = res;
           }
         }, err => {
@@ -211,8 +204,8 @@ export class AdminStudentFeesComponent implements OnInit {
         this.feesForm.value.feesAmount = this.paybleStallment[0][1];
         this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
           if (res) {
-            this.successDone();
-            this.successMsg = res;
+            this.receiptMode = true;
+            this.receiptStallment = res;
           }
         }, err => {
           this.errorCheck = true;
@@ -220,18 +213,6 @@ export class AdminStudentFeesComponent implements OnInit {
         })
       }
     }
-  }
-
-
-
-  feesDelete(id: String) {
-    this.feesService.deleteFees(id).subscribe((res: any) => {
-      if (res) {
-        this.successDone();
-        this.successMsg = res;
-        this.deleteById = '';
-      }
-    })
   }
 
 
@@ -266,7 +247,6 @@ export class AdminStudentFeesComponent implements OnInit {
   addBulkFees() {
     this.feesService.addBulkFees(this.movies).subscribe((res: any) => {
       if (res) {
-        this.successDone();
         this.successMsg = res;
       }
     }, err => {

@@ -77,7 +77,7 @@
                                         <th>S.No.</th>
                                         <th>Receipt No.</th>
                                         <th>Fee Stallment</th>
-                                        <th>Paid Amount</th>
+                                        <th>Paid Stallment Amount</th>
                                         <th>Payment Date</th>
                                         <th>Fee Receipt</th>
                                     </tr>
@@ -185,26 +185,6 @@
                                         </table>
                                         <table class="custom-table">
                                             <tr>
-                                                <th>Particulars</th>
-                                                <ng-container
-                                                    *ngFor="let item of clsFeesStructure?.feesType,let i = index">
-                                                    <th style="font-weight: normal;"
-                                                        *ngFor="let fee of item | keyvalue">
-                                                        {{ fee.key}} Fee</th>
-                                                </ng-container>
-                                            </tr>
-                                            <tr>
-                                                <th>Fee Amount</th>
-                                                <ng-container
-                                                    *ngFor="let item of clsFeesStructure?.feesType,let i = index">
-                                                    <th style="font-weight: normal;"
-                                                        *ngFor="let fee of item | keyvalue">
-                                                        &#8377; {{ fee.value}}</th>
-                                                </ng-container>
-                                            </tr>
-                                        </table>
-                                        <table class="custom-table">
-                                            <tr>
                                                 <th>S.No.</th>
                                                 <th>Receipt No.</th>
                                                 <th>Fee Stallment</th>
@@ -231,6 +211,26 @@
                                                     </td>
                                                 </tr>
                                             </ng-container>
+                                        </table>
+                                        <table class="custom-table">
+                                            <tr>
+                                                <th>Particulars</th>
+                                                <ng-container
+                                                    *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                                    <th style="font-weight: normal;"
+                                                        *ngFor="let fee of item | keyvalue">
+                                                        {{ fee.key}} Fee</th>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <th>Fee Amount</th>
+                                                <ng-container
+                                                    *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                                    <th style="font-weight: normal;"
+                                                        *ngFor="let fee of item | keyvalue">
+                                                        &#8377; {{ fee.value}}</th>
+                                                </ng-container>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>

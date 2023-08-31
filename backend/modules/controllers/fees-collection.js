@@ -57,12 +57,25 @@ let CreateFeesCollection = async (req, res, next) => {
         if (totalFees < paidFees) {
             return res.status(400).json(`All fees stallment already paid`);
         }
+        const stallment = {
+            class: className,
+            receiptNo: receiptNo,
+            rollNumber: rollNumber,
+            totalFees: totalFees,
+            paidFees: paidFees,
+            dueFees: dueFees,
+            feesStallment: feesStallment,
+            feesAmount: feesAmount,
+            paymentDate: istDateTimeString
+        }
         const updatedDocument = await FeesCollectionModel.findOneAndUpdate(
-            { _id: id, 'stallment': { $elemMatch: { [feesStallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesStallment]: { $exists: true } } },'paymentDate': { $elemMatch: { [feesStallment]: { $exists: true } } } },
-            { $set: { [`stallment.$.${feesStallment}`]: feesAmount, [`receipt.$.${feesStallment}`]: receiptNo,[`paymentDate.$.${feesStallment}`]: istDateTimeString, paidFees: paidFees, dueFees: dueFees } },
+            { _id: id, 'stallment': { $elemMatch: { [feesStallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesStallment]: { $exists: true } } }, 'paymentDate': { $elemMatch: { [feesStallment]: { $exists: true } } } },
+            { $set: { [`stallment.$.${feesStallment}`]: feesAmount, [`receipt.$.${feesStallment}`]: receiptNo, [`paymentDate.$.${feesStallment}`]: istDateTimeString, paidFees: paidFees, dueFees: dueFees } },
             { new: true }
         );
-        return res.status(200).json(`Fees payment successfuly`);
+        if (updatedDocument) {
+            return res.status(200).json(stallment);
+        }
     } catch (error) {
         console.log(error);
     }
