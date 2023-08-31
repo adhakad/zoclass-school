@@ -102,7 +102,8 @@
                                             </td>
                                             <td>
                                                 <span *ngIf="fee.receiptNo==0">-</span>
-                                                <mat-icon *ngIf="fee.receiptNo!==0">launch</mat-icon>
+                                                <mat-icon *ngIf="fee.receiptNo!==0"
+                                                    (click)="feeReceipt(fee.stallment)">launch</mat-icon>
                                             </td>
                                         </tr>
                                     </ng-container>
@@ -114,6 +115,131 @@
                         <div class="col-12">
                             <button class="btn btn-primary print-pdf" (click)="downloadPDF()">Download PDF</button>
                             <button class="btn btn-primary m-5 print-pdf" (click)="printContent()">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="modal fade show" [class.show]="showModal">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Fee Payment Receipt</h5>
+                            <mat-icon matRipple (click)="closeModal()">close</mat-icon>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div #receipt class="custom-container">
+                                    <div class="table-container">
+                                        <table class="logo-table text-bold">
+                                            <tr>
+                                                <td>
+                                                    <img src="../../../../assets/logo.png" alt=""> Vandana Convent
+                                                    School,Guna
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="info-table">
+                                            <tr>
+                                                <td>
+                                                    School Code : 2832
+                                                </td>
+                                                <td>
+                                                    School Fee Statement - 2023
+                                                </td>
+                                                <td>
+                                                    Affiliation No. : 1050
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="custom-table">
+                                            <tr>
+                                                <td class="text-bold">Admission No.</td>
+                                                <td>12345</td>
+                                                <td class="text-bold">Roll Number</td>
+                                                <td>{{studentFeesCollection?.rollNumber}}</td>
+                                                <td class="text-bold">Class</td>
+                                                <td>{{studentFeesCollection?.class}}th</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold">Student Name</td>
+                                                <td>{{studentFeesCollection?.name | titlecase}}</td>
+                                                <td class="text-bold">Father Name</td>
+                                                <td>Narendra Dhakad</td>
+                                                <td class="text-bold">Mother Name</td>
+                                                <td>Manisha Dhakad</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold">Paid Fee</td>
+                                                <td>&#8377; {{studentFeesCollection?.paidFees}}</td>
+                                                <td class="text-bold">Due Fee</td>
+                                                <td>&#8377; {{studentFeesCollection?.dueFees}}</td>
+                                                <td class="text-bold">Total Fee</td>
+                                                <td>&#8377; {{studentFeesCollection?.totalFees}}</td>
+                                            </tr>
+                                        </table>
+                                        <table class="custom-table">
+                                            <tr>
+                                                <th>Particulars</th>
+                                                <ng-container
+                                                    *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                                    <th style="font-weight: normal;"
+                                                        *ngFor="let fee of item | keyvalue">
+                                                        {{ fee.key}} Fee</th>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <th>Fee Amount</th>
+                                                <ng-container
+                                                    *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                                    <th style="font-weight: normal;"
+                                                        *ngFor="let fee of item | keyvalue">
+                                                        &#8377; {{ fee.value}}</th>
+                                                </ng-container>
+                                            </tr>
+                                        </table>
+                                        <table class="custom-table">
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Receipt No.</th>
+                                                <th>Fee Stallment</th>
+                                                <th>Paid Amount</th>
+                                                <th>Payment Date</th>
+                                                <th>Fee Receipt</th>
+                                            </tr>
+                                            <ng-container *ngIf="singleReceiptStallment && singleReceiptStallment.length>0">
+                                                <tr>
+                                                    <td>
+                                                        1
+                                                    </td>
+                                                    <td>
+                                                        {{ singleReceiptStallment[0]?.receiptNo }}
+                                                    </td>
+                                                    <td>
+                                                        {{ singleReceiptStallment[0]?.stallment |titlecase }}
+                                                    </td>
+                                                    <td>
+                                                        &#8377; {{ singleReceiptStallment[0]?.paidAmount }}
+                                                    </td>
+                                                    <td>
+                                                        {{ singleReceiptStallment[0]?.paymentDate }}
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary print-pdf" (click)="downloadReceiptPDF()">Download
+                                PDF</button>
+                            <button class="btn btn-primary print-pdf" (click)="printReceipt()">Print</button>
                         </div>
                     </div>
                 </div>

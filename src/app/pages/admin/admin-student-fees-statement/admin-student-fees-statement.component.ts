@@ -11,11 +11,14 @@ import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
 })
 export class AdminStudentFeesStatementComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
+  @ViewChild('receipt') receipt!: ElementRef;
   cls: any;
+  showModal:boolean = false;
   clsFeesStructure: any;
   studentFeesCollection: any;
   rollNumber: any;
   processedData: any[] = [];
+  singleReceiptStallment:any[] = [];
   constructor(public activatedRoute: ActivatedRoute, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
@@ -32,7 +35,27 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   downloadPDF() {
     this.printPdfService.generatePDF(this.content.nativeElement, "Fee-statement.pdf");
   }
+  printReceipt() {
+    this.printPdfService.printElement(this.receipt.nativeElement);
+  }
 
+  downloadReceiptPDF() {
+    this.printPdfService.generatePDF(this.receipt.nativeElement, "Fee-receipt.pdf");
+  }
+  closeModal() {
+    this.showModal = false;
+    
+  }
+  feeReceipt(singleStallment:any) {
+    const data:any = this.processedData
+
+    const desiredStallment = singleStallment;
+
+    this.singleReceiptStallment = Object.values(data).filter((item:any) => item.stallment === desiredStallment);
+    console.log(this.singleReceiptStallment)
+    this.showModal = true;
+
+  }
   singleStudentFeesCollection(cls: any, rollNumber: any) {
     this.feesService.singleStudentFeesCollection(cls, rollNumber).subscribe((res: any) => {
       if (res) {
