@@ -45,7 +45,7 @@ export class AdminStudentFeesComponent implements OnInit {
   singleStudent:any;
   paybleStallment:any;
   payNow:boolean=false;
-  receiptStallment:any[]=[];
+  receiptStallment:any={};
   receiptMode:boolean = false;
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService,private studentService:StudentService) {
@@ -115,7 +115,7 @@ export class AdminStudentFeesComponent implements OnInit {
     this.payNow=false;
     this.paybleStallment = [];
     this.paybleStallment = [0,0];
-    this.receiptStallment=[];
+    this.receiptStallment={};
     this.receiptMode = false;
     this.getAllStudentFeesCollectionByClass(this.cls)
   }
