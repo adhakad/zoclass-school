@@ -128,22 +128,22 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
-                                                            <table class="custom-table">
+                                                            <table class="info-table">
                                                                 <tr>
-                                                                    <td class="text-bold">Admission No.</td>
+                                                                    <td class="text-bold">Admission No. :</td>
                                                                     <td>956544</td>
-                                                                    <td class="text-bold">Roll Number</td>
+                                                                    <td class="text-bold">Roll Number :</td>
                                                                     <td>{{singleStudent.rollNumber}}</td>
-                                                                    <td class="text-bold">Class</td>
+                                                                    <td class="text-bold">Class :</td>
                                                                     <td>{{singleStudent.class}}th</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="text-bold">Student Name</td>
+                                                                    <td class="text-bold">Student Name :</td>
                                                                     <td>{{singleStudent.name |
                                                                         titlecase}}</td>
-                                                                    <td class="text-bold">Father Name</td>
+                                                                    <td class="text-bold">Father Name :</td>
                                                                     <td>Narendra Dhakad</td>
-                                                                    <td class="text-bold">Mother Name</td>
+                                                                    <td class="text-bold">Mother Name :</td>
                                                                     <td>Manisha Dhakad</td>
                                                                 </tr>
                                                             </table>
@@ -180,8 +180,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer"
-                                                *ngIf="paybleStallment[0][1]>0 && !receiptMode">
+                                            <div class="modal-footer" *ngIf="paybleStallment[0][1]>0 && !receiptMode">
                                                 <mat-checkbox style="margin-right: 10px;" class="example-margin"
                                                     (click)="feesPay(payNow)">Allow Payment</mat-checkbox>
 
@@ -191,7 +190,8 @@
                                                     {{paybleStallment[0][1]}}</button>
                                             </div>
                                         </form>
-                                        <div class="modal-body" *ngIf="receiptMode && receiptStallment">
+                                        <div class="modal-body"
+                                            *ngIf="receiptMode && receiptStallment && singleStudent">
                                             <div class="row">
                                                 <div #receipt class="custom-container">
                                                     <div class="table-container">
@@ -217,23 +217,26 @@
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                        <table class="custom-table">
+                                                        <table class="info-table">
                                                             <tr>
-                                                                <td class="text-bold">Admission No.</td>
+                                                                <td class="text-bold">Admission No. :</td>
                                                                 <td>12345</td>
-                                                                <td class="text-bold">Roll Number</td>
+                                                                <td class="text-bold">Roll Number :</td>
                                                                 <td>{{receiptStallment.rollNumber}}</td>
-                                                                <td class="text-bold">Class</td>
+                                                                <td class="text-bold">Class :</td>
                                                                 <td>{{receiptStallment.class}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="text-bold">Student Name</td>
-                                                                <td>abc</td>
-                                                                <td class="text-bold">Father Name</td>
+                                                                <td class="text-bold">Student Name :</td>
+                                                                <td>{{singleStudent.name |
+                                                                    titlecase}}</td>
+                                                                <td class="text-bold">Father Name :</td>
                                                                 <td>Narendra Dhakad</td>
-                                                                <td class="text-bold">Mother Name</td>
+                                                                <td class="text-bold">Mother Name :</td>
                                                                 <td>Manisha Dhakad</td>
                                                             </tr>
+                                                        </table>
+                                                        <table class="custom-table">
                                                             <tr>
                                                                 <td class="text-bold">Paid Fee</td>
                                                                 <td>&#8377; {{receiptStallment.paidFees}}</td>

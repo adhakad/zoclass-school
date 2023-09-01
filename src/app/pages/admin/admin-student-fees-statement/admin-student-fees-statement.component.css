@@ -16,7 +16,7 @@
     border: none;
     font-size: 1.3em;
     margin-top: 2vh;
-    margin-bottom: 6vh;
+    margin-bottom: 5vh;
     letter-spacing: .5px;
     display: inline-table;
   }
@@ -38,7 +38,9 @@
   img{
     height: 35px;
   }
+  .info-table th,
   .info-table td {
+    height: 40px;
     color: #7c7698fb;
     text-align: center;
     border: none;

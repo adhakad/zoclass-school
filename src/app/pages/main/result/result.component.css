@@ -1,15 +1,4 @@
 @import'../../../pages/auth/teacher-auth/teacher-login/teacher-login.component.css';
-
-h4 {
-  color: #8b69f2;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-
-h3 {
-  color: #7c7698fb !important;
-}
-
 .custom-container {
   font-family: Arial, sans-serif;
   overflow: auto;
@@ -27,7 +16,7 @@ h3 {
   border: none;
   font-size: 1.3em;
   margin-top: 2vh;
-  margin-bottom: 6vh;
+  margin-bottom: 5vh;
   letter-spacing: .5px;
   display: inline-table;
 }
@@ -49,7 +38,9 @@ h3 {
 img{
   height: 35px;
 }
+.info-table th,
 .info-table td {
+  height: 40px;
   color: #7c7698fb;
   text-align: center;
   border: none;
@@ -72,7 +63,6 @@ img{
   border: 1px solid rgb(218, 218, 222);
   text-align: center;
 }
-
 .center {
   text-align: center;
 }
