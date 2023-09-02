@@ -102,22 +102,6 @@ export class ResultComponent implements OnInit {
                   break;
                 }
               }
-              grandTotalMarks += totalMarks;
-
-
-              percentile = (grandTotalMarks / totalMaxMarks) * 100;
-              for (let i = 0; i < this.resultStructureInfo.gradeMaxMarks.length; i++) {
-                const gradeMax: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMaxMarks[i])[0]));
-                const gradeMin: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMinMarks[i])[0]));
-
-                if (!isNaN(gradeMax) && !isNaN(gradeMin)) {
-                  if (percentile >= gradeMin && percentile <= gradeMax) {
-                    percentileGrade = Object.keys(this.resultStructureInfo.gradeMaxMarks[i])[0];
-                    break;
-                  }
-                }
-              }
-
               return {
                 subject: subjectName,
                 theoryMarks: theoryMarks,
@@ -127,9 +111,28 @@ export class ResultComponent implements OnInit {
               };
             })
           };
+
+
+          grandTotalMarks = this.examResultInfo.marks.reduce((total:number,item:any) => {
+            return total + item.totalMarks;
+          },0);
+          percentile = (grandTotalMarks / totalMaxMarks) * 100;
+          percentile = parseFloat(percentile.toFixed(2));
+          const basePercentile = parseFloat(percentile.toFixed(0));
+          for (let i = 0; i < this.resultStructureInfo.gradeMaxMarks.length; i++) {
+            const gradeMax: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMaxMarks[i])[0]));
+            const gradeMin: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMinMarks[i])[0]));
+            if (!isNaN(gradeMax) && !isNaN(gradeMin)) {
+              if (basePercentile >= gradeMin && basePercentile <= gradeMax) {
+                percentileGrade = Object.keys(this.resultStructureInfo.gradeMaxMarks[i])[0];
+                break;
+              }
+            }  
+          }
+          
           this.examResultInfo.grandTotalMarks = grandTotalMarks;
           this.examResultInfo.totalMaxMarks = totalMaxMarks;
-          this.examResultInfo.percentile = parseFloat(percentile.toFixed(2))
+          this.examResultInfo.percentile = percentile;
           this.examResultInfo.percentileGrade = percentileGrade;
         }
         if (!examResult.practicalMarks) {
@@ -169,19 +172,6 @@ export class ResultComponent implements OnInit {
                   break;
                 }
               }
-              grandTotalMarks += totalMarks;
-              percentile = (grandTotalMarks / totalMaxMarks) * 100;
-              for (let i = 0; i < this.resultStructureInfo.gradeMaxMarks.length; i++) {
-                const gradeMax: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMaxMarks[i])[0]));
-                const gradeMin: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMinMarks[i])[0]));
-
-                if (!isNaN(gradeMax) && !isNaN(gradeMin)) {
-                  if (percentile >= gradeMin && percentile <= gradeMax) {
-                    percentileGrade = Object.keys(this.resultStructureInfo.gradeMaxMarks[i])[0];
-                    break;
-                  }
-                }
-              }
               return {
                 subject: subjectName,
                 theoryMarks: theoryMarks,
@@ -191,9 +181,25 @@ export class ResultComponent implements OnInit {
               };
             })
           };
+          grandTotalMarks = this.examResultInfo.marks.reduce((total:number,item:any) => {
+            return total + item.totalMarks;
+          },0);
+          percentile = (grandTotalMarks / totalMaxMarks) * 100;
+          percentile = parseFloat(percentile.toFixed(2));
+          const basePercentile = parseFloat(percentile.toFixed(0));
+          for (let i = 0; i < this.resultStructureInfo.gradeMaxMarks.length; i++) {
+            const gradeMax: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMaxMarks[i])[0]));
+            const gradeMin: number = parseFloat(String(Object.values(this.resultStructureInfo.gradeMinMarks[i])[0]));
+            if (!isNaN(gradeMax) && !isNaN(gradeMin)) {
+              if (basePercentile >= gradeMin && basePercentile <= gradeMax) {
+                percentileGrade = Object.keys(this.resultStructureInfo.gradeMaxMarks[i])[0];
+                break;
+              }
+            }  
+          }
           this.examResultInfo.grandTotalMarks = grandTotalMarks;
           this.examResultInfo.totalMaxMarks = totalMaxMarks;
-          this.examResultInfo.percentile = parseFloat(percentile.toFixed(2));
+          this.examResultInfo.percentile = percentile;
           this.examResultInfo.percentileGrade = percentileGrade;
         }
       }
