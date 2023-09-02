@@ -53,6 +53,7 @@ export class ResultComponent implements OnInit {
       if (res) {
         this.studentInfo = res.studentInfo;
         let examResult = res.examResult;
+
         this.resultStructureInfo = res.examResultStructure;
 
         let grandTotalMarks = 0;
@@ -70,6 +71,7 @@ export class ResultComponent implements OnInit {
   
           const totalPracticalMaxMarks: number = examResult.practicalMarks.reduce((total: number, subjectMarks: any) => {
             const subjectName: string = Object.keys(subjectMarks)[0];
+
             const maxMarksObject: any = this.resultStructureInfo.practicalMaxMarks.find((maxMarks: any) => Object.keys(maxMarks)[0] === subjectName);
             const maxMarks: number = maxMarksObject ? parseFloat(maxMarksObject[subjectName]) : 0;
   
@@ -91,9 +93,11 @@ export class ResultComponent implements OnInit {
               const practicalMark = practicalMarkObject ? parseFloat(practicalMarkObject[subjectName]) : 0;
               const totalMarks = theoryMarks + practicalMark;
 
+
               let grade = '';
               const gradeMaxMarks = this.resultStructureInfo.gradeMaxMarks;
               const gradeMinMarks = this.resultStructureInfo.gradeMinMarks;
+              
               for (let i = 0; i < gradeMaxMarks.length; i++) {
                 const gradeRange: any = Object.values(gradeMaxMarks[i])[0];
                 if (totalMarks >= gradeMinMarks[i][Object.keys(gradeMinMarks[i])[0]] &&
