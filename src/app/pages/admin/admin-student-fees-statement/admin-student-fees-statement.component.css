@@ -42,7 +42,6 @@
   .info-table td {
     height: 40px;
     color: #7c7698fb;
-    text-align: center;
     border: none;
   }
   
@@ -63,8 +62,35 @@
     border: 1px solid rgb(218, 218, 222);
     text-align: center;
   }
-  .center {
+  .receipt-table{
+    width: 800px;
+    font-size: 1em;
+    letter-spacing: .25px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(218, 218, 222);
+    display: inline-table;
+  }
+  .receipt-table th,
+  .receipt-table td {
+    height: 40px;
+    color: #7c7698fb;
+  }
+
+  .receipt-table .receipt-row td {
+    height: 5px;
+    padding-top: 5px;
+  }
+  .custom-container p {
+    color: #7c7698fb;
+  }
+  .text-center {
     text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .border{
+    border:1px solid #ccc;
   }
   .text-bold{
     font-weight: bold;
@@ -85,6 +111,10 @@
       width: 100%;
     }
     .custom-table {
+      width: 100%;
+      font-size: 10px;
+    }
+    .receipt-table {
       width: 100%;
       font-size: 10px;
     }
@@ -110,6 +140,9 @@
     }
   
     .custom-table {
+      width: 100%;
+    }
+    .receipt-table {
       width: 100%;
     }
   
