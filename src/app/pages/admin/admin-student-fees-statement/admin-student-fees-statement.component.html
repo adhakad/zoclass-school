@@ -93,7 +93,7 @@
                                                 <span *ngIf="fee.receiptNo!==0">{{ fee.receiptNo }}</span>
                                             </td>
                                             <td>
-                                                {{ fee.stallment |titlecase }}
+                                                {{ fee.installment |titlecase }}
                                             </td>
                                             <td>
                                                 &#8377; {{ fee.paidAmount }}
@@ -105,7 +105,7 @@
                                             <td>
                                                 <span *ngIf="fee.receiptNo==0">-</span>
                                                 <mat-icon *ngIf="fee.receiptNo!==0"
-                                                    (click)="feeReceipt(fee.stallment)">launch</mat-icon>
+                                                    (click)="feeReceipt(fee.installment)">launch</mat-icon>
                                             </td>
                                         </tr>
                                     </ng-container>
@@ -161,7 +161,7 @@
                                         <table class="info-table">
                                             <tr>
                                                 <td class="text-bold">Receipt No. :</td>
-                                                <td>{{ singleReceiptStallment[0]?.receiptNo }}</td>
+                                                <td>{{ singleReceiptInstallment[0]?.receiptNo }}</td>
                                                 <td class="text-bold">Admission No. :</td>
                                                 <td>12345</td>
                                             </tr>
@@ -215,14 +215,14 @@
                                                 <td></td>
                                                 <td>
                                                     <p class="text-center"><span class="text-bold">{{
-                                                            singleReceiptStallment[0]?.stallment |titlecase }}</span>
+                                                            singleReceiptInstallment[0]?.installment |titlecase }}</span>
                                                         installment amount deposited <span class="text-bold">&#8377; {{
-                                                            singleReceiptStallment[0]?.paidAmount }} /-</span></p>
+                                                            singleReceiptInstallment[0]?.paidAmount }} /-</span></p>
                                                 </td>
                                                 <td></td>
                                             </tr>
                                         </table>
-                                        <p>Date : {{ singleReceiptStallment[0]?.paymentDate }}
+                                        <p>Date : {{ singleReceiptInstallment[0]?.paymentDate }}
                                         </p>
                                     </div>
                                 </div>

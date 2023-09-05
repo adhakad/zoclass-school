@@ -25,7 +25,7 @@ let GetAllStudentFeesCollectionByClass = async (req, res, next) => {
 
 let CreateFeesCollection = async (req, res, next) => {
     let className = req.body.class;
-    let { rollNumber, feesStallment, feesAmount } = req.body;
+    let { rollNumber, feesInstallment, feesAmount } = req.body;
     let receiptNo = Math.floor(Math.random() * 899999 + 100000);
     const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
     const istDateTimeString = currentDateIst.toFormat('dd-MM-yyyy hh:mm:ss a');
@@ -40,41 +40,42 @@ let CreateFeesCollection = async (req, res, next) => {
             return res.status(404).json(`${rollNumber} fees record not found`);
         }
 
-        const feesStructureStallment = checkFeesStructure.stallment.find(item => Object.keys(item)[0] === feesStallment);
-        const paidFeesStallment = checkFeesCollection.stallment.find(item => Object.keys(item)[0] === feesStallment);
-        if (feesStructureStallment[feesStallment] === paidFeesStallment[feesStallment]) {
-            return res.status(400).json(`${feesStallment} fees stallment already paid`);
+        const feesStructureInstallment = checkFeesStructure.installment.find(item => Object.keys(item)[0] === feesInstallment);
+        const paidFeesInstallment = checkFeesCollection.installment.find(item => Object.keys(item)[0] === feesInstallment);
+        if (feesStructureInstallment[feesInstallment] === paidFeesInstallment[feesInstallment]) {
+            return res.status(400).json(`${feesInstallment} fees installment already paid`);
         }
         const id = checkFeesCollection._id;
         const totalFees = checkFeesCollection.totalFees;
-        const stallments = checkFeesCollection.stallment;
-        const totalStallment = stallments.reduce((acc, installment) => {
+        const installments = checkFeesCollection.installment;
+        const totalInstallment = installments.reduce((acc, installment) => {
             const value = Object.values(installment)[0];
             return acc + value;
         }, 0);
-        const paidFees = totalStallment + feesAmount;
+        const paidFees = totalInstallment + feesAmount;
         const dueFees = totalFees - paidFees;
         if (totalFees < paidFees) {
-            return res.status(400).json(`All fees stallment already paid`);
+            return res.status(400).json(`All fees installment already paid`);
         }
-        const stallment = {
+        const installment = {
             class: className,
             receiptNo: receiptNo,
             rollNumber: rollNumber,
             totalFees: totalFees,
             paidFees: paidFees,
             dueFees: dueFees,
-            feesStallment: feesStallment,
+            feesInstallment: feesInstallment,
             feesAmount: feesAmount,
+            
             paymentDate: istDateTimeString
         }
         const updatedDocument = await FeesCollectionModel.findOneAndUpdate(
-            { _id: id, 'stallment': { $elemMatch: { [feesStallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesStallment]: { $exists: true } } }, 'paymentDate': { $elemMatch: { [feesStallment]: { $exists: true } } } },
-            { $set: { [`stallment.$.${feesStallment}`]: feesAmount, [`receipt.$.${feesStallment}`]: receiptNo, [`paymentDate.$.${feesStallment}`]: istDateTimeString, paidFees: paidFees, dueFees: dueFees } },
+            { _id: id, 'installment': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'paymentDate': { $elemMatch: { [feesInstallment]: { $exists: true } } } },
+            { $set: { [`installment.$.${feesInstallment}`]: feesAmount, [`receipt.$.${feesInstallment}`]: receiptNo, [`paymentDate.$.${feesInstallment}`]: istDateTimeString, paidFees: paidFees, dueFees: dueFees } },
             { new: true }
         );
         if (updatedDocument) {
-            return res.status(200).json(stallment);
+            return res.status(200).json(installment);
         }
     } catch (error) {
         console.log(error);

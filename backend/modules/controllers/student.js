@@ -66,8 +66,8 @@ let CreateStudent = async (req, res, next) => {
             return res.status(400).json(`Roll number already exist for class ${className}`);
         }
         const totalFees = checkFeesStr.totalFees;
-        const stallment = checkFeesStr.stallment;
-        stallment.forEach((item) => {
+        const installment = checkFeesStr.installment;
+        installment.forEach((item) => {
             Object.keys(item).forEach((key) => {
                 item[key] = 0;
             });
@@ -86,9 +86,9 @@ let CreateStudent = async (req, res, next) => {
             totalFees: totalFees,
             paidFees: 0,
             dueFees: totalFees,
-            receipt: stallment,
-            stallment: stallment,
-            paymentDate:stallment
+            receipt: installment,
+            installment: installment,
+            paymentDate:installment
         }
         const createStudent = await StudentModel.create(studentData);
         const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
@@ -120,6 +120,7 @@ let ChangeStatus = async (req, res, next) => {
         const studentData = {
             status: status
         }
+        
         const updateStatus = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
         return res.status(200).json('Student update succesfully');
     } catch (error) {

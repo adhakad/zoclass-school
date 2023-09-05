@@ -98,7 +98,7 @@
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
                                         <form [formGroup]="feesForm" (ngSubmit)="feesAddUpdate()"
-                                            *ngIf="!deleteMode && paybleStallment && singleStudent && !receiptMode">
+                                            *ngIf="!deleteMode && paybleInstallment && singleStudent && !receiptMode">
                                             <div class="modal-body">
                                                 <div *ngIf="errorCheck">
                                                     <p class="error-message">{{errorMsg}}</p>
@@ -152,12 +152,12 @@
                                                             </table>
                                                             <table class="custom-table">
                                                                 <tr
-                                                                    *ngFor="let stallmentGroup of singleStudent.stallment | chunk: 3; let i = index">
+                                                                    *ngFor="let installmentGroup of singleStudent.installment | chunk: 3; let i = index">
                                                                     <ng-container>
                                                                         <ng-container
-                                                                            *ngFor="let stallmentObject of stallmentGroup; let j = index">
+                                                                            *ngFor="let installmentObject of installmentGroup; let j = index">
                                                                             <ng-container
-                                                                                *ngFor="let entry of stallmentObject | keyvalue">
+                                                                                *ngFor="let entry of installmentObject | keyvalue">
                                                                                 <td class="text-bold">
                                                                                     {{ entry.key }}
                                                                                 </td>
@@ -173,18 +173,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer" *ngIf="paybleStallment[0][1]>0 && !receiptMode">
+                                            <div class="modal-footer" *ngIf="paybleInstallment[0][1]>0 && !receiptMode">
                                                 <mat-checkbox style="margin-right: 5px;" class="example-margin"
                                                     (click)="feesPay(payNow)">Allow Payment</mat-checkbox>
 
                                                 <button class="submit-button" mat-raised-button type="button"
                                                     (click)="feesAddUpdate()" [disabled]="!payNow">Pay
-                                                    {{paybleStallment[0][0]}} Stallment &#8377;
-                                                    {{paybleStallment[0][1]}}</button>
+                                                    {{paybleInstallment[0][0]}} Installment &#8377;
+                                                    {{paybleInstallment[0][1]}}</button>
                                             </div>
                                         </form>
                                         <div class="modal-body"
-                                            *ngIf="receiptMode && receiptStallment && singleStudent">
+                                            *ngIf="receiptMode && receiptInstallment && singleStudent">
                                             <div class="row">
                                                 <div #receipt class="custom-container">
                                                     <div class="table-container">
@@ -210,13 +210,13 @@
                                                         <table class="info-table">
                                                             <tr>
                                                                 <td class="text-bold">Receipt No. :</td>
-                                                                <td>{{receiptStallment.receiptNo}}</td>
+                                                                <td>{{receiptInstallment.receiptNo}}</td>
                                                                 <td class="text-bold">Admission No. :</td>
                                                                 <td>12345</td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="text-bold">Class :</td>
-                                                                <td>{{receiptStallment.class}}th</td>
+                                                                <td>{{receiptInstallment.class}}th</td>
                                                                 <td class="text-bold">Date Of Birth :</td>
                                                                 <td>30.04.2005</td>
                                                             </tr>
@@ -246,33 +246,33 @@
                                                                 <td></td>
                                                                 <td class="text-bold text-right">Total Fee</td>
                                                                 <td class="text-bold">&#8377;
-                                                                    {{receiptStallment.totalFees}}</td>
+                                                                    {{receiptInstallment.totalFees}}</td>
                                                             </tr>
                                                             <tr class="text-center receipt-row">
                                                                 <td></td>
                                                                 <td class="text-bold text-right">Paid Fee</td>
                                                                 <td class="text-bold">&#8377;
-                                                                    {{receiptStallment.paidFees}}</td>
+                                                                    {{receiptInstallment.paidFees}}</td>
                                                             </tr>
                                                             <tr class="text-center receipt-row">
                                                                 <td></td>
                                                                 <td class="text-bold text-right">Due Fee</td>
                                                                 <td class="text-bold">&#8377;
-                                                                    {{receiptStallment.dueFees}}</td>
+                                                                    {{receiptInstallment.dueFees}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td></td>
                                                                 <td>
                                                                     <p class="text-center"><span class="text-bold">
-                                                                        {{receiptStallment.feesStallment}}</span>
+                                                                        {{receiptInstallment.feesInstallment}}</span>
                                                                         installment amount deposited <span class="text-bold">&#8377;
-                                                                            {{receiptStallment.feesAmount}} /-</span></p>
+                                                                            {{receiptInstallment.feesAmount}} /-</span></p>
                                                                 </td>
                                                                 <td></td>
                                                             </tr>
                                                         </table>
                                                         
-                                                        <p>{{ receiptStallment.paymentDate }}</p>
+                                                        <p>Date : {{ receiptInstallment.paymentDate }}</p>
                                                     </div>
                                                 </div>
                                             </div>

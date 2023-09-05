@@ -18,7 +18,7 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   studentFeesCollection: any;
   rollNumber: any;
   processedData: any[] = [];
-  singleReceiptStallment:any[] = [];
+  singleReceiptInstallment:any[] = [];
   constructor(public activatedRoute: ActivatedRoute, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
@@ -46,13 +46,13 @@ export class AdminStudentFeesStatementComponent implements OnInit {
     this.showModal = false;
     
   }
-  feeReceipt(singleStallment:any) {
+  feeReceipt(singleInstallment:any) {
     const data:any = this.processedData
 
-    const desiredStallment = singleStallment;
+    const desiredInstallment = singleInstallment;
 
-    this.singleReceiptStallment = Object.values(data).filter((item:any) => item.stallment === desiredStallment);
-    console.log(this.singleReceiptStallment)
+    this.singleReceiptInstallment = Object.values(data).filter((item:any) => item.installment === desiredInstallment);
+    console.log(this.singleReceiptInstallment)
     this.showModal = true;
 
   }
@@ -75,15 +75,15 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   }
 
   processData() {
-    for (let i = 0; i < this.studentFeesCollection.stallment.length; i++) {
+    for (let i = 0; i < this.studentFeesCollection.installment.length; i++) {
       const receiptNo = Object.values(this.studentFeesCollection.receipt[i])[0];
-      const stallment = Object.keys(this.studentFeesCollection.stallment[i])[0];
-      const paidAmount = Object.values(this.studentFeesCollection.stallment[i])[0];
+      const installment = Object.keys(this.studentFeesCollection.installment[i])[0];
+      const paidAmount = Object.values(this.studentFeesCollection.installment[i])[0];
       const paymentDate = Object.values(this.studentFeesCollection.paymentDate[i])[0];
 
       this.processedData.push({
         receiptNo,
-        stallment,
+        installment,
         paidAmount,
         paymentDate
       });

@@ -22,12 +22,12 @@
                                     <thead class="bg-light">
                                         <tr class="text-muted">
                                             <th>S.No.</th>
-                                            <th>Fee Stallment</th>
+                                            <th>Fee Installment</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let item of  clsFeesStructure?.stallment,let i = index">
+                                        <tr *ngFor="let item of  clsFeesStructure?.installment,let i = index">
                                             <td>
                                                 <p class="mb-0">{{i+1}}</p>
                                             </td>
@@ -107,8 +107,8 @@
                                             <section class="example-section">
                                                 <div class="col-12">
                                                     <mat-radio-group class="example-margin">
-                                                        <mat-radio-button value="stallment"
-                                                            (click)="stallmentPayment()">Stallment
+                                                        <mat-radio-button value="installment"
+                                                            (click)="installmentPayment()">Installment
                                                             Payment
                                                         </mat-radio-button>
                                                         <mat-radio-button class="example-margin" value="monthly"
@@ -117,21 +117,21 @@
                                                     </mat-radio-group>
                                                 </div>
                                             </section>
-                                            <div class="row" *ngIf="stallment">
+                                            <div class="row" *ngIf="installment">
                                                 <div class="col-6">
                                                     <mat-checkbox class="example-margin" checked=“true”
                                                         [disabled]="disabled">
-                                                        Stallment First
+                                                        Installment First
                                                     </mat-checkbox>
                                                     <mat-checkbox class="example-margin" checked=“true”
                                                         [disabled]="disabled">
-                                                        Stallment Second
+                                                        Installment Second
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="col-6">
                                                     <mat-checkbox class="example-margin" checked=“true”
                                                         [disabled]="disabled">
-                                                        Stallment Third
+                                                        Installment Third
                                                     </mat-checkbox>
                                                 </div>
                                             </div>
@@ -228,13 +228,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h3 style="color: #8c88ff;">Fees Stallment</h3>
+                                                    <h3 style="color: #8c88ff;">Fees Installment</h3>
                                                     <div formArrayName="feesPayType">
                                                         <div
                                                             *ngFor="let singleFeesPayType of selectedFeesPayType; let i = index">
                                                             <div [formGroupName]="i">
                                                                 <mat-form-field appearance="outline">
-                                                                    <mat-label>Stallment {{singleFeesPayType |
+                                                                    <mat-label>Installment {{singleFeesPayType |
                                                                         titlecase}}
                                                                         Fees</mat-label>
                                                                     <input matInput type="number"

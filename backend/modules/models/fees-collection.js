@@ -7,7 +7,7 @@ const FeesCollectionModel = mongoose.model('fees-collection', {
   paidFees:{type:Number}, 
   dueFees:{type:Number},
   receipt:{},
-  stallment:{},
+  installment:{},
   paymentDate:{}
 });
 

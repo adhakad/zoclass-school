@@ -43,9 +43,9 @@ export class AdminStudentFeesComponent implements OnInit {
 
   studentList:any[]=[];
   singleStudent:any;
-  paybleStallment:any;
+  paybleInstallment:any;
   payNow:boolean=false;
-  receiptStallment:any={};
+  receiptInstallment:any={};
   receiptMode:boolean = false;
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService,private studentService:StudentService) {
@@ -53,7 +53,7 @@ export class AdminStudentFeesComponent implements OnInit {
       class:[''],
       rollNumber:[''],
       feesAmount: [''],
-      feesStallment:['']
+      feesInstallment:['']
     });
   }
 
@@ -113,9 +113,9 @@ export class AdminStudentFeesComponent implements OnInit {
     this.successMsg = '';
     this.errorMsg = '';
     this.payNow=false;
-    this.paybleStallment = [];
-    this.paybleStallment = [0,0];
-    this.receiptStallment={};
+    this.paybleInstallment = [];
+    this.paybleInstallment = [0,0];
+    this.receiptInstallment={};
     this.receiptMode = false;
     this.getAllStudentFeesCollectionByClass(this.cls)
   }
@@ -129,16 +129,16 @@ export class AdminStudentFeesComponent implements OnInit {
   }
   studentFeesPay(student:any) {
     this.singleStudent = student;
-    const stallment = this.singleStudent.stallment;
-    const result = stallment.find((stallment:any) => {
-      const [key, value] = Object.entries(stallment)[0];
+    const installment = this.singleStudent.installment;
+    const result = installment.find((installment:any) => {
+      const [key, value] = Object.entries(installment)[0];
       return value === 0;
     });
     if (result) {
       const [key, value] = Object.entries(result)[0];
-      this.paybleStallment = this.clsFeesStructure.stallment.flatMap((item:any) => Object.entries(item).filter(([keys, values]) => keys === key));
+      this.paybleInstallment = this.clsFeesStructure.installment.flatMap((item:any) => Object.entries(item).filter(([keys, values]) => keys === key));
     } else {
-      this.paybleStallment = [0,0];
+      this.paybleInstallment = [0,0];
     }
 
     this.showModal = true;
@@ -200,12 +200,12 @@ export class AdminStudentFeesComponent implements OnInit {
       } else {
         this.feesForm.value.class = this.singleStudent.class;
         this.feesForm.value.rollNumber = this.singleStudent.rollNumber;
-        this.feesForm.value.feesStallment = this.paybleStallment[0][0];
-        this.feesForm.value.feesAmount = this.paybleStallment[0][1];
+        this.feesForm.value.feesInstallment = this.paybleInstallment[0][0];
+        this.feesForm.value.feesAmount = this.paybleInstallment[0][1];
         this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
           if (res) {
             this.receiptMode = true;
-            this.receiptStallment = res;
+            this.receiptInstallment = res;
           }
         }, err => {
           this.errorCheck = true;

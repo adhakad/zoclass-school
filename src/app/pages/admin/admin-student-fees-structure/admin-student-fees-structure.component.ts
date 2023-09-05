@@ -10,7 +10,7 @@ import { FeesStructureService } from 'src/app/services/fees-structure.service';
 })
 export class AdminStudentFeesStructureComponent implements OnInit {
   disabled = true;
-  stallment: boolean = false;
+  installment: boolean = false;
   monthly: boolean = false;
 
 
@@ -55,16 +55,16 @@ export class AdminStudentFeesStructureComponent implements OnInit {
       }
     })
   }
-  stallmentPayment() {
+  installmentPayment() {
     this.checkFeesPayType = true;
     this.monthly = false;
-    this.stallment = true;
+    this.installment = true;
     this.selectedFeesPayType = [];
     this.selectedFeesPayType = ['First', 'Second', 'Third'];
   }
   monthlyPayment() {
     this.checkFeesPayType = true;
-    this.stallment = false;
+    this.installment = false;
     this.monthly = true;
     this.selectedFeesPayType = [];
     this.selectedFeesPayType = ['July', 'August', 'September', 'October', 'November', 'December', 'January', 'Fabruary', 'March', 'April'];
@@ -82,7 +82,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   }
 
   falseAllValue() {
-    this.stallment = false;
+    this.installment = false;
     this.monthly = false;
 
     this.totalFees = 0;

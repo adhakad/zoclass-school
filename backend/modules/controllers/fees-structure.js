@@ -39,15 +39,14 @@ let CreateFeesStructure = async (req, res, next) => {
             return res.status(400).json(`Class ${className} total fees is not equal to all fees particulars total`);
         }
         if (totalFees!==feesPayTypeTotal) {
-            return res.status(400).json(`Class ${className} total fees is not equal to all fees stallment total`);
+            return res.status(400).json(`Class ${className} total fees is not equal to all fees installment total`);
         }
-        
         
         let feesStructureData = {
             class: className,
             totalFees: totalFees,
             feesType:feesType,
-            stallment:feesPayType,
+            installment:feesPayType,
         }
         let feesStructure = await FeesStructureModel.create(feesStructureData);
         // console.log(feesStructure)
