@@ -9,22 +9,9 @@
                 <div class="col-12 big-container">
                     <div class="col-lg-12 offset-lg-0">
                         <div class="main-card pt-2 pb-4">
+
                             <div class="row mt-4 mb-2">
-                                <div class="col-8 col-lg-5">
-                                    <input type="text" class="form-control" placeholder="Result Search..."
-                                        id="searchText" name="searchText" #searchText="ngModel"
-                                        [(ngModel)]="filters.searchText" (keyup)="getFees({page : 1, limit : 0})">
-                                </div>
-                                <div class="col-4 col-lg-2 offset-lg-5 pb-3">
-                                    <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
-                                        (click)="addBulkFeesModel()"><mat-icon
-                                            style="font-size: 20px;">add</mat-icon>Create</button>
-                                </div>
-                                <div class="row pt-2 pb-1">
-                                    <div class="col-12 col-lg-2">
-                                        <a routerLink="/admin/students/fees/class/structure/{{cls}}">Fee Structure
-                                            {{cls}}</a>
-                                    </div>
+                                <div class="row pb-3">
                                     <div class="col-12 col-lg-10">
                                         <mat-radio-group (change)="onChange($event)">
                                             <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result
@@ -35,7 +22,18 @@
                                         </mat-radio-group>
                                     </div>
                                 </div>
+                                <div class="col-8 col-lg-5">
+                                    <input type="text" class="form-control" placeholder="Result Search..."
+                                        id="searchText" name="searchText" #searchText="ngModel"
+                                        [(ngModel)]="filters.searchText" (keyup)="getFees({page : 1, limit : 0})">
+                                </div>
+                                <div class="col-4 col-lg-2 offset-lg-5 pb-3">
+                                    <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
+                                        (click)="addBulkFeesModel()"><mat-icon
+                                            style="font-size: 20px;">add</mat-icon>Create</button>
+                                </div>
                             </div>
+
                             <table class="table table-hover align-middle mt-2 mb-1 bg-white">
                                 <thead class="bg-light">
                                     <tr>
@@ -234,8 +232,9 @@
                                                                 <th class="border">Particulars</th>
                                                                 <th class="border">Fee Amount</th>
                                                             </tr>
-                
-                                                            <tr class="text-center" *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+
+                                                            <tr class="text-center"
+                                                                *ngFor="let item of clsFeesStructure?.feesType,let i = index">
                                                                 <td class="border">{{i+1}}.</td>
                                                                 <td class="border" *ngFor="let fee of item | keyvalue">
                                                                     {{ fee.key}} Fee</td>
@@ -264,14 +263,16 @@
                                                                 <td></td>
                                                                 <td>
                                                                     <p class="text-center"><span class="text-bold">
-                                                                        {{receiptInstallment.feesInstallment}}</span>
-                                                                        installment amount deposited <span class="text-bold">&#8377;
-                                                                            {{receiptInstallment.feesAmount}} /-</span></p>
+                                                                            {{receiptInstallment.feesInstallment}}</span>
+                                                                        installment amount deposited <span
+                                                                            class="text-bold">&#8377;
+                                                                            {{receiptInstallment.feesAmount}} /-</span>
+                                                                    </p>
                                                                 </td>
                                                                 <td></td>
                                                             </tr>
                                                         </table>
-                                                        
+
                                                         <p>Date : {{ receiptInstallment.paymentDate }}</p>
                                                     </div>
                                                 </div>
