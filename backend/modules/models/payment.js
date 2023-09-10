@@ -3,9 +3,13 @@ const Schema = mongoose.Schema;
 
 const paymentSchema = new Schema({
   orderId: { type: String, required: true },
-  amount: { type: Number, required: true },
+  studentId: { type: String, required: true },
+  class: { type: Number, required: true },
+  rollNumber: { type: Number, required: true },
+  feesInstallment: { type: String, required: true },
+  feesAmount: { type: Number, required: true },
+  currency:{ type: String, required: true },
   status: { type: String, default: 'pending' },
-  // Add more fields as needed
 });
 
 module.exports = mongoose.model('Payment', paymentSchema);

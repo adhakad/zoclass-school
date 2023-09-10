@@ -1,38 +1,32 @@
 <mat-toolbar class="header">
-  <button mat-flat-button class="logo">
-    <span>zoclass</span>
-  </button>
-  <button mat-flat-button >
-  </button>
-  <button mat-flat-button>
-  </button>
-  <button mat-icon-button>
-    <mat-icon style="color: #8d6dff;" (click)="openMenu(true)" class="openMenu">menu</mat-icon>
-  </button>
+  <div class="logo dashbord-logo-margin">
+    <img src="../../../assets/logo.png" alt="">
+    <span>Vandana Convent School</span>
+  </div>
+  <div class="col-lg-7">
+    <button mat-icon-button>
+      <mat-icon class="hamburger-icon" (click)="hamburgerMenu(true)">menu</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
-<div [ngClass]="{'top-navbar' : false==nav}">
-    <mat-toolbar class="navbar">
-      <mat-icon class="close-icon" (click)="openMenu(false)">close</mat-icon>
-      <button mat-button class="menu-button" routerLink="/student/dashboard" routerLinkActive="active-link" (click)="openMenu(true)">
-        <mat-icon>home</mat-icon>
-        <span>Dashboard</span>
+<div [ngClass]="{'top-hamburger-menu' : false==nav}">
+  <mat-toolbar class="hamburger-menu">
+    <mat-icon class="close-icon" (click)="hamburgerMenu(false)">close</mat-icon>
+    <button mat-menu-item [routerLink]="['/admin/dashboard']" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
+      <mat-icon>home</mat-icon>
+      <span>Dashboard</span>
+    </button>
+      <button mat-menu-item class="menu-button" [routerLink]="['/student/fees']" routerLinkActive="active-link">
+        <mat-icon>currency_rupee</mat-icon>
+        <span>Fee Management</span>
       </button>
-      
-      <!-- <button mat-button class="menu-button" >
-        <mat-icon>books</mat-icon>
-        <span>Student Profile</span>
-      </button> -->
-      <button mat-button class="menu-button" [routerLink]="['/student/test']" routerLinkActive="active-link">
-        <mat-icon>assignment</mat-icon>
-        <span>Test</span>
+      <button mat-menu-item class="menu-button" routerLinkActive="active-link" [routerLink]="['/admin/students/admit-card/class']">
+        <mat-icon>list alt</mat-icon>
+        <span>Admit Cards</span>
       </button>
-      <button mat-button class="menu-button" [routerLink]="['/student/subject']" routerLinkActive="active-link">
-        <mat-icon>info</mat-icon>
-        <span>Subject</span>
-      </button>
-      <button mat-button class="menu-button" [routerLink]="['/student/all-test/results-pdf']" routerLinkActive="active-link">
-        <mat-icon>branding_watermark</mat-icon>
-        <span>All Test Results PDF</span>
+      <button mat-menu-item class="menu-button" [routerLink]="['/admin/students/result/class']" routerLinkActive="active-link">
+        <mat-icon>person</mat-icon>
+        <span>Exam Result</span>
       </button>
   </mat-toolbar>
 </div>

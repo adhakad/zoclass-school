@@ -3,7 +3,7 @@ const FeesCollectionModel = mongoose.model('fees-collection', {
   name:{type:String},
   class: { type: Number },
   rollNumber: { type: Number }, 
-  totalFees:{type:Number,default:10000},
+  totalFees:{type:Number},
   paidFees:{type:Number}, 
   dueFees:{type:Number},
   receipt:{},

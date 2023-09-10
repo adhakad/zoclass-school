@@ -66,11 +66,10 @@ let CreateFeesCollection = async (req, res, next) => {
             dueFees: dueFees,
             feesInstallment: feesInstallment,
             feesAmount: feesAmount,
-            
             paymentDate: istDateTimeString
         }
         const updatedDocument = await FeesCollectionModel.findOneAndUpdate(
-            { _id: id, 'installment': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'paymentDate': { $elemMatch: { [feesInstallment]: { $exists: true } } } },
+            { _id: id,'installment': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'paymentDate': { $elemMatch: { [feesInstallment]: { $exists: true } } } },
             { $set: { [`installment.$.${feesInstallment}`]: feesAmount, [`receipt.$.${feesInstallment}`]: receiptNo, [`paymentDate.$.${feesInstallment}`]: istDateTimeString, paidFees: paidFees, dueFees: dueFees } },
             { new: true }
         );
@@ -81,8 +80,6 @@ let CreateFeesCollection = async (req, res, next) => {
         console.log(error);
     }
 }
-
-
 
 module.exports = {
     GetAllStudentFeesCollectionByClass,

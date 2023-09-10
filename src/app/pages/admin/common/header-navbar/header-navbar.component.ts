@@ -19,7 +19,6 @@ export class HeaderNavbarComponent implements OnInit {
     }else if(val==false){
       this.nav = false;
     }
-    
   }
 
 }

@@ -1,5 +1,4 @@
 import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
-declare var Razorpay: any;
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -49,7 +48,7 @@ export class AdminStudentFeesComponent implements OnInit {
   receiptInstallment:any={};
   receiptMode:boolean = false;
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService,private studentService:StudentService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
       class:[''],
       rollNumber:[''],
@@ -203,56 +202,19 @@ export class AdminStudentFeesComponent implements OnInit {
           this.errorMsg = err.error;
         })
       } else {
-
-        let amount = this.paybleInstallment[0][1];
-        let amountInPaise = amount * 100;
-
-        const RozarpayOptions = {
-          description: 'Sample Razorpay demo',
-          currency: 'INR',
-          amount:amountInPaise ,
-          name: 'Sai',
-          key: 'rzp_test_ARoUa9Hxw3scSz',
-          image: 'https://i.imgur.com/FApqk3D.jpeg',
-          prefill: {
-            name: 'Abhishek',
-            email: 'abhishek@gmail.com',
-            phone: '1234567890'
-          },
-          theme: {
-            color: '#6466e3'
-          },
-          modal: {
-            ondismiss:  () => {
-              console.log('dismissed')
-            }
+        this.feesForm.value.class = this.singleStudent.class;
+        this.feesForm.value.rollNumber = this.singleStudent.rollNumber;
+        this.feesForm.value.feesInstallment = this.paybleInstallment[0][0];
+        this.feesForm.value.feesAmount = this.paybleInstallment[0][1];
+        this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
+          if (res) {
+            this.receiptMode = true;
+            this.receiptInstallment = res;
           }
-        }
-    
-        const successCallback = (paymentid: any) => {
-          console.log(paymentid);
-        }
-    
-        const failureCallback = (e: any) => {
-          console.log(e);
-        }
-    
-        let a = Razorpay.open(RozarpayOptions,successCallback, failureCallback)
-        console.log(a)
-
-        // this.feesForm.value.class = this.singleStudent.class;
-        // this.feesForm.value.rollNumber = this.singleStudent.rollNumber;
-        // this.feesForm.value.feesInstallment = this.paybleInstallment[0][0];
-        // this.feesForm.value.feesAmount = this.paybleInstallment[0][1];
-        // this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
-        //   if (res) {
-        //     this.receiptMode = true;
-        //     this.receiptInstallment = res;
-        //   }
-        // }, err => {
-        //   this.errorCheck = true;
-        //   this.errorMsg = err.error;
-        // })
+        }, err => {
+          this.errorCheck = true;
+          this.errorMsg = err.error;
+        })
       }
     }
   }

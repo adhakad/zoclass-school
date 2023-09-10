@@ -156,16 +156,6 @@
                 </div>
                 <div class="col-lg-3 offset-lg-1">
                     <div class="row">
-                        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-                        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-                        <div>
-                            <label for="amount">Amount:</label>
-                            <input type="number" [(ngModel)]="amount" id="amount" name="amount" required>
-                            <br>
-                            <button class="submit-button" mat-raised-button (click)="createPayment()">Pay with Razorpay</button>
-                          </div>
-
-
                         <div class="col-10 offset-1">
                             <h3>Branches</h3>
                             <p>Guna</p>
