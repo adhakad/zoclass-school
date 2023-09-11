@@ -1,121 +1,104 @@
 <app-header-navigation></app-header-navigation>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 col-lg-2">
-            <app-side-navigation></app-side-navigation>
-        </div>
-        <div class="col-12 col-lg-10">
-            <div class="row">
-                <div class="col-12 big-container">
-                    <div class="col-lg-12 offset-lg-0">
-                        <div class="main-card" *ngIf="admitCardInfo && studentAdmitCardInfo">
-                            <!-- <table class="table align-middle mt-5 mb-0 bg-white abc">
-                                <thead class="bg-light">
-                                    <tr class="text-muted">
-                                        <th>Student Name</th>
-                                        <th style="font-weight: 400;">{{studentAdmitCardInfo.name | titlecase}}</th>
-                                        <th>Roll Number</th>
-                                        <th style="font-weight: 400;">{{studentAdmitCardInfo.rollNumber}}</th>
-                                        <th>Class</th>
-                                        <th style="font-weight: 400;">{{studentAdmitCardInfo.class}}</th>
-                                    </tr>
-                                    <tr class="text-muted">
-                                        <th>Admit Card No.</th>
-                                        <th style="font-weight: 400;">{{studentAdmitCardInfo.admitCardNo}}</th>
-                                        <th>Exam</th>
-                                        <th style="font-weight: 400;">{{admitCardInfo[0]?.examType | titlecase}} Exam
-                                        </th>
-                                        <th>Year</th>
-                                        <th style="font-weight: 400;">2023</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                            <table class="table table-hover align-middle mt-4 mb-0 bg-white">
-                                <thead class="bg-light">
-                                    <tr class="text-muted">
-                                        <th>No.</th>
-                                        <th>Subject</th>
-                                        <th>Exam Date</th>
-                                        <th>Exam Timing</th>
-                                    </tr>
-                                </thead>
-                                <tbody *ngIf="processedData && processedData.length > 0">
-                                    <tr *ngFor="let exam of processedData; let i = index">
-                                        <td>
-                                            <p class="mb-0">{{ i + 1 }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ exam.subject | titlecase}}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ exam.date }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">{{ exam.timing }}</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table> -->
-                            <div class="container" *ngIf="admitCardInfo && studentAdmitCardInfo">
-                                <div class="row bg-light">
-                                  <div class="col-8 offset-2">
-                                    <table class="table align-middle mb-0 bg-white abc">
-                                      <thead class="bg-light">
-                                        <p class="m-2 pt-3 pb-3 text-muted" style="white-space: nowrap;font-weight: 500;color: #7c7698fb;">{{studentAdmitCardInfo?.examType | titlecase}} Exam Admit Card</p>
-                                        <tr class="text-muted">
-                                          <th>Admit Card No.</th>
-                                          <th style="font-weight: 400;">{{studentAdmitCardInfo?.admitCardNo}}</th>
-                                          <th>Roll Number</th>
-                                          <th style="font-weight: 400;">
-                                            {{studentAdmitCardInfo?.rollNumber}}</th>
-                                          <th>Class</th>
-                                          <th style="font-weight: 400;">{{studentAdmitCardInfo?.class}}th
-                                          </th>
-                                        </tr>
-                                        <tr class="text-muted">
-                                          <th>Student Name</th>
-                                          <th style="font-weight: 400;">{{studentAdmitCardInfo?.name | titlecase}}</th>
-                                          <th>Father Name</th>
-                                          <th style="font-weight: 400;">Narendra Dhakad</th>
-                                          <th>Mother Name</th>
-                                          <th style="font-weight: 400;">Manisha Dhakad</th>
-                                        </tr>
-                                        <br><br>
-                                        <tr class="text-muted">
-                                            <th>S.No.</th>
-                                            <th>Subject Code</th>
-                                            <th>Subject</th>
-                                            <th>Exam Date</th>
-                                            <th>Exam Timing</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf="processedData && processedData.length > 0">
-                                        <tr *ngFor="let exam of processedData; let i = index">
-                                            <td>
-                                                {{ i + 1 }}
-                                            </td>
-                                            <td>
-                                              100
-                                          </td>
-                                            <td>
-                                                {{ exam.subject | titlecase}}
-                                            </td>
-                                            <td>
-                                                {{ exam.date }}
-                                            </td>
-                                            <td>
-                                                {{ exam.timing }}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container-fluid dashboard-container">
+  <div class="row">
+    <div class="col-12 col-lg-2">
+      <app-side-navigation></app-side-navigation>
     </div>
+    <div class="col-12 col-lg-10">
+      <div class="row">
+        <div class="col-12 big-container">
+          <div class="col-lg-12 offset-lg-0">
+            <div class="main-card">
+              <div class="row">
+                <div *ngIf="!studentAdmitCardInfo">
+                  <h3 style="text-align: center;margin-top: 25vh;">No Record Found</h3>
+                </div>
+                <div #content class="custom-container" *ngIf="studentAdmitCardInfo">
+                  <div class="table-container">
+                    <table class="logo-table text-bold">
+                      <tr>
+                        <td>
+                          <img src="../../../../assets/logo.png" alt=""> Vandana Convent School,Guna
+                        </td>
+                      </tr>
+                    </table>
+                    <table class="info-table">
+                      <tr>
+                        <td>
+                          School Code : 2832
+                        </td>
+                        <td>
+                          {{studentAdmitCardInfo?.examType | titlecase}}
+                          Exam Admit Card - 2023
+                        </td>
+                        <td>
+                          Affiliation No. : 1050
+                        </td>
+                      </tr>
+                    </table>
+                    <table class="info-table">
+                      <tr>
+                        <th>Admit Card No. :</th>
+                        <td>
+                          {{studentAdmitCardInfo?.admitCardNo}}
+                        </td>
+                        <td class="text-bold">Roll Number :</td>
+                        <td>
+                          {{studentAdmitCardInfo?.rollNumber}}
+                        </td>
+                        <td class="text-bold">Class :</td>
+                        <td>
+                          {{studentAdmitCardInfo?.class}}th
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold">Student Name :</td>
+                        <td>
+                          {{studentAdmitCardInfo?.name | titlecase}}
+                        </td>
+                        <td class="text-bold">Father Name :</td>
+                        <td>Narendra Dhakad</td>
+                        <td class="text-bold">Mother Name :</td>
+                        <td>Manisha Dhakad</td>
+                      </tr>
+                    </table>
+
+
+                    <table class="custom-table">
+                      <tr>
+                        <th>S.No.</th>
+                        <th>Subject Code</th>
+                        <th>Subject</th>
+                        <th>Exam Date</th>
+                        <th>Exam Timing</th>
+                      </tr>
+                      <ng-container *ngIf="processedData && processedData.length > 0">
+                        <tr *ngFor="let exam of processedData; let i = index">
+                          <td>
+                            {{ i + 1 }}
+                          </td>
+                          <td>
+                            100
+                          </td>
+                          <td>
+                            {{ exam.subject | titlecase}}
+                          </td>
+                          <td>
+                            {{ exam.date }}
+                          </td>
+                          <td>
+                            {{ exam.timing }}
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

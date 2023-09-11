@@ -20,7 +20,7 @@ export class AdmitCardComponent implements OnInit {
   admitCardInfo: any;
   processedData: any[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
+  constructor(private fb: FormBuilder, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
     this.admitCardForm = this.fb.group({
       admitCardNo: ['', Validators.required],
       class: ['', Validators.required],

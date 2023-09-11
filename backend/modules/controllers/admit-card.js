@@ -22,10 +22,19 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
     }
 }
 let GetSingleStudentAdmitCardById = async(req,res,next) => {
-    let id = req.params.id;
+    let studentId = req.params.id;
     try{
-        const singleStudentAdmitCard = await AdmitCardModel.findOne({studentId:id});
-        return res.status(200).json(singleStudentAdmitCard);
+        let admitCard = await AdmitCardModel.findOne({studentId:studentId})
+        if (!admitCard) {
+            return res.status(404).json({ errorMsg: 'Admit card not exist' });
+        }
+        let stream = admitCard.stream;
+        let className = admitCard.class;
+        let admitCardStructure = await AdmitCardStructureModel.findOne({class:className,stream:stream});
+        if(!admitCardStructure){
+            return res.status(404).json({ errorMsg: 'This class any exam not exist' });
+        }
+        return res.status(200).json({admitCardStructure:admitCardStructure,admitCard:admitCard});
     }catch(error){
         console.log(error);
     }

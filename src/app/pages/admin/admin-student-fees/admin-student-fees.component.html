@@ -36,9 +36,9 @@
 
                             <table class="table table-hover align-middle mt-2 mb-1 bg-white">
                                 <thead class="bg-light">
-                                    <tr>
+                                    <tr class="text-muted">
                                         <th>No.</th>
-                                        <th>Fee Payment</th>
+                                        <th>Offline Fee Payment</th>
                                         <th>Fee Statement</th>
                                         <th>Student Name</th>
                                         <th>Roll Number</th>
@@ -54,7 +54,7 @@
                                         </td>
                                         <th>
                                             <button *ngIf="student.paidFees !== student.totalFees" class="submit-button"
-                                                mat-raised-button (click)="studentFeesPay(student)">Pay Fee</button>
+                                                mat-raised-button (click)="studentFeesPay(student)">Pay Offline</button>
                                             <button *ngIf="student.paidFees === student.totalFees" class="submit-button"
                                                 mat-raised-button [disabled]="student.paidFees === student.totalFees"
                                                 style="background-color: transparent;color: #7c7698fb;">Fee

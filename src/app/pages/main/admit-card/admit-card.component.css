@@ -5,8 +5,9 @@
 }
 
 .table-container {
-  border: none;
+  border: 1px solid #ccc;
   padding: 25px;
+  border-radius: 5px;
   margin-left: 10px;
   margin-top: 2vh;
 }

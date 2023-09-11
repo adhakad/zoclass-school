@@ -18,6 +18,9 @@ export class ExamResultService {
   singleStudentExamResult(examResultFormData: any) {
     return this.http.post(`${this.url}/result`,examResultFormData);
   }
+  singleStudentExamResultById(studentId: any) {
+    return this.http.get(`${this.url}/result/${studentId}`);
+  }
   examResultPaginationList(examResultData:any){
     return this.http.post(`${this.url}/exam-result-pagination`,examResultData);
   }

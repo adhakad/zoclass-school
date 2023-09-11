@@ -1,1 +1,100 @@
-<p>student-result works!</p>
+<app-header-navigation></app-header-navigation>
+<div class="container-fluid dashboard-container">
+  <div class="row">
+    <div class="col-12 col-lg-2">
+      <app-side-navigation></app-side-navigation>
+    </div>
+    <div class="col-12 col-lg-10">
+      <div class="row">
+        <div class="col-12 big-container">
+          <div class="col-lg-12 offset-lg-0">
+            <div class="main-card">
+              <div class="row">
+                <div *ngIf="!studentInfo && !resultStructureInfo">
+                  <h3 style="text-align: center;margin-top: 25vh;">No Record Found</h3>
+                </div>
+                <div #content class="custom-container" *ngIf="studentInfo && resultStructureInfo">
+                  <div class="table-container">
+                    <table class="logo-table text-bold">
+                      <tr>
+                        <td>
+                          <img src="../../../../assets/logo.png" alt="">  Vandana Convent School,Guna
+                        </td>
+                      </tr>
+                    </table>
+                    <table class="info-table">
+                      <tr>
+                        <td>
+                          School Code : 2832
+                        </td>
+                        <td>
+                          {{examResultInfo?.examType | titlecase}} Exam Result - 2023
+                        </td>
+                        <td>
+                          Affiliation No. : 1050
+                        </td>
+                      </tr>
+                    </table>
+                    <table class="info-table">
+                      <tr>
+                        <td class="text-bold">Result No. :</td>
+                        <td>{{examResultInfo?.resultNo}}</td>
+                        <td class="text-bold">Roll Number :</td>
+                        <td>{{examResultInfo?.rollNumber}}</td>
+                        <td class="text-bold">Class :</td>
+                        <td>{{examResultInfo?.class}}th</td>
+                      </tr>
+                      <tr>
+                        <td class="text-bold">Student Name :</td>
+                        <td>{{studentInfo?.name | titlecase}}</td>
+                        <td class="text-bold">Father Name :</td>
+                        <td>Narendra Dhakad</td>
+                        <td class="text-bold">Mother Name :</td>
+                        <td>Manisha Dhakad</td>
+                      </tr>
+                    </table>
+            
+                    <table class="custom-table">
+                      <tr>
+                        <th>S.No.</th>
+                        <th>Subject</th>
+                        <th>Theory Marks</th>
+                        <th>Practical Marks</th>
+                        <th>Total Marks</th>
+                        <th>Grade</th>
+                      </tr>
+                      <tr *ngFor="let exam of examResultInfo.marks; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ exam.subject | titlecase }}</td>
+                        <td>{{ exam.theoryMarks }}</td>
+                        <td>{{ exam.practicalMarks > 0 ? exam.practicalMarks : '' }}</td>
+                        <td>{{ exam.totalMarks }}</td>
+                        <td>{{ exam.grade }}</td>
+                      </tr>
+                    </table>
+            
+                    <table class="custom-table">
+                      <tr>
+                        <td>
+                          <span class="text-bold">Percentage</span> : {{examResultInfo?.percentile}}%
+                        </td>
+                        <td>
+                          <span class="text-bold">Grand Total (Theory + Practical/Internal Marks)</span> : {{
+                          examResultInfo?.grandTotalMarks }}/{{ examResultInfo?.totalMaxMarks}}
+                        </td>
+                        <td>
+                          <span class="text-bold">Overall Grade</span> : {{examResultInfo?.percentileGrade}}
+                        </td>
+            
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'student/fees', loadChildren: () => import('src/app/pages/student/student-fees/student-fees.module').then((module) => module.StudentFeesModule), canActivate: [StudentAuthGuard] },
   { path: 'student/fees/statement/:id/:rollnumber', loadChildren: () => import('src/app/pages/student/student-fees-statement/student-fees-statement.module').then((module) => module.StudentFeesStatementModule), canActivate: [StudentAuthGuard] },
   { path: 'student/admit-card', loadChildren: () => import('src/app/pages/student/student-admit-card/student-admit-card.module').then((module) => module.StudentAdmitCardModule), canActivate: [StudentAuthGuard] },
-
+  { path: 'student/result', loadChildren: () => import('src/app/pages/student/student-result/student-result.module').then((module) => module.StudentResultModule), canActivate: [StudentAuthGuard] },
   // Admin Routing Section
 
   { path: 'admin/login', loadChildren: () => import('src/app/pages/auth/admin-auth/admin-login/admin-login.module').then((module) => module.AdminLoginModule) },

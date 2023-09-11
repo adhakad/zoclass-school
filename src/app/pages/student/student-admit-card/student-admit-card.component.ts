@@ -1,11 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { AdmitCardStructureService } from 'src/app/services/admit-card-structure.service';
+import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
 import { AdmitCardService } from 'src/app/services/admit-card.service';
 import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
-import { ClassSubjectService } from 'src/app/services/class-subject.service';
-import { SubjectService } from 'src/app/services/subject.service';
-
+import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
 
 @Component({
   selector: 'app-student-admit-card',
@@ -13,85 +9,57 @@ import { SubjectService } from 'src/app/services/subject.service';
   styleUrls: ['./student-admit-card.component.css']
 })
 export class StudentAdmitCardComponent implements OnInit {
+  @ViewChild('content') content!: ElementRef;
+  errorMsg: string = '';
+  studentAdmitCardInfo: any;
   studentInfo: any;
-  subjectInfo: any;
-  classSubjectInfo: any;
-  recordLimit: number = 5;
-  filters: any = {};
-  number: number = 0;
-  paginationValues: Subject<any> = new Subject();
-  studentAdmitCardInfo:any;
-  admitCardInfo:any;
-  
-
-
-  // admitCardInfo = [
-  //   {
-  //     class:10,
-  //     examDate: {
-  //       maths: "30/09/2023",
-  //       science: "03/08/2023",
-  //     },
-  //     examStartTime: {
-  //       maths: "8:00 AM",
-  //       science: "9:30 AM",
-  //     },
-  //     examEndTime: {
-  //       maths: "9:00 AM",
-  //       science: "11:00 AM",
-  //     },
-  //   }
-  // ];
-
+  admitCardInfo: any;
   processedData: any[] = [];
 
-
-
-  constructor(private studentAuthService: StudentAuthService, private admitCardStructureService:AdmitCardStructureService,private admitCardService:AdmitCardService) { }
-
+  constructor(private studentAuthService: StudentAuthService,private printPdfService: PrintPdfService, private admitCardService: AdmitCardService) {}
   ngOnInit(): void {
     this.studentInfo = this.studentAuthService.getLoggedInStudentInfo();
     let studentId = this.studentInfo?.id;
-    this.singleStudentAdmitCardById(studentId);
-    this.getAdmitCardByClass();
+    this.admitCard(studentId);
   }
 
-  getAdmitCardByClass() {
-    let cls = this.studentInfo.class;
-    this.admitCardStructureService.admitCardStructureByClass(cls).subscribe((res:any) => {
+  printContent() {
+    this.printPdfService.printElement(this.content.nativeElement);
+  }
+
+  downloadPDF() {
+    this.printPdfService.generatePDF(this.content.nativeElement, "Admitcard.pdf");
+  }
+
+  
+  admitCard(studentId:any) {
+    this.admitCardService.singleStudentAdmitCardById(studentId).subscribe((res: any) => {
       if (res) {
-        this.admitCardInfo = res;
-        console.log(res)
-        this.processData();
-        
+        if (!this.processedData || !this.studentAdmitCardInfo || !this.admitCardInfo) {
+          this.studentAdmitCardInfo = res.admitCard;
+          this.admitCardInfo = res.admitCardStructure;
+          this.processData();
+        }
+
       }
+    }, err => {
+      this.errorMsg = err.error.errorMsg;
     })
   }
-  
+  processData() {
+    for (let i = 0; i < this.admitCardInfo.examDate.length; i++) {
+      const subject = Object.keys(this.admitCardInfo.examDate[i])[0];
+      const date = Object.values(this.admitCardInfo.examDate[i])[0];
+      const startTime = Object.values(this.admitCardInfo.examStartTime[i])[0];
+      const endTime = Object.values(this.admitCardInfo.examEndTime[i])[0];
 
-
-    processData() {
-      for (let i = 0; i < this.admitCardInfo[0].examDate.length; i++) {
-        const subject = Object.keys(this.admitCardInfo[0].examDate[i])[0];
-        const date = Object.values(this.admitCardInfo[0].examDate[i])[0];
-        const startTime = Object.values(this.admitCardInfo[0].examStartTime[i])[0];
-        const endTime = Object.values(this.admitCardInfo[0].examEndTime[i])[0];
-  
-        this.processedData.push({
-          subject,
-          date,
-          timing: `${startTime} to ${endTime}`
-        });
-      }
+      this.processedData.push({
+        subject,
+        date,
+        timing: `${startTime} to ${endTime}`
+      });
     }
-  
-  singleStudentAdmitCardById(id:any){
-    this.admitCardService.singleStudentAdmitCardById(id).subscribe((res:any) => {
-      if(res){
-        this.studentAdmitCardInfo = res;
-        console.log(res)
-      }
-    })
   }
+
 
 }

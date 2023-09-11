@@ -6,6 +6,7 @@
 }
 
 .table-container {
+  min-height: 85vh;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 15px;
@@ -89,8 +90,7 @@ img {
   .table-container {
     border: 1px solid #ccc;
     padding: 25px;
-    margin-left: 10px;
-    margin-top: 2vh;
+    margin-top: 1vh;
   }
 
   .info-table {

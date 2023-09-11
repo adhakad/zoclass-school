@@ -17,7 +17,31 @@ let GetSingleStudentExamResult = async (req, res, next) => {
         }
         let examResult = await ExamResultModel.findOne({ resultNo: resultNo, class: className, rollNumber: rollNumber })
         if (!examResult) {
-            return res.status(404).json({ errorMsg: 'Admit card not found' });
+            return res.status(404).json({ errorMsg: 'Exam result not found' });
+        }
+        let examType = await examResult.examType;
+        let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType });
+        if (!examResultStructure) {
+            return res.status(404).json({ errorMsg: 'This class any exam not found' });
+        }
+        return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: studentInfo });
+    } catch (error) {
+        console.log(error)
+    }
+}
+let GetSingleStudentExamResultById = async (req, res, next) => {
+    let studentId = req.params.id;
+    try {
+        let studentInfo = await StudentModel.findOne({_id:studentId});
+        let className = studentInfo.class;
+        let rollNumber = studentInfo.rollNumber;
+        let examResultStr = await ExamResultStructureModel.findOne({ class: className });
+        if (!examResultStr) {
+            return res.status(404).json({ errorMsg: 'This class any exam not found' });
+        }
+        let examResult = await ExamResultModel.findOne({ class:className,rollNumber:rollNumber });
+        if (!examResult) {
+            return res.status(404).json({ errorMsg: 'Exam result not found' });
         }
         let examType = await examResult.examType;
         let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType });
@@ -182,6 +206,7 @@ let CreateBulkExamResult = async (req, res, next) => {
 
 module.exports = {
     GetSingleStudentExamResult,
+    GetSingleStudentExamResultById,
     GetExamResultPagination,
     CreateExamResult,
     CreateBulkExamResult

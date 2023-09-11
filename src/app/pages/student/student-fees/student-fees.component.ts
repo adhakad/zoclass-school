@@ -82,8 +82,8 @@ export class StudentFeesComponent implements OnInit {
           description: 'Payment for Your Product',
           image: '../../../../assets/logo.png',
           prefill: {
-            name: 'Abhishek',
-            email: 'abhishek@gmail.com',
+            name: this.studentInfo.name,
+            email: this.studentInfo.email,
             contact: '9340700360',
             method: 'online'
           },
