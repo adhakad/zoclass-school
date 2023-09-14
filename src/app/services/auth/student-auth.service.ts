@@ -10,7 +10,7 @@ import { StudentLoginData } from "src/app/modal/student.modal";
   providedIn: 'root'
 })
 export class StudentAuthService {
-  url = 'http://localhost:3000/api/student';
+  // url = 'http://localhost:3000/api/student';
   urlSecond = 'http://localhost:3000/api/student-user';
   private isStudentAuthenticated = false;
   private token: string | null = '';

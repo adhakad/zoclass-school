@@ -88,7 +88,7 @@ export class StudentFeesComponent implements OnInit {
             method: 'online'
           },
           theme: {
-            color: '#8b69f2',
+            color: '#503c8a',
           },
           order_id: response.order.id,
           handler: this.paymentHandler.bind(this),

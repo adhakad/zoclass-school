@@ -6,7 +6,8 @@ body {
 }
 
 :host {
-  --common-color: #8b69f2;
+  /* --common-color: #8c65ff;  */
+  --common-color: #fff;  
   --header-height: 10vh;
 }
 
@@ -24,14 +25,17 @@ Header section
   padding: 0 !important;
   display: flex;
   justify-content: space-around;
+  border-bottom :1px solid rgb(240, 239, 244);
 }
 
 .header .logo img {
-  height: 60px;
+  height: 40px;
 }
 
 .header .logo span {
-  color: #DAF2F9;
+  margin-left: 5px;
+  color: #5a4599;
+  /* color: #7f60da; */
   font: 1em sans-serif;
   letter-spacing: .5px;
 }
@@ -41,9 +45,9 @@ Header section
 }
 
 .hamburger-icon {
-  color: #DAF2F9;
-  font-size: 30px;
-  line-height: 15px;
+  color: #5a4599;
+  font-size: 25px;
+  margin-bottom: 2px;
 }
 
 .hamburger-menu {
@@ -52,53 +56,49 @@ Header section
   position: fixed;
   left: 0;
   z-index: 1000;
-  padding-top: 4.5vh;
+  top: 0;
   display: block;
-  justify-content: space-around;
-  background-color: white;
-  margin-top: -10vh;
+  background-color: #fff;
+
 }
 
 .hamburger-menu button {
   font-size: large;
-  color: #7c7698fb !important;
+  color: #5a4599 !important;
 }
 
 .hamburger-menu .mat-icon {
-  color: #7c7698fb !important;
+  color: #5a4599 !important;
 }
 
 .close-icon {
-  color: #7c7698fb !important;
+  color: #5a4599 !important;
   font-size: 25px;
-  margin-left: 90%;
+  margin-top: 3.5vh;
+  margin-left: 88%;
 }
-
 .top-hamburger-menu {
   display: none;
 }
-
 /* 
   Scrollbar style
   */
-  ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
 
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 10px;
-  }
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: #cdcad6;
-    border-radius: 10px;
-  }
+::-webkit-scrollbar-thumb {
+  background: #dedce6;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #ada9bb;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d2da;
+}
 
 /* 
 Side navigation section
@@ -124,7 +124,7 @@ Dashboard section
 }
 
 .main-card {
-  min-height:70vh;
+  min-height: 70vh;
   width: 100%;
   background-color: transparent;
 }
@@ -142,12 +142,13 @@ Dashboard section
 .category-card {
   height: 200px;
   border-radius: 15px;
-  background: linear-gradient(to bottom right, #ededff, #c2c2ff);
+  background-color: #5e48a01b;
 }
 
 .category-title {
   text-align: center;
 }
+
 .form-control {
   height: 45px;
   color: #7c7698fb;
@@ -169,8 +170,8 @@ Dashboard section
 }
 
 .submit-button {
-  background: #8d6dff;
-  color: #DAF2F9;
+  background: #503c8a;
+  color: #fff;
   height: 42px;
   font-size: 15px;
   box-shadow: none;
@@ -200,10 +201,12 @@ Dashboard section
   overflow-y: auto;
   overflow-x: auto;
 }
+
 th {
   white-space: nowrap;
 }
-td{
+
+td {
   white-space: nowrap;
 }
 
@@ -211,6 +214,7 @@ table mat-icon {
   color: #7c7698fb;
   cursor: pointer;
 }
+
 .table p {
   color: #7c7698fb;
 }
@@ -224,7 +228,7 @@ table mat-icon {
   display: block;
   z-index: 10 !important;
   background: rgba(0, 0, 0, 0.5);
-} 
+}
 
 .modal-header {
   background-color: #fff;
@@ -232,10 +236,12 @@ table mat-icon {
   position: sticky;
   z-index: 1;
 }
-.modal-header .modal-title{
+
+.modal-header .modal-title {
   color: #7c7698fb;
 }
-.modal-header .mat-icon{
+
+.modal-header .mat-icon {
   cursor: pointer;
   color: #7c7698fb;
 }
@@ -296,7 +302,7 @@ table mat-icon {
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: #7c7698fb!important;
+  color: #7c7698fb !important;
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
@@ -385,17 +391,17 @@ table mat-icon {
   /* 
 Header section
 */
-  .dashbord-logo-margin {
+  /* .dashbord-logo-margin {
     margin-left: 10px;
-  }
+  } */
 
   .header .logo img {
-    height: 61px;
+    height: 40px;
+    margin-right: 10px;
   }
 
   .header .logo span {
-    color: #DAF2F9;
-    font: 1.25em sans-serif;
+    font: 1.20em sans-serif;
     letter-spacing: .5px;
   }
 
@@ -404,11 +410,10 @@ Header section
   }
 
   .header .main-menu button {
-    color: #DAF2F9;
+    color: #5a4599;
     margin-left: 20px;
     cursor: pointer;
   }
-
   .header .main-menu .menu-item {
     font: 1.20em sans-serif;
     letter-spacing: .85px;
@@ -439,7 +444,7 @@ Side navigation section
   }
 
   .side-navbar li button {
-    color: #8d6dff;
+    color: #503c8a;
     width: 100%;
     padding: 5px;
     display: block;
@@ -460,8 +465,8 @@ Side navigation section
   }
 
   .side-navbar li button.active-link {
-    background: #8d6dff;
-    color: #DAF2F9;
+    background: #503c8a;
+    color: #fff;
   }
 
   /* 

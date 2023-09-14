@@ -32,7 +32,7 @@ export class TeacherAuthInterceptor implements HttpInterceptor {
         if (err.status === 403 && !this.refresh) {
           this.refresh = true;
           const refreshToken = this.teacherAuthService.getRefreshToken()?.refreshToken;
-          return this.http.post('http://localhost:3000/api/teacher-user/refresh', {token:refreshToken}).pipe(
+          return this.http.post('http://65.2.121.215/api/teacher-user/refresh', {token:refreshToken}).pipe(
             switchMap((res: any) => {
               const newAccessToken = res.accessToken
               this.teacherAuthService.storeAccessToken(newAccessToken)

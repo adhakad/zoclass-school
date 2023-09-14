@@ -1,3 +1,4 @@
+
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 declare var jQuery: any;
 import { isPlatformBrowser } from '@angular/common';
@@ -33,7 +34,7 @@ export class HomeComponent implements OnInit {
   loggedInStudentInfo: any;
   no: number = 0;
   loadTitle = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private bannerService: BannerService, private topperService: TopperService, private testimonialService: TestimonialService, private adsService: AdsService, private studentAuthService: StudentAuthService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private bannerService: BannerService, private topperService: TopperService, private testimonialService: TestimonialService, private adsService: AdsService, private studentAuthService: StudentAuthService) { }
 
   async ngOnInit() {
     this.getLoggedInStudentInfo();
@@ -70,15 +71,20 @@ export class HomeComponent implements OnInit {
           items: 2,
           loop: false,
           dots: false,
-          nav: false,
+          nav: true,
           responsiveClass: true,
+          navText: [
+            "<button style='position:absolute;z-index:1001;left:-1%;margin-top:-23vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-prev material-icons'>keyboard_arrow_left</mat-icon></button>",
+            "<button style='position:absolute;z-index:1001;right:-1%;margin-top:-23vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-next material-icons'>keyboard_arrow_right</mat-icon></button>"
+
+          ],
           responsive: {
             600: {
-              stagePadding: 45,
+              stagePadding: 30,
               items: 4,
             },
             1500: {
-              stagePadding: 45,
+              stagePadding: 50,
               items: 5,
             },
           }

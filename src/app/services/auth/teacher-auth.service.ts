@@ -10,7 +10,7 @@ import { TeacherLoginData } from "src/app/modal/teacher.model";
   providedIn: 'root'
 })
 export class TeacherAuthService {
-  url = 'http://localhost:3000/api/teacher';
+  // url = 'http://localhost:3000/api/teacher';
   urlSecond = 'http://localhost:3000/api/teacher-user';
   private isTeacherAuthenticated = false;
   private token: string | null = '';
