@@ -114,20 +114,25 @@ export class HomeComponent implements OnInit {
           }
         });
         jQuery('.testimonial-carousel').owlCarousel({
-          stagePadding: 15,
+          stagePadding: 50,
           items: 1,
           loop: false,
           dots: false,
-          nav: false,
+          nav: true,
           responsiveClass: true,
+          navText: [
+            "<button style='position:absolute;z-index:1001;left:-1%;margin-top:-28vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-prev material-icons'>keyboard_arrow_left</mat-icon></button>",
+            "<button style='position:absolute;z-index:1001;right:-1%;margin-top:-28vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-next material-icons'>keyboard_arrow_right</mat-icon></button>"
+
+          ],
           responsive: {
             600: {
-              stagePadding: 25,
+              stagePadding: 50,
               items: 3,
             },
             1500: {
-              stagePadding: 25,
-              items: 3,
+              stagePadding: 50,
+              items: 4,
             },
           }
         });
@@ -168,3 +173,4 @@ export class HomeComponent implements OnInit {
     })
   }
 }
+ 

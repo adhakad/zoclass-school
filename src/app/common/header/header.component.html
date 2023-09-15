@@ -1,7 +1,7 @@
-<mat-toolbar style="height: 5vh;width: 100%;background-color: #503c8a;text-align: center;">
-  <div style="width: 50%;"><span style="font-size: .65em;color: #fff;">Krisnani Nagar, Guna, Madhya Pradesh</span></div>
-  <div style="width: 50%;"><span style="font-size: .65em;color: #fff;">Affiliate : 166522</span></div>
-</mat-toolbar>
+<!-- <mat-toolbar style="height: 5vh;width: 100%;background-color: #5a4599;text-align: center;">
+  <div style="width: 50%;"><span style="font-size: .65em;color: #e6e4ee;">Krisnani Nagar, Guna, Madhya Pradesh</span></div>
+  <div style="width: 50%;"><span style="font-size: .65em;color: #e6e4ee;">Affiliate : 16652</span></div>
+</mat-toolbar> -->
 <mat-toolbar class="header">
   <div class="logo">
     <img src="../../../assets/logo.png" alt="">
@@ -9,7 +9,11 @@
   </div>
   <div>
     <button mat-icon-button>
-      <mat-icon class="hamburger-icon" (click)="hamburgerMenu(true)">menu</mat-icon>
+      <svg class="hamburger-icon" (click)="hamburgerMenu(true)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 25 25">
+        <rect x="0" y="3" width="24" height="1.5"/>
+        <rect x="0" y="10" width="24" height="1.5"/>
+        <rect x="0" y="17" width="24" height="1.5"/>
+      </svg>
     </button>
   </div>
   <div class="main-menu" style="text-align: center;">

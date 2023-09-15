@@ -25,7 +25,10 @@ Header section
   padding: 0 !important;
   display: flex;
   justify-content: space-around;
-  border-bottom :1px solid rgb(240, 239, 244);
+  /* border-bottom :1px solid rgb(240, 239, 244); */
+  box-shadow: 0 0 0px -10px #4f3c8a3c,
+      0 0 0 0px #4f3c8a3c,
+      0 0 40px 0 #4f3c8a3c;
 }
 
 .header .logo img {
@@ -45,9 +48,9 @@ Header section
 }
 
 .hamburger-icon {
-  color: #5a4599;
-  font-size: 25px;
-  margin-bottom: 2px;
+  fill: #5a4599;
+  width: 24px;
+  height: 24px;
 }
 
 .hamburger-menu {
@@ -73,7 +76,7 @@ Header section
 
 .close-icon {
   color: #5a4599 !important;
-  font-size: 25px;
+  font-size: 28px;
   margin-top: 3.5vh;
   margin-left: 88%;
 }
