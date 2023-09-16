@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
           }
         });
         jQuery('.testimonial-carousel').owlCarousel({
-          stagePadding: 50,
+          stagePadding: 30,
           items: 1,
           loop: false,
           dots: false,
