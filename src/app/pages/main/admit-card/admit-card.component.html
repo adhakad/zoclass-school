@@ -9,10 +9,10 @@
             <h2>{{errorMsg}}</h2>
             <form [formGroup]="admitCardForm" (ngSubmit)="admitCard()">
               <mat-form-field appearance="outline">
-                <mat-label>Admit Card No.</mat-label>
-                <input matInput type="text" formControlName="admitCardNo">
-                <mat-hint *ngIf="!admitCardForm.get('admitCardNo')?.valid && admitCardForm.get('admitCardNo')?.touched"
-                  class="form-text text-danger">Please enter admit card number.</mat-hint>
+                <mat-label>Admission No.</mat-label>
+                <input matInput type="text" formControlName="admissionNo">
+                <mat-hint *ngIf="!admitCardForm.get('admissionNo')?.valid && admitCardForm.get('admissionNo')?.touched"
+                  class="form-text text-danger">Please enter admission number.</mat-hint>
               </mat-form-field>
               <mat-form-field appearance="outline">
                 <mat-label>class</mat-label>
@@ -65,8 +65,8 @@
         </table>
         <table class="info-table">
           <tr>
-            <th>Admit Card No. :</th>
-            <td>{{studentAdmitCardInfo?.admitCardNo}}</td>
+            <th>Admission No. :</th>
+            <td>{{studentAdmitCardInfo?.admissionNo}}</td>
             <td class="text-bold">Roll Number :</td>
             <td>{{studentAdmitCardInfo?.rollNumber}}</td>
             <td class="text-bold">Class :</td>
@@ -76,9 +76,9 @@
             <td class="text-bold">Student Name :</td>
             <td>{{studentAdmitCardInfo?.name | titlecase}}</td>
             <td class="text-bold">Father Name :</td>
-            <td>Narendra Dhakad</td>
+            <td>{{studentAdmitCardInfo?.fatherName | titlecase}}</td>
             <td class="text-bold">Mother Name :</td>
-            <td>Manisha Dhakad</td>
+            <td>{{studentAdmitCardInfo?.motherName | titlecase}}</td>
           </tr>
         </table>
 

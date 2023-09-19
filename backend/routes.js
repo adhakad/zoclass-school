@@ -18,7 +18,6 @@ module.exports = app => {
     app.use('/api/exam-result-structure',require('./modules/routes/exam-result-structure'));
     app.use('/api/fees', require('./modules/routes/fees-collection'));
     app.use('/api/fees-structure', require('./modules/routes/fees-structure'));
-    app.use('/api/admission', require('./modules/routes/admission'));
     app.use('/api/admit-card-structure', require('./modules/routes/admit-card-structure'));
     app.use('/api/admit-card', require('./modules/routes/admit-card'));
     app.use('/api/payment', require('./modules/routes/payment'));

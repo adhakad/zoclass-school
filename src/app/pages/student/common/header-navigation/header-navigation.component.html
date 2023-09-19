@@ -1,11 +1,15 @@
 <mat-toolbar class="header">
   <div class="logo dashbord-logo-margin">
-    <!-- <img src="../../../assets/logo.png" alt=""> -->
+    <img src="../../../assets/logo.png" alt="">
     <span>Vandana Convent School</span>
   </div>
   <div class="col-lg-7">
     <button mat-icon-button>
-      <mat-icon class="hamburger-icon" (click)="hamburgerMenu(true)">menu</mat-icon>
+      <svg class="hamburger-icon" (click)="hamburgerMenu(true)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 25 25">
+        <rect x="0" y="3" width="24" height="1.5"/>
+        <rect x="0" y="10" width="24" height="1.5"/>
+        <rect x="0" y="17" width="24" height="1.5"/>
+      </svg>
     </button>
   </div>
 </mat-toolbar>

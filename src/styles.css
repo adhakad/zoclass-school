@@ -145,7 +145,11 @@ Dashboard section
 .category-card {
   height: 200px;
   border-radius: 15px;
-  background-color: #5e48a01b;
+  /* background-color: #5e48a01b; */
+  background-color: #fff;
+  box-shadow: 0 0 0px -10px #4f3c8a3c,
+      0 0 0 0px #4f3c8a3c,
+      0 0 40px 0 #4f3c8a3c;
 }
 
 .category-title {

@@ -26,6 +26,7 @@ export class StudentFeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.studentInfo = this.studentAuthService.getLoggedInStudentInfo();
+    console.log(this.studentInfo)
     this.cls = this.studentInfo.class;
     this.rollNumber = this.studentInfo.rollNumber;
     this.feesStructureByClass(this.cls);

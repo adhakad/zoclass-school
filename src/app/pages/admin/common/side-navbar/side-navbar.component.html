@@ -14,9 +14,9 @@
       </button>
     </li>
     <li class="nav-item">
-      <button mat-button class="menu-button" routerLinkActive="active-link" [routerLink]="['/admin/students/admission']">
-        <mat-icon>list alt</mat-icon>
-        <span>Admission</span>
+      <button mat-button class="menu-button" [routerLink]="['/admin/student']" routerLinkActive="active-link">
+        <mat-icon>person</mat-icon>
+        <span>Student</span>
       </button>
     </li>
     <li class="nav-item">
@@ -44,13 +44,7 @@
         <mat-icon>person_add</mat-icon>
         <span>Teacher</span>
       </button>
-    </li>
-    <li class="nav-item">
-      <button mat-button class="menu-button" [routerLink]="['/admin/student']" routerLinkActive="active-link">
-        <mat-icon>person</mat-icon>
-        <span>Student</span>
-      </button>
-    </li>
+    </li>  
     <li class="nav-item">
       <button mat-button class="menu-button" [routerLink]="['/admin/notification']" routerLinkActive="active-link">
         <mat-icon>notifications</mat-icon>

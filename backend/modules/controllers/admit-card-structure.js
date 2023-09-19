@@ -47,18 +47,11 @@ let CreateAdmitCardStructure = async (req, res, next) => {
 
         let studentAdmitCardData = [];
         for (const student of studentData) {
-            let admitCardNo = Math.floor(Math.random() * 899999 + 100000);
             studentAdmitCardData.push({
                 studentId:student._id,
-                admitCardNo: admitCardNo,
-                name: student.name,
-                class: student.class,
-                stream:stream,
-                rollNumber: student.rollNumber,
                 examType: examType,
             });
         }
-
         let admitCardStructure = await AdmitCardStructureModel.create(admitCardStructureData);
         let studentAdmitCard = await AdmitCardModel.create(studentAdmitCardData);
         if (admitCardStructure && studentAdmitCard) {

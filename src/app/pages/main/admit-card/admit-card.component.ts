@@ -22,7 +22,7 @@ export class AdmitCardComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
     this.admitCardForm = this.fb.group({
-      admitCardNo: ['', Validators.required],
+      admissionNo: ['', Validators.required],
       class: ['', Validators.required],
       rollNumber: ['', Validators.required],
     })
@@ -50,7 +50,7 @@ export class AdmitCardComponent implements OnInit {
     this.admitCardService.singleStudentAdmitCard(this.admitCardForm.value).subscribe((res: any) => {
       if (res) {
         if (!this.processedData || !this.studentAdmitCardInfo || !this.admitCardInfo) {
-          this.studentAdmitCardInfo = res.admitCard;
+          this.studentAdmitCardInfo = {...res.studentInfo,...res.admitCard};
           this.admitCardInfo = res.admitCardStructure;
           this.processData();
         }

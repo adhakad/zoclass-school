@@ -23,29 +23,98 @@ export class StudentComponent implements OnInit {
   classInfo: Class[] = [];
   studentInfo: any[] = [];
   recordLimit: number = 10;
-  filters:any = {};
-  number:number=0;
+  filters: any = {};
+  number: number = 0;
   paginationValues: Subject<any> = new Subject();
-  page:Number=0;
+  page: Number = 0;
 
+  sessions:any;
+  categorys:any;
+  religions:any;
+  qualifications:any;
+  occupations:any;
+  stream: string='';
+  notApplicable: String = "stream";
+  streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
+  cls:number =0;
+  admissionType:string='';
   constructor(private fb: FormBuilder, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
-      name: ['', Validators.required],
+      session: ['', Validators.required],
+      admissionType: ['', Validators.required],
       class: ['', Validators.required],
       rollNumber: ['', Validators.required],
+      stream: ['', Validators.required],
+      admissionNo: ['', Validators.required],
+      name: ['', Validators.required],
+      dob: ['', Validators.required],
+      gender: ['', Validators.required],
+      category: ['', Validators.required],
+      religion: ['', Validators.required],
+      nationality: ['', Validators.required],
+      contact: ['', Validators.required],
+      address: ['', Validators.required],
+      lastSchool: [''],
+      fatherName: ['', Validators.required],
+      fatherQualification: ['', Validators.required],
+      fatherOccupation: ['', Validators.required],
+      fatherContact: ['', Validators.required],
+      fatherAnnualIncome: ['', Validators.required],
+      motherName: ['', Validators.required],
+      motherQualification: ['', Validators.required],
+      motherOccupation: ['', Validators.required],
+      motherContact: ['', Validators.required],
+      motherAnnualIncome: ['', Validators.required],
     })
   }
 
   ngOnInit(): void {
-    this.getStudents({page : 1});
+    this.getStudents({ page: 1 });
     this.getClass();
+    this.allOptions();
   }
+  chooseAdmissionType(event:any){
+    if(event){
+      if(event.value=='new'){
+        this.admissionType = event.value;
+        const admissionNo = Math.floor(Math.random() * 89999999 + 10000000);
+        this.studentForm.get('admissionNo')?.setValue(admissionNo);
+      }
+      if(event.value=='old'){
+        this.admissionType = event.value;
+        this.studentForm.get('admissionNo')?.setValue(null);
+      }
+    }
+  }
+  chooseClass(event: any) {
+    if(event){
+      if(this.stream){
+        this.studentForm.get('stream')?.setValue(null);
+      }
+      this.cls = event.value;
+    }
+  }
+  chooseStream(event:any){
+    this.stream = event.value;
+  }
+
+  date(e:any) {
+    var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
+    this.studentForm.get('dob')?.setValue(convertDate, {
+      onlyself: true,
+    });
+  }
+
   closeModal() {
     this.showModal = false;
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
+    this.stream = '';
+    this.cls = 0;
+    this.admissionType='';
+    this.studentForm.reset();
   }
   addStudentModel() {
     this.showModal = true;
@@ -77,23 +146,23 @@ export class StudentComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getStudents({page : this.page});
+      this.getStudents({ page: this.page });
     }, 1000)
   }
 
-  getStudents($event:any) {
+  getStudents($event: any) {
     this.page = $event.page
     return new Promise((resolve, reject) => {
-      let params:any = {
+      let params: any = {
         filters: {},
         page: $event.page,
         limit: $event.limit ? $event.limit : this.recordLimit
       };
       this.recordLimit = params.limit;
-      if(this.filters.searchText) {
+      if (this.filters.searchText) {
         params["filters"]["searchText"] = this.filters.searchText.trim();
       }
-      
+
       this.studentService.studentPaginationList(params).subscribe((res: any) => {
         if (res) {
           this.studentInfo = res.studentList;
@@ -130,16 +199,16 @@ export class StudentComponent implements OnInit {
       }
     }
   }
-  changeStatus(id:any, statusValue:any) {
-    if(id) {
+  changeStatus(id: any, statusValue: any) {
+    if (id) {
       let params = {
-        id : id,
+        id: id,
         statusValue: statusValue,
       }
       console.log(this.paginationValues)
       this.studentService.changeStatus(params).subscribe((res: any) => {
-        if(res){
-          this.getStudents({page : this.page});
+        if (res) {
+          this.getStudents({ page: this.page });
         }
       })
     }
@@ -152,5 +221,13 @@ export class StudentComponent implements OnInit {
         this.deleteById = '';
       }
     })
+  }
+
+  allOptions() {
+    this.sessions = [{ year: '2023-24' }, { year: '2024-25' }, { year: '2025-26' }, { year: '2026-27' }, { year: '2027-28' }, { year: '2028-29' }, { year: '2029-30' }]
+    this.categorys = [{ category: 'General' }, { category: 'OBC' }, { category: 'SC' }, { category: 'ST' }, { category: 'Other' }]
+    this.religions = [{ religion: 'Hinduism' }, { religion: 'Buddhism' }, { religion: 'Christanity' }, { religion: 'Jainism' }, { religion: 'Sikhism' }, { religion: 'Other' }]
+    this.qualifications = [{ qualification: 'Doctoral Degree' }, { qualification: 'Masters Degree' }, { qualification: 'Graduate Diploma' }, { qualification: 'Graduate Certificate' }, { qualification: 'Graduate Certificate' }, { qualification: 'Bachelor Degree' }, { qualification: 'Advanced Diploma' }, { qualification: 'Primary School' }, { qualification: 'High School' }, { qualification: 'Higher Secondary School' }, { qualification: 'Illiterate' }, { qualification: 'Other' }]
+    this.occupations = [{ occupation: 'Agriculture(Farmer)' }, { occupation: 'Laborer' }, { occupation: 'Self Employed' }, { occupation: 'Private Job' }, { occupation: 'State Govt. Employee' }, { occupation: 'Central Govt. Employee' }, { occupation: 'Military Job' }, { occupation: 'Para-Military Job' }, { occupation: 'PSU Employee' }, { occupation: 'Other' }]
   }
 }

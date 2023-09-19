@@ -53,9 +53,24 @@ let GetSingleStudent = async (req, res, next) => {
 }
 let CreateStudent = async (req, res, next) => {
 
+    const todayDate = new Date();
     let otp = Math.floor(Math.random() * 899999 + 100000);
-    const { name, rollNumber } = req.body;
-    const className = req.body.class;
+    let { name,rollNumber, session,admissionType,stream,admissionNo,dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
+    let className = req.body.class;
+    if(stream==="stream"){
+        stream = "N/A";
+    }
+    const date = new Date(dob);
+    const options = {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+    };
+    dob = date.toLocaleDateString(undefined, options);
+    const doa = todayDate.toLocaleDateString(undefined, options);
+    const studentData = {
+        name,rollNumber,otp, session,admissionType,stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
+    }
     try {
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStr) {
@@ -72,13 +87,7 @@ let CreateStudent = async (req, res, next) => {
                 item[key] = 0;
             });
         });
-
-        const studentData = {
-            name: name,
-            class: className,
-            rollNumber: rollNumber,
-            otp: otp,
-        }
+        
         const studentFeesData = {
             name: name,
             class: className,
