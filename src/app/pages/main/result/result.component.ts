@@ -23,7 +23,7 @@ export class ResultComponent implements OnInit {
   
   constructor(private fb: FormBuilder, private router: Router,private printPdfService:PrintPdfService, private examResultService: ExamResultService, private classService: ClassService) {
     this.examResultForm = this.fb.group({
-      resultNo: ['', Validators.required],
+      admissionNo: ['', Validators.required],
       class: ['', Validators.required],
       rollNumber: ['', Validators.required],
     })
@@ -85,7 +85,7 @@ export class ResultComponent implements OnInit {
             class: examResult.class,
             examType: examResult.examType,
             rollNumber: examResult.rollNumber,
-            resultNo: examResult.resultNo,
+            admissionNo: examResult.admissionNo,
             marks: examResult.theoryMarks.map((subjectMarks: any) => {
               const subjectName = Object.keys(subjectMarks)[0];
               const theoryMarks = parseFloat(subjectMarks[subjectName]);
@@ -159,7 +159,7 @@ export class ResultComponent implements OnInit {
             class: examResult.class,
             examType: examResult.examType,
             rollNumber: examResult.rollNumber,
-            resultNo: examResult.resultNo,
+            admissionNo: examResult.admissionNo,
             marks: examResult.theoryMarks.map((subjectMarks: any) => {
               const subjectName = Object.keys(subjectMarks)[0];
               const theoryMarks = parseFloat(subjectMarks[subjectName])

@@ -37,20 +37,20 @@
                     </table>
                     <table class="info-table">
                       <tr>
-                        <td class="text-bold">Result No. :</td>
-                        <td>{{examResultInfo?.resultNo}}</td>
+                        <td class="text-bold">Admission No. :</td>
+                        <td>{{studentInfo?.admissionNo}}</td>
                         <td class="text-bold">Roll Number :</td>
-                        <td>{{examResultInfo?.rollNumber}}</td>
+                        <td>{{studentInfo?.rollNumber}}</td>
                         <td class="text-bold">Class :</td>
-                        <td>{{examResultInfo?.class}}th</td>
+                        <td>{{studentInfo?.class}}th</td>
                       </tr>
                       <tr>
                         <td class="text-bold">Student Name :</td>
                         <td>{{studentInfo?.name | titlecase}}</td>
                         <td class="text-bold">Father Name :</td>
-                        <td>Narendra Dhakad</td>
+                        <td>{{studentInfo?.fatherName | titlecase}}</td>
                         <td class="text-bold">Mother Name :</td>
-                        <td>Manisha Dhakad</td>
+                        <td>{{studentInfo?.motherName | titlecase}}</td>
                       </tr>
                     </table>
             

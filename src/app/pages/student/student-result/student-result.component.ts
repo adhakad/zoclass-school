@@ -35,6 +35,7 @@ export class StudentResultComponent implements OnInit {
     this.examResultService.singleStudentExamResultById(studentId).subscribe((res: any) => {
       if (res) {
         this.studentInfo = res.studentInfo;
+        console.log(this.studentInfo)
         let examResult = res.examResult;
 
         this.resultStructureInfo = res.examResultStructure;

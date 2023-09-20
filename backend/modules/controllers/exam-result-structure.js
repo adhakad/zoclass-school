@@ -47,51 +47,22 @@ let CreateExamResultStructure = async (req, res, next) => {
         if (checkExamExist) {
             return res.status(400).json(`This class ${examType} exam structure already exist`);
         }
-        let examResultStructureData;
-        if (practicalMaxMarks && !gradeMaxMarks) {
-            examResultStructureData = {
-                class: className,
-                examType: examType,
-                stream: stream,
-                theoryMaxMarks: theoryMaxMarks,
-                theoryPassMarks: theoryPassMarks,
-                practicalMaxMarks: practicalMaxMarks,
-                practicalPassMarks: practicalPassMarks,
-            }
+        let examResultStructureData = { 
+            class: className,
+            examType: examType,
+            stream: stream,
+            theoryMaxMarks: theoryMaxMarks,
+            theoryPassMarks: theoryPassMarks,
+        };
+        if (practicalMaxMarks) {
+            examResultStructureData.practicalMaxMarks = practicalMaxMarks;
+            examResultStructureData.practicalPassMarks = practicalPassMarks;
         }
-        if (!practicalMaxMarks && gradeMaxMarks) {
-            examResultStructureData = {
-                class: className,
-                examType: examType,
-                stream: stream,
-                theoryMaxMarks: theoryMaxMarks,
-                theoryPassMarks: theoryPassMarks,
-                gradeMinMarks: gradeMinMarks,
-                gradeMaxMarks: gradeMaxMarks,
-            }
+        if (gradeMaxMarks) {
+            examResultStructureData.gradeMinMarks = gradeMinMarks;
+            examResultStructureData.gradeMaxMarks = gradeMaxMarks;
         }
-        if (practicalMaxMarks && gradeMaxMarks) {
-            examResultStructureData = {
-                class: className,
-                examType: examType,
-                stream: stream,
-                theoryMaxMarks: theoryMaxMarks,
-                theoryPassMarks: theoryPassMarks,
-                practicalMaxMarks: practicalMaxMarks,
-                practicalPassMarks: practicalPassMarks,
-                gradeMinMarks: gradeMinMarks,
-                gradeMaxMarks: gradeMaxMarks,
-            }
-        }
-        if (!practicalMaxMarks && !gradeMaxMarks) {
-            examResultStructureData = {
-                class: className,
-                examType: examType,
-                stream: stream,
-                theoryMaxMarks: theoryMaxMarks,
-                theoryPassMarks: theoryPassMarks,
-            }
-        }
+
         let examResultStructure = await ExamResultStructureModel.create(examResultStructureData);
 
         return res.status(200).json('Exam result structure structure add successfuly');

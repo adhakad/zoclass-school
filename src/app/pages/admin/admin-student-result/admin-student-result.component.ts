@@ -22,7 +22,9 @@ export class AdminStudentResultComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
+  allExamResults: any[] = [];
   examResultInfo: any[] = [];
+  studentInfo: any;
   recordLimit: number = 10;
   filters: any = {};
   number: number = 0;
@@ -56,8 +58,8 @@ export class AdminStudentResultComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getExamResults({ page: 1 });
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
+    this.getStudentExamResultByClass(this.cls);
   }
 
   addExamResultModel() {
@@ -115,33 +117,43 @@ export class AdminStudentResultComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getExamResults({ page: this.page });
+      this.getStudentExamResultByClass(this.cls);
     }, 1000)
   }
 
-  getExamResults($event: any) {
-    this.page = $event.page
-    return new Promise((resolve, reject) => {
-      let params: any = {
-        filters: {},
-        page: $event.page,
-        limit: $event.limit ? $event.limit : this.recordLimit,
-        class: this.cls
-      };
-      this.recordLimit = params.limit;
-      if (this.filters.searchText) {
-        params["filters"]["searchText"] = this.filters.searchText.trim();
-      }
-
-      this.examResultService.examResultPaginationList(params).subscribe((res: any) => {
-        if (res) {
-          this.examResultInfo = res.examResultList;
-          this.number = params.page;
-          this.paginationValues.next({ type: 'page-init', page: params.page, totalTableRecords: res.countExamResult });
-          return resolve(true);
+  getStudentExamResultByClass(cls: any) {
+    this.examResultService.getAllStudentExamResultByClass(cls).subscribe((res: any) => {
+      if (res) {
+        this.examResultInfo = res.examResultInfo;
+        this.studentInfo = res.studentInfo;
+        const studentInfoMap = new Map();
+        this.studentInfo.forEach((item: any) => {
+          studentInfoMap.set(item._id, item);
+        });
+        
+        const combinedData = this.examResultInfo.reduce((result: any, examResult: any) => {
+          const studentInfo = studentInfoMap.get(examResult.studentId);
+        
+          if (studentInfo) {
+            result.push({
+              studentId: examResult.studentId,
+              class: examResult.class,
+              examType: examResult.examType,
+              status: examResult.status || "",
+              name: studentInfo.name,
+              rollNumber: studentInfo.rollNumber,
+              admissionNo: studentInfo.admissionNo
+            });
+          }
+        
+          return result;
+        }, []);
+        console.log(combinedData)
+        if (combinedData) {
+          this.allExamResults = combinedData;
         }
-      });
-    });
+      }
+    })
   }
 
 

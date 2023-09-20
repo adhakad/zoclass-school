@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 const ExamResultModel = mongoose.model('exam-result', {
-  rollNumber: { type: Number },
+  studentId: { type: String },
   class: { type: Number },
-  resultNo: { type: Number },
   examType: { type: String },
-  stream: { type: String },
   theoryMarks: {},
   practicalMarks: {},
 });

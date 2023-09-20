@@ -13,7 +13,9 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
         }
         let studentId = student._id;
         let stream = student.stream;
-        
+        if(stream==="stream"){
+            stream = "N/A";
+        }
         let admitCard = await AdmitCardModel.findOne({studentId:studentId});
         if (!admitCard) {
             return res.status(404).json({ errorMsg: 'Admit card not foundd' });

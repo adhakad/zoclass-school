@@ -19,10 +19,10 @@ export class ExamResultService {
     return this.http.post(`${this.url}/result`,examResultFormData);
   }
   singleStudentExamResultById(studentId: any) {
-    return this.http.get(`${this.url}/result/${studentId}`);
+    return this.http.get(`${this.url}/student/${studentId}`);
   }
-  examResultPaginationList(examResultData:any){
-    return this.http.post(`${this.url}/exam-result-pagination`,examResultData);
+  getAllStudentExamResultByClass(cls:any){
+    return this.http.get(`${this.url}/class/${cls}`);
   }
   updateExamResult(examForm:any){
     return this.http.put(`${this.url}`,examForm);

@@ -3,19 +3,24 @@ const ExamResultModel = require('../models/exam-result');
 const StudentModel = require('../models/student');
 
 let GetSingleStudentExamResult = async (req, res, next) => {
-    let { resultNo, rollNumber } = req.body;
+    let { admissionNo, rollNumber } = req.body;
     let className = req.body.class;
 
     try {
-        let studentInfo = await StudentModel.findOne({ rollNumber: rollNumber, class: className });
-        if (!studentInfo) {
-            return res.status(404).json(`Roll number not found for class ${className}`);
+        let student = await StudentModel.findOne({ admissionNo: admissionNo, class: className, rollNumber: rollNumber },'admissionNo name rollNumber class fatherName motherName stream');
+        if (!student) {
+            return res.status(404).json({ errorMsg: 'Exam result not found' });
         }
-        let examResultStr = await ExamResultStructureModel.findOne({ class: className });
+        let studentId = student._id;
+        let stream = student.stream;
+        if(stream==="stream"){
+            stream = "N/A";
+        }
+        let examResultStr = await ExamResultStructureModel.findOne({ class: className, stream: stream });
         if (!examResultStr) {
             return res.status(404).json({ errorMsg: 'This class any exam not found' });
         }
-        let examResult = await ExamResultModel.findOne({ resultNo: resultNo, class: className, rollNumber: rollNumber })
+        let examResult = await ExamResultModel.findOne({ studentId: studentId })
         if (!examResult) {
             return res.status(404).json({ errorMsg: 'Exam result not found' });
         }
@@ -24,7 +29,7 @@ let GetSingleStudentExamResult = async (req, res, next) => {
         if (!examResultStructure) {
             return res.status(404).json({ errorMsg: 'This class any exam not found' });
         }
-        return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: studentInfo });
+        return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: student });
     } catch (error) {
         console.log(error)
     }
@@ -32,14 +37,20 @@ let GetSingleStudentExamResult = async (req, res, next) => {
 let GetSingleStudentExamResultById = async (req, res, next) => {
     let studentId = req.params.id;
     try {
-        let studentInfo = await StudentModel.findOne({_id:studentId});
-        let className = studentInfo.class;
-        let rollNumber = studentInfo.rollNumber;
-        let examResultStr = await ExamResultStructureModel.findOne({ class: className });
+        let student = await StudentModel.findOne({_id:studentId},'admissionNo name rollNumber class fatherName motherName stream');
+        if (!student) {
+            return res.status(404).json({ errorMsg: 'Student not found' });
+        }
+        let stream = student.stream;
+        let className = student.class;
+        if(stream==="stream"){
+            stream = "N/A";
+        }
+        let examResultStr = await ExamResultStructureModel.findOne({ class: className,stream:stream });
         if (!examResultStr) {
             return res.status(404).json({ errorMsg: 'This class any exam not found' });
         }
-        let examResult = await ExamResultModel.findOne({ class:className,rollNumber:rollNumber });
+        let examResult = await ExamResultModel.findOne({ studentId:studentId });
         if (!examResult) {
             return res.status(404).json({ errorMsg: 'Exam result not found' });
         }
@@ -48,61 +59,79 @@ let GetSingleStudentExamResultById = async (req, res, next) => {
         if (!examResultStructure) {
             return res.status(404).json({ errorMsg: 'This class any exam not found' });
         }
-        return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: studentInfo });
+        return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: student });
     } catch (error) {
         console.log(error)
     }
 }
-let GetExamResultPagination = async (req, res, next) => {
-    let className = req.body.class;
-    let searchText = req.body.filters.searchText;
-    let searchObj = {};
-    if (searchText) {
-        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText)
-            ? {
-                $or: [{ rollNumber: searchText }],
-            }
-            : { studentName: new RegExp(`${searchText.toString().trim()}`, 'i') };
-    }
-
-    try {
-        let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
-        let page = req.body.page || 1;
-        const examResultList = await ExamResultModel.find({ class: className }).find(searchObj)
-            .limit(limit * 1)
-            .skip((page - 1) * limit)
-            .exec();
-        const countExamResult = await ExamResultModel.count();
-
-        let examResultData = { countExamResult: 0 };
-        examResultData.examResultList = examResultList;
-        examResultData.countExamResult = countExamResult;
-        return res.json(examResultData);
-    } catch (error) {
+let GetAllStudentExamResultByClass = async (req, res, next) => {
+    let className = req.params.id;
+    try{
+        const student = await StudentModel.find({class:className});
+        if(!student){
+            return res.status(404).json({ errorMsg: 'This class any student not found' });
+        }
+        const examResult = await ExamResultModel.find({class:className});
+        if(!examResult){
+            return res.status(404).json({ errorMsg: 'This class exam result not found' });
+        }
+        return res.status(200).json({examResultInfo:examResult,studentInfo:student});
+    }catch(error){
         console.log(error);
     }
 }
 
+// let GetExamResultPagination = async (req, res, next) => {
+//     let className = req.body.class;
+//     let searchText = req.body.filters.searchText;
+//     let searchObj = {};
+//     if (searchText) {
+//         searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText)
+//             ? {
+//                 $or: [{ rollNumber: searchText }],
+//             }
+//             : { studentName: new RegExp(`${searchText.toString().trim()}`, 'i') };
+//     }
+
+//     try {
+//         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
+//         let page = req.body.page || 1;
+//         const examResultList = await ExamResultModel.find({ class: className }).find(searchObj)
+//             .limit(limit * 1)
+//             .skip((page - 1) * limit)
+//             .exec();
+//         const countExamResult = await ExamResultModel.count();
+
+//         let examResultData = { countExamResult: 0 };
+//         examResultData.examResultList = examResultList;
+//         examResultData.countExamResult = countExamResult;
+//         return res.json(examResultData);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
 let CreateExamResult = async (req, res, next) => {
     let className = req.body.class;
-    let { rollNumber, examType ,stream} = req.body;
+    let { rollNumber, examType, stream } = req.body;
     let resultNo = Math.floor(Math.random() * 899999 + 100000);
     let { theoryMarks, practicalMarks } = req.body.type;
-    if(stream==="stream"){
+    if (stream === "stream") {
         stream = "N/A";
     }
     let streamMsg = `${stream} stream`;
     try {
-        const checkRollNumber = await StudentModel.findOne({rollNumber:rollNumber,class: className,stream:stream});
-        if(!checkRollNumber){
-            if(stream==="N/A"){
+        const student = await StudentModel.findOne({ rollNumber: rollNumber, class: className, stream: stream });
+        if (!student) {
+            if (stream === "N/A") {
                 streamMsg = ``;
             }
             return res.status(404).json(`Class ${className} ${streamMsg} roll number ${rollNumber} not found`);
         }
-        const checkResultStr = await ExamResultStructureModel.findOne({class:className,examType:examType,stream:stream});
-        if(!checkResultStr){
-            if(stream==="N/A"){
+        let studentId = student._id;
+        const checkResultStr = await ExamResultStructureModel.findOne({ class: className, examType: examType, stream: stream });
+        if (!checkResultStr) {
+            if (stream === "N/A") {
                 streamMsg = ``;
             }
             return res.status(404).json(`Class ${className} ${streamMsg} ${examType} exam not found`);
@@ -112,27 +141,16 @@ let CreateExamResult = async (req, res, next) => {
             return res.status(400).json("Result already exist for this roll number");
         }
 
-        let examResultData;
-        if (theoryMarks && practicalMarks) {
-            examResultData = {
-                rollNumber: rollNumber,
-                examType: examType,
-                class: className,
-                resultNo: resultNo,
-                theoryMarks: theoryMarks,
-                practicalMarks: practicalMarks
-            }
-        }
-        if (theoryMarks && !practicalMarks) {
-            examResultData = {
-                rollNumber: rollNumber,
-                examType: examType,
-                class: className,
-                resultNo: resultNo,
-                theoryMarks: theoryMarks,
-            }
-        }
+        let examResultData = {
+            studentId: studentId,
+            examType: examType,
+            class: className,
+            theoryMarks: theoryMarks,
 
+        }
+        if (practicalMarks) {
+            examResultData.practicalMarks = practicalMarks;
+        }
 
         let createExamResult = await ExamResultModel.create(examResultData);
         return res.status(200).json('Student exam result add successfully');
@@ -143,8 +161,8 @@ let CreateExamResult = async (req, res, next) => {
 }
 
 let CreateBulkExamResult = async (req, res, next) => {
-    let {examType,stream} = req.body;
-    if(stream==="stream"){
+    let { examType, stream } = req.body;
+    if (stream === "stream") {
         stream = "N/A";
     }
     let result = [];
@@ -174,7 +192,7 @@ let CreateBulkExamResult = async (req, res, next) => {
 
         const resultEntry = {
             examType: examType,
-            stream:stream,
+            stream: stream,
             resultNo: resultNo,
             rollNumber: rollNumber,
             class: studentClass,
@@ -207,7 +225,7 @@ let CreateBulkExamResult = async (req, res, next) => {
 module.exports = {
     GetSingleStudentExamResult,
     GetSingleStudentExamResultById,
-    GetExamResultPagination,
+    GetAllStudentExamResultByClass,
     CreateExamResult,
     CreateBulkExamResult
 }

@@ -19,11 +19,7 @@
                     </mat-radio-group>
                   </div>
                 </div>
-                <div class="col-8 col-lg-5">
-                  <input type="text" class="form-control" placeholder="Result Search..." id="searchText"
-                    name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
-                    (keyup)="getExamResults({page : 1, limit : 0})">
-                </div>
+                
                 <div class="col-4 col-lg-2 offset-lg-5 pb-3">
                   <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
                     (click)="addBulkExamResultModel()"><mat-icon>add</mat-icon>Create</button>
@@ -35,46 +31,43 @@
                 <thead class="bg-light">
                   <tr class="text-muted">
                     <th>No.</th>
-                    <th>Result No.</th>
+                    <th>Admission No.</th>
+                    <th>Name</th>
                     <th>Roll Number</th>
                     <th>Class</th>
-                    <th>Stream</th>
-                    <th *ngFor="let subject of classSubject,let i = index">{{subject.subject}}</th>
-                    <th>Action</th>
+                    <!-- <th *ngFor="let subject of classSubject,let i = index">{{subject.subject}}</th> -->
+                    <!-- <th>Action</th> -->
                   </tr>
                 </thead>
 
-                <tbody *ngIf="examResultInfo && examResultInfo.length>0">
-                  <tr *ngFor="let examResults of examResultInfo,let i=index">
+                <tbody *ngIf="allExamResults && allExamResults.length>0">
+                  <tr *ngFor="let students of allExamResults,let i=index">
                     <td>
-                      <p class="mb-0">{{number*10+i+1-10}}</p>
-                    </td>
-                    <td>
-                      <p class="mb-0">{{examResults.resultNo}}</p>
+                      <p class="mb-0">{{i+1}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{examResults.rollNumber}}</p>
+                      <p class="mb-0">{{students.admissionNo}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{examResults.class}}</p>
+                      <p class="mb-0">{{students.name}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{examResults.stream}}</p>
+                      <p class="mb-0">{{students.rollNumber}}</p>
                     </td>
-                    <td *ngFor="let marks of examResults.marks,let i = index">
-                      <p class="mb-0">{{marks}}</p>
+                    <td>
+                      <p class="mb-0">{{students.class}}</p>
                     </td>
-                    <td class="mb-0">
-                      <mat-icon (click)="updateExamResultModel(examResults)">edit_note</mat-icon>
-                      <mat-icon (click)="deleteExamResultModel(examResults._id)">delete</mat-icon>
-                    </td>
+                    <!-- <td>
+                      <a class="mb-0 status-active" (click)="changeStatus(students.studentId,0)"
+                        *ngIf="students.status == 'Active'"
+                        href="javascript:void(0)">&nbsp;&nbsp;&nbsp;{{students.status}}</a>
+                      <a class="mb-0 status-inactive" (click)="changeStatus(students.studentId,1)"
+                        *ngIf="students.status == 'Inactive'" href="javascript:void(0)">{{students.status}}</a>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>
-              <div class="pagination">
-                <app-pagination [paginationValues]="paginationValues" (onChange)="getExamResults($event)">
-                </app-pagination>
-              </div>
+              
               <div class="modal fade show" [class.show]="showModal">
                 <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content" *ngIf="successMsg">
