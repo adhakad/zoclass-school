@@ -49,6 +49,7 @@ let CreateAdmitCardStructure = async (req, res, next) => {
         for (const student of studentData) {
             studentAdmitCardData.push({
                 studentId:student._id,
+                class:className,
                 examType: examType,
             });
         }

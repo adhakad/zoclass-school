@@ -3,7 +3,13 @@ const Schema = mongoose.Schema;
 
 const AdmitCardSchema = new Schema({
   studentId: { type: String },
+  class: { type: Number },
   examType: { type: String },
+  status: {
+    type: String,
+    enum: ['Active', 'Inactive'],
+    default: 'Active'
+},
 });
 
 const AdmitCardModel = mongoose.model('admit-card', AdmitCardSchema);

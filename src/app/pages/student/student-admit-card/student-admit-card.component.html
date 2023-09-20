@@ -38,9 +38,9 @@
                     </table>
                     <table class="info-table">
                       <tr>
-                        <th>Admit Card No. :</th>
+                        <th>Admission No. :</th>
                         <td>
-                          {{studentAdmitCardInfo?.admitCardNo}}
+                          {{studentAdmitCardInfo?.admissionNo}}
                         </td>
                         <td class="text-bold">Roll Number :</td>
                         <td>
@@ -57,9 +57,9 @@
                           {{studentAdmitCardInfo?.name | titlecase}}
                         </td>
                         <td class="text-bold">Father Name :</td>
-                        <td>Narendra Dhakad</td>
+                        <td>{{studentAdmitCardInfo?.fatherName | titlecase}}</td>
                         <td class="text-bold">Mother Name :</td>
-                        <td>Manisha Dhakad</td>
+                        <td>{{studentAdmitCardInfo?.motherName | titlecase}}</td>
                       </tr>
                     </table>
 

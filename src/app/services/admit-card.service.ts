@@ -20,4 +20,7 @@ export class AdmitCardService {
   singleStudentAdmitCard(admitCardFormData: any) {
     return this.http.post(`${this.url}`,admitCardFormData);
   }
+  changeStatus(params:any){
+    return this.http.put(`${this.url}/status/${params.id}`,params);
+  }
 }

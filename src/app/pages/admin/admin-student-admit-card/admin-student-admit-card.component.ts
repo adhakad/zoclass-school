@@ -10,57 +10,67 @@ import { AdmitCardService } from 'src/app/services/admit-card.service';
 export class AdminStudentAdmitCardComponent implements OnInit {
 
   allAdmitCards: any[] = [];
-  cls:any;
+  cls: any;
+  admitCardInfo: any;
+  studentInfo: any;
 
-  constructor(public activatedRoute: ActivatedRoute,private admitCardService:AdmitCardService) {
-    
+  constructor(public activatedRoute: ActivatedRoute, private admitCardService: AdmitCardService) {
+
   }
 
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getAdmitCardStudentByClass(this.cls);
+    this.getStudentAdmitCardByClass(this.cls);
   }
 
 
 
-  getAdmitCardStudentByClass(cls:any){
-    this.admitCardService.getAllStudentAdmitCardByClass(cls).subscribe((res:any) => {
-      if(res){
-        this.allAdmitCards = res;
+  getStudentAdmitCardByClass(cls: any) {
+    this.admitCardService.getAllStudentAdmitCardByClass(cls).subscribe((res: any) => {
+      if (res) {
+        this.admitCardInfo = res.admitCardInfo;
+        this.studentInfo = res.studentInfo;
+        const studentInfoMap = new Map();
+        this.studentInfo.forEach((item: any) => {
+          studentInfoMap.set(item._id, item);
+        });
+        
+        const combinedData = this.admitCardInfo.reduce((result: any, admitCard: any) => {
+          const studentInfo = studentInfoMap.get(admitCard.studentId);
+        
+          if (studentInfo) {
+            result.push({
+              studentId: admitCard.studentId,
+              class: admitCard.class,
+              examType: admitCard.examType,
+              status: admitCard.status || "",
+              name: studentInfo.name,
+              rollNumber: studentInfo.rollNumber,
+              admissionNo: studentInfo.admissionNo
+            });
+          }
+        
+          return result;
+        }, []);
+        console.log(combinedData)
+        if (combinedData) {
+          this.allAdmitCards = combinedData;
+        }
       }
     })
   }
 
-  // getAdmitCardStudentByClass(cls:any){
-  //   this.admitCardService.admitCardStudentByClass(cls).subscribe((res:any) => {
-  //     if(res){
-  //       this.allAdmitCards = res;
-  //       console.log(this.allAdmitCards)
-
-  //       // let dateTime = new Date();
-  //       // console.log(dateTime)
-
-  //     }
-  //   })
-  // }
-
-
-  
-    
-
-  
-  changeStatus(id:any, statusValue:any) {
-    if(id) {
+  changeStatus(id: any, statusValue: any) {
+    if (id) {
       let params = {
-        id : id,
+        id: id,
         statusValue: statusValue,
       }
-      // console.log(this.paginationValues)
-      // this.studentService.changeStatus(params).subscribe((res: any) => {
-      //   if(res){
-      //     this.getStudents({page : this.page});
-      //   }
-      // })
+      this.admitCardService.changeStatus(params).subscribe((res: any) => {
+        if(res){
+          this.getStudentAdmitCardByClass(this.cls);
+        }
+      })
     }
   }
 }

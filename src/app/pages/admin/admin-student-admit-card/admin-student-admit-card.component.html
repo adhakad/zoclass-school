@@ -15,11 +15,10 @@
                   <thead class="bg-light">
                     <tr class="text-muted">
                       <th>No.</th>
-                      <th>Admit Card No.</th>
+                      <th>Admission No.</th>
                       <th>Student</th>
                       <th>Roll Number</th>
                       <th>Class</th>
-                      <th>Stream</th>
                       <th>Status</th>
                     </tr>
                   </thead>
@@ -29,7 +28,7 @@
                         <p class="mb-0">{{i+1}}</p>
                       </td>
                       <td>
-                        <p class="mb-0">{{students.admitCardNo}}</p>
+                        <p class="mb-0">{{students.admissionNo}}</p>
                       </td>
                       <td>
                         <p class="mb-0">{{students.name}}</p>
@@ -41,19 +40,12 @@
                         <p class="mb-0">{{students.class}}</p>
                       </td>
                       <td>
-                        <p class="mb-0">{{students.stream}}</p>
-                      </td>
-                      <!-- <td>
-                        <a class="mb-0 status-active" (click)="changeStatus(students._id,0)"
+                        <a class="mb-0 status-active" (click)="changeStatus(students.studentId,0)"
                           *ngIf="students.status == 'Active'"
                           href="javascript:void(0)">&nbsp;&nbsp;&nbsp;{{students.status}}</a>
-                        <a class="mb-0 status-inactive" (click)="changeStatus(students._id,1)"
+                        <a class="mb-0 status-inactive" (click)="changeStatus(students.studentId,1)"
                           *ngIf="students.status == 'Inactive'" href="javascript:void(0)">{{students.status}}</a>
                       </td>
-                      <td class="mb-0">
-                        <mat-icon (click)="updateStudentModel(students)" style="cursor: pointer;">edit_note</mat-icon>
-                        <mat-icon (click)="deleteStudentModel(students._id)" style="cursor: pointer;">delete</mat-icon>
-                      </td> -->
                     </tr>
                   </tbody>
                 </table>
