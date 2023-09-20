@@ -33,7 +33,6 @@ export class StudentAdmitCardComponent implements OnInit {
 
   
   admitCard(studentId:any) {
-    console.log(studentId)
     this.admitCardService.singleStudentAdmitCardById(studentId).subscribe((res: any) => {
       if (res) {
         if (!this.processedData || !this.studentAdmitCardInfo || !this.admitCardInfo) {

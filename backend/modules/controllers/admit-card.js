@@ -30,7 +30,7 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
 let GetSingleStudentAdmitCardById = async(req,res,next) => {
     let studentId = req.params.id;
     try{
-        let student = await StudentModel.findOne({_id:studentId});
+        let student = await StudentModel.findOne({_id:studentId},'admissionNo name rollNumber class fatherName motherName stream');
         if (!student) {
             return res.status(404).json({ errorMsg: 'Student not found' });
         }
