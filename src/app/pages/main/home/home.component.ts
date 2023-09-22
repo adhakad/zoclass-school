@@ -54,7 +54,8 @@ export class HomeComponent implements OnInit {
   }
   ngAfterViewInit() {
     if (this.isBrowser) {
-      setTimeout(function () {
+      
+      setTimeout(() =>  {
         jQuery('.banner-carousel').owlCarousel({
           items: 1,
           autoplay: true,
@@ -74,9 +75,8 @@ export class HomeComponent implements OnInit {
           nav: true,
           responsiveClass: true,
           navText: [
-            "<button style='position:absolute;z-index:1001;left:-1%;margin-top:-23vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-prev material-icons'>keyboard_arrow_left</mat-icon></button>",
-            "<button style='position:absolute;z-index:1001;right:-1%;margin-top:-23vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-next material-icons'>keyboard_arrow_right</mat-icon></button>"
-
+            "<button style='position:absolute;left:-1%;background:#4f3c8a68;color:#5a4599;border:none;border-radius:50%;width:30px;height:30px;top:50%;transform:translateY(-50%);'><mat-icon style='margin-top:2px;margin-left:-3px;' class='material-icons'>keyboard_arrow_left</mat-icon></button>",
+            "<button style='position:absolute;right:-1%;background:#4f3c8a68;color:#5a4599;border:none;border-radius:50%;width:30px;height:30px;top:50%;transform:translateY(-50%);'><mat-icon style='margin-top:2px;margin-left:-3px;' class='material-icons'>keyboard_arrow_right</mat-icon></button>"
           ],
           responsive: {
             600: {
@@ -121,9 +121,8 @@ export class HomeComponent implements OnInit {
           nav: true,
           responsiveClass: true,
           navText: [
-            "<button style='position:absolute;z-index:1001;left:-1%;margin-top:-28vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-prev material-icons'>keyboard_arrow_left</mat-icon></button>",
-            "<button style='position:absolute;z-index:1001;right:-1%;margin-top:-28vh;background:#4f3c8a68;color:#5a4599;border-radius:50%;box-shadow:none;border:none;height:30px;width:30px;'><mat-icon style='margin-top:2px;margin-left:-3px;' class='owl-next material-icons'>keyboard_arrow_right</mat-icon></button>"
-
+            "<button style='position:absolute;left:-1%;background:#4f3c8a68;color:#5a4599;border:none;border-radius:50%;width:30px;height:30px;top:50%;transform:translateY(-50%);'><mat-icon style='margin-top:2px;margin-left:-3px;' class='material-icons'>keyboard_arrow_left</mat-icon></button>",
+            "<button style='position:absolute;right:-1%;background:#4f3c8a68;color:#5a4599;border:none;border-radius:50%;width:30px;height:30px;top:50%;transform:translateY(-50%);'><mat-icon style='margin-top:2px;margin-left:-3px;' class='material-icons'>keyboard_arrow_right</mat-icon></button>"
           ],
           responsive: {
             600: {
