@@ -71,6 +71,7 @@ export class AdminStudentResultComponent implements OnInit {
   }
   addBulkExamResultModel() {
     this.showBulkResultModal = true;
+    this.errorCheck = false;
   }
   updateExamResultModel(examResult: any) {
     this.showModal = true;
@@ -100,14 +101,14 @@ export class AdminStudentResultComponent implements OnInit {
 
   closeModal() {
     this.falseAllValue();
-    this.showModal = false;
-    this.showBulkResultModal = false;
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
     this.selectedExam = '';
     this.stream = '';
     this.examResultForm.reset();
+    this.showModal = false;
+    this.showBulkResultModal = false;
   }
   onChange(event: MatRadioChange) {
     this.selectedValue = event.value;
@@ -148,7 +149,6 @@ export class AdminStudentResultComponent implements OnInit {
         
           return result;
         }, []);
-        console.log(combinedData)
         if (combinedData) {
           this.allExamResults = combinedData;
         }
@@ -190,8 +190,6 @@ export class AdminStudentResultComponent implements OnInit {
   getSingleClassResultStrucByStream(params: any) {
     this.examResultStructureService.getSingleClassResultStrucByStream(params).subscribe((res: any) => {
       if (res) {
-        this.errorCheck = true;
-        this.errorMsg = '';
         this.practicalSubjects = [];
         this.classSubject = [];
         if (res.theoryMaxMarks) {
@@ -216,8 +214,6 @@ export class AdminStudentResultComponent implements OnInit {
       }
     }, err => {
       this.falseAllValue();
-      this.errorCheck = true;
-      this.errorMsg = err.error;
     })
   }
 
@@ -324,8 +320,7 @@ export class AdminStudentResultComponent implements OnInit {
       }
     }, err => {
       this.errorCheck = true;
-      this.errorMsg = err.error.errMsg;
-      this.existRollnumber = err.error.existRollnumber;
+      this.errorMsg = err.error;
     })
   }
 
