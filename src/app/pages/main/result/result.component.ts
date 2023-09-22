@@ -61,7 +61,7 @@ export class ResultComponent implements OnInit {
         let percentile:number = 0;
         if (examResult.practicalMarks) {
           this.examResultInfo = {};
-          const totalTheoryMaxMarks: number = examResult.theoryMarks.reduce((total: number, subjectMarks: any) => {
+          const totalTheoryMaxMarks: number = this.resultStructureInfo.theoryMaxMarks.reduce((total: number, subjectMarks: any) => {
             const subjectName: string = Object.keys(subjectMarks)[0];
             const maxMarksObject: any = this.resultStructureInfo.theoryMaxMarks.find((maxMarks: any) => Object.keys(maxMarks)[0] === subjectName);
             const maxMarks: number = maxMarksObject ? parseFloat(maxMarksObject[subjectName]) : 0;
@@ -69,7 +69,7 @@ export class ResultComponent implements OnInit {
             return total + maxMarks;
           }, 0);
   
-          const totalPracticalMaxMarks: number = examResult.practicalMarks.reduce((total: number, subjectMarks: any) => {
+          const totalPracticalMaxMarks: number = this.resultStructureInfo.practicalMaxMarks.reduce((total: number, subjectMarks: any) => {
             const subjectName: string = Object.keys(subjectMarks)[0];
 
             const maxMarksObject: any = this.resultStructureInfo.practicalMaxMarks.find((maxMarks: any) => Object.keys(maxMarks)[0] === subjectName);
@@ -142,7 +142,7 @@ export class ResultComponent implements OnInit {
         if (!examResult.practicalMarks) {
           this.examResultInfo = {};
 
-          const totalTheoryMaxMarks: number = examResult.theoryMarks.reduce((total: number, subjectMarks: any) => {
+          const totalTheoryMaxMarks: number = this.resultStructureInfo.theoryMaxMarks.reduce((total: number, subjectMarks: any) => {
             const subjectName: string = Object.keys(subjectMarks)[0];
             const maxMarksObject: any = this.resultStructureInfo.theoryMaxMarks.find((maxMarks: any) => Object.keys(maxMarks)[0] === subjectName);
             const maxMarks: number = maxMarksObject ? parseFloat(maxMarksObject[subjectName]) : 0;
