@@ -16,7 +16,7 @@
 <div [ngClass]="{'top-hamburger-menu' : false==nav}">
   <mat-toolbar class="hamburger-menu">
     <mat-icon class="close-icon" (click)="hamburgerMenu(false)">close</mat-icon>
-    <button mat-menu-item [routerLink]="['/admin/dashboard']" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
+    <button mat-menu-item [routerLink]="['/student/dashboard']" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
       <mat-icon>home</mat-icon>
       <span>Dashboard</span>
     </button>
@@ -24,11 +24,11 @@
         <mat-icon>currency_rupee</mat-icon>
         <span>Fee Management</span>
       </button>
-      <button mat-menu-item class="menu-button" routerLinkActive="active-link" [routerLink]="['/admin/students/admit-card/class']">
+      <button mat-menu-item class="menu-button" routerLinkActive="active-link" [routerLink]="['/student/admit-card']">
         <mat-icon>list alt</mat-icon>
         <span>Admit Cards</span>
       </button>
-      <button mat-menu-item class="menu-button" [routerLink]="['/admin/students/result/class']" routerLinkActive="active-link">
+      <button mat-menu-item class="menu-button" [routerLink]="['/student/result']" routerLinkActive="active-link">
         <mat-icon>person</mat-icon>
         <span>Exam Result</span>
       </button>
