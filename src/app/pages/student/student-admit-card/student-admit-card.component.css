@@ -1,5 +1,7 @@
 @import'../../../../styles.css';
-
+.custom-container p {
+  color: #7c7698fb;
+}
 .custom-container {
   font-family: Arial, sans-serif;
   overflow: auto;
