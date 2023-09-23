@@ -11,7 +11,7 @@ const razorpay = new Razorpay({
 });
 
 let CreatePayment = async (req, res) => {
-  const { studentId, name, cls, rollNumber, feesInstallment, feesAmount, currency } = req.body;
+  const { studentId, name, cls, feesInstallment, feesAmount, currency } = req.body;
   const paymentData = {
     amount: feesAmount * 100,
     currency: currency,
@@ -23,7 +23,6 @@ let CreatePayment = async (req, res) => {
       name: name,
       orderId: order.id,
       class: cls,
-      rollNumber: rollNumber,
       feesInstallment: feesInstallment,
       feesAmount: feesAmount,
       currency,
@@ -53,14 +52,14 @@ let ValidatePayment = async (req, res) => {
         { new: true }
       );
       if (updatedPayment) {
-        const rollNumber = updatedPayment.rollNumber;
+        const studentId = updatedPayment.studentId;
         const className = updatedPayment.class;
         let feesAmount = updatedPayment.feesAmount;
         let feesInstallment = updatedPayment.feesInstallment;
         let receiptNo = Math.floor(Math.random() * 899999 + 100000);
         const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
         const istDateTimeString = currentDateIst.toFormat('dd-MM-yyyy hh:mm:ss a');
-        const checkFeesCollection = await FeesCollectionModel.findOne({ rollNumber: rollNumber, class: className });
+        const checkFeesCollection = await FeesCollectionModel.findOne({studentId:studentId, class: className });
         const id = checkFeesCollection._id;
         const totalFees = checkFeesCollection.totalFees;
         const installments = checkFeesCollection.installment;

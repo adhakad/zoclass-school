@@ -55,9 +55,9 @@ let CreateStudent = async (req, res, next) => {
 
     const todayDate = new Date();
     let otp = Math.floor(Math.random() * 899999 + 100000);
-    let { name,rollNumber, session,admissionType,stream,admissionNo,dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
+    let { name, rollNumber, session, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
     let className = req.body.class;
-    if(stream==="stream"){
+    if (stream === "stream") {
         stream = "N/A";
     }
     const date = new Date(dob);
@@ -69,7 +69,7 @@ let CreateStudent = async (req, res, next) => {
     dob = date.toLocaleDateString(undefined, options);
     const doa = todayDate.toLocaleDateString(undefined, options);
     const studentData = {
-        name,rollNumber,otp, session,admissionType,stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
+        name, rollNumber, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
     }
     try {
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
@@ -87,21 +87,23 @@ let CreateStudent = async (req, res, next) => {
                 item[key] = 0;
             });
         });
-        
+
         const studentFeesData = {
-            name: name,
             class: className,
-            rollNumber: rollNumber,
             totalFees: totalFees,
             paidFees: 0,
             dueFees: totalFees,
             receipt: installment,
             installment: installment,
-            paymentDate:installment
+            paymentDate: installment
         }
         const createStudent = await StudentModel.create(studentData);
-        const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-        return res.status(200).json('Student Created succesfuly');
+        if (createStudent) {
+            let studentId = createStudent._id;
+            studentFeesData.studentId = studentId;
+            const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
+            return res.status(200).json('Student Created succesfuly');
+        }
     } catch (error) {
         console.log(error);
     }
@@ -129,7 +131,7 @@ let ChangeStatus = async (req, res, next) => {
         const studentData = {
             status: status
         }
-        
+
         const updateStatus = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
         return res.status(200).json('Student update succesfully');
     } catch (error) {

@@ -33,19 +33,19 @@
                                 <table class="info-table text-center">
                                     <tr>
                                         <td class="text-bold">Admission No. :</td>
-                                        <td>12345</td>
+                                        <td>{{studentInfo[0]?.admissionNo}}</td>
                                         <td class="text-bold">Roll Number :</td>
-                                        <td>{{studentFeesCollection?.rollNumber}}</td>
+                                        <td>{{studentInfo[0]?.rollNumber}}</td>
                                         <td class="text-bold">Class :</td>
-                                        <td>{{studentFeesCollection?.class}}th</td>
+                                        <td>{{studentInfo[0]?.class}}th</td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold">Student Name :</td>
-                                        <td>{{studentFeesCollection?.name | titlecase}}</td>
+                                        <td>{{studentInfo[0]?.name | titlecase}}</td>
                                         <td class="text-bold">Father Name :</td>
-                                        <td>Narendra Dhakad</td>
+                                        <td>{{studentInfo[0]?.fatherName}}</td>
                                         <td class="text-bold">Mother Name :</td>
-                                        <td>Manisha Dhakad</td>
+                                        <td>{{studentInfo[0]?.motherName}}</td>
                                     </tr>
                                 </table>
                                 <table class="custom-table">
@@ -163,19 +163,19 @@
                                                 <td class="text-bold">Receipt No. :</td>
                                                 <td>{{ singleReceiptInstallment[0]?.receiptNo }}</td>
                                                 <td class="text-bold">Admission No. :</td>
-                                                <td>12345</td>
+                                                <td>{{studentInfo[0]?.admissionNo}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-bold">Class :</td>
-                                                <td>{{studentFeesCollection?.class}}th</td>
+                                                <td>{{studentInfo[0]?.class}}th</td>
                                                 <td class="text-bold">Date Of Birth :</td>
-                                                <td>30.04.2005</td>
+                                                <td>{{studentInfo[0]?.dob}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-bold">Student Name :</td>
-                                                <td>{{studentFeesCollection?.name | titlecase}}</td>
+                                                <td>{{studentInfo[0]?.name | titlecase}}</td>
                                                 <td class="text-bold">Father Name :</td>
-                                                <td>Narendra Dhakad</td>
+                                                <td>{{studentInfo[0]?.fatherName | titlecase}}</td>
                                             </tr>
                                         </table>
                                         <table class="receipt-table">

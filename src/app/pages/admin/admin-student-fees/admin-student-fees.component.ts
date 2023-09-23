@@ -48,10 +48,10 @@ export class AdminStudentFeesComponent implements OnInit {
   receiptInstallment:any={};
   receiptMode:boolean = false;
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private classSubjectService: ClassSubjectService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
       class:[''],
-      rollNumber:[''],
+      studentId:[''],
       feesAmount: [''],
       feesInstallment:['']
     });
@@ -63,28 +63,14 @@ export class AdminStudentFeesComponent implements OnInit {
     this.getFees({ page: 1 });
 
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getClassSubject(this.cls);
     this.feesStructureByClass(this.cls);
     // this.getStudentByClass(this.cls);
     this.getAllStudentFeesCollectionByClass(this.cls);
   }
 
-  // paymentNow() {
-    
-  // }
-
   printReceipt() {
     this.printPdfService.printElement(this.receipt.nativeElement);
     this.closeModal();
-  }
-
-  getClassSubject(cls: any) {
-    this.classSubjectService.getSubjectByClass(cls).subscribe(res => {
-      if (res) {
-        // this.showModal=true;
-        this.classSubject = res;
-      }
-    })
   }
 
   // getStudentByClass(cls:any){
@@ -98,7 +84,15 @@ export class AdminStudentFeesComponent implements OnInit {
   getAllStudentFeesCollectionByClass(cls:any){
     this.feesService.getAllStudentFeesCollectionByClass(cls).subscribe((res:any) => {
       if(res){
-        this.studentList = res;
+        let studentFeesCollection = res.studentFeesCollection;
+        let studentInfo = res.studentInfo;
+        const studentMap:any = new Map(studentInfo.map((student:any) => [student._id, student]));
+        const combinedData = studentFeesCollection.map((feeCollection:any)=> ({
+          ...studentMap.get(feeCollection.studentId),
+          ...feeCollection
+        }));
+
+        this.studentList = combinedData;
       }
     })
   }
@@ -203,7 +197,7 @@ export class AdminStudentFeesComponent implements OnInit {
         })
       } else {
         this.feesForm.value.class = this.singleStudent.class;
-        this.feesForm.value.rollNumber = this.singleStudent.rollNumber;
+        this.feesForm.value.studentId = this.singleStudent.studentId;
         this.feesForm.value.feesInstallment = this.paybleInstallment[0][0];
         this.feesForm.value.feesAmount = this.paybleInstallment[0][1];
         this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {

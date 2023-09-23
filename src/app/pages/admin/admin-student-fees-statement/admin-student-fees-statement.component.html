@@ -33,19 +33,19 @@
                                 <table class="info-table text-center">
                                     <tr>
                                         <td class="text-bold">Admission No. :</td>
-                                        <td>12345</td>
+                                        <td>{{studentInfo[0]?.admissionNo}}</td>
                                         <td class="text-bold">Roll Number :</td>
-                                        <td>{{studentFeesCollection?.rollNumber}}</td>
+                                        <td>{{studentInfo[0]?.rollNumber}}</td>
                                         <td class="text-bold">Class :</td>
-                                        <td>{{studentFeesCollection?.class}}th</td>
+                                        <td>{{studentInfo[0]?.class}}th</td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold">Student Name :</td>
-                                        <td>{{studentFeesCollection?.name | titlecase}}</td>
+                                        <td>{{studentInfo[0]?.name | titlecase}}</td>
                                         <td class="text-bold">Father Name :</td>
-                                        <td>Narendra Dhakad</td>
+                                        <td>{{studentInfo[0]?.fatherName | titlecase}}</td>
                                         <td class="text-bold">Mother Name :</td>
-                                        <td>Manisha Dhakad</td>
+                                        <td>{{studentInfo[0]?.motherName | titlecase}}</td>
                                     </tr>
                                 </table>
                                 <table class="custom-table">
@@ -113,20 +113,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-12">
                             <button class="submit-button print-pdf mx-4" mat-raised-button
                                 (click)="downloadPDF()">PDF</button>
                             <button class="submit-button print-pdf" mat-raised-button
                                 (click)="printContent()">Print</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-
-
-
-
 
             <div class="modal fade show" [class.show]="showModal">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -163,19 +159,19 @@
                                                 <td class="text-bold">Receipt No. :</td>
                                                 <td>{{ singleReceiptInstallment[0]?.receiptNo }}</td>
                                                 <td class="text-bold">Admission No. :</td>
-                                                <td>12345</td>
+                                                <td>{{studentInfo[0]?.admissionNo}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-bold">Class :</td>
-                                                <td>{{studentFeesCollection?.class}}th</td>
+                                                <td>{{studentInfo[0]?.class}}th</td>
                                                 <td class="text-bold">Date Of Birth :</td>
-                                                <td>30.04.2005</td>
+                                                <td>{{studentInfo[0]?.dob}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-bold">Student Name :</td>
-                                                <td>{{studentFeesCollection?.name | titlecase}}</td>
+                                                <td>{{studentInfo[0]?.name | titlecase}}</td>
                                                 <td class="text-bold">Father Name :</td>
-                                                <td>Narendra Dhakad</td>
+                                                <td>{{studentInfo[0]?.fatherName | titlecase}}</td>
                                             </tr>
                                         </table>
                                         <table class="receipt-table">
@@ -222,8 +218,15 @@
                                                 <td></td>
                                             </tr>
                                         </table>
-                                        <p>Date : {{ singleReceiptInstallment[0]?.paymentDate }}
-                                        </p>
+                                        <p>Date : {{ singleReceiptInstallment[0]?.paymentDate }}</p>
+                                        <div>
+                                            <h4 class="text-bold" style="color: #7c7698fb;">Instructions :</h4>
+                                            <p>1. Payment installment fee amount</p>
+                                            <p>2. First installment fee amount First installment</p>
+                                            <p>3. Fee amount First installment First installment First installment</p>
+                                            <p>4. School installment fee amount installment</p>
+                                            <p>5. Online installment fee amount First installment</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

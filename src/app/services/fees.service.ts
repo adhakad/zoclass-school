@@ -16,10 +16,10 @@ export class FeesService {
     return this.http.post(`${this.url}/bulk-fees`,feesBulkResult);
   }
   getAllStudentFeesCollectionByClass(cls:any){
-    return this.http.get(`${this.url}/student/${cls}`);
+    return this.http.get(`${this.url}/class/${cls}`);
   }
-  singleStudentFeesCollection(cls:any,rollNumber:any){
-    return this.http.get(`${this.url}/${cls}/student/${rollNumber}`);
+  singleStudentFeesCollectionById(studentId:any){
+    return this.http.get(`${this.url}/student/${studentId}`);
   }
   feesPaginationList(feesData:any){
     return this.http.post(`${this.url}/fees-pagination`,feesData);

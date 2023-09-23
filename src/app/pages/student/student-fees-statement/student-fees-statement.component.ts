@@ -17,15 +17,16 @@ export class StudentFeesStatementComponent implements OnInit {
   showModal:boolean = false;
   clsFeesStructure: any;
   studentFeesCollection: any;
-  rollNumber: any;
+  studentId: any;
   processedData: any[] = [];
   singleReceiptInstallment:any[] = [];
+  studentInfo:any[]=[];
   constructor(public activatedRoute: ActivatedRoute, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
-    this.cls = this.activatedRoute.snapshot.paramMap.get('id');
-    this.rollNumber = this.activatedRoute.snapshot.paramMap.get('rollnumber');
-    this.singleStudentFeesCollection(this.cls, this.rollNumber)
+    this.cls = this.activatedRoute.snapshot.paramMap.get('class');
+    this.studentId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.singleStudentFeesCollectionById(this.studentId)
     this.feesStructureByClass(this.cls)
   }
   
@@ -49,18 +50,17 @@ export class StudentFeesStatementComponent implements OnInit {
   }
   feeReceipt(singleInstallment:any) {
     const data:any = this.processedData
-
     const desiredInstallment = singleInstallment;
-
     this.singleReceiptInstallment = Object.values(data).filter((item:any) => item.installment === desiredInstallment);
-    console.log(this.singleReceiptInstallment)
     this.showModal = true;
 
   }
-  singleStudentFeesCollection(cls: any, rollNumber: any) {
-    this.feesService.singleStudentFeesCollection(cls, rollNumber).subscribe((res: any) => {
+  singleStudentFeesCollectionById(studentId: any) {
+    this.feesService.singleStudentFeesCollectionById(studentId).subscribe((res: any) => {
       if (res) {
-        this.studentFeesCollection = res;
+        this.studentFeesCollection = res.studentFeesCollection;
+        this.studentInfo = res.studentInfo;
+        console.log(this.studentInfo)
         this.processData();
       }
     })

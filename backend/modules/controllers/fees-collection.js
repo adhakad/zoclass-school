@@ -1,13 +1,18 @@
 const FeesCollectionModel = require('../models/fees-collection');
 const FeesStructureModel = require('../models/fees-structure');
+const StudentModel = require('../models/student');
 const { DateTime } = require('luxon');
 
-let GetSingleStudentFeesCollection = async (req, res, next) => {
-    let className = req.params.id;
-    let rollNumber = req.params.rollNumber;
+let GetSingleStudentFeesCollectionById = async (req, res, next) => {
+    let studentId = req.params.studentId;
+    
     try {
-        const studentFeesCollection = await FeesCollectionModel.findOne({ class: className, rollNumber: rollNumber });
-        return res.status(200).json(studentFeesCollection);
+        const student = await StudentModel.find({ _id: studentId },'_id admissionNo name rollNumber class fatherName motherName dob');
+        if(!student){
+            return res.status(404).json('Student not found !')
+        }
+        const studentFeesCollection = await FeesCollectionModel.findOne({ studentId:studentId });
+        return res.status(200).json({studentInfo:student,studentFeesCollection:studentFeesCollection});
     } catch (error) {
         console.log(error);
     }
@@ -16,8 +21,15 @@ let GetSingleStudentFeesCollection = async (req, res, next) => {
 let GetAllStudentFeesCollectionByClass = async (req, res, next) => {
     let className = req.params.class;
     try {
+        const student = await StudentModel.find({ class: className },'_id admissionNo name rollNumber class fatherName dob');
+        if(!student){
+            return res.status(404).json('Student not found !')
+        }
         const studentFeesCollection = await FeesCollectionModel.find({ class: className });
-        return res.status(200).json(studentFeesCollection);
+        if(!studentFeesCollection){
+            return res.status(404).json('Student fees collection not found !')
+        }
+        return res.status(200).json({studentFeesCollection:studentFeesCollection,studentInfo:student});
     } catch (error) {
         console.log(error);
     }
@@ -25,7 +37,7 @@ let GetAllStudentFeesCollectionByClass = async (req, res, next) => {
 
 let CreateFeesCollection = async (req, res, next) => {
     let className = req.body.class;
-    let { rollNumber, feesInstallment, feesAmount } = req.body;
+    let { studentId, feesInstallment, feesAmount } = req.body;
     let receiptNo = Math.floor(Math.random() * 899999 + 100000);
     const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
     const istDateTimeString = currentDateIst.toFormat('dd-MM-yyyy hh:mm:ss a');
@@ -35,9 +47,9 @@ let CreateFeesCollection = async (req, res, next) => {
         if (!checkFeesStructure) {
             return res.status(404).json(`Class ${className} fees structure not found`);
         }
-        const checkFeesCollection = await FeesCollectionModel.findOne({ rollNumber: rollNumber, class: className });
+        const checkFeesCollection = await FeesCollectionModel.findOne({ studentId:studentId, class: className });
         if (!checkFeesCollection) {
-            return res.status(404).json(`${rollNumber} fees record not found`);
+            return res.status(404).json(`Fees record not found`);
         }
 
         const feesStructureInstallment = checkFeesStructure.installment.find(item => Object.keys(item)[0] === feesInstallment);
@@ -60,7 +72,7 @@ let CreateFeesCollection = async (req, res, next) => {
         const installment = {
             class: className,
             receiptNo: receiptNo,
-            rollNumber: rollNumber,
+            studentId:studentId,
             totalFees: totalFees,
             paidFees: paidFees,
             dueFees: dueFees,
@@ -83,7 +95,7 @@ let CreateFeesCollection = async (req, res, next) => {
 
 module.exports = {
     GetAllStudentFeesCollectionByClass,
-    GetSingleStudentFeesCollection,
+    GetSingleStudentFeesCollectionById,
     CreateFeesCollection
 
 }

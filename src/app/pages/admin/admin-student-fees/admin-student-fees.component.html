@@ -38,9 +38,10 @@
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>No.</th>
-                                        <th>Offline Fee Payment</th>
+                                        <th>Fee Payment</th>
                                         <th>Fee Statement</th>
                                         <th>Student Name</th>
+                                        <th>Admission No.</th>
                                         <th>Roll Number</th>
                                         <th>Paid Fee</th>
                                         <th>Due Fee</th>
@@ -62,11 +63,14 @@
                                         </th>
                                         <td class="mb-0">
                                             <mat-icon
-                                                routerLink="/admin/students/fees/class/statement/{{student.class}}/{{student.rollNumber}}"
+                                                routerLink="/admin/students/fees/class/statement/{{student.class}}/{{student.studentId}}"
                                                 style="cursor: pointer;">launch</mat-icon>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{student.name | titlecase}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{student.admissionNo}}</p>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{student.rollNumber}}</p>
@@ -126,7 +130,7 @@
                                                             <table class="info-table">
                                                                 <tr>
                                                                     <td class="text-bold">Admission No. :</td>
-                                                                    <td>956544</td>
+                                                                    <td>{{singleStudent.admissionNo}}</td>
                                                                     <td class="text-bold">Class :</td>
                                                                     <td>{{singleStudent.class}}th</td>
                                                                 </tr>
@@ -135,7 +139,7 @@
                                                                     <td>{{singleStudent.name |
                                                                         titlecase}}</td>
                                                                     <td class="text-bold">Father Name :</td>
-                                                                    <td>Narendra Dhakad</td>
+                                                                    <td>{{singleStudent.fatherName}}</td>
                                                                 </tr>
                                                             </table>
                                                             <table class="custom-table">
@@ -210,20 +214,20 @@
                                                                 <td class="text-bold">Receipt No. :</td>
                                                                 <td>{{receiptInstallment.receiptNo}}</td>
                                                                 <td class="text-bold">Admission No. :</td>
-                                                                <td>12345</td>
+                                                                <td>{{singleStudent.admissionNo}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="text-bold">Class :</td>
                                                                 <td>{{receiptInstallment.class}}th</td>
                                                                 <td class="text-bold">Date Of Birth :</td>
-                                                                <td>30.04.2005</td>
+                                                                <td>{{singleStudent.dob}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="text-bold">Student Name :</td>
                                                                 <td>{{singleStudent.name |
                                                                     titlecase}}</td>
                                                                 <td class="text-bold">Father Name :</td>
-                                                                <td>Narendra Dhakad</td>
+                                                                <td>{{singleStudent.fatherName}}</td>
                                                             </tr>
                                                         </table>
                                                         <table class="receipt-table">
@@ -274,6 +278,14 @@
                                                         </table>
 
                                                         <p>Date : {{ receiptInstallment.paymentDate }}</p>
+                                                        <div>
+                                                            <h4 class="text-bold" style="color: #7c7698fb;">Instructions :</h4>
+                                                            <p>1. Payment installment fee amount</p>
+                                                            <p>2. First installment fee amount First installment</p>
+                                                            <p>3. Fee amount First installment First installment First installment</p>
+                                                            <p>4. School installment fee amount installment</p>
+                                                            <p>5. Online installment fee amount First installment</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

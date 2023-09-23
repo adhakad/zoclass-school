@@ -13,23 +13,23 @@
                                 <table class="info-table" style="width: auto;">
                                     <tr>
                                         <td class="text-bold">Admission No.</td>
-                                        <td>: 12345</td>
+                                        <td>: {{studentInfo[0]?.admissionNo}}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold">Roll Number</td>
-                                        <td>: {{studentInfo.rollNumber}}</td>
+                                        <td>: {{studentInfo[0]?.rollNumber}}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold">Class</td>
-                                        <td>: {{studentInfo.class}}th</td>
+                                        <td>: {{studentInfo[0]?.class}}th</td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold">Student Name</td>
-                                        <td>: {{studentInfo.name}}</td>
+                                        <td>: {{studentInfo[0]?.name}}</td>
                                     </tr>
                                     <tr>
                                        <td class="text-bold">Fee Statement</td>
-                                       <td><mat-icon routerLink="/student/fees/statement/{{studentInfo.class}}/{{studentInfo.rollNumber}}">launch</mat-icon></td>
+                                       <td><mat-icon routerLink="/student/fees/statement/{{studentInfo[0]?.class}}/{{studentInfo[0]?._id}}">launch</mat-icon></td>
                                     </tr>
                                 </table>
                                 <table class="info-table">

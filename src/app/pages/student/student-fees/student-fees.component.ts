@@ -16,34 +16,37 @@ export class StudentFeesComponent implements OnInit {
   errorMessage: String = '';
   successMessage: String = '';
   cls: any;
-  studentInfo: any;
+  studentInfo: any[] = [];
   clsFeesStructure: any;
   studentFeesCollection: any;
-  rollNumber: any;
+  studentId: any;
   paybleInstallment: any[] = [];
   check: boolean = false;
-  constructor(private router: Router,private paymentService: PaymentService, private studentAuthService: StudentAuthService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
+  student:any;
+  constructor(private router: Router, private paymentService: PaymentService, private studentAuthService: StudentAuthService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
-    this.studentInfo = this.studentAuthService.getLoggedInStudentInfo();
-    console.log(this.studentInfo)
-    this.cls = this.studentInfo.class;
-    this.rollNumber = this.studentInfo.rollNumber;
+    this.student = this.studentAuthService.getLoggedInStudentInfo();
+    this.cls = this.student.class;
+    this.studentId = this.student.id;
     this.feesStructureByClass(this.cls);
   }
 
   feesStructureByClass(cls: any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       if (res) {
-        this.singleStudentFeesCollection(this.cls, this.rollNumber);
         this.clsFeesStructure = res;
+        if (this.clsFeesStructure) {
+          this.singleStudentFeesCollectionById(this.studentId);
+        }
       }
     })
   }
-  singleStudentFeesCollection(cls: any, rollNumber: any) {
-    this.feesService.singleStudentFeesCollection(cls, rollNumber).subscribe((res: any) => {
+  singleStudentFeesCollectionById(studentId: any) {
+    this.feesService.singleStudentFeesCollectionById(studentId).subscribe((res: any) => {
       if (res) {
-        this.studentFeesCollection = res;
+        this.studentFeesCollection = res.studentFeesCollection;
+        this.studentInfo = res.studentInfo;
         const installment = this.studentFeesCollection.installment;
         const result = installment.find((installment: any) => {
           const [key, value] = Object.entries(installment)[0];
@@ -66,13 +69,12 @@ export class StudentFeesComponent implements OnInit {
     }, 1000)
   }
   createPayment() {
-    const studentId = this.studentInfo.id;
-    const cls = this.studentInfo.class;
-    const rollNumber = this.studentInfo.rollNumber;
+    const studentId = this.student.id;
+    const cls = this.student.class;
     const feesInstallment = Object.keys(this.paybleInstallment[0])[0];
     const feesAmount = Object.values(this.paybleInstallment[0])[0];
     const currency = 'INR';
-    const paymentData = { studentId: studentId, cls: cls, rollNumber: rollNumber, feesInstallment: feesInstallment, feesAmount: feesAmount, currency: currency };
+    const paymentData = { studentId: studentId, cls: cls, feesInstallment: feesInstallment, feesAmount: feesAmount, currency: currency };
     this.paymentService.createPayment(paymentData).subscribe(
       (response: any) => {
         const options = {
@@ -83,8 +85,8 @@ export class StudentFeesComponent implements OnInit {
           description: 'Payment for Your Product',
           image: '../../../../assets/logo.png',
           prefill: {
-            name: this.studentInfo.name,
-            email: this.studentInfo.email,
+            name: this.student.name,
+            email: this.student.email,
             contact: '9340700360',
             method: 'online'
           },
@@ -95,7 +97,7 @@ export class StudentFeesComponent implements OnInit {
           handler: this.paymentHandler.bind(this),
         };
         Razorpay.open(options);
-        this.paybleInstallment=["abc"];
+        this.paybleInstallment = ["abc"];
       },
       (error) => {
         this.errorMessage = 'Payment creation failed. Please try again later.';
