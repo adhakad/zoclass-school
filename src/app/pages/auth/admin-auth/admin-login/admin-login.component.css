@@ -4,7 +4,6 @@
 .login-card{
   padding-top: 5vh;
   padding-bottom: 5vh;
-  margin-bottom: 10vh;
   box-shadow: none;
  }
  .login-card button{
@@ -38,6 +37,8 @@ a {
 
 @media(min-width:1200px){
 .login-card{
+  margin-top: 2vh;
+  margin-bottom: 10vh;
  border-radius: 15px;
  box-shadow: 0 0 0px -10px #4f3c8a3c,
       0 0 0 0px #4f3c8a3c,

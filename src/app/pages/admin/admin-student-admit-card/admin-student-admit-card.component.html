@@ -50,7 +50,7 @@
                     <td>
                       <a class="mb-0 status-active" (click)="changeStatus(students.studentId,0)"
                         *ngIf="students.status == 'Active'"
-                        href="javascript:void(0)">&nbsp;&nbsp;&nbsp;{{students.status}}</a>
+                        href="javascript:void(0)">{{students.status}}&nbsp;&nbsp;</a>
                       <a class="mb-0 status-inactive" (click)="changeStatus(students.studentId,1)"
                         *ngIf="students.status == 'Inactive'" href="javascript:void(0)">{{students.status}}</a>
                     </td>

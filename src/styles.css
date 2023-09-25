@@ -188,16 +188,18 @@ Dashboard section
 .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
   background: #634ca1a4;
   color: #faf7ff;
+  cursor:not-allowed;
 }
 
 .status-active {
-  color: #503c8a;
+  color: #8c7dccfb;
+  font-weight: 500;
   cursor: pointer;
   text-decoration: none;
 }
 
 .status-inactive {
-  color: #7c7698fb;
+  color: #948fa9e3;
   cursor: pointer;
   text-decoration: none;
 }
@@ -341,6 +343,8 @@ table mat-icon {
 
 ::ng-deep .mat-radio-button {
   color: #7c7698fb;
+  margin-right: 20px;
+  margin-bottom: 5px;
 }
 
 ::ng-deep .mat-radio-outer-circle {
