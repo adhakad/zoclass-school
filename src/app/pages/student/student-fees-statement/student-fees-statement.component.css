@@ -1,15 +1,17 @@
 @import'../../../../styles.css';
 .custom-container {
-    font-family: Arial, sans-serif;
-    overflow: auto;
-  }
-  
-  .table-container {
-    border: none;
-    padding: 25px;
-    margin-left: 10px;
-    margin-top: 2vh;
-  }
+  font-family: Arial, sans-serif;
+  overflow: auto;
+}
+
+.table-container {
+  min-height: 85vh;
+  border: none;
+  padding: 25px;
+  border-radius: 5px;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
   
   .logo-table {
     width: 800px;
@@ -127,6 +129,7 @@
   @media (min-width: 992px) {
     .table-container {
       border: 1px solid #ccc;
+      border-radius: 5px;
     }
     .logo-table {
       width: 100%;

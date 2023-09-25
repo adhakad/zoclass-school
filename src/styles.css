@@ -181,16 +181,17 @@ Dashboard section
   color: #fff;
   height: 42px;
   font-size: 15px;
+  cursor: pointer;
   box-shadow: none;
 }
 
 .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
-  background: #b7b1ff;
+  background: #634ca1a4;
   color: #faf7ff;
 }
 
 .status-active {
-  color: #8d6dff;
+  color: #503c8a;
   cursor: pointer;
   text-decoration: none;
 }
@@ -279,7 +280,7 @@ table mat-icon {
 }
 
 .modal-title {
-  color: #8c88ff;
+  color: #503c8a;
   font-size: 20px;
 }
 
@@ -347,11 +348,11 @@ table mat-icon {
 }
 
 ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #8c88ff;
+  border-color: #503c8a;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #8c88ff;
+  background-color: #503c8a;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
@@ -367,15 +368,15 @@ table mat-icon {
 }
 
 ::ng-deep .mat-checkbox-ripple .mat-ripple-element {
-  background-color: #8c88ff !important;
+  background-color: #503c8a !important;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: #8c88ff !important;
+  background-color: #503c8a !important;
 }
 
 ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: #8c88ff !important;
+  background-color: #503c8a !important;
 }
 
 

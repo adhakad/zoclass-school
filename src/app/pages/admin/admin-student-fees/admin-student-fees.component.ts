@@ -64,7 +64,6 @@ export class AdminStudentFeesComponent implements OnInit {
 
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.feesStructureByClass(this.cls);
-    // this.getStudentByClass(this.cls);
     this.getAllStudentFeesCollectionByClass(this.cls);
   }
 
@@ -72,14 +71,6 @@ export class AdminStudentFeesComponent implements OnInit {
     this.printPdfService.printElement(this.receipt.nativeElement);
     this.closeModal();
   }
-
-  // getStudentByClass(cls:any){
-  //   this.studentService.getStudentByClass(cls).subscribe((res:any) => {
-  //     if(res){
-  //       this.studentList = res;
-  //     }
-  //   })
-  // }
 
   getAllStudentFeesCollectionByClass(cls:any){
     this.feesService.getAllStudentFeesCollectionByClass(cls).subscribe((res:any) => {

@@ -52,7 +52,6 @@ export class AdminStudentAdmitCardComponent implements OnInit {
         
           return result;
         }, []);
-        console.log(combinedData)
         if (combinedData) {
           this.allAdmitCards = combinedData;
         }

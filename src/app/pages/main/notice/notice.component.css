@@ -1,5 +1,5 @@
 .container-fluid {
-    background-color: #ffffff;
+    background-color: #fff;
   }
 .main-card {
     background-color: #fff;
@@ -37,7 +37,7 @@ mat-panel-title {
  
  @media (min-width: 992px) {
     .container-fluid {
-        background-color: #8580981e;;
+        background-color: #8580981e;
     }
     .big-container {
         background-color: #fff;

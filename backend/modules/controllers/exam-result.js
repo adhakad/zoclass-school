@@ -190,7 +190,7 @@ let CreateBulkExamResult = async (req, res, next) => {
     try {
         const students = await StudentModel.find({ 'rollNumber': { $in: newClsRollNumber }, class: className }, '_id rollNumber');
         if (students.length == 0) {
-            return res.status(404).json(`Invalid all roll number`);
+            return res.status(404).json(`All roll number invalid !`);
         }
         if (newClsRollNumber.length > students.length) {
             let studentRollNumber = [];
