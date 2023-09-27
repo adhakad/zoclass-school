@@ -20,7 +20,8 @@
                             <table class="table table-hover align-middle mt-2 mb-1 bg-white">
                                 <thead class="bg-light">
                                     <tr class="text-muted">
-                                        <th>No.</th>
+                                        <th>S.No.</th>
+                                        <th>Admit Card Structure</th>
                                         <th>Exam</th>
                                         <th>Class</th>
                                         <th>Stream</th>
@@ -31,6 +32,9 @@
                                     <tr *ngFor="let examAdmitCard of examAdmitCard,let i=index">
                                         <td>
                                             <p class="mb-0">{{i+1}}</p>
+                                        </td>
+                                        <td class="mb-0">
+                                            <mat-icon>launch</mat-icon>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{examAdmitCard.examType}}</p>

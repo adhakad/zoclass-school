@@ -19,7 +19,8 @@
                             <table class="table table-hover align-middle mt-2 mb-1 bg-white">
                                 <thead class="bg-light">
                                     <tr class="text-muted">
-                                        <th>No.</th>
+                                        <th>S.No.</th>
+                                        <th>Result Structure</th>
                                         <th>Class</th>
                                         <th>Stream</th>
                                         <th>Exam</th>
@@ -30,6 +31,9 @@
                                     <tr *ngFor="let examResultStr of examResultStr,let i = index;">
                                         <td>
                                             <p class="mb-0">{{i+1}}</p>
+                                        </td>
+                                        <td class="mb-0">
+                                            <mat-icon>launch</mat-icon>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{examResultStr.class}}</p>

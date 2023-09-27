@@ -16,8 +16,35 @@
                                 </div>
                             </div>
 
-
-                            <div class="col-12 col-lg-6">
+                            <div class="col-12">
+                                <table class="table table-hover mt-4 align-middle mb-0 bg-white">
+                                    <thead class="bg-light">
+                                        <tr class="text-muted">
+                                            <th>S.No.</th>
+                                            <th>Fee Structure</th>
+                                            <th>Class</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="clsFeesStructure">
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">1</p>
+                                            </td>
+                                            <td class="mb-0">
+                                                <mat-icon>launch</mat-icon>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">{{clsFeesStructure?.class}}</p>
+                                            </td>
+                                            <td class="mb-0">
+                                                <mat-icon>delete</mat-icon>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- <div class="col-12 col-lg-6">
                                 <table class="table table-hover mt-4 align-middle mb-0 bg-white">
                                     <thead class="bg-light">
                                         <tr class="text-muted">
@@ -64,7 +91,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> -->
 
                             <div class="modal fade show" [class.show]="showModal">
                                 <div class="modal-dialog" role="document">
