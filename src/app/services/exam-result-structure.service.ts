@@ -23,7 +23,7 @@ export class ExamResultStructureService {
   //   return this.http.post(`${this.url}/bulk-examResult`,examResultBulkResult);
   // }
   
-  // deleteExamResult(id:any){
-  //   return this.http.delete(`${this.url}/${id}`);
-  // }
+  deleteResultStructure(id:any){
+    return this.http.delete(`${this.url}/${id}`);
+  }
 }

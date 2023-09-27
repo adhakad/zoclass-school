@@ -135,6 +135,7 @@ let CreateExamResult = async (req, res, next) => {
         let examResultData = {
             studentId: studentId,
             examType: examType,
+            stream:stream,
             class: className,
             theoryMarks: theoryMarks,
         }
@@ -178,6 +179,7 @@ let CreateBulkExamResult = async (req, res, next) => {
         }
         const resultEntry = {
             examType: examType,
+            stream:stream,
             class: studentClass,
             theoryMarks: theoryMarks
         };

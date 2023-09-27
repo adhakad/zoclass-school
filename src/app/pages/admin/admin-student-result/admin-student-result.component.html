@@ -40,6 +40,7 @@
                     <th>Admission No.</th>
                     <th>Name</th>
                     <th>Roll Number</th>
+                    <th>Stream</th>
                     <!-- <th *ngFor="let subject of classSubject,let i = index">{{subject.subject}}</th> -->
                     <!-- <th>Action</th> -->
                   </tr>
@@ -58,6 +59,9 @@
                     </td>
                     <td>
                       <p class="mb-0">{{students.rollNumber}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{students.stream}}</p>
                     </td>
                     <!-- <td>
                       <a class="mb-0 status-active" (click)="changeStatus(students.studentId,0)"

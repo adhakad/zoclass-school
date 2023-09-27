@@ -140,6 +140,7 @@ export class AdminStudentResultComponent implements OnInit {
               studentId: examResult.studentId,
               class: examResult.class,
               examType: examResult.examType,
+              stream: examResult.stream,
               status: examResult.status || "",
               name: studentInfo.name,
               rollNumber: studentInfo.rollNumber,

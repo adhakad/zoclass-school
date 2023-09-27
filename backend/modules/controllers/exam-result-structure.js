@@ -1,4 +1,5 @@
 const ExamResultStructureModel = require('../models/exam-result-structure');
+const ExamResultModel = require('../models/exam-result');
 const classModel = require('../models/class');
 
 
@@ -16,15 +17,15 @@ let GetSingleClassExamResultStructureByStream = async (req, res, next) => {
     let className = req.params.class;
     let stream = req.params.stream;
     let examType = req.params.exam;
-    if(stream==="stream"){
+    if (stream === "stream") {
         stream = "N/A";
     }
     let streamMsg = `${stream} stream`;
     try {
-        const singleExamResultStructureStr = await ExamResultStructureModel.findOne({ class: className,stream:stream,examType:examType });
-        if(!singleExamResultStructureStr){
-            if(stream==="N/A"){
-                
+        const singleExamResultStructureStr = await ExamResultStructureModel.findOne({ class: className, stream: stream, examType: examType });
+        if (!singleExamResultStructureStr) {
+            if (stream === "N/A") {
+
                 streamMsg = ``;
             }
             return res.status(404).json(`Class ${className} ${streamMsg} ${examType} exam not found`);
@@ -39,7 +40,7 @@ let CreateExamResultStructure = async (req, res, next) => {
     let className = req.body.class;
     let { examType, stream } = req.body;
     let { theoryMaxMarks, theoryPassMarks, practicalMaxMarks, practicalPassMarks, gradeMinMarks, gradeMaxMarks } = req.body.type;
-    if(stream==="stream"){
+    if (stream === "stream") {
         stream = "N/A";
     }
     try {
@@ -47,7 +48,7 @@ let CreateExamResultStructure = async (req, res, next) => {
         if (checkExamExist) {
             return res.status(400).json(`This class ${examType} exam structure already exist`);
         }
-        let examResultStructureData = { 
+        let examResultStructureData = {
             class: className,
             examType: examType,
             stream: stream,
@@ -72,9 +73,33 @@ let CreateExamResultStructure = async (req, res, next) => {
     }
 }
 
+let DeleteResultStructure = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const resultStr = await ExamResultStructureModel.findOne({ _id: id });
+        const className = resultStr.class;
+        const stream = resultStr.stream;
+        const examType = resultStr.examType;
+        const deleteResultStructure = await ExamResultStructureModel.findByIdAndRemove(id);
+        if (deleteResultStructure) {
+            const result = await ExamResultModel.findOne({ class: className, stream: stream, examType: examType });
+            if (!result) {
+                return res.status(200).json('Exam Result structure delete succesfully');
+            }
+            const deleteResult = await ExamResultModel.deleteMany({ class: className, stream: stream, examType: examType });
+            if (deleteResult) {
+                return res.status(200).json('Exam Result structure delete succesfully');
+            }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     GetSingleClassExamResultStructure,
     GetSingleClassExamResultStructureByStream,
-    CreateExamResultStructure
+    CreateExamResultStructure,
+    DeleteResultStructure
 
 }

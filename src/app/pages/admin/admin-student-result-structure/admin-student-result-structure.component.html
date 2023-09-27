@@ -23,6 +23,7 @@
                                         <th>Class</th>
                                         <th>Stream</th>
                                         <th>Exam</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="examResultStr">
@@ -39,13 +40,15 @@
                                         <td>
                                             <p class="mb-0">{{examResultStr.examType | titlecase}} Exam</p>
                                         </td>
-
+                                        <td class="mb-0">
+                                            <mat-icon (click)="deleteResultStructureModel(examResultStr._id)">delete</mat-icon>
+                                          </td>
                                     </tr>
 
                                 </tbody>
                             </table>
                             <div class="modal fade show" [class.show]="showModal">
-                                <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode && !successMsg">
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -330,13 +333,21 @@
                                                         </div>
                                                     </ng-container>
                                                 </div>
-                                                <div class="modal-footer">
+                                                <div class="modal-footer" *ngIf="!deleteMode">
                                                     <button class="submit-button" mat-raised-button
                                                         [disabled]="!examResultForm.valid || !stream"
                                                         type="submit">Submit</button>
                                                 </div>
+                                                
                                             </form>
                                         </ng-container>
+                                        <div *ngIf="deleteMode">
+                                            <h4>To delete exam result structure detail, click ok to confirm.</h4>
+                                            <div class="modal-footer">
+                                                <button class="delete-button" mat-raised-button type="button"
+                                                    (click)="resultStructureDelete(deleteById)">Ok</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

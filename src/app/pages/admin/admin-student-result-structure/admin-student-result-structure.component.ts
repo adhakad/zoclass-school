@@ -66,6 +66,12 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.examResultForm.reset();
   }
 
+  deleteResultStructureModel(id: String) {
+    this.showModal = true;
+    this.deleteMode = true;
+    this.deleteById = id;
+  }
+
   falseFormValue() {
     const controlOne = <FormArray>this.examResultForm.get('type.theoryMaxMarks');
     const controlTwo = <FormArray>this.examResultForm.get('type.theoryPassMarks');
@@ -90,6 +96,9 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.falseAllValue();
     this.showModal = false;
     this.errorMsg = '';
+    this.deleteMode = false;
+    this.deleteById = '';
+    this.successMsg = '';
     this.examResultForm.reset();
   }
   successDone() {
@@ -257,6 +266,16 @@ export class AdminStudentResultStructureComponent implements OnInit {
       })
     }
 
+  }
+
+  resultStructureDelete(id: String) {
+    this.examResultStructureService.deleteResultStructure(id).subscribe((res: any) => {
+      if (res) {
+        this.successDone();
+        this.successMsg = res;
+        this.deleteById = '';
+      }
+    })
   }
 
 }
