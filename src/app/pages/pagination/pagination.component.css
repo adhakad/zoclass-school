@@ -3,14 +3,14 @@
     margin-top: 10px;
 }
 button{
-    color: #8d6dff;
+    color: #503c8a;
 }
 .button{
     background-color: #e7e6f897;
     margin: 3px;
 }
 .pagination_active{
-    background-color:#8d6dff;
+    background-color:#503c8a;
     color: #fff;
     margin: 3px;
 }

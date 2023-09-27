@@ -24,6 +24,7 @@
                                         <th>Exam</th>
                                         <th>Class</th>
                                         <th>Stream</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="examAdmitCard && examAdmitCard.length>0">
@@ -40,14 +41,16 @@
                                         <td>
                                             <p class="mb-0">{{examAdmitCard.stream}}</p>
                                         </td>
+                                        <td class="mb-0">
+                                            <mat-icon (click)="deleteAdmitCardStructureModel(examAdmitCard._id)">delete</mat-icon>
+                                          </td>
                                     </tr>
 
                                 </tbody>
                             </table>
 
                             <div class="modal fade show" [class.show]="showModal">
-                                <div class="modal-dialog modal-dialog-scrollable modal-lg">
-
+                                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode">
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -63,15 +66,15 @@
                                     <div class="modal-content" *ngIf="!successMsg && classSubject">
                                         <div class="modal-header">
                                             <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Admit
-                                                Card'}}</h5>
+                                                Card Structure'}}</h5>
                                             <mat-icon matRipple (click)="closeModal()"
                                                 style="cursor: pointer;">close</mat-icon>
                                         </div>
 
                                         <form [formGroup]="admitcardForm" (ngSubmit)="admitcardAddUpdate()"
-                                            *ngIf="!deleteMode && classSubject">
+                                            *ngIf="classSubject">
 
-                                            <div class="modal-body">
+                                            <div class="modal-body" *ngIf="!deleteMode">
                                                 <div *ngIf="errorCheck">
                                                     <p class="error-message">{{errorMsg}}</p>
                                                 </div>
@@ -206,13 +209,13 @@
                                                 <button class="submit-button" mat-raised-button
                                                     [disabled]="!admitcardForm.valid" type="submit">Submit</button>
                                             </div>
-                                            <!-- <div *ngIf="deleteMode">
-                                                <h4>To delete admitcard detail, click ok to confirm.</h4>
+                                            <div *ngIf="deleteMode">
+                                                <h4>To delete admit card structure detail, click ok to confirm.</h4>
                                                 <div class="modal-footer">
                                                     <button class="delete-button" mat-raised-button type="button"
-                                                        (click)="admitcardDelete(deleteById)">Ok</button>
+                                                        (click)="admitCardStructureDelete(deleteById)">Ok</button>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </form>
                                     </div>
                                 </div>

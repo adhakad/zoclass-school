@@ -26,6 +26,7 @@
                     <th>No.</th>
                     <th>Student</th>
                     <th>Class</th>
+                    <th>Admission No.</th>
                     <th>Roll Number</th>
                     <th>Otp</th>
                     <th>Status</th>
@@ -42,6 +43,9 @@
                     </td>
                     <td>
                       <p class="mb-0">{{students.class}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{students.admissionNo}}</p>
                     </td>
                     <td>
                       <p class="mb-0">{{students.rollNumber}}</p>
@@ -70,8 +74,7 @@
               </div>
 
               <div class="modal fade show" [class.show]="showModal">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-
+                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode">
                   <div class="modal-content" *ngIf="successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -90,8 +93,8 @@
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
 
-                    <form [formGroup]="studentForm" (ngSubmit)="studentAddUpdate()" *ngIf="!deleteMode">
-                      <div class="modal-body">
+                    <form [formGroup]="studentForm" (ngSubmit)="studentAddUpdate()">
+                      <div class="modal-body" *ngIf="!deleteMode">
 
                         <div *ngIf="errorCheck">
                           <p class="error-message">{{errorMsg}}</p>

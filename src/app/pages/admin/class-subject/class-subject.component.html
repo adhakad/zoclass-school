@@ -58,7 +58,7 @@
                 </app-pagination>
               </div>
               <div class="modal fade show" [class.show]="showModal">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode" role="document">
                   <div class="modal-content" *ngIf="successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title" style="color: transparent;">Class Subject</h5>

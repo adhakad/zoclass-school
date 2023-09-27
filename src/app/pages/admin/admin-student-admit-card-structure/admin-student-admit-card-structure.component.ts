@@ -158,11 +158,17 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   addAdmitCardModel() {
     this.showModal = true;
   }
-
+  deleteAdmitCardStructureModel(id: String) {
+    this.showModal = true;
+    this.deleteMode = true;
+    this.deleteById = id;
+  }
 
   closeModal() {
     this.showModal = false;
     this.errorMsg = '';
+    this.deleteMode = false;
+    this.deleteById = '';
     this.falseAllValue();
     this.admitcardForm.reset();
   }
@@ -246,6 +252,16 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
       })
     }
 
+  }
+
+  admitCardStructureDelete(id: String) {
+    this.admitCardStructureService.deleteAdmitCardStructure(id).subscribe((res: any) => {
+      if (res) {
+        this.successDone();
+        this.successMsg = res;
+        this.deleteById = '';
+      }
+    })
   }
 
 }

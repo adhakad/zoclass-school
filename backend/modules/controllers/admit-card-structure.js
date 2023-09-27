@@ -21,19 +21,12 @@ let CreateAdmitCardStructure = async (req, res, next) => {
     let streamMsg = `${stream} stream`;
 
     try {
-        const checkExamExist = await AdmitCardStructureModel.findOne({ class: className, examType: examType,stream:stream });
+        const checkExamExist = await AdmitCardStructureModel.findOne({ class: className,stream:stream });
         if (checkExamExist) {
             if(stream==="N/A"){
                 streamMsg = ``;
             }
-            return res.status(400).json(`Class ${className} ${streamMsg} ${examType} exam admit card structure already exist`);
-        }
-        const checkAdmitCardExist = await AdmitCardModel.findOne({ class: className,stream:stream });
-        if (checkAdmitCardExist) {
-            if(stream==="N/A"){
-                streamMsg = ``;
-            }
-            return res.status(400).json(`Class ${className} ${streamMsg} exam admit cards already exist`);
+            return res.status(400).json(`Class ${className} ${streamMsg} exam admit card structure already exist !`);
         }
         let admitCardStructureData = {
             class: className,
@@ -50,6 +43,7 @@ let CreateAdmitCardStructure = async (req, res, next) => {
             studentAdmitCardData.push({
                 studentId:student._id,
                 class:className,
+                stream:stream,
                 examType: examType,
             });
         }
@@ -63,10 +57,27 @@ let CreateAdmitCardStructure = async (req, res, next) => {
         console.log(error);
     }
 }
+let DeleteAdmitCardStructure = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const admitCard = await AdmitCardStructureModel.findOne({_id:id});
+        const className = admitCard.class;
+        const stream = admitCard.stream;
+        const examType =admitCard.examType;
+        const deleteAdmitCard = await AdmitCardModel.deleteMany({class:className,stream:stream,examType:examType});
+        const deleteAdmitCardStructure = await AdmitCardStructureModel.findByIdAndRemove(id);
+        if(deleteAdmitCard && deleteAdmitCardStructure){
+            return res.status(200).json('Admit card structure delete succesfully');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
 module.exports = {
     GetSingleClassAdmitCardStructure,
-    CreateAdmitCardStructure
+    CreateAdmitCardStructure,
+    DeleteAdmitCardStructure
 }
