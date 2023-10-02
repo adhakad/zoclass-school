@@ -81,7 +81,7 @@ export class StudentFeesComponent implements OnInit {
           key: 'rzp_test_ARoUa9Hxw3scSz',
           amount: response.order.feesAmount,
           currency: response.order.currency,
-          name: 'Vandana Convent School',
+          name: 'zoclass',
           description: 'Payment for Your Product',
           image: '../../../../assets/logo.png',
           prefill: {

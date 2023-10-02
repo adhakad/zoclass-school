@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
-  apiUrl = 'http://localhost:3000/api/payment';
+  url = `${environment.API_URL}/api/payment`;
   constructor(private http: HttpClient) {}
 
   createPayment(paymentData: any) {
-    return this.http.post(`${this.apiUrl}/create`, paymentData);
+    return this.http.post(`${this.url}/create`, paymentData);
   }
   validatePayment(paymentData: any) {
-    return this.http.post(`${this.apiUrl}/validate`, paymentData);
+    return this.http.post(`${this.url}/validate`, paymentData);
   }
 }

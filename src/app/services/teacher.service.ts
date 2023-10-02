@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Teacher } from '../modal/teacher.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherService {
-  url = 'http://localhost:3000/api/teacher';
+  url = `${environment.API_URL}/api/teacher`;
   constructor(private http:HttpClient) { }
 
   addTeacher(teacherData:Teacher){

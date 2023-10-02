@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ClassSubject } from '../modal/class-subject.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClassSubjectService {
-  url = 'http://localhost:3000/api/class-subject';
+  url = `${environment.API_URL}/api/class-subject`;
   constructor(private http:HttpClient) { }
 
   addClassSubject(classSubjectData:ClassSubject){

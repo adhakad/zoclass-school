@@ -4,14 +4,14 @@ import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
 import { StudentLoginData } from "src/app/modal/student.modal";
+import { environment } from "src/environments/environment";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentAuthService {
-  // url = 'http://localhost:3000/api/student';
-  urlSecond = 'http://localhost:3000/api/student-user';
+  url = `${environment.API_URL}/api/student-user`;
   private isStudentAuthenticated = false;
   private token: string | null = '';
   private tokenTimer: any;
@@ -34,10 +34,10 @@ export class StudentAuthService {
   }
 
   login(studentLoginData: StudentLoginData) {
-    return this.http.post(`${this.urlSecond}/login`, studentLoginData);
+    return this.http.post(`${this.url}/login`, studentLoginData);
   }
   signup(studentSignupData: any) {
-    return this.http.post(`${this.urlSecond}/signup`, studentSignupData);
+    return this.http.post(`${this.url}/signup`, studentSignupData);
   }
 
   storeAccessToken(accessToken: string) {

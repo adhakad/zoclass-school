@@ -9,9 +9,11 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, switchMap, throwError} from 'rxjs';
 import { TeacherAuthService } from '../services/auth/teacher-auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class TeacherAuthInterceptor implements HttpInterceptor {
+  url = `${environment.API_URL}/api/teacher-user`;
   refresh=false
   
   constructor(private http:HttpClient, private teacherAuthService: TeacherAuthService) {}
@@ -32,7 +34,7 @@ export class TeacherAuthInterceptor implements HttpInterceptor {
         if (err.status === 403 && !this.refresh) {
           this.refresh = true;
           const refreshToken = this.teacherAuthService.getRefreshToken()?.refreshToken;
-          return this.http.post('http://65.2.121.215/api/teacher-user/refresh', {token:refreshToken}).pipe(
+          return this.http.post(`${this.url}/refresh`, {token:refreshToken}).pipe(
             switchMap((res: any) => {
               const newAccessToken = res.accessToken
               this.teacherAuthService.storeAccessToken(newAccessToken)

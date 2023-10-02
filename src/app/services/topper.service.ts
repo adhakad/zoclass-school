@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Topper } from '../modal/topper.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopperService {
-  url = 'http://localhost:3000/api/topper';
+  url = `${environment.API_URL}/api/topper`;
   constructor(private http:HttpClient) { }
 
   addTopper(topperData:Topper){

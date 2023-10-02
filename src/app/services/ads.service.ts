@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Ads } from '../modal/ads.model';
-
+import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: 'root'
 })
 export class AdsService {
-  url = 'http://localhost:3000/api/ads';
+  url = `${environment.API_URL}/api/ads`;
   constructor(private http:HttpClient) { }
 
   addAds(adsData:Ads){

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Banner } from '../modal/banner.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class BannerService {
-  url = 'http://localhost:3000/api/banner';
+  url = `${environment.API_URL}/api/banner`;
   constructor(private http:HttpClient) { }
 
   addBanner(bannerData:Banner){

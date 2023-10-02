@@ -4,12 +4,13 @@ import { CookieService } from 'ngx-cookie-service';
 import { StudentAuthService } from './auth/student-auth.service';
 import { TeacherAuthService } from './auth/teacher-auth.service';
 import { AdminAuthService } from './auth/admin-auth.service';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  url = 'http://localhost:3000/api/notification';
+  url = `${environment.API_URL}/api/notification`;
   loggedInStudentInfo:any;
   loggedInTeacherInfo:any;
   loggedInAdminInfo:any;

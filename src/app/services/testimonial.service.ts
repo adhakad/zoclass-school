@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Testimonial } from '../modal/testimonial.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TestimonialService {
-  url = 'http://localhost:3000/api/testimonial';
+  url = `${environment.API_URL}/api/testimonial`;
   constructor(private http:HttpClient) { }
 
   addTestimonial(testimonialData:Testimonial){

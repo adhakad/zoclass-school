@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamResultStructureService {
-  url = 'http://localhost:3000/api/exam-result-structure';
+  url = `${environment.API_URL}/api/exam-result-structure`;
   constructor(private http: HttpClient) { }
 
   addExamResultStructure(examResultForm:any) {

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Class } from '../modal/class.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClassService {
 
-  url = 'http://localhost:3000/api/class';
+  url = `${environment.API_URL}/api/class`;
   constructor(private http:HttpClient) { }
 
   addClass(classData:Class){

@@ -4,13 +4,14 @@ import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
 import { AdminLoginData } from "src/app/modal/admin.model";
+import { environment } from "src/environments/environment";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminAuthService {
-  url = 'http://localhost:3000/api/admin';
+  url = `${environment.API_URL}/api/admin`;
   private isAdminAuthenticated = false;
   private token: string | null = '';
   private tokenTimer: any;

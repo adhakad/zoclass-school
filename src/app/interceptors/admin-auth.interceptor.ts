@@ -9,9 +9,11 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, switchMap, throwError} from 'rxjs';
 import { AdminAuthService } from '../services/auth/admin-auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AdminAuthInterceptor implements HttpInterceptor {
+  url = `${environment.API_URL}/api/admin`;
   refresh=false
   
   constructor(private http:HttpClient, private adminAuthService: AdminAuthService) {}
@@ -32,7 +34,7 @@ export class AdminAuthInterceptor implements HttpInterceptor {
         if (err.status === 403 && !this.refresh) {
           this.refresh = true;
           const refreshToken = this.adminAuthService.getRefreshToken()?.refreshToken;
-          return this.http.post('http://65.2.121.215/api/admin/refresh', {token:refreshToken}).pipe(
+          return this.http.post(`${this.url}/refresh`, {token:refreshToken}).pipe(
             switchMap((res: any) => {
               const newAccessToken = res.accessToken
               this.adminAuthService.storeAccessToken(newAccessToken)
