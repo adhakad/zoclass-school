@@ -1,9 +1,9 @@
 <app-header></app-header>
-<div class="container pt-5 pb-5" *ngIf="!examResultInfo">
-  <div class="row pt-5 pb-5">
-    <div class="col-12 col-lg-6 offset-lg-3 login-card" *ngIf="!examResultInfo">
+<div class="login" *ngIf="!examResultInfo">
+  <div class="row">
+    <div class="col-12 col-lg-5 offset-lg-3 login-card" *ngIf="!examResultInfo">
       <div class="row">
-        <div class="col-12 col-lg-10 offset-lg-1 padding">
+        <div class="col-12 col-lg-10 offset-lg-1">
           <h3>Exam Result</h3>
           <div class="col-12">
             <h2>{{errorMsg}}</h2>
@@ -11,7 +11,8 @@
               <mat-form-field appearance="outline">
                 <mat-label>Admission No.</mat-label>
                 <input matInput type="text" formControlName="admissionNo">
-                <mat-hint *ngIf="!examResultForm.get('admissionNo')?.valid && examResultForm.get('admissionNo')?.touched"
+                <mat-hint
+                  *ngIf="!examResultForm.get('admissionNo')?.valid && examResultForm.get('admissionNo')?.touched"
                   class="form-text text-danger">Please enter admission no.</mat-hint>
               </mat-form-field>
               <mat-form-field appearance="outline">
@@ -46,7 +47,7 @@
         <table class="logo-table text-bold">
           <tr>
             <td>
-              <img src="../../../../assets/logo.png" alt="">  Vandana Convent School,Guna
+              <img src="../../../../assets/logo.png" alt=""> Vandana Convent School,Guna
             </td>
           </tr>
         </table>
@@ -123,7 +124,7 @@
           <p>3. Fee amount First installment First installment First installment</p>
           <p>4. School installment fee amount installment</p>
           <p>5. Online installment fee amount First installment</p>
-      </div>
+        </div>
       </div>
     </div>
   </div>

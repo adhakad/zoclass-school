@@ -8,8 +8,14 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('src/app/pages/main/home/home.module').then((module) => module.HomeModule) },
   { path: 'notice', loadChildren: () => import('src/app/pages/main/notice/notice.module').then((module) => module.NoticeModule) },
-  { path: 'admit-card', loadChildren: () => import('src/app/pages/main/admit-card/admit-card.module').then((module) => module.AdmitCardModule), },
-  { path: 'result', loadChildren: () => import('src/app/pages/main/result/result.module').then((module) => module.ResultModule), },
+  { path: 'admit-card', loadChildren: () => import('src/app/pages/main/admit-card/admit-card.module').then((module) => module.AdmitCardModule) },
+  { path: 'result', loadChildren: () => import('src/app/pages/main/result/result.module').then((module) => module.ResultModule) },
+  { path: 'terms-and-conditions', loadChildren: () => import('src/app/pages/main/terms-conditions/terms-conditions.module').then((module) => module.TermsConditionsModule) },
+  { path: 'privacy-policy', loadChildren: () => import('src/app/pages/main/privacy-policy/privacy-policy.module').then((module) => module.PrivacyPolicyModule) },
+  { path: 'refund-cancellation-policy', loadChildren: () => import('src/app/pages/main/refund-cancellation-policy/refund-cancellation-policy.module').then((module) => module.RefundCancellationPolicyModule) },
+  { path: 'about', loadChildren: () => import('src/app/pages/main/about/about.module').then((module) => module.AboutModule) },
+  { path: 'contact', loadChildren: () => import('src/app/pages/main/contact/contact.module').then((module) => module.ContactModule) },
+
 
   //  Student Routing Section
   { path: 'student/signup', loadChildren: () => import('src/app/pages/auth/student-auth/student-signup/student-signup.module').then((module) => module.StudentSignupModule) },
@@ -24,7 +30,7 @@ const routes: Routes = [
 
   { path: 'admin/login', loadChildren: () => import('src/app/pages/auth/admin-auth/admin-login/admin-login.module').then((module) => module.AdminLoginModule) },
   { path: 'admin/dashboard', loadChildren: () => import('src/app/pages/admin/dashboard/dashboard.module').then((module) => module.DashboardModule), canActivate: [AdminAuthGuard] },
-  
+
   { path: 'admin/setting', loadChildren: () => import('src/app/pages/admin/admin-setting/admin-setting.module').then((module) => module.AdminSettingModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/setting/:id', loadChildren: () => import('src/app/pages/admin/admin-setting-cls/admin-setting-cls.module').then((module) => module.AdminSettingClsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class', loadChildren: () => import('src/app/pages/admin/admin-student-fees-cls/admin-student-fees-cls.module').then((module) => module.AdminStudentFeesClsModule), canActivate: [AdminAuthGuard] },
@@ -47,7 +53,7 @@ const routes: Routes = [
   { path: 'admin/ads', loadChildren: () => import('src/app/pages/admin/ads/ads.module').then((module) => module.AdsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/topper', loadChildren: () => import('src/app/pages/admin/topper/topper.module').then((module) => module.TopperModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/testimonial', loadChildren: () => import('src/app/pages/admin/testimonial/testimonial.module').then((module) => module.TestimonialModule), canActivate: [AdminAuthGuard] },
-    { path: 'admin/notification', loadChildren: () => import('src/app/pages/admin/notification-page/notification-page.module').then((module) => module.NotificationPageModule), canActivate: [AdminAuthGuard] },
+  { path: 'admin/notification', loadChildren: () => import('src/app/pages/admin/notification-page/notification-page.module').then((module) => module.NotificationPageModule), canActivate: [AdminAuthGuard] },
 
   // Teacher Routing Section
   { path: 'teacher/signup', loadChildren: () => import('src/app/pages/auth/teacher-auth/teacher-signup/teacher-signup.module').then((module) => module.TeacherSignupModule) },
@@ -55,7 +61,7 @@ const routes: Routes = [
   { path: 'teacher/dashboard', loadChildren: () => import('src/app/pages/teacher/teacher-dashboard/teacher-dashboard.module').then((module) => module.TeacherDashboardModule), canActivate: [TeacherAuthGuard] },
   { path: 'teacher/subject', loadChildren: () => import('src/app/pages/teacher/teacher-subject/teacher-subject.module').then((module) => module.TeacherSubjectModule), canActivate: [TeacherAuthGuard] },
   { path: 'teacher/student', loadChildren: () => import('src/app/pages/teacher/teacher-student/teacher-student.module').then((module) => module.TeacherStudentModule), canActivate: [TeacherAuthGuard] },
-  
+
 ];
 
 @NgModule({

@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
   private isBrowser: boolean = isPlatformBrowser(this.platformId);
 
 
-  currentYear: any;
   bannerInfo: Banner[] = [];
   teacherInfo: Teacher[] = [];
   adsInfo: Ads[] = [];
@@ -42,8 +41,6 @@ export class HomeComponent implements OnInit {
     this.getAds()
     this.getTestimonial();
     this.getTopper();
-
-    this.currentYear = (new Date()).getFullYear()
   }
 
   getLoggedInStudentInfo() {

@@ -7,14 +7,19 @@
     border-radius: 10px;
 }
 .main-card h3 {
-    color: #7d719bc7;
+    /* color: #5a4599d0; */
+    color:#444F60;
     margin-top: 2vh;
-    letter-spacing: .6px;
-    font-size: 18px;
+    font-size: 20px;
+    letter-spacing: .5px;
     margin-bottom: 5px;
 }
+p{
+    color: #444f60f7;
+    font-size: 15px;
+    letter-spacing: .5px;
+}
 .notice-card {
-    color: #574790;
     margin-bottom: 20px;
     border-radius: 15px !important;
     background: #f3f2ff;
@@ -37,18 +42,24 @@ mat-panel-title {
  
  @media (min-width: 992px) {
     .container-fluid {
-        background-color: #8580981e;
+        /* background-color: #dee1f33c; */
+        background-color: #64748d0c;
+        padding-bottom:5vh;
     }
     .big-container {
         background-color: #fff;
         min-height: 90vh;
-        margin-top: 5px;
-        margin-bottom: 15px;
+        margin-top: 5vh;
         border-radius: 15px;
+        border: 1px solid rgba(218, 218, 224, 0.858);
+        /* box-shadow: 0 0 0px -10px #4f3c8a3c,
+      0 0 0 0px #4f3c8a3c,
+      0 0 50px 0 #4f3c8a3c; */
     }
     .main-card {
         background-color: transparent;
         margin-top: 50px;
         padding-bottom: 15px;
     }
+    
 }

@@ -9,6 +9,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { FooterModule } from 'src/app/common/footer/footer.module';
 
 
 
@@ -20,6 +21,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
   ],
   exports:[
     HeaderModule,
+    FooterModule,
     MaterialUiModule,
     ReactiveFormsModule,
     FormsModule,
