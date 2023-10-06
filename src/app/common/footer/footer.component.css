@@ -1,6 +1,6 @@
 .footer {
     background-color:#241750f2;
-    /* text-align: center; */
+    /* text-align: center;#241750f2 */
  }
  .mat-divider{
    background-color: #e0e0ffe2;
@@ -19,8 +19,8 @@
     color: #e0e0ffe2;
     font-size: 16px;
     letter-spacing: .5px;
-    /* margin-top: 15px;
-    margin-bottom: 15px; */
+    margin-top: 25px;
+    margin-bottom: 25px;
  }
  
  .copyright p {

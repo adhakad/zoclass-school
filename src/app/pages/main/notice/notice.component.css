@@ -4,18 +4,21 @@
 .main-card {
     background-color: #fff;
     margin-top: 20px;
+    margin-bottom:2vh;
     border-radius: 10px;
 }
 .main-card h3 {
-    /* color: #5a4599d0; */
-    color:#444F60;
+    /* color: #3837679a; */
+    color: #4e4caacd;
     margin-top: 2vh;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 500;
     letter-spacing: .5px;
     margin-bottom: 5px;
 }
 p{
-    color: #444f60f7;
+    margin-top: 2vh;
+    color: #4e4caac1;
     font-size: 15px;
     letter-spacing: .5px;
 }
@@ -42,8 +45,7 @@ mat-panel-title {
  
  @media (min-width: 992px) {
     .container-fluid {
-        /* background-color: #dee1f33c; */
-        background-color: #64748d0c;
+        background-color: #64748d15;
         padding-bottom:5vh;
     }
     .big-container {
@@ -52,9 +54,6 @@ mat-panel-title {
         margin-top: 5vh;
         border-radius: 15px;
         border: 1px solid rgba(218, 218, 224, 0.858);
-        /* box-shadow: 0 0 0px -10px #4f3c8a3c,
-      0 0 0 0px #4f3c8a3c,
-      0 0 50px 0 #4f3c8a3c; */
     }
     .main-card {
         background-color: transparent;
