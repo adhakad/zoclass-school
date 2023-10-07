@@ -49,6 +49,7 @@ a {
 @media(min-width:1200px) {
   .login {
     min-height: 90vh;
+    padding-top: 5vh;
     background-color: #64748d15;
     padding-left: 2%;
     padding-right: 2%;

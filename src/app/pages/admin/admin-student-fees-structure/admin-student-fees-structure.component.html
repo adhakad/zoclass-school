@@ -23,6 +23,7 @@
                                             <th>S.No.</th>
                                             <th>Fee Structure</th>
                                             <th>Class</th>
+                                            <th>Total Fees</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -36,6 +37,9 @@
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{clsFeesStructure?.class}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">&#8377; {{clsFeesStructure?.totalFees}}</p>
                                             </td>
                                             <td class="mb-0">
                                                 <mat-icon>delete</mat-icon>
@@ -238,9 +242,9 @@
                                                 <div *ngIf="errorCheck">
                                                     <p class="error-message">{{errorMsg}}</p>
                                                 </div>
-                                                <p style="color: #7d719bc7;">Total Fees : {{totalFees | currency:'INR'}}
+                                                <p>Total Fees : {{totalFees | currency:'INR'}}
                                                 </p>
-                                                <h3 style="color: #8c88ff;">Fees Particulars</h3>
+                                                <h3>Fees Particulars</h3>
                                                 <div formGroupName="type">
                                                     <div formArrayName="feesType">
                                                         <div
@@ -255,7 +259,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h3 style="color: #8c88ff;">Fees Installment</h3>
+                                                    <h3>Fees Installment</h3>
                                                     <div formArrayName="feesPayType">
                                                         <div
                                                             *ngFor="let singleFeesPayType of selectedFeesPayType; let i = index">

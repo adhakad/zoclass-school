@@ -7,9 +7,8 @@
 .table-container {
   border: none;
   padding: 25px;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-left: 10px;
-  margin-top: 2vh;
 }
 
 .logo-table {
@@ -23,7 +22,7 @@
 }
 
 .logo-table td {height: 40px;
-  color: #7c7698fb;
+  color: #4e4caacd;
   border: none;
   text-align: center;
 }
@@ -42,7 +41,7 @@ img{
 .info-table th,
 .info-table td {
   height: 40px;
-  color: #7c7698fb;
+  color: #4e4caacd;
   text-align: center;
   border: none;
 }
@@ -60,7 +59,7 @@ img{
 .custom-table th,
 .custom-table td {
   height: 40px;
-  color: #7c7698fb;
+  color: #4e4caacd;
   border: 1px solid rgb(218, 218, 222);
   text-align: center;
 }
@@ -97,7 +96,8 @@ img{
 
 @media (min-width: 992px) {
   .table-container {
-    border: 1px solid #ccc;
+    background-color: #fff;
+    border: 1px solid rgb(223, 223, 230);
   }
   .logo-table {
     width: 100%;

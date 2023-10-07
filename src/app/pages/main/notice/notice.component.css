@@ -58,7 +58,7 @@ mat-panel-title {
         background-color: #fff;
         min-height: 90vh;
         margin-top: 5vh;
-        border-radius: 15px;
+        border-radius: 10px;
         border: 1px solid rgba(218, 218, 224, 0.858);
     }
     .main-card {

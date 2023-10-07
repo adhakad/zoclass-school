@@ -22,7 +22,7 @@
   }
   
   .logo-table td {height: 40px;
-    color: #7c7698fb;
+    
     border: none;
     text-align: center;
   }
@@ -41,7 +41,7 @@
   .info-table th,
   .info-table td {
     height: 40px;
-    color: #7c7698fb;
+    
     border: none;
   }
   
@@ -58,7 +58,7 @@
   .custom-table th,
   .custom-table td {
     height: 40px;
-    color: #7c7698fb;
+    
     border: 1px solid rgb(218, 218, 222);
     text-align: center;
   }
@@ -73,7 +73,7 @@
   .receipt-table th,
   .receipt-table td {
     height: 40px;
-    color: #7c7698fb;
+    
   }
 
   .receipt-table .receipt-row td {
@@ -81,7 +81,7 @@
     padding-top: 5px;
   }
   .custom-container p {
-    color: #7c7698fb;
+    color: #4e4caacd;
   }
   .text-center {
     text-align: center;

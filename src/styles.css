@@ -97,11 +97,11 @@ Header section
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #dedce6;
+  background: #4e4caa24;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4d2da;
+  background: #4e4caa32;
 }
 
 /* 
@@ -138,18 +138,19 @@ Dashboard section
   letter-spacing: .6px;
   font-size: 18px;
 }
-
+p{
+  color: #4e4caacd;
+}
 .category-card {
+  background: #ebebff;
   height: 200px;
   border-radius: 15px;
-  background-color: #8d6dff3d;
-  box-shadow: 0 0 0px -10px #8f89ccbc,
-      0 0 0 0 #8f89ccbc,
-      0 0 2px 0 #8f89ccbc;
+  cursor: pointer;
 }
 
 .category-card h3 {
   text-align: center;
+  margin-top: 25%;
   letter-spacing: .6px;
   font-size: 18px;
   color: #4e4caacd;
@@ -157,18 +158,18 @@ Dashboard section
 
 .form-control {
   height: 45px;
-  color: #4e4caac1;
+  color: #4e4caacd;
   border: 2px solid #e1dfeed7;
 }
 
 .form-control::placeholder {
-  color: #b7b5c5f7;
+  color: #4e4caa83;
   font-size: 15px;
 }
 
 .form-control:focus {
-  border-color: #d2d0dfe0;
-  box-shadow: 0 0 0 1px #e1dfee66
+  border-color: #4e4caa46;
+  box-shadow: 0 0 0 1px #4e4caa1e;
 }
 
 .text-danger {
@@ -178,27 +179,28 @@ Dashboard section
 .submit-button {
   height: 42px;
   background: #8d6dff;
-  color:#fff;
+  color: #fff;
   box-shadow: none !important;
-  
+
 }
 
 .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
   /* background: #e7e6f897;
   color: #8d6dff9a; */
-  background: #b7b1ffed;
-  color: #faf7ff;
+  background: #ebebff;
+  color: #4e4caacd;
+  cursor: not-allowed;
 }
 
 .status-active {
-  color: #8c7dccfb;
+  color: #8d6dff;
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
 }
 
 .status-inactive {
-  color: #948fa9e3;
+  color: #4e4caacd;
   cursor: pointer;
   text-decoration: none;
 }
@@ -213,19 +215,21 @@ Dashboard section
 
 th {
   white-space: nowrap;
+  color: #4e4caacd;;
 }
 
 td {
   white-space: nowrap;
+  color: #4e4caacd;;
 }
 
 table mat-icon {
-  color: #4e4caac1;
+  color: #4e4caacd;
   cursor: pointer;
 }
 
 .table p {
-  color: #4e4caac1;
+  color: #4e4caacd;
 }
 
 .pagination {
