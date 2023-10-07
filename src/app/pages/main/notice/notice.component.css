@@ -1,6 +1,12 @@
-.container-fluid {
+  .container-fluid {
     background-color: #fff;
-  }
+    padding-bottom:5vh;
+}
+.big-container {
+    background-color: #fff;
+    min-height: 90vh;
+    margin-top: 2vh;
+}
 .main-card {
     background-color: #fff;
     margin-top: 20px;

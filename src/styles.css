@@ -1,6 +1,5 @@
 html,
 body {
-  background-color: #64748d15;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow-x: hidden;
@@ -36,7 +35,7 @@ Header section
 }
 
 .header .logo span {
-  color: #8c88ff;
+  color: #8d6dff;
   margin-left: 5px;
   /* color: #7f60da; */
   font: 1em sans-serif;
@@ -48,7 +47,7 @@ Header section
 }
 
 .hamburger-icon {
-  fill: #8c88ff;
+  fill: #8d6dff;
   width: 24px;
   height: 24px;
 }
@@ -67,15 +66,15 @@ Header section
 
 .hamburger-menu button {
   font-size: large;
-  color: #8c88ff !important;
+  color: #8d6dff !important;
 }
 
 .hamburger-menu .mat-icon {
-  color: #8c88ff !important;
+  color: #8d6dff !important;
 }
 
 .close-icon {
-  color: #8c88ff !important;
+  color: #8d6dff !important;
   font-size: 28px;
   margin-top: 3.5vh;
   margin-left: 88%;
@@ -143,7 +142,7 @@ Dashboard section
 .category-card {
   height: 200px;
   border-radius: 15px;
-  background-color: #8c88ff3d;
+  background-color: #8d6dff3d;
   box-shadow: 0 0 0px -10px #8f89ccbc,
       0 0 0 0 #8f89ccbc,
       0 0 2px 0 #8f89ccbc;
@@ -158,7 +157,7 @@ Dashboard section
 
 .form-control {
   height: 45px;
-  color: #7c7698fb;
+  color: #4e4caac1;
   border: 2px solid #e1dfeed7;
 }
 
@@ -177,18 +176,18 @@ Dashboard section
 }
 
 .submit-button {
-  background: #8c88ff;
-  color: #fff;
   height: 42px;
-  font-size: 15px;
-  cursor: pointer;
-  box-shadow: none;
+  background: #8d6dff;
+  color:#fff;
+  box-shadow: none !important;
+  
 }
 
 .submit-button.mat-button-disabled:not([class*=mat-elevation-z]) {
-  background: #634ca1a4;
+  /* background: #e7e6f897;
+  color: #8d6dff9a; */
+  background: #b7b1ffed;
   color: #faf7ff;
-  cursor: not-allowed;
 }
 
 .status-active {
@@ -221,12 +220,12 @@ td {
 }
 
 table mat-icon {
-  color: #7c7698fb;
+  color: #4e4caac1;
   cursor: pointer;
 }
 
 .table p {
-  color: #7c7698fb;
+  color: #4e4caac1;
 }
 
 .pagination {
@@ -248,12 +247,12 @@ table mat-icon {
 }
 
 .modal-header .modal-title {
-  color: #7c7698fb;
+  color: #4e4caac1;
 }
 
 .modal-header .mat-icon {
   cursor: pointer;
-  color: #7c7698fb;
+  color: #4e4caac1;
 }
 
 .modal-footer {
@@ -282,7 +281,7 @@ table mat-icon {
 }
 
 .modal-title {
-  color: #8c88ff;
+  color: #8d6dff;
   font-size: 20px;
 }
 
@@ -307,56 +306,56 @@ table mat-icon {
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: #7c7698fb !important;
+  color: #4e4caac1 !important;
 
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: #7c7698fb !important;
+  color: #4e4caac1 !important;
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
-  color: #7c7698fb !important;
+  color: #4e4caac1 !important;
   opacity: 0.8 !important;
 }
 
 ::ng-deep .mat-input-element {
-  caret-color: #7c7698fb !important;
+  caret-color: #4e4caac1 !important;
 }
 
 ::ng-deep .mat-form-field-invalid .mat-input-element,
 .mat-warn .mat-input-element {
-  caret-color: #7c7698fb !important;
+  caret-color: #4e4caac1 !important;
 }
 
 ::ng-deep .mat-form-field-label {
-  color: #7c7698fb !important;
+  color: #4e4caac1 !important;
 }
 
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-  color: #7c7698fb !important;
+  color: #4e4caac1 !important;
 }
 
 ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
-  color: #7c7698fb !important;
+  color: #4e4caac1 !important;
 }
 
 ::ng-deep .mat-radio-button {
-  color: #7c7698fb;
+  color: #4e4caac1;
   margin-right: 20px;
   margin-bottom: 5px;
 }
 
 ::ng-deep .mat-radio-outer-circle {
-  border: 1px solid #7c7698fb;
+  border: 1px solid #4e4caac1;
 }
 
 ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #8c88ff;
+  border-color: #8d6dff;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #8c88ff;
+  background-color: #8d6dff;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
@@ -364,23 +363,23 @@ table mat-icon {
 }
 
 .mat-checkbox {
-  color: #7c7698fb;
+  color: #4e4caac1;
 }
 
 ::ng-deep .mat-checkbox-frame {
-  border-color: #7c7698fb !important;
+  border-color: #4e4caac1 !important;
 }
 
 ::ng-deep .mat-checkbox-ripple .mat-ripple-element {
-  background-color: #8c88ff !important;
+  background-color: #8d6dff !important;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: #8c88ff !important;
+  background-color: #8d6dff !important;
 }
 
 ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: #8c88ff !important;
+  background-color: #8d6dff !important;
 }
 
 
@@ -399,7 +398,6 @@ table mat-icon {
 }
 
 @media (min-width: 992px) {
-
   /* 
 Header section
 */
@@ -422,7 +420,7 @@ Header section
   }
 
   .header .main-menu button {
-    color: #8c88ff;
+    color: #8d6dff;
     margin-left: 20px;
     cursor: pointer;
   }
@@ -460,7 +458,7 @@ Side navigation section
   }
 
   .side-navbar li button {
-    color: #8c88ff;
+    color: #8d6dff;
     width: 100%;
     padding: 5px;
     display: block;
@@ -481,7 +479,7 @@ Side navigation section
   }
 
   .side-navbar li button.active-link {
-    background: #8c88ff;
+    background: #8d6dff;
     color: #fff;
   }
 
