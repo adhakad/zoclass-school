@@ -8,12 +8,11 @@ import { StudentComponent } from './student.component';
 
 @NgModule({
   declarations: [
-    StudentComponent
+    StudentComponent,
   ],
   imports: [
     CommonModule,
     StudentRoutingModule,
-
     AdminSharedModule,
   ]
 })

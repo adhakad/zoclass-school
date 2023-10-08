@@ -3,13 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { StudentService } from 'src/app/services/student.service';
 import { ClassService } from 'src/app/services/class.service';
+import { Student } from 'src/app/modal/student.modal';
+import { Class } from 'src/app/modal/class.model';
 
 @Component({
-  selector: 'app-student',
-  templateUrl: './student.component.html',
-  styleUrls: ['./student.component.css']
+  selector: 'app-school',
+  templateUrl: './school.component.html',
+  styleUrls: ['./school.component.css']
 })
-export class StudentComponent implements OnInit {
+export class SchoolComponent implements OnInit {
+
   studentForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;
@@ -18,7 +21,7 @@ export class StudentComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  classInfo: any[] = [];
+  classInfo: Class[] = [];
   studentInfo: any[] = [];
   recordLimit: number = 10;
   filters: any = {};
@@ -134,7 +137,7 @@ export class StudentComponent implements OnInit {
   }
 
   getClass() {
-    this.classService.getClassList().subscribe((res: any) => {
+    this.classService.getClassList().subscribe((res: Class[]) => {
       if (res) {
         this.classInfo = res;
       }
@@ -203,6 +206,7 @@ export class StudentComponent implements OnInit {
         id: id,
         statusValue: statusValue,
       }
+      console.log(this.paginationValues)
       this.studentService.changeStatus(params).subscribe((res: any) => {
         if (res) {
           this.getStudents({ page: this.page });
@@ -227,4 +231,5 @@ export class StudentComponent implements OnInit {
     this.qualifications = [{ qualification: 'Doctoral Degree' }, { qualification: 'Masters Degree' }, { qualification: 'Graduate Diploma' }, { qualification: 'Graduate Certificate' }, { qualification: 'Graduate Certificate' }, { qualification: 'Bachelor Degree' }, { qualification: 'Advanced Diploma' }, { qualification: 'Primary School' }, { qualification: 'High School' }, { qualification: 'Higher Secondary School' }, { qualification: 'Illiterate' }, { qualification: 'Other' }]
     this.occupations = [{ occupation: 'Agriculture(Farmer)' }, { occupation: 'Laborer' }, { occupation: 'Self Employed' }, { occupation: 'Private Job' }, { occupation: 'State Govt. Employee' }, { occupation: 'Central Govt. Employee' }, { occupation: 'Military Job' }, { occupation: 'Para-Military Job' }, { occupation: 'PSU Employee' }, { occupation: 'Other' }]
   }
+
 }

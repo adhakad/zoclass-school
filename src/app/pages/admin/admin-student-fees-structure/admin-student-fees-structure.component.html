@@ -36,7 +36,7 @@
                                                 <mat-icon>launch</mat-icon>
                                             </td>
                                             <td>
-                                                <p class="mb-0">{{clsFeesStructure?.class}}</p>
+                                                <p class="mb-0">{{clsFeesStructure?.class | classSuffix}}</p>
                                             </td>
                                             <td>
                                                 <p class="mb-0">&#8377; {{clsFeesStructure?.totalFees}}</p>
@@ -113,7 +113,7 @@
 
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Select Fees Structure 10th
+                                            <h5 class="modal-title">Create Fees Structure {{cls | classSuffix}}
                                             </h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>

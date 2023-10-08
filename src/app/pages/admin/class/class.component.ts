@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { Class } from '../../../modal/class.model';
 import { ClassService } from '../../../services/class.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class ClassComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  classInfo: Class[] = [];
+  classInfo: any[] = [];
 
   recordLimit: number = 5;
   filters: any = {};
@@ -46,7 +45,7 @@ export class ClassComponent implements OnInit {
     this.deleteMode = false;
     this.classForm.reset();
   }
-  updateClassModel(cls: Class) {
+  updateClassModel(cls: any) {
     this.showModal = true;
     this.deleteMode = false;
     this.updateMode = true;

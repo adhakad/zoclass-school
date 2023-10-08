@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = app => {
+    app.use('/api/school',require('./modules/routes/school'));
     app.use('/api/admin', require('./modules/routes/users/admin-user'));
     app.use('/api/student-user', require('./modules/routes/users/student-user'));
     app.use('/api/teacher-user', require('./modules/routes/users/teacher-user'));

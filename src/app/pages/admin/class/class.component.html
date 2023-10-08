@@ -25,9 +25,7 @@
                   <tr class="text-muted">
                     <th>No.</th>
                     <th>Class</th>
-                    <th style="color: transparent;">Class</th>
                     <th>Class In Words</th>
-                    <th style="color: transparent;">Class In Words</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -37,13 +35,11 @@
                       <p class="mb-0">{{number*10+i+1-10}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{class.class}}</p>
+                      <p class="mb-0">{{class.class | classSuffix}}</p>
                     </td>
-                    <td></td>
                     <td>
-                      <p class="mb-0">{{class.class}}</p>
+                      <p class="mb-0">{{class.class | classSuffix}}</p>
                     </td>
-                    <td></td>
                     <td class="mb-0">
                       <mat-icon (click)="updateClassModel(class)">edit_note</mat-icon>
                       <mat-icon (click)="deleteClassModel(class._id)">delete</mat-icon>

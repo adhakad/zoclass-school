@@ -21,7 +21,7 @@ export class NotificationPageComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  classInfo: Class[] = [];
+  classInfo: any[] = [];
   roleInfo: any[] = [];
   notificationInfo: any[] = [];
   recordLimit: number = 10;
@@ -81,7 +81,7 @@ export class NotificationPageComponent implements OnInit {
   }
 
   getClass() {
-    this.classService.getClassList().subscribe((res: Class[]) => {
+    this.classService.getClassList().subscribe((res: any[]) => {
       if (res) {
         this.classInfo = res;
       }

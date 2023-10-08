@@ -14,7 +14,7 @@
                   <div class="row">
                     <div class="col-12">
                       <h3>Admit Card ><span>
-                          {{cls}}th</span></h3>
+                          {{cls | classSuffix}}</span></h3>
                     </div>
                   </div>
                 </div>
@@ -45,7 +45,7 @@
                       <p class="mb-0">{{students.rollNumber}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.class}}</p>
+                      <p class="mb-0">{{students.class | classSuffix}}</p>
                     </td>
                     <td>
                       <a class="mb-0 status-active" (click)="changeStatus(students.studentId,0)"

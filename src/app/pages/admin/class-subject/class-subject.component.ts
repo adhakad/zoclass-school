@@ -23,7 +23,7 @@ export class ClassSubjectComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  classInfo: Class[] = [];
+  classInfo: any[] = [];
   subjectInfo: any[] = [];
   classSubjectInfo: any[] = [];
   selectedSubjectGroup: any[] = [];

@@ -42,7 +42,7 @@
                       <p class="mb-0">{{students.name}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.class | classSuffix}}</p>
+                      <p class="mb-0">{{students.class}}</p>
                     </td>
                     <td>
                       <p class="mb-0">{{students.admissionNo}}</p>
@@ -131,7 +131,7 @@
                                 <mat-select matInput formControlName="class">
                                   <div *ngFor="let classInfo of classInfo">
                                     <mat-option [value]="classInfo.class"
-                                      (click)="chooseClass(studentForm.get('class'))">{{classInfo.class | classSuffix}}</mat-option>
+                                      (click)="chooseClass(studentForm.get('class'))">{{classInfo.class}}</mat-option>
                                   </div>
                                 </mat-select>
                                 <mat-hint

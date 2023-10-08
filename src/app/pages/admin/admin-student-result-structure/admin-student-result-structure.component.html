@@ -36,7 +36,7 @@
                                             <mat-icon>launch</mat-icon>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{examResultStr.class}}</p>
+                                            <p class="mb-0">{{examResultStr.class | classSuffix}}</p>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{examResultStr.stream}}</p>
@@ -67,7 +67,7 @@
                                     <div class="modal-content" *ngIf="!successMsg && classSubject">
                                         <div class="modal-header">
                                             <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Exam
-                                                Result Structure'}}</h5>
+                                                Result Structure'}} {{cls | classSuffix}}</h5>
                                             <mat-icon matRipple (click)="closeModal()"
                                                 style="cursor: pointer;">close</mat-icon>
                                         </div>

@@ -18,7 +18,7 @@
                 <mat-label>class</mat-label>
                 <mat-select type="number" matInput formControlName="class">
                   <div *ngFor="let classInfo of classInfo">
-                    <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                    <mat-option value="{{classInfo.class}}">{{classInfo.class | classSuffix}}</mat-option>
                   </div>
                 </mat-select>
                 <mat-hint *ngIf="!admitCardForm.get('class')?.valid && admitCardForm.get('class')?.touched"
@@ -70,7 +70,7 @@
             <td class="text-bold">Roll Number :</td>
             <td>{{studentAdmitCardInfo?.rollNumber}}</td>
             <td class="text-bold">Class :</td>
-            <td>{{studentAdmitCardInfo?.class}}th</td>
+            <td>{{studentAdmitCardInfo?.class | classSuffix}}</td>
           </tr>
           <tr>
             <td class="text-bold">Student Name :</td>

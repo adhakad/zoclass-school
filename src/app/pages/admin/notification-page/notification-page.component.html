@@ -43,7 +43,7 @@
                     <td>
                       <p class="mb-0" *ngIf="notifications.class==101">No class available</p>
                       <p class="mb-0" *ngIf="notifications.class==102">No class available</p>
-                      <p class="mb-0" *ngIf="notifications.role=='Student'">{{notifications.class}}</p>
+                      <p class="mb-0" *ngIf="notifications.role=='Student'">{{notifications.class | classSuffix}}</p>
                     </td>
                     <td>
                       <p class="mb-0">{{notifications.title}}</p>
@@ -111,7 +111,7 @@
                           <mat-label>Select class</mat-label>
                           <mat-select type="number" matInput formControlName="class">
                             <div *ngFor="let classInfo of classInfo">
-                              <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                              <mat-option value="{{classInfo.class}}">{{classInfo.class | classSuffix}}</mat-option>
                             </div>
                           </mat-select>
                         </mat-form-field>

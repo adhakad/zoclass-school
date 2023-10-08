@@ -39,7 +39,7 @@
                                             <td class="text-bold">Roll Number :</td>
                                             <td>{{studentInfo[0]?.rollNumber}}</td>
                                             <td class="text-bold">Class :</td>
-                                            <td>{{studentInfo[0]?.class}}th</td>
+                                            <td>{{studentInfo[0]?.class | classSuffix}}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-bold">Student Name :</td>
@@ -170,7 +170,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-bold">Class :</td>
-                                                <td>{{studentInfo[0]?.class}}th</td>
+                                                <td>{{studentInfo[0]?.class | classSuffix}}</td>
                                                 <td class="text-bold">Date Of Birth :</td>
                                                 <td>{{studentInfo[0]?.dob}}</td>
                                             </tr>
@@ -229,7 +229,7 @@
                                         <p>Date : {{ singleReceiptInstallment[0]?.paymentDate }}
                                         </p>
                                         <div>
-                                            <h4 class="text-bold" style="color: #7c7698fb;">Instructions :</h4>
+                                            <h4 class="text-bold">Instructions :</h4>
                                             <p>1. Payment installment fee amount</p>
                                             <p>2. First installment fee amount First installment</p>
                                             <p>3. Fee amount First installment First installment First installment</p>

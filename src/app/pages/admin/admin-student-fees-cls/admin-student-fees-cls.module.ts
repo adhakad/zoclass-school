@@ -5,10 +5,9 @@ import { AdminStudentFeesClsRoutingModule } from './admin-student-fees-cls-routi
 import { AdminStudentFeesClsComponent } from './admin-student-fees-cls.component';
 import { AdminSharedModule } from '../admin-shared/admin-shared.module';
 
-
 @NgModule({
   declarations: [
-    AdminStudentFeesClsComponent
+    AdminStudentFeesClsComponent,
   ],
   imports: [
     CommonModule,

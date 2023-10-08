@@ -46,7 +46,7 @@
                                                 style="height: 28px;;">
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{topper.class}}</p>
+                                            <p class="mb-0">{{topper.class | classSuffix}}</p>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{topper.percentile}}</p>
@@ -104,7 +104,7 @@
                                                     <mat-select type="number" matInput formControlName="class">
                                                         <div *ngFor="let classInfo of classInfo">
                                                             <mat-option
-                                                                value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                                                                value="{{classInfo.class}}">{{classInfo.class | classSuffix}}</mat-option>
                                                         </div>
                                                     </mat-select>
                                                     <mat-hint

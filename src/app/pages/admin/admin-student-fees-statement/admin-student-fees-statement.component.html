@@ -37,7 +37,7 @@
                                         <td class="text-bold">Roll Number :</td>
                                         <td>{{studentInfo[0]?.rollNumber}}</td>
                                         <td class="text-bold">Class :</td>
-                                        <td>{{studentInfo[0]?.class}}th</td>
+                                        <td>{{studentInfo[0]?.class | classSuffix}}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold">Student Name :</td>
@@ -163,7 +163,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-bold">Class :</td>
-                                                <td>{{studentInfo[0]?.class}}th</td>
+                                                <td>{{studentInfo[0]?.class | classSuffix}}</td>
                                                 <td class="text-bold">Date Of Birth :</td>
                                                 <td>{{studentInfo[0]?.dob}}</td>
                                             </tr>

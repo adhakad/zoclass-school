@@ -9,13 +9,14 @@ import { PortalModule } from '@angular/cdk/portal';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { SharedPipeModule } from 'src/app/pipes/shared-pipe/shared-pipe.module';
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports:[
     SideNavbarModule,
@@ -27,7 +28,8 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     PortalModule,
     MatMomentDatetimeModule,
     MatDatetimepickerModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    SharedPipeModule
   ]
 })
 export class AdminSharedModule { }

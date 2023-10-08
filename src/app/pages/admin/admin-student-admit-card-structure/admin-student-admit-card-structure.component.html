@@ -40,7 +40,7 @@
                                             <p class="mb-0">{{examAdmitCard.examType}}</p>
                                         </td>
                                         <td>
-                                            <p class="mb-0">{{examAdmitCard.class}}</p>
+                                            <p class="mb-0">{{examAdmitCard.class | classSuffix}}</p>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{examAdmitCard.stream}}</p>
@@ -70,7 +70,7 @@
                                     <div class="modal-content" *ngIf="!successMsg && classSubject">
                                         <div class="modal-header">
                                             <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Admit
-                                                Card Structure'}}</h5>
+                                                Card Structure'}} {{cls | classSuffix}}</h5>
                                             <mat-icon matRipple (click)="closeModal()"
                                                 style="cursor: pointer;">close</mat-icon>
                                         </div>

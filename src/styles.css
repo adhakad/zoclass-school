@@ -10,7 +10,6 @@ body {
   --common-color: #fff;
   --header-height: 10vh;
 }
-
 /*
 Header section
 */
@@ -137,6 +136,9 @@ Dashboard section
   color: #4e4caacd;
   letter-spacing: .6px;
   font-size: 18px;
+}
+h4{
+  color: #4e4caacd;
 }
 p{
   color: #4e4caacd;
@@ -499,7 +501,7 @@ Side navigation section
 
   .big-container {
     background-color: #fff;
-    min-height: 90vh;
+    min-height: 87vh;
     width: 98.5%;
     margin-top: 1.5vh;
     margin-left: .75%;

@@ -5,15 +5,14 @@ import { AdminSettingClsRoutingModule } from './admin-setting-cls-routing.module
 import { AdminSettingClsComponent } from './admin-setting-cls.component';
 import { AdminSharedModule } from '../admin-shared/admin-shared.module';
 
-
 @NgModule({
   declarations: [
-    AdminSettingClsComponent
+    AdminSettingClsComponent,
   ],
   imports: [
     CommonModule,
     AdminSettingClsRoutingModule,
-    AdminSharedModule
+    AdminSharedModule,
   ]
 })
 export class AdminSettingClsModule { }

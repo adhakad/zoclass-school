@@ -5,10 +5,9 @@ import { AdminStudentAdmitCardClsRoutingModule } from './admin-student-admit-car
 import { AdminStudentAdmitCardClsComponent } from './admin-student-admit-card-cls.component';
 import { AdminSharedModule } from '../admin-shared/admin-shared.module';
 
-
 @NgModule({
   declarations: [
-    AdminStudentAdmitCardClsComponent
+    AdminStudentAdmitCardClsComponent,
   ],
   imports: [
     CommonModule,

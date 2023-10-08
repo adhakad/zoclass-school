@@ -14,7 +14,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <h3>Fee Payment ><span>
-                                                    {{cls}}th</span></h3>
+                                                    {{cls | classSuffix}}</span></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                                                     <td class="text-bold">Admission No. :</td>
                                                                     <td>{{singleStudent.admissionNo}}</td>
                                                                     <td class="text-bold">Class :</td>
-                                                                    <td>{{singleStudent.class}}th</td>
+                                                                    <td>{{singleStudent.class | classSuffix}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="text-bold">Student Name :</td>
@@ -199,7 +199,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="text-bold">Class :</td>
-                                                                <td>{{receiptInstallment.class}}th</td>
+                                                                <td>{{receiptInstallment.class | classSuffix}}</td>
                                                                 <td class="text-bold">Date Of Birth :</td>
                                                                 <td>{{singleStudent.dob}}</td>
                                                             </tr>

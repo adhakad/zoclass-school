@@ -48,7 +48,7 @@
                         </td>
                         <td class="text-bold">Class :</td>
                         <td>
-                          {{studentAdmitCardInfo?.class}}th
+                          {{studentAdmitCardInfo?.class | classSuffix}}
                         </td>
                       </tr>
                       <tr>
@@ -93,7 +93,7 @@
                       </ng-container>
                     </table>
                     <div>
-                      <h4 class="text-bold" style="color: #7c7698fb;">Instructions :</h4>
+                      <h4 class="text-bold">Instructions :</h4>
                       <p>1. Payment installment fee amount</p>
                       <p>2. First installment fee amount First installment</p>
                       <p>3. Fee amount First installment First installment First installment</p>

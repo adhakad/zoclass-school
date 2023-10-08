@@ -8,7 +8,7 @@ import { AdminStudentResultClsComponent } from './admin-student-result-cls.compo
 
 @NgModule({
   declarations: [
-    AdminStudentResultClsComponent
+    AdminStudentResultClsComponent,
   ],
   imports: [
     CommonModule,

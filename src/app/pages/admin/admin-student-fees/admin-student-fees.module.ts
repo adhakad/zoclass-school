@@ -5,13 +5,11 @@ import { AdminStudentFeesRoutingModule } from './admin-student-fees-routing.modu
 import { AdminStudentFeesComponent } from './admin-student-fees.component';
 import { AdminSharedModule } from '../admin-shared/admin-shared.module';
 
-import { ChunkPipe } from 'src/app/chunk.pipe';
 
 
 @NgModule({
   declarations: [
     AdminStudentFeesComponent,
-    ChunkPipe
   ],
   imports: [
     CommonModule,

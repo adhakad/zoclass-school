@@ -19,8 +19,8 @@ export class TopperComponent implements OnInit {
   successMsg: String = '';
   errorMsg: String = '';
   errorCheck: Boolean = false;
-  topperInfo: Topper[] = [];
-  classInfo: Class[] = [];
+  topperInfo: any[] = [];
+  classInfo: any[] = [];
 
   recordLimit: number = 5;
   filters:any = {};
@@ -43,7 +43,7 @@ export class TopperComponent implements OnInit {
   }
 
   getClass() {
-    this.classService.getClassList().subscribe((res: Class[]) => {
+    this.classService.getClassList().subscribe((res: any[]) => {
       if (res) {
         this.classInfo = res;
       }
@@ -84,7 +84,7 @@ export class TopperComponent implements OnInit {
     this.deleteMode = false;
     this.topperForm.reset();
   }
-  updateTopperModel(topper: Topper) {
+  updateTopperModel(topper: any) {
     this.showModal = true;
     this.deleteMode = false;
     this.updateMode = true;
