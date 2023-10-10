@@ -4,7 +4,6 @@ import { AdminAuthService } from "src/app/services/auth/admin-auth.service";
 import { TeacherAuthService } from "src/app/services/auth/teacher-auth.service";
 import { StudentAuthService } from "src/app/services/auth/student-auth.service";
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -25,7 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isMatMenu2Open = false;
   prevButtonTrigger: any;
   modulesList: any;
-
 
   ModulesList: any = [{
     label: 'User',
@@ -66,7 +64,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let userDetail = this.studentAuthService.getLoggedInStudentInfo();
     if (userDetail) {
-      // console.log(userDetail.name)
     }
 
     this.adminAuthService.autoAuthAdmin();

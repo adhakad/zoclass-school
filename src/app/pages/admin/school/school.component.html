@@ -11,67 +11,85 @@
             <div class="main-card">
               <div class="row mt-4 mb-2">
                 <div class="col-8 col-lg-5">
-                  <input type="text" class="form-control" placeholder="Student Search..." id="searchText"
-                    name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
-                    (keyup)="getStudents({page : 1, limit : 0})">
+                  <input type="text" class="form-control" placeholder="School Search...">
                 </div>
                 <div class="col-4 col-lg-2 offset-lg-5">
                   <button class="submit-button" mat-raised-button
-                    (click)="addStudentModel()"><mat-icon>add</mat-icon>Create</button>
+                    (click)="addSchoolModel()"><mat-icon>add</mat-icon>Create</button>
                 </div>
               </div>
-              <table class="table table-hover align-middle mt-2 mb-1 bg-white">
+              <table class="table table-hover align-middle mt-3 mb-1 bg-white">
                 <thead class="bg-light">
                   <tr class="text-muted">
                     <th>No.</th>
-                    <th>Student</th>
-                    <th>Class</th>
-                    <th>Admission No.</th>
-                    <th>Roll Number</th>
-                    <th>Otp</th>
-                    <th>Status</th>
+                    <th>School Name</th>
+                    <th>Affiliation Number</th>
+                    <th>School Code</th>
+                    <th>Founded Year</th>
+                    <th>Board</th>
+                    <th>Medium</th>
+                    <th>Street</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Country</th>
+                    <th>Pin Code</th>
+                    <th>Phone</th>
+                    <th>Email</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody *ngIf="studentInfo && studentInfo.length>0">
-                  <tr *ngFor="let students of studentInfo,let i=index">
+                <tbody *ngIf="schoolInfo">
+                  <tr>
                     <td>
-                      <p class="mb-0">{{number*10+i+1-10}}</p>
+                      <p class="mb-0">1</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.name}}</p>
+                      <p class="mb-0">{{schoolInfo?.schoolName}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.class}}</p>
+                      <p class="mb-0">{{schoolInfo?.affiliationNumber}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.admissionNo}}</p>
+                      <p class="mb-0">{{schoolInfo?.schoolCode}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.rollNumber}}</p>
+                      <p class="mb-0">{{schoolInfo?.foundedYear}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.otp}}</p>
+                      <p class="mb-0">{{schoolInfo?.board}}</p>
                     </td>
                     <td>
-                      <a class="mb-0 status-active" (click)="changeStatus(students._id,0)"
-                        *ngIf="students.status == 'Active'"
-                        href="javascript:void(0)">{{students.status}}&nbsp;&nbsp;</a>
-                      <a class="mb-0 status-inactive" (click)="changeStatus(students._id,1)"
-                        *ngIf="students.status == 'Inactive'" href="javascript:void(0)">{{students.status}}</a>
+                      <p class="mb-0">{{schoolInfo?.medium}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.street}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.city}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.state}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.country}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.pinCode}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.phone}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.email}}</p>
                     </td>
                     <td class="mb-0">
-                      <mat-icon (click)="updateStudentModel(students)">edit_note</mat-icon>
-                      <mat-icon (click)="deleteStudentModel(students._id)">delete</mat-icon>
+                      <mat-icon (click)="updateSchoolModel(schoolInfo)">edit_note</mat-icon>
+                      <mat-icon (click)="deleteSchoolModel(schoolInfo?._id)">delete</mat-icon>
                     </td>
                   </tr>
 
                 </tbody>
               </table>
-              <div class="pagination">
-                <app-pagination [paginationValues]="paginationValues" (onChange)="getStudents($event)">
-                </app-pagination>
-              </div>
 
               <div class="modal fade show" [class.show]="showModal">
                 <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode">
@@ -89,11 +107,11 @@
 
                   <div class="modal-content" *ngIf="!successMsg">
                     <div class="modal-header">
-                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Create New'}} Student</h5>
+                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Create New'}} School</h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
 
-                    <form [formGroup]="studentForm" (ngSubmit)="studentAddUpdate()">
+                    <form [formGroup]="schoolForm" (ngSubmit)="schoolAddUpdate()">
                       <div class="modal-body" *ngIf="!deleteMode">
 
                         <div *ngIf="errorCheck">
@@ -104,296 +122,159 @@
 
                           <div class="row">
                             <ng-container>
-                              <h3>Academic Info</h3>
+                              <h3>School Info</h3>
                             </ng-container>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Session</mat-label>
-                                <mat-select type="text" matInput formControlName="session">
-                                  <div *ngFor="let session of sessions">
-                                    <mat-option value="{{session.year}}">{{session.year}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('session')?.valid && studentForm.get('session')?.touched"
-                                  class="form-text text-danger">Session is required</mat-hint>
+                                <mat-label>School Name</mat-label>
+                                <input matInput type="text" formControlName="schoolName">
+                                <mat-error *ngIf="schoolForm.get('schoolName')?.hasError('required') && schoolForm.get('schoolName')?.touched">
+                                  School name is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('schoolName')?.hasError('maxlength')">
+                                  Maximum 50 characters allowed for School Name
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Last School Optional</mat-label>
-                                <input matInput type="text" formControlName="lastSchool">
+                                <mat-label>Affiliation Number</mat-label>
+                                <input matInput type="text" formControlName="affiliationNumber">
+                                <mat-error *ngIf="schoolForm.get('affiliationNumber')?.hasError('required') && schoolForm.get('affiliationNumber')?.touched">
+                                  Affiliation number is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('affiliationNumber')?.hasError('pattern')">
+                                  Affiliation number must contain digits only
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>class</mat-label>
-                                <mat-select matInput formControlName="class">
-                                  <div *ngFor="let classInfo of classInfo">
-                                    <mat-option [value]="classInfo.class"
-                                      (click)="chooseClass(studentForm.get('class'))">{{classInfo.class}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('class')?.valid && studentForm.get('class')?.touched"
-                                  class="form-text text-danger">Class is required</mat-hint>
+                                <mat-label>School Code</mat-label>
+                                <input matInput type="text" formControlName="schoolCode">
+                                <mat-error *ngIf="schoolForm.get('schoolCode')?.hasError('required') && schoolForm.get('schoolCode')?.touched">
+                                  School code is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('schoolCode')?.hasError('maxlength')">
+                                  Maximum 10 characters allowed for School Code
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Stream</mat-label>
-                                <mat-select type="text" matInput formControlName="stream">
-                                  <ng-container *ngIf="cls==12 || cls==11">
-                                    <div *ngFor="let subject of streamMainSubject">
-                                      <mat-option (click)="chooseStream(studentForm.get('stream'))"
-                                        value="{{subject}}">{{subject}}</mat-option>
-                                    </div>
-                                  </ng-container>
-                                  <ng-container *ngIf="cls<11 && cls!==0">
-                                    <div>
-                                      <mat-option value="{{notApplicable}}"
-                                        (click)="chooseStream(studentForm.get('stream'))">N/A</mat-option>
-                                    </div>
-                                  </ng-container>
-                                </mat-select>
-                                <mat-hint
-                                    *ngIf="!studentForm.get('stream')?.valid && studentForm.get('stream')?.touched"
-                                    class="form-text text-danger">Stream is required</mat-hint>
+                                <mat-label>Founded Year</mat-label>
+                                <input matInput type="text" formControlName="foundedYear">
+                                <mat-error *ngIf="schoolForm.get('foundedYear')?.hasError('required') && schoolForm.get('foundedYear')?.touched">
+                                  Founded year is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('foundedYear')?.hasError('pattern')">
+                                  Invalid founded year format. Use a four-digit year starting with '19' or '20'
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Admission Type</mat-label>
-                                <mat-select type="text" matInput formControlName="admissionType">
-                                  <div>
-                                    <mat-option value="new" (click)="chooseAdmissionType(studentForm.get('admissionType'))">New Admission</mat-option>
-                                    <mat-option value="old" (click)="chooseAdmissionType(studentForm.get('admissionType'))">Old Admission</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('admissionType')?.valid && studentForm.get('admissionType')?.touched"
-                                  class="form-text text-danger">Admission type is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType !=='new' && admissionType !=='old'">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
-                                <input matInput readonly>
-                              </mat-form-field> 
-                            </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType=='new'">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
-                                <input matInput type="number" formControlName="admissionNo" readonly>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
-                                  class="form-text text-danger">Admission no. is required</mat-hint>
-                              </mat-form-field> 
-                            </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType=='old'">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
-                                <input matInput type="number" formControlName="admissionNo">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
-                                  class="form-text text-danger">Admission no. is required</mat-hint>
-                              </mat-form-field> 
-                            </div>
-                            <ng-container>
-                              <h3>Student Info</h3>
-                            </ng-container>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Name</mat-label>
-                                <input matInput type="text" formControlName="name">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('name')?.valid && studentForm.get('name')?.touched"
-                                  class="form-text text-danger">Name is required</mat-hint>
+                                <mat-label>Board</mat-label>
+                                <input matInput type="text" formControlName="board">
+                                <mat-error *ngIf="schoolForm.get('board')?.hasError('required') && schoolForm.get('board')?.touched">
+                                  Board is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('board')?.hasError('maxlength')">
+                                  Maximum 50 characters allowed for Board
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Roll Number</mat-label>
-                                <input matInput type="number" formControlName="rollNumber">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('rollNumber')?.valid && studentForm.get('rollNumber')?.touched"
-                                  class="form-text text-danger">Roll number is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Date of birth</mat-label>
-                                <input matInput readonly [matDatepicker]="picker" formControlName="dob" />
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Gender</mat-label>
-                                <mat-select type="text" matInput formControlName="gender">
-                                  <div>
-                                    <mat-option value="Male">Male</mat-option>
-                                    <mat-option value="Female">Female</mat-option>
-                                    <mat-option value="Other">Other</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('gender')?.valid && studentForm.get('gender')?.touched"
-                                  class="form-text text-danger">Gender is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Category</mat-label>
-                                <mat-select type="text" matInput formControlName="category">
-                                  <div *ngFor="let category of categorys">
-                                    <mat-option value="{{category.category}}">{{category.category}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('category')?.valid && studentForm.get('category')?.touched"
-                                  class="form-text text-danger">Category is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Religion</mat-label>
-                                <mat-select type="text" matInput formControlName="religion">
-                                  <div *ngFor="let religion of religions">
-                                    <mat-option value="{{religion.religion}}">{{religion.religion}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('religion')?.valid && studentForm.get('religion')?.touched"
-                                  class="form-text text-danger">Religion is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Nationality</mat-label>
-                                <mat-select type="text" matInput formControlName="nationality">
-                                  <div>
-                                    <mat-option value="Indian">Indian</mat-option>
-                                    <mat-option value="Other">Other</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('nationality')?.valid && studentForm.get('nationality')?.touched"
-                                  class="form-text text-danger">Nationality is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Contact</mat-label>
-                                <input matInput type="text" formControlName="contact">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('contact')?.valid && studentForm.get('contact')?.touched"
-                                  class="form-text text-danger">Contact is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Address</mat-label>
-                                <input matInput type="text" formControlName="address">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('address')?.valid && studentForm.get('address')?.touched"
-                                  class="form-text text-danger">Address is required</mat-hint>
+                                <mat-label>Medium</mat-label>
+                                <input matInput type="text" formControlName="medium">
+                                <mat-error *ngIf="schoolForm.get('medium')?.hasError('required') && schoolForm.get('medium')?.touched">
+                                  Medium is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('medium')?.hasError('maxlength')">
+                                  Maximum 50 characters allowed for Medium
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <ng-container>
-                              <h3>Parent's Info</h3>
+                              <h3>School Address</h3>
                             </ng-container>
-                            <div class="co-12 col-lg-6">
+                            <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Father Name</mat-label>
-                                <input matInput type="text" formControlName="fatherName">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('fatherName')?.valid && studentForm.get('fatherName')?.touched"
-                                  class="form-text text-danger">Father name is required</mat-hint>
-                              </mat-form-field>
-                              <mat-form-field appearance="outline">
-                                <mat-label>Father Qualification</mat-label>
-                                <mat-select type="text" matInput formControlName="fatherQualification">
-                                  <div *ngFor="let qualification of qualifications">
-                                    <mat-option
-                                      value="{{qualification.qualification}}">{{qualification.qualification}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('fatherQualification')?.valid && studentForm.get('fatherQualification')?.touched"
-                                  class="form-text text-danger">Father qualification is required</mat-hint>
-                              </mat-form-field>
-                              <mat-form-field appearance="outline">
-                                <mat-label>Father Occupation</mat-label>
-                                <mat-select type="text" matInput formControlName="fatherOccupation">
-                                  <div *ngFor="let occupation of occupations">
-                                    <mat-option value="{{occupation.occupation}}">{{occupation.occupation}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('fatherOccupation')?.valid && studentForm.get('fatherOccupation')?.touched"
-                                  class="form-text text-danger">Father occupation is required</mat-hint>
-                              </mat-form-field>
-                              <mat-form-field appearance="outline">
-                                <mat-label>Father Contact</mat-label>
-                                <input matInput type="text" formControlName="fatherContact">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('fatherContact')?.valid && studentForm.get('fatherContact')?.touched"
-                                  class="form-text text-danger">Father contact is required</mat-hint>
-                              </mat-form-field>
-                              <mat-form-field appearance="outline">
-                                <mat-label>Father Annual Income</mat-label>
-                                <input matInput type="text" formControlName="fatherAnnualIncome">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('fatherAnnualIncome')?.valid && studentForm.get('fatherAnnualIncome')?.touched"
-                                  class="form-text text-danger">Father annual income is required</mat-hint>
+                                <mat-label>Street</mat-label>
+                                <input matInput type="text" formControlName="street">
+                                <mat-error *ngIf="schoolForm.get('street')?.hasError('required') && schoolForm.get('street')?.touched">
+                                  Street is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('street')?.hasError('maxlength')">
+                                  Maximum 100 characters allowed for Street
+                                </mat-error>
                               </mat-form-field>
                             </div>
-                            <div class="co-12 col-lg-6">
+                            <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Mother Name</mat-label>
-                                <input matInput type="text" formControlName="motherName">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('motherName')?.valid && studentForm.get('motherName')?.touched"
-                                  class="form-text text-danger">Mother name is required</mat-hint>
+                                <mat-label>City</mat-label>
+                                <input matInput type="text" formControlName="city">
+                                <mat-error *ngIf="schoolForm.get('city')?.hasError('required') && schoolForm.get('city')?.touched">
+                                  City is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('city')?.hasError('maxlength')">
+                                  Maximum 50 characters allowed for City
+                                </mat-error>
                               </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Mother Qualification</mat-label>
-                                <mat-select type="text" matInput formControlName="motherQualification">
-                                  <div *ngFor="let qualification of qualifications">
-                                    <mat-option
-                                      value="{{qualification.qualification}}">{{qualification.qualification}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('motherQualification')?.valid && studentForm.get('motherQualification')?.touched"
-                                  class="form-text text-danger">Mother qualification is required</mat-hint>
+                                <mat-label>State</mat-label>
+                                <input matInput type="text" formControlName="state">
+                                <mat-error *ngIf="schoolForm.get('state')?.hasError('required') && schoolForm.get('state')?.touched">
+                                  State is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('state')?.hasError('maxlength')">
+                                  Maximum 50 characters allowed for State
+                                </mat-error>
                               </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Mother Occupation</mat-label>
-                                <mat-select type="text" matInput formControlName="motherOccupation">
-                                  <div *ngFor="let occupation of occupations">
-                                    <mat-option value="{{occupation.occupation}}">{{occupation.occupation}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('motherOccupation')?.valid && studentForm.get('motherOccupation')?.touched"
-                                  class="form-text text-danger">Mother occupation is required</mat-hint>
+                                <mat-label>Pin Code</mat-label>
+                                <input matInput type="text" formControlName="pinCode">
+                                <mat-error *ngIf="schoolForm.get('pinCode')?.hasError('required') && schoolForm.get('pinCode')?.touched">
+                                  Pin code is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('pinCode')?.hasError('pattern')">
+                                  Invalid postal code format. Use a 6-digit code.
+                                </mat-error>
                               </mat-form-field>
+                            </div>   
+                            <ng-container>
+                              <h3>School Contact</h3>
+                            </ng-container>                     
+                            <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Mother Contact</mat-label>
-                                <input matInput type="text" formControlName="motherContact">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('motherContact')?.valid && studentForm.get('motherContact')?.touched"
-                                  class="form-text text-danger">Mother contact is required</mat-hint>
+                                <mat-label>Phone</mat-label>
+                                <input matInput type="text" formControlName="phone">
+                                <mat-error *ngIf="schoolForm.get('phone')?.hasError('required') && schoolForm.get('phone')?.touched">
+                                  Phone is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('phone')?.hasError('minlength')">
+                                  Phone must be at least 10 characters long
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('phone')?.hasError('pattern')">
+                                  Phone must contain only digits
+                                </mat-error>
                               </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Mother Annual Income</mat-label>
-                                <input matInput type="text" formControlName="motherAnnualIncome">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('motherAnnualIncome')?.valid && studentForm.get('motherAnnualIncome')?.touched"
-                                  class="form-text text-danger">Mother annual income is required</mat-hint>
+                                <mat-label>Email</mat-label>
+                                <input matInput type="text" formControlName="email">
+                                <mat-error *ngIf="schoolForm.get('email')?.hasError('required') && schoolForm.get('email')?.touched">
+                                  Email is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('email')?.hasError('email')">
+                                  Invalid email format
+                                </mat-error>
                               </mat-form-field>
                             </div>
                           </div>
@@ -402,13 +283,13 @@
 
                       <div class="modal-footer" *ngIf="!deleteMode">
                         <button class="submit-button" mat-raised-button type="submit"
-                          [disabled]="!studentForm.valid">Submit</button>
+                          [disabled]="!schoolForm.valid">Submit</button>
                       </div>
                       <div *ngIf="deleteMode">
-                        <h3>To delete student detail, click ok to confirm.</h3>
+                        <h3>To delete school detail, click ok to confirm.</h3>
                         <div class="modal-footer">
                           <button class="delete-button" mat-raised-button type="button"
-                            (click)="studentDelete(deleteById)">Ok</button>
+                            (click)="schoolDelete(deleteById)">Ok</button>
                         </div>
                       </div>
                     </form>

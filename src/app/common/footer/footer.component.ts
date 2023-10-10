@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   currentYear: any;
-  constructor() { }
+  schoolInfo:any;
+  constructor(private schoolService:SchoolService) { }
 
   ngOnInit(): void {
+    this.getSchool();
     this.currentYear = (new Date()).getFullYear();
+  }
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=> {
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
   }
 
 }

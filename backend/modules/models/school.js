@@ -6,9 +6,6 @@ const schoolSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  
-  logo:{},
-
   affiliationNumber: {
     type: String,
     required: true,
@@ -21,50 +18,6 @@ const schoolSchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
-  address: {
-    street: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    city: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    state: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    postalCode: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    country: {
-      type: String,
-      default: 'India',
-    },
-  },
-  phone: {
-    type: String,
-    trim: true,
-  },
-//   principal: {
-//     name: {
-//       type: String,
-//       trim: true,
-//     },
-//     email: {
-//       type: String,
-//       trim: true,
-//     },
-//     phone: {
-//       type: String,
-//       trim: true,
-//     },
-//   },
   foundedYear: {
     type: Number,
   },
@@ -73,6 +26,38 @@ const schoolSchema = new mongoose.Schema({
     trim: true,
   },
   medium: {
+    type: String,
+    trim: true,
+  },
+  street: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  city: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  state: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  country: {
+    type: String,
+    default: 'India',
+  },
+  pinCode: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  phone: {
+    type: String,
+    trim: true,
+  },
+  email: {
     type: String,
     trim: true,
   },

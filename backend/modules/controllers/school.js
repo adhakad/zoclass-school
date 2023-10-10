@@ -1,9 +1,19 @@
 const SchoolModel = require('../models/school');
 
+let GetSingleSchoolNameLogo = async (req, res, next) => {
+    try {
+        const singleSchool = await SchoolModel.findOne({},'schoolName foundedYear');
+        if (singleSchool) {
+            return res.status(200).json(singleSchool);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 let GetSingleSchool = async (req, res, next) => {
     try {
-        const singleSchool = await SchoolModel.findOne({ _id: req.params.id });
-        if(singleSchool){
+        const singleSchool = await SchoolModel.findOne({});
+        if (singleSchool) {
             return res.status(200).json(singleSchool);
         }
     } catch (error) {
@@ -11,13 +21,16 @@ let GetSingleSchool = async (req, res, next) => {
     }
 }
 let CreateSchool = async (req, res, next) => {
-    const schoolData = {
-        title: req.body.title,
-    }
+    let { schoolName, affiliationNumber, schoolCode, foundedYear, board, medium, street, city, state, country, pinCode, phone, email } = req.body;
+    const schoolData = { schoolName, affiliationNumber, schoolCode, foundedYear, board, medium, street, city, state, country, pinCode, phone, email };
     try {
         let countSchool = await SchoolModel.count();
-        if (countSchool == 15) {
-            return res.status(400).json('School limit is over to 15');
+        if(countSchool > 0){
+            return res.status(400).json('School detail already exist !');
+        }
+        let school = await SchoolModel.findOne({affiliationNumber:affiliationNumber,schoolCode:schoolCode});
+        if (school) {
+            return res.status(400).json('School detail already exist !');
         }
         const createSchool = await SchoolModel.create(schoolData);
         if (createSchool) {
@@ -54,6 +67,7 @@ let DeleteSchool = async (req, res, next) => {
 }
 
 module.exports = {
+    GetSingleSchoolNameLogo,
     GetSingleSchool,
     CreateSchool,
     UpdateSchool,

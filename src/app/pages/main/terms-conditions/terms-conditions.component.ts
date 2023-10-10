@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-terms-conditions',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./terms-conditions.component.css']
 })
 export class TermsConditionsComponent implements OnInit {
-
-  constructor() { }
+  schoolInfo:any;
+  constructor(private schoolService:SchoolService) { }
 
   ngOnInit(): void {
+    this.getSchool();
+  }
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=>{
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
   }
 
 }
