@@ -39,27 +39,27 @@
     </div>
   </div>
 </div>
-<div class="login" *ngIf="admitCardInfo && studentAdmitCardInfo">
+<div class="container-fluid" *ngIf="admitCardInfo && studentAdmitCardInfo">
   <div class="row">
     <div #content class="col-lg-10 offset-lg-1 custom-container">
       <div class="table-container">
         <table class="logo-table text-bold">
           <tr>
             <td>
-              <img src="../../../../assets/logo.png" alt=""> Vandana Convent School,Guna
+              <img src="../../../../assets/logo.png" alt=""> {{schoolInfo?.schoolName}}
             </td>
           </tr>
         </table>
         <table class="info-table">
           <tr>
             <td>
-              School Code : 2832
+              School Code : {{schoolInfo?.schoolCode}}
             </td>
             <td>
               {{studentAdmitCardInfo?.examType | titlecase}} Exam Admit Card - 2023
             </td>
             <td>
-              Affiliation No. : 1050
+              Affiliation No. : {{schoolInfo?.affiliationNumber}}
             </td>
           </tr>
         </table>
@@ -112,7 +112,7 @@
           </ng-container>
         </table>
         <div>
-          <h4 class="text-bold" style="color: #4e4caacd;">Instructions :</h4>
+          <h4 class="text-bold">Instructions :</h4>
           <p>1. Payment installment fee amount</p>
           <p>2. First installment fee amount First installment</p>
           <p>3. Fee amount First installment First installment First installment</p>
@@ -122,7 +122,11 @@
       </div>
     </div>
   </div>
-  <button class="submit-button print-pdf mx-4" mat-raised-button (click)="downloadPDF()">PDF</button>
-  <button class="submit-button print-pdf" mat-raised-button (click)="printContent()">Print</button>
-
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1 mt-4 mb-4">
+      <button class="submit-button print-pdf mx-4" mat-raised-button (click)="downloadPDF()">PDF</button>
+      <button class="submit-button print-pdf" mat-raised-button (click)="printContent()">Print</button>
+    </div>
+  </div>
+  <app-footer></app-footer>
 </div>

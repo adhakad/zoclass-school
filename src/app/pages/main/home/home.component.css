@@ -73,6 +73,7 @@
    margin-bottom: 2vh;
    text-align: center;
    border-radius: 15px;
+   justify-content: center;
    box-shadow: 0 0 0px -10px #8f89ccbc,
       0 0 0 0 #8f89ccbc,
       0 0 2px 0 #8f89ccbc;
@@ -81,6 +82,7 @@
 .testimonial-card .img-container {
    width: 85px;
    height: 85px;
+   padding-top: 20px;
    border-radius: 50%;
 }
 

@@ -1,62 +1,68 @@
 .footer {
-    background-color:#241750f2;
-    /* text-align: center;#241750f2 */
- }
- .mat-divider{
-   background-color: #e0e0ffe2;
- }
- .footer-card {
-    /* margin-top: 45px; */
- }
- 
- .footer-card h3 {
-    color: #fff;
-    font-size: 20px;
-    letter-spacing: .5px;
- }
- 
- .footer-card p {
-    color: #e0e0ffe2;
-    font-size: 16px;
-    letter-spacing: .5px;
-    margin-top: 25px;
-    margin-bottom: 25px;
- }
- 
- .copyright p {
-    color: #e0e0ffe2;
-    font-size: 15px;
-    letter-spacing: .45px;
-    text-align: center;
-    /* margin-top: 40px;
-    margin-bottom: 35px; */
- }
+   background-color: #241750;
+   /* text-align: center;#241750f2 */
+}
 
- @media (min-width: 992px) {
- 
-    .footer {
-       /* padding-bottom: 10px */
-    }
- 
-    .footer-card {}
- 
-    .footer-card h3 {
-       font-size: 20px;
-       letter-spacing: .5px;
-    }
- 
-    .footer-card p {
-       font-size: 16px;
-       letter-spacing: .5px;
-       /* margin-top: 15px;
+.mat-divider {
+   background-color: #e0e0ffe2;
+}
+
+.footer-card {
+   /* margin-top: 45px; */
+}
+
+.footer-card h3 {
+   color: #fff;
+   font-size: 20px;
+   letter-spacing: .5px;
+}
+
+.footer-card p {
+   color: #e0e0ffe2;
+   font-size: 16px;
+   letter-spacing: .5px;
+   margin-top: 25px;
+   margin-bottom: 25px;
+}
+
+.copyright p {
+   color: #e0e0ffe2;
+   font-size: 15px;
+   letter-spacing: .45px;
+   text-align: center;
+}
+.copyright .software-company{
+   cursor: pointer;
+}
+.copyright .software-company span {
+   color: rgb(184, 184, 255);
+}
+
+@media (min-width: 992px) {
+
+   .footer {
+      /* padding-bottom: 10px */
+   }
+
+   .footer-card {}
+
+   .footer-card h3 {
+      font-size: 20px;
+      letter-spacing: .5px;
+   }
+
+   .footer-card p {
+      font-size: 16px;
+      letter-spacing: .5px;
+      /* margin-top: 15px;
        margin-bottom: 15px; */
-    }
- 
-    .copyright p {
-       font-size: 16px;
-       letter-spacing: .5px;
-       text-align: center;
-       /* margin-top: 15px;
+   }
+
+   .copyright p {
+      font-size: 16px;
+      letter-spacing: .5px;
+      text-align: center;
+      /* margin-top: 15px;
        margin-bottom: 20px; */
-    }
- }
+   }
+}

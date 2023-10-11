@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AdmitCardService } from 'src/app/services/admit-card.service';
 import { ClassService } from 'src/app/services/class.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 
 @Component({
@@ -15,12 +16,13 @@ export class AdmitCardComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
   errorMsg: string = '';
   admitCardForm: FormGroup;
+  schoolInfo:any;
   classInfo: any;
   studentAdmitCardInfo: any;
   admitCardInfo: any;
   processedData: any[] = [];
 
-  constructor(private fb: FormBuilder, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
+  constructor(private fb: FormBuilder,private schoolService:SchoolService, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
     this.admitCardForm = this.fb.group({
       admissionNo: ['', Validators.required],
       class: ['', Validators.required],
@@ -29,6 +31,7 @@ export class AdmitCardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getClass();
+    this.getSchool();
   }
 
   printContent() {
@@ -38,7 +41,13 @@ export class AdmitCardComponent implements OnInit {
   downloadPDF() {
     this.printPdfService.generatePDF(this.content.nativeElement, "Admitcard.pdf");
   }
-
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=> {
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
+  }
   getClass() {
     this.classService.getClassList().subscribe((res: any) => {
       if (res) {

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ExamResultService } from 'src/app/services/exam-result.service';
 import { ClassService } from 'src/app/services/class.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 
 @Component({
@@ -15,13 +16,14 @@ export class ResultComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
   errorMsg: string = '';
   examResultForm: FormGroup;
+  schoolInfo:any;
   classInfo: any;
   studentInfo: any;
   examResultInfo: any;
   resultStructureInfo: any;
   processedData: any[] = [];
   
-  constructor(private fb: FormBuilder, private router: Router,private printPdfService:PrintPdfService, private examResultService: ExamResultService, private classService: ClassService) {
+  constructor(private fb: FormBuilder, private schoolService:SchoolService,private printPdfService:PrintPdfService, private examResultService: ExamResultService, private classService: ClassService) {
     this.examResultForm = this.fb.group({
       admissionNo: ['', Validators.required],
       class: ['', Validators.required],
@@ -30,6 +32,7 @@ export class ResultComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getClass();
+    this.getSchool();
   }
 
 
@@ -41,6 +44,13 @@ export class ResultComponent implements OnInit {
     this.printPdfService.generatePDF(this.content.nativeElement,"Result.pdf");
   }
 
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=> {
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
+  }
   getClass() {
     this.classService.getClassList().subscribe((res: any) => {
       if (res) {

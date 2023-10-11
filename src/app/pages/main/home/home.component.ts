@@ -12,8 +12,6 @@ import { AdsService } from 'src/app/services/ads.service';
 import { TopperService } from 'src/app/services/topper.service';
 import { TestimonialService } from 'src/app/services/testimonial.service';
 import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
-import { PaymentService } from 'src/app/services/payment/payment.service';
-
 
 @Component({
   selector: 'app-home',
@@ -24,12 +22,12 @@ export class HomeComponent implements OnInit {
   private isBrowser: boolean = isPlatformBrowser(this.platformId);
 
 
-  bannerInfo: Banner[] = [];
-  teacherInfo: Teacher[] = [];
-  adsInfo: Ads[] = [];
-  topperInfo: Topper[] = [];
-  testimonialInfo: Testimonial[] = [];
-  cls: Number = 0;
+  bannerInfo: any[] = [];
+  teacherInfo: any[] = [];
+  adsInfo: any[] = [];
+  topperInfo: any[] = [];
+  testimonialInfo: any[] = [];
+  cls: number = 0;
   loggedInStudentInfo: any;
   no: number = 0;
   loadTitle = false;
@@ -137,14 +135,14 @@ export class HomeComponent implements OnInit {
   }
 
   getBanner() {
-    this.bannerService.getBannerList().subscribe((res: Banner[]) => {
+    this.bannerService.getBannerList().subscribe((res: any[]) => {
       if (res) {
         this.bannerInfo = res;
       }
     })
   }
   getTopper() {
-    this.topperService.getTopperList().subscribe((res: Topper[]) => {
+    this.topperService.getTopperList().subscribe((res: any[]) => {
       if (res) {
         this.topperInfo = res;
         setTimeout(() => {
@@ -154,7 +152,7 @@ export class HomeComponent implements OnInit {
     })
   }
   getAds() {
-    this.adsService.getAdsList().subscribe((res: Ads[]) => {
+    this.adsService.getAdsList().subscribe((res: any[]) => {
       if (res) {
         this.adsInfo = res;
       }
@@ -162,7 +160,7 @@ export class HomeComponent implements OnInit {
   }
 
   getTestimonial() {
-    this.testimonialService.getTestimonialList().subscribe((res: Testimonial[]) => {
+    this.testimonialService.getTestimonialList().subscribe((res: any[]) => {
       if (res) {
         this.testimonialInfo = res;
       }
