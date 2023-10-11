@@ -10,6 +10,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { FeesStructureService } from 'src/app/services/fees-structure.service';
 import { StudentService } from 'src/app/services/student.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-admin-student-fees',
@@ -41,6 +42,7 @@ export class AdminStudentFeesComponent implements OnInit {
   existRollnumber: number[] = [];
   clsFeesStructure: any;
 
+  schoolInfo:any;
   studentList:any[]=[];
   singleStudent:any;
   paybleInstallment:any;
@@ -48,7 +50,7 @@ export class AdminStudentFeesComponent implements OnInit {
   receiptInstallment:any={};
   receiptMode:boolean = false;
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
+  constructor(private fb: FormBuilder,private schoolService:SchoolService, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
       class:[''],
       studentId:[''],
@@ -60,8 +62,8 @@ export class AdminStudentFeesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getSchool();
     this.getFees({ page: 1 });
-
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.feesStructureByClass(this.cls);
     this.getAllStudentFeesCollectionByClass(this.cls);
@@ -70,6 +72,14 @@ export class AdminStudentFeesComponent implements OnInit {
   printReceipt() {
     this.printPdfService.printElement(this.receipt.nativeElement);
     this.closeModal();
+  }
+
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=> {
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
   }
 
   getAllStudentFeesCollectionByClass(cls:any){

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FeesStructureService } from 'src/app/services/fees-structure.service';
 import { FeesService } from 'src/app/services/fees.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-admin-student-fees-statement',
@@ -20,15 +21,23 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   processedData: any[] = [];
   singleReceiptInstallment:any[] = [];
   studentInfo:any[] = [];
-  constructor(public activatedRoute: ActivatedRoute, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
+  schoolInfo:any;
+  constructor(public activatedRoute: ActivatedRoute,private schoolService:SchoolService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
+    this.getSchool();
     this.cls = this.activatedRoute.snapshot.paramMap.get('class');
     this.studentId = this.activatedRoute.snapshot.paramMap.get('id');
     this.singleStudentFeesCollectionById(this.studentId)
     this.feesStructureByClass(this.cls)
   }
-  
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=> {
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
+  }
   printContent() {
     this.printPdfService.printElement(this.content.nativeElement);
   }

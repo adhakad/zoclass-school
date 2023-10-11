@@ -89,26 +89,26 @@
                                                 <div class="row">
                                                     <div class="custom-container">
                                                         <div class="table-container">
-                                                            <table class="logo-table text-bold">
+                                                            <table class="logo-table text-bold text-center">
                                                                 <tr>
                                                                     <td>
                                                                         <img src="../../../../assets/logo.png" alt="">
-                                                                        Vandana Convent
-                                                                        School,Guna
+                                                                        {{schoolInfo?.schoolName}}
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                             <table class="info-table text-center">
                                                                 <tr>
                                                                     <td>
-                                                                        School Code : 2832
+                                                                        School Code : {{schoolInfo?.schoolCode}}
                                                                     </td>
                                                                     <td>
-                                                                        Affiliation No. : 1050
+                                                                        Affiliation No. :
+                                                                        {{schoolInfo?.affiliationNumber}}
                                                                     </td>
                                                                 </tr>
                                                             </table>
-                                                            <table class="info-table">
+                                                            <table class="info-table text-center">
                                                                 <tr>
                                                                     <td class="text-bold">Admission No. :</td>
                                                                     <td>{{singleStudent.admissionNo}}</td>
@@ -158,11 +158,12 @@
                                             </div>
                                             <div class="modal-footer" *ngIf="paybleInstallment[0][1]>0 && !receiptMode">
                                                 <mat-checkbox style="margin-right: 10px;" class="example-margin"
-                                                    (click)="feesPay(payNow)">Allow {{paybleInstallment[0][0]}} Installment</mat-checkbox>
+                                                    (click)="feesPay(payNow)">Allow {{paybleInstallment[0][0]}}
+                                                    Installment</mat-checkbox>
 
                                                 <button class="submit-button" mat-raised-button type="button"
                                                     (click)="feesAddUpdate()" [disabled]="!payNow">Pay
-                                                     &#8377;
+                                                    &#8377;
                                                     {{paybleInstallment[0][1]}}</button>
                                             </div>
                                         </form>
@@ -171,26 +172,26 @@
                                             <div class="row">
                                                 <div #receipt class="custom-container">
                                                     <div class="table-container">
-                                                        <table class="logo-table text-bold">
+                                                        <table class="logo-table text-bold text-center">
                                                             <tr>
                                                                 <td>
+                                                                <td>
                                                                     <img src="../../../../assets/logo.png" alt="">
-                                                                    Vandana Convent
-                                                                    School,Guna
+                                                                    {{schoolInfo?.schoolName}}
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                         <table class="info-table text-center">
                                                             <tr>
                                                                 <td>
-                                                                    School Code : 2832
+                                                                    School Code : {{schoolInfo?.schoolCode}}
                                                                 </td>
                                                                 <td>
-                                                                    Affiliation No. : 1050
+                                                                    Affiliation No. : {{schoolInfo?.affiliationNumber}}
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                        <table class="info-table">
+                                                        <table class="info-table text-center">
                                                             <tr>
                                                                 <td class="text-bold">Receipt No. :</td>
                                                                 <td>{{receiptInstallment.receiptNo}}</td>
@@ -260,7 +261,7 @@
 
                                                         <p>Date : {{ receiptInstallment.paymentDate }}</p>
                                                         <div>
-                                                            <h4 class="text-bold" style="color: #4e4caacd;">Instructions
+                                                            <h4 class="text-bold">Instructions
                                                                 :</h4>
                                                             <p>1. Payment installment fee amount</p>
                                                             <p>2. First installment fee amount First installment</p>

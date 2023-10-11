@@ -2,6 +2,7 @@ import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
 import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
 import { ExamResultService } from 'src/app/services/exam-result.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
+import { SchoolService } from 'src/app/services/school.service';
 @Component({
   selector: 'app-student-result',
   templateUrl: './student-result.component.html',
@@ -14,15 +15,22 @@ export class StudentResultComponent implements OnInit {
   examResultInfo: any;
   resultStructureInfo: any;
   processedData: any[] = [];
-  
-  constructor(private studentAuthService: StudentAuthService,private printPdfService:PrintPdfService, private examResultService: ExamResultService) {}
+  schoolInfo:any;
+  constructor(private schoolService:SchoolService,private studentAuthService: StudentAuthService,private printPdfService:PrintPdfService, private examResultService: ExamResultService) {}
   ngOnInit(): void {
+    this.getSchool();
     let studentInfo = this.studentAuthService.getLoggedInStudentInfo();
     let studentId = studentInfo?.id;
     this.examResult(studentId);
   }
 
-
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=> {
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
+  }
   printContent() {
     this.printPdfService.printElement(this.content.nativeElement);
   }

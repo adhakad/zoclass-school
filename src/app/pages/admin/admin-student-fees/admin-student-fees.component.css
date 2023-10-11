@@ -7,7 +7,6 @@
   background-color: #fff;
   border: none;
   padding: 25px;
-  margin-left: 10px;
   margin-top: 2vh;
 }
 .logo-table {
@@ -86,6 +85,7 @@ img{
 }
 @media (min-width: 576px) and (max-width:991.98px) {
   .table-container {
+    margin-top: 1vh;
     border: 1px solid #ccc;
   }
   .logo-table {
@@ -108,7 +108,10 @@ img{
 }
 @media (min-width: 992px) {
   .table-container {
-    border: 1px solid #ccc;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    border-radius: 5px;
+    /* border: 1px solid #ccc; */
   }
   .logo-table {
     width: 100%;

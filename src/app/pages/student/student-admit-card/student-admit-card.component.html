@@ -15,28 +15,30 @@
                 </div>
                 <div #content class="custom-container" *ngIf="studentAdmitCardInfo">
                   <div class="table-container">
-                    <table class="logo-table text-bold">
+                    <table class="logo-table text-bold text-center">
                       <tr>
                         <td>
-                          <img src="../../../../assets/logo.png" alt=""> Vandana Convent School,Guna
+                          <img src="../../../../assets/logo.png" alt="">
+                          {{schoolInfo?.schoolName}}
                         </td>
                       </tr>
                     </table>
-                    <table class="info-table">
+                    <table class="info-table text-center">
                       <tr>
                         <td>
-                          School Code : 2832
+                          School Code : {{schoolInfo?.schoolCode}}
                         </td>
                         <td>
                           {{studentAdmitCardInfo?.examType | titlecase}}
                           Exam Admit Card - 2023
                         </td>
                         <td>
-                          Affiliation No. : 1050
+                          Affiliation No. :
+                          {{schoolInfo?.affiliationNumber}}
                         </td>
                       </tr>
                     </table>
-                    <table class="info-table">
+                    <table class="info-table text-center">
                       <tr>
                         <th>Admission No. :</th>
                         <td>

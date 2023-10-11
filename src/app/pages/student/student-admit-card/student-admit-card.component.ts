@@ -2,6 +2,7 @@ import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
 import { AdmitCardService } from 'src/app/services/admit-card.service';
 import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-student-admit-card',
@@ -12,12 +13,14 @@ export class StudentAdmitCardComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
   errorMsg: string = '';
   studentAdmitCardInfo: any;
+  schoolInfo:any;
   studentInfo: any;
   admitCardInfo: any;
   processedData: any[] = [];
 
-  constructor(private studentAuthService: StudentAuthService,private printPdfService: PrintPdfService, private admitCardService: AdmitCardService) {}
+  constructor(private schoolService:SchoolService,private studentAuthService: StudentAuthService,private printPdfService: PrintPdfService, private admitCardService: AdmitCardService) {}
   ngOnInit(): void {
+    this.getSchool();
     this.studentInfo = this.studentAuthService.getLoggedInStudentInfo();
     let studentId = this.studentInfo?.id;
     this.admitCard(studentId);
@@ -30,7 +33,13 @@ export class StudentAdmitCardComponent implements OnInit {
   downloadPDF() {
     this.printPdfService.generatePDF(this.content.nativeElement, "Admitcard.pdf");
   }
-
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=> {
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
+  }
   
   admitCard(studentId:any) {
     this.admitCardService.singleStudentAdmitCardById(studentId).subscribe((res: any) => {

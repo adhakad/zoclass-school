@@ -6,27 +6,29 @@
         </div>
         <div class="col-12 col-lg-10">
             <div class="row">
-                <div class="col-12 big-container pb-4">
+                <div class="col-12 big-container">
                     <div class="row mt-2">
                         <div #content class="custom-container">
                             <div class="table-container">
-                                <table class="logo-table text-bold">
+                                <table class="logo-table text-bold text-center">
                                     <tr>
                                         <td>
-                                            <img src="../../../../assets/logo.png" alt=""> Vandana Convent School,Guna
+                                            <img src="../../../../assets/logo.png" alt="">
+                                            {{schoolInfo?.schoolName}}
                                         </td>
                                     </tr>
                                 </table>
                                 <table class="info-table text-center">
                                     <tr>
                                         <td>
-                                            School Code : 2832
+                                            School Code : {{schoolInfo?.schoolCode}}
                                         </td>
                                         <td>
                                             School Fee Statement - 2023
                                         </td>
                                         <td>
-                                            Affiliation No. : 1050
+                                            Affiliation No. :
+                                            {{schoolInfo?.affiliationNumber}}
                                         </td>
                                     </tr>
                                 </table>
@@ -136,25 +138,27 @@
                             <div class="row">
                                 <div #receipt class="custom-container">
                                     <div class="table-container">
-                                        <table class="logo-table text-bold">
+                                        <table class="logo-table text-bold text-center">
+                                            <tr>
                                             <tr>
                                                 <td>
-                                                    <img src="../../../../assets/logo.png" alt=""> Vandana Convent
-                                                    School,Guna
+                                                    <img src="../../../../assets/logo.png" alt="">
+                                                    {{schoolInfo?.schoolName}}
                                                 </td>
                                             </tr>
                                         </table>
                                         <table class="info-table text-center">
                                             <tr>
                                                 <td>
-                                                    School Code - 2832
+                                                    School Code : {{schoolInfo?.schoolCode}}
                                                 </td>
                                                 <td>
-                                                    Affiliation No. - 1050
+                                                    Affiliation No. :
+                                                    {{schoolInfo?.affiliationNumber}}
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table class="info-table">
+                                        <table class="info-table text-center">
                                             <tr>
                                                 <td class="text-bold">Receipt No. :</td>
                                                 <td>{{ singleReceiptInstallment[0]?.receiptNo }}</td>
@@ -211,7 +215,8 @@
                                                 <td></td>
                                                 <td>
                                                     <p class="text-center"><span class="text-bold">{{
-                                                            singleReceiptInstallment[0]?.installment |titlecase }}</span>
+                                                            singleReceiptInstallment[0]?.installment |titlecase
+                                                            }}</span>
                                                         installment amount deposited <span class="text-bold">&#8377; {{
                                                             singleReceiptInstallment[0]?.paidAmount }} /-</span></p>
                                                 </td>

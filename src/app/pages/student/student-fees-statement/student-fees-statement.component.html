@@ -14,21 +14,22 @@
                                     <table class="logo-table text-bold">
                                         <tr>
                                             <td>
-                                                <img src="../../../../assets/logo.png" alt=""> Vandana Convent
-                                                School,Guna
+                                                <img src="../../../../assets/logo.png" alt="">
+                                                {{schoolInfo?.schoolName}}
                                             </td>
                                         </tr>
                                     </table>
                                     <table class="info-table text-center">
                                         <tr>
                                             <td>
-                                                School Code : 2832
+                                                School Code : {{schoolInfo?.schoolCode}}
                                             </td>
                                             <td>
                                                 School Fee Statement - 2023
                                             </td>
                                             <td>
-                                                Affiliation No. : 1050
+                                                Affiliation No. :
+                                                {{schoolInfo?.affiliationNumber}}
                                             </td>
                                         </tr>
                                     </table>
@@ -143,25 +144,26 @@
                             <div class="row">
                                 <div #receipt class="custom-container">
                                     <div class="table-container" style="margin-left:5px;">
-                                        <table class="logo-table text-bold">
+                                        <table class="logo-table text-bold text-center">
                                             <tr>
                                                 <td>
-                                                    <img src="../../../../assets/logo.png" alt=""> Vandana Convent
-                                                    School,Guna
+                                                    <img src="../../../../assets/logo.png" alt="">
+                                                    {{schoolInfo?.schoolName}}
                                                 </td>
                                             </tr>
                                         </table>
                                         <table class="info-table text-center">
                                             <tr>
                                                 <td>
-                                                    School Code - 2832
+                                                    School Code : {{schoolInfo?.schoolCode}}
                                                 </td>
                                                 <td>
-                                                    Affiliation No. - 1050
+                                                    Affiliation No. :
+                                                    {{schoolInfo?.affiliationNumber}}
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table class="info-table">
+                                        <table class="info-table text-center">
                                             <tr>
                                                 <td class="text-bold">Receipt No. :</td>
                                                 <td>{{ singleReceiptInstallment[0]?.receiptNo }}</td>
