@@ -6,6 +6,7 @@ import { FeesStructureService } from 'src/app/services/fees-structure.service';
 import { FeesService } from 'src/app/services/fees.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
 import { PaymentService } from 'src/app/services/payment/payment.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-student-fees',
@@ -23,13 +24,22 @@ export class StudentFeesComponent implements OnInit {
   paybleInstallment: any[] = [];
   check: boolean = false;
   student:any;
-  constructor(private router: Router, private paymentService: PaymentService, private studentAuthService: StudentAuthService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
+  schoolInfo:any;
+  constructor(private schoolService:SchoolService, private paymentService: PaymentService, private studentAuthService: StudentAuthService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
+    this.getSchool;
     this.student = this.studentAuthService.getLoggedInStudentInfo();
     this.cls = this.student.class;
     this.studentId = this.student.id;
     this.feesStructureByClass(this.cls);
+  }
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=>{
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
   }
 
   feesStructureByClass(cls: any) {
