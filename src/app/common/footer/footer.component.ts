@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
     this.currentYear = (new Date()).getFullYear();
   }
   softwareCompany(){
-    window.location.href = 'https://www.linkedin.com';
+    window.location.href = 'https://www.linkedin.com/in/abhishek-dhakad-53360216b';
   }
   getSchool(){
     this.schoolService.getSchool().subscribe((res:any)=> {

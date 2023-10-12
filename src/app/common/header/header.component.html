@@ -111,62 +111,62 @@
   <mat-toolbar class="hamburger-menu">
     <mat-icon class="close-icon" (click)="hamburgerMenu(false)">close</mat-icon>
     <button mat-menu-item routerLink="/" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Home</span>
     </button>
     <button mat-menu-item routerLink="/about">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>About school</span>
     </button>
     <button mat-menu-item>
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>School Information</span>
     </button>
     <button mat-menu-item routerLink="/admit-card">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Admit Card</span>
     </button>
     <button mat-menu-item routerLink="/result">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Exam Result</span>
     </button>
     <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/admin/login">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Admin Login</span>
     </button>
     <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/teacher/login">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Teacher Login</span>
     </button>
     <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/student/login">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Student Login</span>
     </button>
     <button mat-menu-item *ngIf="isAdminAuthenticated" routerLink="/admin/dashboard">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Admin Dashboard</span>
     </button>
     <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Teacher Dashboard</span>
     </button>
     <button mat-menu-item *ngIf="isStudentAuthenticated" routerLink="/student/dashboard">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Student Dashboard</span>
     </button>
     <button mat-menu-item *ngIf="isAdminAuthenticated" (click)="onLogout('admin')">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Logout</span>
     </button>
     <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Logout</span>
     </button>
     <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">
-      <mat-icon>dialpad</mat-icon>
+      <!-- <mat-icon>dialpad</mat-icon> -->
       <span>Logout</span>
     </button>
   </mat-toolbar>

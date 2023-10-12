@@ -65,15 +65,15 @@ Header section
 
 .hamburger-menu button {
   font-size: large;
-  color: #8d6dff !important;
+  color: #4e4caacd !important;
 }
 
 .hamburger-menu .mat-icon {
-  color: #8d6dff !important;
+  color: #4e4caacd !important;
 }
 
 .close-icon {
-  color: #8d6dff !important;
+  color: #4e4caacd !important;
   font-size: 28px;
   margin-top: 3.5vh;
   margin-left: 88%;

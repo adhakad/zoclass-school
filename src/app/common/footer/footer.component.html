@@ -3,12 +3,26 @@
         <div class="row mx-3">
             <div class="col-lg-3 offset-lg-1">
                 <div class="row">
-                    <div class="col-10 offset-1">
-                        <h3 class="mb-4">Our Classes</h3>
-                        <p>Competitive Exams</p>
-                        <p>IIT JEE</p>
-                        <p>NEET</p>
-                        <p>Olympiad Preparation</p>
+                    <div class="col-10 col-lg-12 offset-1">
+                        <h3 class="mb-4">{{schoolInfo?.schoolName}}</h3>
+                        <p></p>
+                        <div class="row">
+                            <div class="col-1">
+                                <mat-icon>location_on</mat-icon>
+                            </div>
+                            <div class="col-10 col-lg-11" style="padding-left: 15px !important;">
+                                <p style="display: inline;">Goushala ke pass {{schoolInfo?.street}},
+                                    {{schoolInfo?.city}}, {{schoolInfo?.state}}
+                                    ({{schoolInfo?.country}}) {{schoolInfo?.pinCode}}</p>
+                            </div>
+                            <p></p>
+                            <div class="col-3"><i class="bi bi-facebook"></i></div>
+                            <div class="col-3"><i class="bi bi-linkedin"></i></div>
+                            <div class="col-3"><i class="bi bi-twitter"></i></div>
+                            <div class="col-3"><i class="bi bi-youtube"></i></div>
+                            <!-- <p></p> -->
+                            <p>All Rights Reserve &copy; {{currentYear}} | {{schoolInfo?.schoolName}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,7 +53,6 @@
             <mat-divider></mat-divider>
         </div>
         <div class="copyright mt-3">
-            <p>All Rights Reserve &copy; {{currentYear}} | {{schoolInfo?.schoolName}}</p>
             <p class="software-company" (click)="softwareCompany()">Developed By <span>Zoclass Solutions</span></p>
         </div>
     </div>

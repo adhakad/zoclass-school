@@ -37,6 +37,15 @@
 .copyright .software-company span {
    color: rgb(184, 184, 255);
 }
+.bi-facebook ,.bi-linkedin,.bi-twitter,.bi-youtube{
+   font-size: 2em;
+   color: #e0e0ffe2;
+   margin-right: 20px;
+}
+.mat-icon{
+   color: #e0e0ffe2;
+   display: inline;
+}
 
 @media (min-width: 992px) {
 
