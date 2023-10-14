@@ -10,6 +10,7 @@ body {
   --common-color: #fff;
   --header-height: 10vh;
 }
+
 /*
 Header section
 */
@@ -36,13 +37,16 @@ Header section
 .header .logo span {
   color: #8d6dff;
   margin-left: 5px;
-  /* color: #7f60da; */
   font: 1em sans-serif;
   letter-spacing: .5px;
 }
 
 .main-menu {
   display: none;
+}
+
+.hamburger {
+  margin-left: 15% !important;
 }
 
 .hamburger-icon {
@@ -137,13 +141,16 @@ Dashboard section
   letter-spacing: .6px;
   font-size: 18px;
 }
-h4{
+
+h4 {
   color: #4e4caacd;
 }
-p{
+
+p {
   color: #4e4caacd;
   font-size: 15px;
 }
+
 .category-card {
   background: #ebebff;
   height: 200px;
@@ -218,12 +225,14 @@ p{
 
 th {
   white-space: nowrap;
-  color: #4e4caacd;;
+  color: #4e4caacd;
+  ;
 }
 
 td {
   white-space: nowrap;
-  color: #4e4caacd;;
+  color: #4e4caacd;
+  ;
 }
 
 table mat-icon {
@@ -435,6 +444,10 @@ Header section
   .header .main-menu .menu-item {
     font: 1.20em sans-serif;
     letter-spacing: .85px;
+  }
+
+  .hamburger {
+    display: none;
   }
 
   .hamburger-menu {

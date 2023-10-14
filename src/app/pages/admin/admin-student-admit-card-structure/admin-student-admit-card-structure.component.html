@@ -9,11 +9,19 @@
                 <div class="col-12 big-container">
                     <div class="col-lg-12 offset-lg-0">
                         <div class="main-card">
-                            <div class="row mt-4 mb-2">
+                            <div class="row">
+                                <div class="col-12 col-lg-4 pt-2">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>Settings > Admit Card > Structure</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-2">
                                 <div class="col-8 col-lg-5">
                                     <button class="submit-button" mat-raised-button
-                                        (click)="addAdmitCardModel()"><mat-icon>add</mat-icon>Create Admit Card
-                                        Structure</button>
+                                        (click)="addAdmitCardModel()"><mat-icon>add</mat-icon>Create</button>
                                 </div>
                             </div>
 
@@ -46,15 +54,17 @@
                                             <p class="mb-0">{{examAdmitCard.stream}}</p>
                                         </td>
                                         <td class="mb-0">
-                                            <mat-icon (click)="deleteAdmitCardStructureModel(examAdmitCard._id)">delete</mat-icon>
-                                          </td>
+                                            <mat-icon
+                                                (click)="deleteAdmitCardStructureModel(examAdmitCard._id)">delete</mat-icon>
+                                        </td>
                                     </tr>
 
                                 </tbody>
                             </table>
 
                             <div class="modal fade show" [class.show]="showModal">
-                                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode && !successMsg">
+                                <div class="modal-dialog modal-dialog-scrollable"
+                                    [class.modal-lg]="!deleteMode && !successMsg">
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>

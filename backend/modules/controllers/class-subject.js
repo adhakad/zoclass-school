@@ -74,12 +74,14 @@ let CreateClassSubject = async (req, res, next) => {
     let className = req.body.class;
     let { stream, subject } = req.body;
     subject = subject.map(subject => ({ subject }));
-    
+    const classSubjectData = {
+        class: className,
+        stream: stream,
+        subject: subject,
+    }
     try {
-        const classSubjectData = {
-            class: className,
-            stream: stream,
-            subject: subject,
+        if(subject.length ==0 || subject ==null){
+            return res.status(400).json(`Please select subject according to this class!`)
         }
         let checkClassSubject = await ClassSubjectModel.findOne({ class: className, stream: stream });
         if(checkClassSubject){

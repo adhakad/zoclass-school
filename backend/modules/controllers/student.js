@@ -17,11 +17,11 @@ let GetStudentPagination = async (req, res, next) => {
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
-        const studentList = await StudentModel.find(searchObj)
+        const studentList = await StudentModel.find({class:10}).find(searchObj)
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
-        const countStudent = await StudentModel.count();
+        const countStudent = await StudentModel.count({class:10});
 
         let studentData = { countStudent: 0 };
         studentData.studentList = studentList;
