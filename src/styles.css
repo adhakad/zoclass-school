@@ -56,6 +56,7 @@ Header section
 }
 
 .hamburger-menu {
+  color:#FF9999;
   height: 100vh;
   width: 100%;
   position: fixed;

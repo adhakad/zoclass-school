@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const StudentModel = mongoose.model('student', {
     session: { type: String },
-    admissionType: { type: String },
-    class: { type: Number },
-    stream: { type: String },
-    admissionNo: { type: Number },
     name: { type: String },
+    class: { type: Number },
+    admissionNo: { type: Number },
     rollNumber: { type: Number },
+    admissionType: { type: String },
+    stream: { type: String },
     dob: { type: String },
     doa: { type: String },
     gender: { type: String },

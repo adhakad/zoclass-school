@@ -50,7 +50,7 @@ export class AdminStudentFeesComponent implements OnInit {
   receiptInstallment:any={};
   receiptMode:boolean = false;
 
-  constructor(private fb: FormBuilder,private schoolService:SchoolService, public activatedRoute: ActivatedRoute,private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private schoolService:SchoolService,private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
       class:[''],
       studentId:[''],

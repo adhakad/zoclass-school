@@ -1,4 +1,6 @@
 const fs = require("fs");
+const crypto = require('crypto');
+
 const BannerModel = require('../models/banner');
 
 let countBanner = async(req,res,next) => {
@@ -35,6 +37,28 @@ let GetBannerPagination = async(req,res,next) => {
     }
 }
 let GetAllBanner = async(req,res,next) => {
+
+    function generateComplexLicenseKey(length) {
+      const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      const charsetLength = charset.length;
+    
+      let licenseKey = '';
+      const randomBytes = crypto.randomBytes(length);
+    
+      for (let i = 0; i < length; i++) {
+        const randomIndex = randomBytes.readUInt8(i) % charsetLength;
+        licenseKey += charset.charAt(randomIndex);
+      }
+    
+      return licenseKey;
+    }
+    
+    const complexLicenseKey = generateComplexLicenseKey(32); // 32-character key
+    console.log('Generated Complex License Key:', complexLicenseKey);
+    
+
+
+
     try{
         const bannerList = await BannerModel.find({});
         return res.status(200).json(bannerList);

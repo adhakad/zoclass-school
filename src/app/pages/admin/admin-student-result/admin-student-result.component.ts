@@ -15,7 +15,7 @@ import { ExamResultStructureService } from 'src/app/services/exam-result-structu
 export class AdminStudentResultComponent implements OnInit {
   examResultForm: FormGroup;
   showModal: boolean = false;
-  showBulkResultModal: boolean = false;
+  showBulkImportModal: boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
   deleteById: String = '';
@@ -70,7 +70,7 @@ export class AdminStudentResultComponent implements OnInit {
 
   }
   addBulkExamResultModel() {
-    this.showBulkResultModal = true;
+    this.showBulkImportModal = true;
     this.errorCheck = false;
   }
   updateExamResultModel(examResult: any) {
@@ -108,7 +108,7 @@ export class AdminStudentResultComponent implements OnInit {
     this.stream = '';
     this.examResultForm.reset();
     this.showModal = false;
-    this.showBulkResultModal = false;
+    this.showBulkImportModal = false;
   }
   onChange(event: MatRadioChange) {
     this.selectedValue = event.value;

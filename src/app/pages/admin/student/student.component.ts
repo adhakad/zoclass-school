@@ -1,8 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// import { read, utils, writeFile } from 'xlsx';
+// import * as ExcelJS from 'exceljs';
 import { Subject } from 'rxjs';
 import { StudentService } from 'src/app/services/student.service';
 import { ClassService } from 'src/app/services/class.service';
+import { MatRadioChange } from '@angular/material/radio';
+import { ExcelService} from 'src/app/services/excel/excel.service';
+import { SchoolService } from 'src/app/services/school.service';
+// export interface ROW_ITEM {
+//   NO:Number;
+//   ID: number;
+//   NAME: string;
+//   DEPARTMENT: string;
+//   MONTH: string;
+//   YEAR: number;
+//   SALES: number;
+//   CHANGE: number;
+//   LEADS: number;
+// }
 
 @Component({
   selector: 'app-student',
@@ -12,6 +29,8 @@ import { ClassService } from 'src/app/services/class.service';
 export class StudentComponent implements OnInit {
   studentForm: FormGroup;
   showModal: boolean = false;
+  showBulkImportModal: boolean = false;
+  showBulkExportModal: boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
   deleteById: String = '';
@@ -20,23 +39,30 @@ export class StudentComponent implements OnInit {
   errorCheck: Boolean = false;
   classInfo: any[] = [];
   studentInfo: any[] = [];
+  studentInfoByClass: any[] = [];
   recordLimit: number = 10;
   filters: any = {};
   number: number = 0;
   paginationValues: Subject<any> = new Subject();
   page: Number = 0;
+  selectedValue: number = 0;
 
-  sessions:any;
-  categorys:any;
-  religions:any;
-  qualifications:any;
-  occupations:any;
-  stream: string='';
+  sessions: any;
+  categorys: any;
+  religions: any;
+  qualifications: any;
+  occupations: any;
+  stream: string = '';
   notApplicable: String = "stream";
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
-  cls:number =0;
-  admissionType:string='';
-  constructor(private fb: FormBuilder, private classService: ClassService, private studentService: StudentService) {
+  cls: number = 0;
+  className: any;
+  admissionType: string = '';
+  schoolInfo:any;
+
+  dataForExcel: any[] = [];
+
+  constructor(private fb: FormBuilder,private schoolService:SchoolService,public ete: ExcelService, public activatedRoute: ActivatedRoute, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
       session: ['', Validators.required],
@@ -68,50 +94,65 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getStudents({ page: 1 });
+    this.className = this.activatedRoute.snapshot.paramMap.get('id');
+    if (this.className) {
+      this.getStudents({ page: 1 });
+    }
+    this.getSchool();
     this.getClass();
     this.allOptions();
   }
-  chooseAdmissionType(event:any){
-    if(event){
-      if(event.value=='new'){
+  getSchool(){
+    this.schoolService.getSchool().subscribe((res:any)=>{
+      if(res){
+        this.schoolInfo = res;
+      }
+    })
+  }
+  chooseAdmissionType(event: any) {
+    if (event) {
+      if (event.value == 'new') {
         this.admissionType = event.value;
         const admissionNo = Math.floor(Math.random() * 89999999 + 10000000);
         this.studentForm.get('admissionNo')?.setValue(admissionNo);
       }
-      if(event.value=='old'){
+      if (event.value == 'old') {
         this.admissionType = event.value;
         this.studentForm.get('admissionNo')?.setValue(null);
       }
     }
   }
   chooseClass(event: any) {
-    if(event){
-      if(this.stream){
+    if (event) {
+      if (this.stream) {
         this.studentForm.get('stream')?.setValue(null);
       }
       this.cls = event.value;
     }
   }
-  chooseStream(event:any){
+  chooseStream(event: any) {
     this.stream = event.value;
   }
 
-  date(e:any) {
+  date(e: any) {
     var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
     this.studentForm.get('dob')?.setValue(convertDate, {
       onlyself: true,
     });
   }
-
+  onChange(event: MatRadioChange) {
+    this.selectedValue = event.value;
+  }
   closeModal() {
     this.showModal = false;
+    this.showBulkImportModal = false;
+    this.showBulkExportModal = false;
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
     this.stream = '';
     this.cls = 0;
-    this.admissionType='';
+    this.admissionType = '';
     this.studentForm.reset();
   }
   addStudentModel() {
@@ -119,6 +160,15 @@ export class StudentComponent implements OnInit {
     this.deleteMode = false;
     this.updateMode = false;
     this.studentForm.reset();
+  }
+  addBulkStudentImportModel() {
+    this.showBulkImportModal = true;
+    this.errorCheck = false;
+  }
+  addBulkStudentExportModel() {
+    this.showBulkExportModal = true;
+    this.errorCheck = false;
+    this.getStudentByClass(this.className);
   }
   updateStudentModel(student: any) {
     this.showModal = true;
@@ -148,13 +198,22 @@ export class StudentComponent implements OnInit {
     }, 1000)
   }
 
+  getStudentByClass(cls:any){
+    this.studentService.getStudentByClass(cls).subscribe((res:any)=> {
+      if(res){
+        this.studentInfoByClass = res;
+        console.log([...this.studentInfoByClass])
+      }
+    })
+  }
   getStudents($event: any) {
     this.page = $event.page
     return new Promise((resolve, reject) => {
       let params: any = {
         filters: {},
         page: $event.page,
-        limit: $event.limit ? $event.limit : this.recordLimit
+        limit: $event.limit ? $event.limit : this.recordLimit,
+        class: this.className
       };
       this.recordLimit = params.limit;
       if (this.filters.searchText) {
@@ -218,6 +277,24 @@ export class StudentComponent implements OnInit {
         this.deleteById = '';
       }
     })
+  }
+
+
+  exportToExcel() {
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    let currentYear = (new Date()).getFullYear();
+    let currentMonth = (new Date()).getMonth();
+    let currentMonthText = months[currentMonth];
+    this.studentInfoByClass.forEach((row: any) => {
+      this.dataForExcel.push(row);
+    });
+    let reportData = {
+      title: `${this.schoolInfo?.schoolName} Student Record - ${currentMonthText} ${currentYear}`,
+      data: this.dataForExcel,
+      headers: Object.keys(this.studentInfoByClass[0]),
+    };
+
+    this.ete.exportExcel(reportData);
   }
 
   allOptions() {

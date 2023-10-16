@@ -1,1 +1,19 @@
 @import'../../../../styles.css';
+
+.radio-btn-mobile {
+    display: inline;
+}
+
+.radio-btn-desktop {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .radio-btn-mobile {
+        display: none;
+    }
+
+    .radio-btn-desktop {
+        display: inline;
+    }
+}

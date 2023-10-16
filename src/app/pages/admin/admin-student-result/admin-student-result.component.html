@@ -11,26 +11,26 @@
             <div class="main-card">
               <div class="row">
                 <div class="col-12 col-lg-4 pt-2 pb-2">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>Exam Result ><span>
-                                    {{cls | classSuffix}}</span></h3>
-                        </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <h3>Exam Result ><span>
+                          {{cls | classSuffix}}</span></h3>
                     </div>
-                </div>
-            </div>
-              <div class="row mb-2">
-                  <div class="col-6 col-lg-6">
-                    <mat-radio-group (change)="onChange($event)">
-                      <mat-radio-button [value]="0" [checked]="selectedValue==0">Bulk Result Create</mat-radio-button>
-                      <mat-radio-button [value]="1" [checked]="selectedValue==1">Single Result Create</mat-radio-button>
-                    </mat-radio-group>
                   </div>
-                <div class="col-4 col-lg-2 offset-2 offset-lg-4">
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-8 col-lg-6">
+                  <mat-radio-group (change)="onChange($event)">
+                    <mat-radio-button [value]="0" [checked]="selectedValue==0">Single Result</mat-radio-button>
+                    <mat-radio-button [value]="1" [checked]="selectedValue==1">Bulk Result</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col-4 col-lg-2 offset-lg-4">
                   <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
-                    (click)="addBulkExamResultModel()"><mat-icon>add</mat-icon>Create</button>
-                  <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
                     (click)="addExamResultModel()"><mat-icon>add</mat-icon>Create</button>
+                  <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
+                    (click)="addBulkExamResultModel()"><mat-icon>add</mat-icon>Import</button>
                 </div>
               </div>
               <table class="table table-hover align-middle mt-2 mb-1 bg-white">
@@ -73,7 +73,7 @@
                   </tr>
                 </tbody>
               </table>
-              
+
               <div class="modal fade show" [class.show]="showModal">
                 <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content" *ngIf="successMsg">
@@ -179,8 +179,8 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button class="submit-button" [disabled]="!examResultForm.valid || !classSubject" mat-raised-button
-                          type="submit">Submit</button>
+                        <button class="submit-button" [disabled]="!examResultForm.valid || !classSubject"
+                          mat-raised-button type="submit">Submit</button>
                       </div>
                     </form>
                     <div *ngIf="deleteMode">
@@ -194,9 +194,8 @@
                 </div>
               </div>
 
-              <div class="modal fade show" [class.show]="showBulkResultModal">
+              <div class="modal fade show" [class.show]="showBulkImportModal">
                 <div class="modal-dialog modal-dialog-top" role="document">
-
                   <div class="modal-content" *ngIf="successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -288,9 +287,9 @@
                       </main>
                     </div>
                     <div class="modal-footer">
-                      <button [disabled]="!fileChoose || !selectedExam || !stream" (click)="addBulkExamResult()" class="submit-button"
-                        mat-raised-button>
-                        Upload
+                      <button [disabled]="!fileChoose || !selectedExam || !stream" (click)="addBulkExamResult()"
+                        class="submit-button" mat-raised-button>
+                        Import
                       </button>
                     </div>
                   </div>

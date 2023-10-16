@@ -10,17 +10,35 @@
           <div class="col-lg-12 offset-lg-0">
             <div class="main-card">
               <div class="row mt-4 mb-2">
-                <div class="col-8 col-lg-5">
+                <div class="col-12 radio-btn-mobile mb-3">
+                  <mat-radio-group (change)="onChange($event)">
+                    <mat-radio-button [value]="0" [checked]="selectedValue==0">Single Create</mat-radio-button>
+                    <mat-radio-button [value]="1" [checked]="selectedValue==1">Bulk Import</mat-radio-button>
+                    <mat-radio-button [value]="2" [checked]="selectedValue==2">Bulk Export</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col-8 col-lg-5 mb-2">
                   <input type="text" class="form-control" placeholder="Student Search..." id="searchText"
                     name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
                     (keyup)="getStudents({page : 1, limit : 0})">
                 </div>
-                <div class="col-4 col-lg-2 offset-lg-5">
-                  <button class="submit-button" mat-raised-button
+                <div class="col-9 col-lg-5 radio-btn-desktop mt-2">
+                  <mat-radio-group (change)="onChange($event)">
+                    <mat-radio-button [value]="0" [checked]="selectedValue==0">Single Create</mat-radio-button>
+                    <mat-radio-button [value]="1" [checked]="selectedValue==1">Bulk Import</mat-radio-button>
+                    <mat-radio-button [value]="2" [checked]="selectedValue==2">Bulk Export</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col-4 col-lg-2">
+                  <button *ngIf="selectedValue==0" class="submit-button" mat-raised-button
                     (click)="addStudentModel()"><mat-icon>add</mat-icon>Create</button>
+                  <button *ngIf="selectedValue==1" class="submit-button" mat-raised-button
+                    (click)="addBulkStudentImportModel()"><mat-icon>add</mat-icon>Import</button>
+                  <button *ngIf="selectedValue==2" class="submit-button" mat-raised-button
+                    (click)="addBulkStudentExportModel()"><mat-icon>cloud_download</mat-icon> Export</button>
                 </div>
               </div>
-              <table class="table table-hover align-middle mt-2 mb-1 bg-white">
+              <table class="table table-hover align-middle mb-1 bg-white">
                 <thead class="bg-light">
                   <tr class="text-muted">
                     <th>No.</th>
@@ -131,11 +149,11 @@
                                 <mat-select matInput formControlName="class">
                                   <div *ngFor="let classInfo of classInfo">
                                     <mat-option [value]="classInfo.class"
-                                      (click)="chooseClass(studentForm.get('class'))">{{classInfo.class | classSuffix}}</mat-option>
+                                      (click)="chooseClass(studentForm.get('class'))">{{classInfo.class |
+                                      classSuffix}}</mat-option>
                                   </div>
                                 </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('class')?.valid && studentForm.get('class')?.touched"
+                                <mat-hint *ngIf="!studentForm.get('class')?.valid && studentForm.get('class')?.touched"
                                   class="form-text text-danger">Class is required</mat-hint>
                               </mat-form-field>
                             </div>
@@ -157,8 +175,8 @@
                                   </ng-container>
                                 </mat-select>
                                 <mat-hint
-                                    *ngIf="!studentForm.get('stream')?.valid && studentForm.get('stream')?.touched"
-                                    class="form-text text-danger">Stream is required</mat-hint>
+                                  *ngIf="!studentForm.get('stream')?.valid && studentForm.get('stream')?.touched"
+                                  class="form-text text-danger">Stream is required</mat-hint>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
@@ -166,8 +184,12 @@
                                 <mat-label>Admission Type</mat-label>
                                 <mat-select type="text" matInput formControlName="admissionType">
                                   <div>
-                                    <mat-option value="new" (click)="chooseAdmissionType(studentForm.get('admissionType'))">New Admission</mat-option>
-                                    <mat-option value="old" (click)="chooseAdmissionType(studentForm.get('admissionType'))">Old Admission</mat-option>
+                                    <mat-option value="new"
+                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">New
+                                      Admission</mat-option>
+                                    <mat-option value="old"
+                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">Old
+                                      Admission</mat-option>
                                   </div>
                                 </mat-select>
                                 <mat-hint
@@ -179,7 +201,7 @@
                               <mat-form-field appearance="outline">
                                 <mat-label>Admission No.</mat-label>
                                 <input matInput readonly>
-                              </mat-form-field> 
+                              </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6" *ngIf="admissionType=='new'">
                               <mat-form-field appearance="outline">
@@ -188,7 +210,7 @@
                                 <mat-hint
                                   *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
                                   class="form-text text-danger">Admission no. is required</mat-hint>
-                              </mat-form-field> 
+                              </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6" *ngIf="admissionType=='old'">
                               <mat-form-field appearance="outline">
@@ -197,7 +219,7 @@
                                 <mat-hint
                                   *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
                                   class="form-text text-danger">Admission no. is required</mat-hint>
-                              </mat-form-field> 
+                              </mat-form-field>
                             </div>
                             <ng-container>
                               <h3>Student Info</h3>
@@ -206,8 +228,7 @@
                               <mat-form-field appearance="outline">
                                 <mat-label>Name</mat-label>
                                 <input matInput type="text" formControlName="name">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('name')?.valid && studentForm.get('name')?.touched"
+                                <mat-hint *ngIf="!studentForm.get('name')?.valid && studentForm.get('name')?.touched"
                                   class="form-text text-danger">Name is required</mat-hint>
                               </mat-form-field>
                             </div>
@@ -415,6 +436,183 @@
                   </div>
                 </div>
               </div>
+
+              <div class="modal fade show" [class.show]="showBulkImportModal">
+                <div class="modal-dialog modal-dialog-top" role="document">
+                  <div class="modal-content" *ngIf="successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p class="success-message">{{successMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <mat-icon></mat-icon>
+                    </div>
+                  </div>
+                  <div class="modal-content" *ngIf="!successMsg">
+                    <div class="modal-header">
+                      <h6 class="modal-title">File Choose xlsx/csv
+                      </h6>
+                      <mat-icon matRipple (click)="closeModal()" style="cursor: pointer;">close</mat-icon>
+                    </div>
+                    <div class="modal-body">
+                      <div *ngIf="errorCheck">
+                        <p class="error-message">{{errorMsg}}</p>
+                      </div>
+                      <main>
+                        <!-- <div class="row mb-2 mt-5">
+                          <mat-form-field appearance="outline">
+                            <mat-label>Exam Type</mat-label>
+                            <mat-select #examSelect matInput>
+                              <div *ngFor="let exam of examType">
+                                <mat-option (click)="selectExam(examSelect.value)" value="{{exam}}">
+                                  {{exam | titlecase}} Exam
+                                </mat-option>
+                              </div>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline">
+                            <mat-label>Stream</mat-label>
+                            <mat-select type="text" matInput>
+                              <ng-container *ngIf="cls==12 || cls==11">
+                                <div *ngFor="let subject of streamMainSubject">
+                                  <mat-option (click)="chooseStream(subject)"
+                                    value="{{subject}}">{{subject}}</mat-option>
+                                </div>
+                              </ng-container>
+                              <ng-container *ngIf="cls<11">
+                                <div>
+                                  <mat-option value="notApplicable"
+                                    (click)='chooseStream(notApplicable)'>N/A</mat-option>
+                                </div>
+                              </ng-container>
+                            </mat-select>
+                          </mat-form-field>
+                          <div class="custom-file">
+                            <input type="file" name="file" class="form-control file-input" id="inputGroupFile" required
+                              (change)="handleImport($event)"
+                              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                          </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Roll Number</th>
+                                            <th scope="col">Class</th>
+                                            <th scope="col">Hindi</th>
+                                            <th scope="col">English</th>
+                                            <th scope="col">Sanskrit</th>
+                                            <th scope="col">Maths</th>
+                                            <th scope="col">Science</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="movies.length;">
+                                            <tr *ngFor="let movie of movies; let i = index">
+                                                <th scope="row">{{ i + 1 }}</th>
+                                                <td>{{ movie.rollNumber }}</td>
+                                                <td>{{ movie.Class }}</td>
+                                                <td>{{ movie.Hindi }}</td>
+                                                <td>{{ movie.English }}</td>
+                                                <td>{{ movie.Sanskrit }}</td>
+                                                <td>{{ movie.Maths }}</td>
+                                                <td>{{ movie.Science }}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                      </main>
+                    </div>
+                    <div class="modal-footer">
+                      <!-- <button [disabled]="!fileChoose || !selectedExam || !stream" (click)="addBulkExamResult()"
+                        class="submit-button" mat-raised-button>
+                        Import
+                      </button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+              <div class="modal fade show" [class.show]="showBulkExportModal">
+                <div class="modal-dialog modal-dialog-top" role="document">
+                  <div class="modal-content" *ngIf="successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p class="success-message">{{successMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <mat-icon></mat-icon>
+                    </div>
+                  </div>
+                  <div class="modal-content" *ngIf="!successMsg">
+                    <div class="modal-header">
+                      <h6 class="modal-title">Export Excel File 
+                      </h6>
+                      <mat-icon matRipple (click)="closeModal()" style="cursor: pointer;">close</mat-icon>
+                    </div>
+                    <div class="modal-body">
+                      <div *ngIf="errorCheck">
+                        <p class="error-message">{{errorMsg}}</p>
+                      </div>
+                      <main>
+                        <div class="row">
+                            <div class="col-12">
+                              <ng-container>
+                                <h3>All Student {{className | classSuffix}}</h3>
+                              </ng-container>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Admission Number</th>
+                                            <th scope="col">Roll Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="studentInfoByClass && studentInfoByClass.length>0">
+                                      <tr *ngFor="let students of studentInfoByClass,let i=index">
+                                        <td>
+                                          <p class="mb-0">{{number*10+i+1-10}}</p>
+                                        </td>
+                                        <td>
+                                          <p class="mb-0">{{students.name}}</p>
+                                        </td>
+                                        <td>
+                                          <p class="mb-0">{{students.admissionNo}}</p>
+                                        </td>
+                                        <td>
+                                          <p class="mb-0">{{students.rollNumber}}</p>
+                                        </td>        
+                                      </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                      </main>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        class="submit-button" (click)="exportToExcel()" mat-raised-button>
+                        Export
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>

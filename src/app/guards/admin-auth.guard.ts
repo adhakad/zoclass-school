@@ -6,15 +6,14 @@ import { AdminAuthService } from '../services/auth/admin-auth.service';
   providedIn: 'root'
 })
 export class AdminAuthGuard implements CanActivate {
-  constructor(private adminAuthService: AdminAuthService, private router: Router) {}
+  constructor(private adminAuthService: AdminAuthService, private router: Router) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const isAccessToken = this.adminAuthService.getAccessToken()?.accessToken;
-      if (isAccessToken) {
-        return true
-      } 
-      return this.router.navigate(["/"]);
-    } 
-  
+    const isAccessToken = this.adminAuthService.getAccessToken()?.accessToken;
+    if (isAccessToken) {
+      return true
+    }
+    return this.router.navigate(["/"]);
+  }
 }

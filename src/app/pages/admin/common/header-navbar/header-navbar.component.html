@@ -20,23 +20,23 @@
       <mat-icon>home</mat-icon>
       <span>Dashboard</span>
     </button>
-    <button mat-menu-item class="menu-button" routerLinkActive="active-link" [routerLink]="['/admin/setting']">
+    <button mat-menu-item class="menu-button" [routerLink]="['/admin/setting']" routerLinkActive="active-link">
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
-    <button mat-menu-item class="menu-button" routerLinkActive="active-link" [routerLink]="['/admin/admission']">
+    <button mat-menu-item class="menu-button" [routerLink]="['/admin/admission']" routerLinkActive="active-link">
       <mat-icon>settings</mat-icon>
       <span>Admission</span>
     </button>
-    <button mat-menu-item class="menu-button" [routerLink]="['/admin/student']" routerLinkActive="active-link">
+    <button mat-menu-item class="menu-button" [routerLink]="['/admin/students/student']" routerLinkActive="active-link">
       <mat-icon>person</mat-icon>
       <span>Student</span>
     </button>
-      <button mat-menu-item class="menu-button" routerLink="/admin/students/fees" routerLinkActive="active-link">
+      <button mat-menu-item class="menu-button" routerLink="['/admin/students/fees']" routerLinkActive="active-link">
         <mat-icon>currency_rupee</mat-icon>
         <span>Fee Management</span>
       </button>
-      <button mat-menu-item class="menu-button" routerLink="/admin/students/admit-card" routerLinkActive="active-link">
+      <button mat-menu-item class="menu-button" routerLink="['/admin/students/admit-card']" routerLinkActive="active-link">
         <mat-icon>list alt</mat-icon>
         <span>Admit Cards</span>
       </button>
