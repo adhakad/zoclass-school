@@ -35,7 +35,7 @@ let GetStudentPagination = async (req, res, next) => {
 
 let GetAllStudentByClass = async (req, res, next) => {
     try {
-        const singleStudent = await StudentModel.find({ class: req.params.class },'-_id -otp -status');
+        const singleStudent = await StudentModel.find({ class: req.params.class },'-_id -session -admissionType -otp -status -__v');
         return res.status(200).json(singleStudent);
     } catch (error) {
         console.log(error);

@@ -9,17 +9,6 @@ import { ClassService } from 'src/app/services/class.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { ExcelService} from 'src/app/services/excel/excel.service';
 import { SchoolService } from 'src/app/services/school.service';
-// export interface ROW_ITEM {
-//   NO:Number;
-//   ID: number;
-//   NAME: string;
-//   DEPARTMENT: string;
-//   MONTH: string;
-//   YEAR: number;
-//   SALES: number;
-//   CHANGE: number;
-//   LEADS: number;
-// }
 
 @Component({
   selector: 'app-student',
@@ -59,8 +48,6 @@ export class StudentComponent implements OnInit {
   className: any;
   admissionType: string = '';
   schoolInfo:any;
-
-  dataForExcel: any[] = [];
 
   constructor(private fb: FormBuilder,private schoolService:SchoolService,public ete: ExcelService, public activatedRoute: ActivatedRoute, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
@@ -280,18 +267,70 @@ export class StudentComponent implements OnInit {
   }
 
 
-  exportToExcel() {
+  async exportToExcel() {
+    console.log(this.studentInfoByClass)
+    let className = this.className;
+    if(className==1){
+      className = `${this.className}st`
+    }
+    if(className==2){
+      className = `${this.className}nd`
+    }
+    if(className==3){
+      className = `${this.className}rd`
+    }
+    if(className>3){
+      className = `${this.className}th`
+    }
+    const header: string[] = [
+      'admissionNo',
+      'name',
+      'fatherName',
+      'motherName',
+      'rollNumber',
+      'class',
+      'stream',
+      'dob',
+      'doa',
+      'gender',
+      'category',
+      'religion',
+      'nationality',
+      'contact',
+      'address',
+      'fatherQualification',
+      'fatherOccupation',
+      'fatherContact',
+      'fatherAnnualIncome',
+      'motherQualification',
+      'motherOccupation',
+      'motherContact',
+      'motherAnnualIncome',
+    ];
+
+    function orderObjectsByHeaders(studentInfoByClass:any, header:any) {
+      return studentInfoByClass.map((obj:any) => {
+        const orderedObj:any = {};
+        header.forEach((header:any) => {
+          orderedObj[header] = obj[header];
+        });
+        return orderedObj;
+      });
+    }
+    const orderedData = await orderObjectsByHeaders(this.studentInfoByClass, header);
     var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     let currentYear = (new Date()).getFullYear();
     let currentMonth = (new Date()).getMonth();
     let currentMonthText = months[currentMonth];
-    this.studentInfoByClass.forEach((row: any) => {
-      this.dataForExcel.push(row);
+    const modifiedHeader = header.map(field => {
+      // Capitalize the first letter and add a space before each capital letter (except the first character)
+      return field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
     });
     let reportData = {
-      title: `${this.schoolInfo?.schoolName} Student Record - ${currentMonthText} ${currentYear}`,
-      data: this.dataForExcel,
-      headers: Object.keys(this.studentInfoByClass[0]),
+      title: `${this.schoolInfo?.schoolName} Student Record Class - ${className} , ${currentMonthText} ${currentYear}`,
+      data: orderedData,
+      headers: modifiedHeader,
+      fileName:`Student Record Class - ${className} , ${currentMonthText} ${currentYear} , ${this.schoolInfo?.schoolName}`,
     };
 
     this.ete.exportExcel(reportData);

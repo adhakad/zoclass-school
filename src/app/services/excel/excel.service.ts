@@ -1,118 +1,123 @@
 import { Injectable } from '@angular/core';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
-// export const imgBase64 =
-//   'data:image/png;base64,iVBORw0KGgoAAAAN....ElFTkSuQmCC';
 @Injectable({
   providedIn: 'root'
 })
 export class ExcelService {
-  
+
   constructor() { }
-  exportExcel(excelData: { title: any; data: any; headers: any }) {
+  exportExcel(excelData: { title: any; data: any; headers: any ,fileName:any}) {
     //Title, Header & Data
     const title = excelData.title;
     const header = excelData.headers;
     const data = excelData.data;
-
-    //Create a workbook with a worksheet
+    const fileName = excelData.fileName
     let workbook = new Workbook();
-    let worksheet = workbook.addWorksheet('Sales Data');
-
-    //Add Row and formatting
-    worksheet.mergeCells('C1', 'F4');
-    let titleRow = worksheet.getCell('C1');
-    titleRow.value = title;
+    let worksheet = workbook.addWorksheet('Student Record');
+    const numberOfColumns = Object.keys(data[0]).length; // Assuming data is an array of student details
+    // Merge cells for the title
+    worksheet.mergeCells(`A1:${String.fromCharCode(64 + numberOfColumns)}1`);
+    worksheet.getRow(1).height = 70;
+    let titleRow = worksheet.getCell('A1');
+    function generatePaddingSpaces(paddingCount: number): string {
+      return ' '.repeat(paddingCount);
+    }
+    const leftPaddingCount = 75;
+    // Calculate the number of spaces for left padding
+    const leftPadding = generatePaddingSpaces(leftPaddingCount);
+    titleRow.value = leftPadding + title;
     titleRow.font = {
       name: 'Calibri',
-      size: 16,
-      underline: 'single',
+      size: 18,
       bold: true,
-      color: { argb: '8D6DFF' },
+      color: { argb: 'FFFFFF' },
     };
-    titleRow.alignment = { vertical: 'middle', horizontal: 'center' };
+    titleRow.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: '8D6DFF' },
+      // Replace 'FFFF00' with your desired color code
+    };
+    titleRow.alignment = { vertical: 'middle', };
+    worksheet.views = [
+      {
+        state: 'frozen',
+        xSplit: 0,
+        ySplit: 1,
+        topLeftCell: 'A2', // Set the top-left cell below the title
+      },
+    ];
 
-    // Date
-    worksheet.mergeCells('G1:H4');
     let d = new Date();
-    let date = d.getDate() + '-' + d.getMonth() + '-' + d.getFullYear();
-    let dateCell = worksheet.getCell('G1');
-    dateCell.value = date;
-    dateCell.font = {
-      name: 'Calibri',
-      size: 12,
-      bold: true,
-    };
-    dateCell.alignment = { vertical: 'middle', horizontal: 'center' };
-
-    //Add Image
-    // let myLogoImage = workbook.addImage({
-    //   base64: imgBase64,
-    //   extension: 'png',
-    // });
-    worksheet.mergeCells('A1:B4');
-    // worksheet.addImage(myLogoImage, 'A1:B4');
-
-    //Blank Row
-    worksheet.addRow([]);
-
-    //Adding Header Row
+    let month = d.getMonth() + 1;
+    let date = d.getDate() + '-' + month + '-' + d.getFullYear();
+    // worksheet.addRow([]);
     let headerRow = worksheet.addRow(header);
     headerRow.eachCell((cell, number) => {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: '8D6DFF;' },
+        fgColor: { argb: 'EBEBFF' },
         bgColor: { argb: '' },
       };
       cell.font = {
         bold: true,
-        color: { argb: 'FFFFFF' },
+        color: { argb: '3F3661' },
         size: 12,
       };
+
+      // Vertically center-align the text in the cell
+      cell.alignment = { vertical: 'middle',horizontal:'center' };
+
+      if (number < header.length) {
+        cell.border = {
+          top: { style: 'thin', color: { argb: 'EBEBFF' } },
+          right: { style: 'thin', color: { argb: 'CDCDCD' } },
+        };
+      }
+
     });
 
+    // Set the row height for the header row
+    headerRow.height = 30;
+
     // Adding Data with Conditional Formatting
+
     data.forEach((d: any) => {
       let row = worksheet.addRow(Object.values(d));
 
-      let sales = row.getCell(6);
-      let color = 'FF99FF99';
-      let sales_val = Number(sales.value) || 0;
-      // Conditional fill color
-      if (sales_val < 200000) {
-        color = 'FF9999';
-      }
-
-      sales.fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: color },
-      };
+      // Set the row height for the student detail rows
+      row.height = 25; // Set the height as per your requirement (in points)
+      row.eachCell((cell) => {
+        cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      });
     });
 
-    worksheet.getColumn(3).width = 20;
-    worksheet.addRow([]);
+    // Calculate the number of columns in the worksheet
+    let studentFieldLength = Object.keys(data[0]).length;
 
-    //Footer Row
+    // Set the column width for all columns in the worksheet
+    for (let i = 0; i < studentFieldLength; i++) {
+      let index = i + 1;
+      worksheet.getColumn(index).width = 15;
+    }
+    worksheet.addRow([]);
     let footerRow = worksheet.addRow([
-      'Employee Sales Report Generated from example.com at ' + date,
+      'Students Record Generated from zoclass.in at ' + date,
     ]);
     footerRow.getCell(1).fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: 'FFB050' },
+      fgColor: { argb: 'EBEBFF' },
     };
-
-    //Merge Cells
-    worksheet.mergeCells(`A${footerRow.number}:F${footerRow.number}`);
-
-    //Generate & Save Excel File
+    footerRow.alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.mergeCells(`A${footerRow.number}:N${footerRow.number}`);
     workbook.xlsx.writeBuffer().then((data) => {
       let blob = new Blob([data], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
-      fs.saveAs(blob, title + '.xlsx');
+      fs.saveAs(blob, fileName + '.xlsx');
     });
   }
 }
