@@ -157,7 +157,7 @@ let CreateBulkStudentRecord = async (req, res, next) => {
                 continue;
             }
         }
-        if(otherClassAdmissionNo.length>0){
+        if (otherClassAdmissionNo.length > 0) {
             const spreadAdmissionNo = otherClassAdmissionNo.join(', ');
             return res.status(400).json(`Admission number(s) ${spreadAdmissionNo} student(s) class is invailid !`);
         }
@@ -184,19 +184,45 @@ let CreateBulkStudentRecord = async (req, res, next) => {
             const spreadRollNumber = duplicateRollNumber.join(', ');
             return res.status(400).json(`Roll number(s) ${spreadRollNumber} already exist !`);
         }
+
+
+        const checkFeesStr = await FeesStructureModel.findOne({ class: className });
+        if (!checkFeesStr) {
+            return res.status(404).json(`Please create fees structure for class ${className} !`);
+        }
+        const totalFees = checkFeesStr.totalFees;
+        const installment = checkFeesStr.installment;
+        installment.forEach((item) => {
+            Object.keys(item).forEach((key) => {
+                item[key] = 0;
+            });
+        });
+
         const createStudent = await StudentModel.create(studentData);
-        // if (createStudent) {
-        //     let studentId = createStudent._id;
-        //     studentFeesData.studentId = studentId;
-        //     const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-        return res.status(200).json('All student created succesfuly.');
-        // }
+
+        const studentFeesData = [];
+        for (const student of createStudent) {
+            studentFeesData.push({
+                studentId: student._id,
+                class: className,
+                totalFees: totalFees,
+                paidFees: 0,
+                dueFees: totalFees,
+                receipt: installment,
+                installment: installment,
+                paymentDate: installment
+            });
+        }
+        if (createStudent && studentFeesData.length>0) {
+            const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
+            if(createStudentFeesData){
+                return res.status(200).json('Student created succesfuly.');
+            } 
+        }
     } catch (error) {
         console.log(error);
     }
 }
-
-
 
 let UpdateStudent = async (req, res, next) => {
     try {
