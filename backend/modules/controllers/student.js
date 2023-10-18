@@ -106,6 +106,15 @@ let CreateStudent = async (req, res, next) => {
         console.log(error);
     }
 }
+
+
+let CreateBulkStudentRecord = async(req,res,next) => {
+  let bulkStudentRecord = req.body;
+  console.log(bulkStudentRecord)
+}
+
+
+
 let UpdateStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -152,6 +161,7 @@ module.exports = {
     GetAllStudentByClass,
     GetSingleStudent,
     CreateStudent,
+    CreateBulkStudentRecord,
     UpdateStudent,
     ChangeStatus,
     DeleteStudent,

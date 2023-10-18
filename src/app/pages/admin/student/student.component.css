@@ -1,5 +1,10 @@
 @import'../../../../styles.css';
-
+.file-input {
+    height: 50px;
+    color: #4e4caacd;
+    border: 1px solid #4e4caacd;
+    border-radius: 5px;
+  }
 .radio-btn-mobile {
     display: inline;
 }

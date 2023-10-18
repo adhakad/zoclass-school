@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { read, utils, writeFile } from 'xlsx';
-// import * as ExcelJS from 'exceljs';
+import * as ExcelJS from 'exceljs';
 import { Subject } from 'rxjs';
 import { StudentService } from 'src/app/services/student.service';
 import { ClassService } from 'src/app/services/class.service';
 import { MatRadioChange } from '@angular/material/radio';
-import { ExcelService} from 'src/app/services/excel/excel.service';
+import { ExcelService } from 'src/app/services/excel/excel.service';
 import { SchoolService } from 'src/app/services/school.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-student',
@@ -17,6 +18,7 @@ import { SchoolService } from 'src/app/services/school.service';
 })
 export class StudentComponent implements OnInit {
   studentForm: FormGroup;
+  excelForm: FormGroup;
   showModal: boolean = false;
   showBulkImportModal: boolean = false;
   showBulkExportModal: boolean = false;
@@ -47,9 +49,11 @@ export class StudentComponent implements OnInit {
   cls: number = 0;
   className: any;
   admissionType: string = '';
-  schoolInfo:any;
+  schoolInfo: any;
+  bulkStudentRecord: any;
+  fileChoose: boolean = false;
 
-  constructor(private fb: FormBuilder,private schoolService:SchoolService,public ete: ExcelService, public activatedRoute: ActivatedRoute, private classService: ClassService, private studentService: StudentService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private schoolService: SchoolService, public ete: ExcelService, public activatedRoute: ActivatedRoute, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
       session: ['', Validators.required],
@@ -78,6 +82,10 @@ export class StudentComponent implements OnInit {
       motherContact: ['', Validators.required],
       motherAnnualIncome: ['', Validators.required],
     })
+
+    this.excelForm = this.fb.group({
+      excelData: [null]
+    });
   }
 
   ngOnInit(): void {
@@ -89,9 +97,9 @@ export class StudentComponent implements OnInit {
     this.getClass();
     this.allOptions();
   }
-  getSchool(){
-    this.schoolService.getSchool().subscribe((res:any)=>{
-      if(res){
+  getSchool() {
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
         this.schoolInfo = res;
       }
     })
@@ -185,9 +193,9 @@ export class StudentComponent implements OnInit {
     }, 1000)
   }
 
-  getStudentByClass(cls:any){
-    this.studentService.getStudentByClass(cls).subscribe((res:any)=> {
-      if(res){
+  getStudentByClass(cls: any) {
+    this.studentService.getStudentByClass(cls).subscribe((res: any) => {
+      if (res) {
         this.studentInfoByClass = res;
         console.log([...this.studentInfoByClass])
       }
@@ -266,20 +274,99 @@ export class StudentComponent implements OnInit {
     })
   }
 
+  handleImport(event: any): void {
+    this.fileChoose = true;
+    const file = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+      const arrayBuffer = e.target.result;
+      this.parseExcel(arrayBuffer);
+    };
+    fileReader.readAsArrayBuffer(file);
+  }
+
+  parseExcel(arrayBuffer: any):void {
+    const workbook = new ExcelJS.Workbook();
+    workbook.xlsx.load(arrayBuffer).then((workbook) => {
+      const worksheet = workbook.getWorksheet(1);
+      const data: any = [];
+      worksheet.eachRow({ includeEmpty: false }, (row: any, rowNumber) => {
+        // Assuming the first row contains headers
+        if (rowNumber === 1) {
+          const headers = row.values.map(String);
+          data.push(headers);
+        } else {
+          const rowData = row.values.map(String);
+          data.push(rowData);
+        }
+      });
+      const indexesToDelete = [0, 4];
+      // IndexesToDelete ke hisab se elements ko delete karna
+      indexesToDelete.sort((a, b) => b - a); // Sort indexesToDelete in descending order
+      indexesToDelete.forEach((index) => {
+        data.splice(index, 1);
+      });
+      const fields = data[0];
+      // Data ke baki ke rows
+      const dataRows = data.slice(1);
+      // Data ko objects mein map karna
+      const mappedData = dataRows.map((row:any)=> {
+        const obj:any = {};
+        fields.forEach((field:any, index:any) => {
+          obj[field] = row[index];
+        });
+        return obj;
+      });
+      
+      function transformKeys(dataArray:any) {
+        return dataArray.map((obj:any) => {
+          const newObj:any = {};
+          for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              const newKey = key.replace(/\s+/g, ''); // Remove spaces
+              newObj[newKey.charAt(0).toLowerCase() + newKey.slice(1)] = obj[key];
+            }
+          }
+          return newObj;
+        });
+      }
+      // Transform the keys of the array
+      const transformedDataArray = transformKeys(mappedData);
+      if(transformedDataArray){
+        this.bulkStudentRecord = transformedDataArray;
+      }
+    });
+  }
+  addBulkStudentRecord() {
+    let studentRecordData = {
+      bulkStudentRecord: this.bulkStudentRecord
+    }
+    if(studentRecordData){
+      this.studentService.addBulkStudentRecord(studentRecordData).subscribe((res: any) => {
+        if (res) {
+          this.successDone();
+          this.successMsg = res;
+        }
+      }, err => {
+        this.errorCheck = true;
+        this.errorMsg = err.error;
+      })
+    }
+  }
+
 
   async exportToExcel() {
-    console.log(this.studentInfoByClass)
     let className = this.className;
-    if(className==1){
+    if (className == 1) {
       className = `${this.className}st`
     }
-    if(className==2){
+    if (className == 2) {
       className = `${this.className}nd`
     }
-    if(className==3){
+    if (className == 3) {
       className = `${this.className}rd`
     }
-    if(className>3){
+    if (className > 3) {
       className = `${this.className}th`
     }
     const header: string[] = [
@@ -308,17 +395,17 @@ export class StudentComponent implements OnInit {
       'motherAnnualIncome',
     ];
 
-    function orderObjectsByHeaders(studentInfoByClass:any, header:any) {
-      return studentInfoByClass.map((obj:any) => {
-        const orderedObj:any = {};
-        header.forEach((header:any) => {
+    function orderObjectsByHeaders(studentInfoByClass: any, header: any) {
+      return studentInfoByClass.map((obj: any) => {
+        const orderedObj: any = {};
+        header.forEach((header: any) => {
           orderedObj[header] = obj[header];
         });
         return orderedObj;
       });
     }
     const orderedData = await orderObjectsByHeaders(this.studentInfoByClass, header);
-    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let currentYear = (new Date()).getFullYear();
     let currentMonth = (new Date()).getMonth();
     let currentMonthText = months[currentMonth];
@@ -330,7 +417,7 @@ export class StudentComponent implements OnInit {
       title: `${this.schoolInfo?.schoolName} Student Record Class - ${className} , ${currentMonthText} ${currentYear}`,
       data: orderedData,
       headers: modifiedHeader,
-      fileName:`Student Record Class - ${className} , ${currentMonthText} ${currentYear} , ${this.schoolInfo?.schoolName}`,
+      fileName: `Student Record Class - ${className} , ${currentMonthText} ${currentYear} , ${this.schoolInfo?.schoolName}`,
     };
 
     this.ete.exportExcel(reportData);

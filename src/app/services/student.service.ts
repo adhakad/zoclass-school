@@ -13,6 +13,9 @@ export class StudentService {
   addStudent(studentData:any){
     return this.http.post(this.url,studentData);
   }
+  addBulkStudentRecord(bulkStudentRecord:any) {
+    return this.http.post(`${this.url}/bulk-student-record`,bulkStudentRecord);
+  }
   getStudentList() {
     return this.http.get<Student[]>(this.url);
   }
