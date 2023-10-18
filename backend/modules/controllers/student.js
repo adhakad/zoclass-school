@@ -18,11 +18,11 @@ let GetStudentPagination = async (req, res, next) => {
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
-        const studentList = await StudentModel.find({class:className}).find(searchObj)
+        const studentList = await StudentModel.find({ class: className }).find(searchObj)
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
-        const countStudent = await StudentModel.count({class:className});
+        const countStudent = await StudentModel.count({ class: className });
 
         let studentData = { countStudent: 0 };
         studentData.studentList = studentList;
@@ -35,7 +35,7 @@ let GetStudentPagination = async (req, res, next) => {
 
 let GetAllStudentByClass = async (req, res, next) => {
     try {
-        const singleStudent = await StudentModel.find({ class: req.params.class },'-_id -session -admissionType -otp -status -__v');
+        const singleStudent = await StudentModel.find({ class: req.params.class }, '-_id -session -admissionType -otp -status -__v');
         return res.status(200).json(singleStudent);
     } catch (error) {
         console.log(error);
@@ -72,11 +72,11 @@ let CreateStudent = async (req, res, next) => {
     try {
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStr) {
-            return res.status(404).json(`Please create fees structure for class ${className}`);
+            return res.status(404).json(`Please create fees structure for class ${className} !`);
         }
         const checkRollNumber = await StudentModel.findOne({ rollNumber: rollNumber, class: className });
         if (checkRollNumber) {
-            return res.status(400).json(`Roll number already exist for class ${className}`);
+            return res.status(400).json(`Roll number already exist for class ${className} !`);
         }
         const totalFees = checkFeesStr.totalFees;
         const installment = checkFeesStr.installment;
@@ -100,7 +100,7 @@ let CreateStudent = async (req, res, next) => {
             let studentId = createStudent._id;
             studentFeesData.studentId = studentId;
             const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-            return res.status(200).json('Student Created succesfuly');
+            return res.status(200).json('Student created succesfuly.');
         }
     } catch (error) {
         console.log(error);
@@ -108,9 +108,92 @@ let CreateStudent = async (req, res, next) => {
 }
 
 
-let CreateBulkStudentRecord = async(req,res,next) => {
-  let bulkStudentRecord = req.body;
-  console.log(bulkStudentRecord)
+let CreateBulkStudentRecord = async (req, res, next) => {
+    let bulkStudentRecord = req.body.bulkStudentRecord;
+    let className = req.body.class;
+    let studentData = [];
+    for (const student of bulkStudentRecord) {
+        let otp = Math.floor(Math.random() * 899999 + 100000);
+        studentData.push({
+            name: student.name,
+            rollNumber: student.rollNumber,
+            otp: otp,
+            admissionType: student.admissionType,
+            stream: student.stream,
+            admissionNo: student.admissionNo,
+            class: student.class,
+            dob: student.dob,
+            doa: student.doa,
+            gender: student.gender,
+            category: student.category,
+            religion: student.religion,
+            nationality: student.nationality,
+            contact: student.contact,
+            address: student.address,
+            fatherName: student.fatherName,
+            fatherQualification: student.fatherQualification,
+            fatherOccupation: student.fatherOccupation,
+            fatherContact: student.fatherContact,
+            fatherAnnualIncome: student.fatherAnnualIncome,
+            motherName: student.motherName,
+            motherQualification: student.motherQualification,
+            motherOccupation: student.motherOccupation,
+            motherContact: student.motherContact,
+            motherAnnualIncome: student.motherAnnualIncome,
+        });
+    }
+    try {
+        if (studentData.length > 100) {
+            return res.status(400).json('File too large, Please make sure that file records to less then or equals to 100 !');
+        }
+        const otherClassAdmissionNo = [];
+        for (const student of studentData) {
+            if (student.class !== className) {
+                // Skip students from other classes
+                const { admissionNo } = student;
+                if (admissionNo) {
+                    otherClassAdmissionNo.push(admissionNo);
+                }
+                continue;
+            }
+        }
+        if(otherClassAdmissionNo.length>0){
+            const spreadAdmissionNo = otherClassAdmissionNo.join(', ');
+            return res.status(400).json(`Admission number(s) ${spreadAdmissionNo} student(s) class is invailid !`);
+        }
+        const existingRecords = await StudentModel.find({ class: className }).lean();
+        const duplicateAdmissionNo = [];
+        const duplicateRollNumber = [];
+        for (const student of studentData) {
+            // Check duplicate students exist from dadabase
+            const { admissionNo, rollNumber } = student;
+            const admissionNoExists = existingRecords.some(record => record.admissionNo == admissionNo);
+            const rollNumberExists = existingRecords.some(record => record.rollNumber == rollNumber);
+            if (admissionNoExists) {
+                duplicateAdmissionNo.push(admissionNo);
+            }
+            if (rollNumberExists) {
+                duplicateRollNumber.push(rollNumber);
+            }
+        }
+        if (duplicateAdmissionNo.length > 0) {
+            const spreadAdmissionNo = duplicateAdmissionNo.join(', ');
+            return res.status(400).json(`Admission number(s) ${spreadAdmissionNo} already exist !`);
+        }
+        if (duplicateRollNumber.length > 0) {
+            const spreadRollNumber = duplicateRollNumber.join(', ');
+            return res.status(400).json(`Roll number(s) ${spreadRollNumber} already exist !`);
+        }
+        const createStudent = await StudentModel.create(studentData);
+        // if (createStudent) {
+        //     let studentId = createStudent._id;
+        //     studentFeesData.studentId = studentId;
+        //     const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
+        return res.status(200).json('All student created succesfuly.');
+        // }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 

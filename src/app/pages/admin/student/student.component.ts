@@ -144,6 +144,8 @@ export class StudentComponent implements OnInit {
     this.showBulkExportModal = false;
     this.updateMode = false;
     this.deleteMode = false;
+    this.fileChoose = false;
+    this.errorCheck = false;
     this.errorMsg = '';
     this.stream = '';
     this.cls = 0;
@@ -275,7 +277,6 @@ export class StudentComponent implements OnInit {
   }
 
   handleImport(event: any): void {
-    this.fileChoose = true;
     const file = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.onload = (e: any) => {
@@ -300,7 +301,9 @@ export class StudentComponent implements OnInit {
           data.push(rowData);
         }
       });
-      const indexesToDelete = [0, 4];
+      const lastIndex =  data.length -1 ;
+      console.log(lastIndex)
+      const indexesToDelete = [0, lastIndex];
       // IndexesToDelete ke hisab se elements ko delete karna
       indexesToDelete.sort((a, b) => b - a); // Sort indexesToDelete in descending order
       indexesToDelete.forEach((index) => {
@@ -332,16 +335,26 @@ export class StudentComponent implements OnInit {
       }
       // Transform the keys of the array
       const transformedDataArray = transformKeys(mappedData);
-      if(transformedDataArray){
+      if(transformedDataArray.length > 100){
+        this.fileChoose = false;
+        this.errorCheck = true;
+        this.errorMsg = 'File too large, Please make sure that file records to less then or equals to 100';
+      }
+      if(transformedDataArray.length <= 100){
         this.bulkStudentRecord = transformedDataArray;
+        this.fileChoose = true;
+        this.errorCheck = false;
+        this.errorMsg = '';
       }
     });
   }
   addBulkStudentRecord() {
     let studentRecordData = {
-      bulkStudentRecord: this.bulkStudentRecord
+      bulkStudentRecord: this.bulkStudentRecord,
+      class:this.className
     }
     if(studentRecordData){
+      console.log(studentRecordData)
       this.studentService.addBulkStudentRecord(studentRecordData).subscribe((res: any) => {
         if (res) {
           this.successDone();
