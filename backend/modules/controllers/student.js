@@ -6,12 +6,42 @@ let countStudent = async (req, res, next) => {
     let countStudent = await StudentModel.count();
     return res.status(200).json({ countStudent });
 }
-let GetStudentPagination = async (req, res, next) => {
+
+
+let GetStudentPaginationByAdmission = async (req, res, next) => {
     let searchText = req.body.filters.searchText;
     let className = req.body.class;
     let searchObj = {};
     if (searchText) {
-        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
+        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText },{ admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
+
+    }
+
+    try {
+        let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
+        let page = req.body.page || 1;
+        const studentList = await StudentModel.find({ admissionType: 'new' }).find(searchObj)
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .exec();
+        const countStudent = await StudentModel.count({ admissionType: 'new' });
+
+        let studentData = { countStudent: 0 };
+        studentData.studentList = studentList;
+        studentData.countStudent = countStudent;
+        return res.json(studentData);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+let GetStudentPaginationByClass = async (req, res, next) => {
+    let searchText = req.body.filters.searchText;
+    let className = req.body.class;
+    let searchObj = {};
+    if (searchText) {
+        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText },{ admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
 
     }
 
@@ -266,7 +296,8 @@ let DeleteStudent = async (req, res, next) => {
 
 module.exports = {
     countStudent,
-    GetStudentPagination,
+    GetStudentPaginationByAdmission,
+    GetStudentPaginationByClass,
     GetAllStudentByClass,
     GetSingleStudent,
     CreateStudent,

@@ -28,6 +28,9 @@ export class StudentService {
   studentPaginationList(studentData:any){
     return this.http.post(`${this.url}/student-pagination`,studentData);
   }
+  studentPaginationByAdmission(studentData:any){
+    return this.http.post(`${this.url}/student-admission-pagination`,studentData);
+  }
   updateStudent(studentData:any){
     return this.http.put(`${this.url}/${studentData._id}`, studentData);
   }

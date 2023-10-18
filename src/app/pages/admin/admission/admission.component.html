@@ -13,7 +13,7 @@
                 <div class="col-8 col-lg-5">
                   <input type="text" class="form-control" placeholder="Student Search..." id="searchText"
                     name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
-                    (keyup)="getStudents({page : 1, limit : 0})">
+                    (keyup)="getStudentsByAdmission({page : 1, limit : 0})">
                 </div>
                 <div class="col-4 col-lg-2 offset-lg-5">
                   <button class="submit-button" mat-raised-button
@@ -28,9 +28,8 @@
                     <th>Class</th>
                     <th>Admission No.</th>
                     <th>Roll Number</th>
+                    <th>Admission Type</th>
                     <th>Otp</th>
-                    <th>Status</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="studentInfo && studentInfo.length>0">
@@ -51,25 +50,17 @@
                       <p class="mb-0">{{students.rollNumber}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{students.otp}}</p>
+                      <p class="mb-0">{{students.admissionType | titlecase}}</p>
                     </td>
                     <td>
-                      <a class="mb-0 status-active" (click)="changeStatus(students._id,0)"
-                        *ngIf="students.status == 'Active'"
-                        href="javascript:void(0)">{{students.status}}&nbsp;&nbsp;</a>
-                      <a class="mb-0 status-inactive" (click)="changeStatus(students._id,1)"
-                        *ngIf="students.status == 'Inactive'" href="javascript:void(0)">{{students.status}}</a>
-                    </td>
-                    <td class="mb-0">
-                      <mat-icon (click)="updateStudentModel(students)">edit_note</mat-icon>
-                      <mat-icon (click)="deleteStudentModel(students._id)">delete</mat-icon>
+                      <p class="mb-0">{{students.otp}}</p>
                     </td>
                   </tr>
 
                 </tbody>
               </table>
               <div class="pagination">
-                <app-pagination [paginationValues]="paginationValues" (onChange)="getStudents($event)">
+                <app-pagination [paginationValues]="paginationValues" (onChange)="getStudentsByAdmission($event)">
                 </app-pagination>
               </div>
 
@@ -131,11 +122,11 @@
                                 <mat-select matInput formControlName="class">
                                   <div *ngFor="let classInfo of classInfo">
                                     <mat-option [value]="classInfo.class"
-                                      (click)="chooseClass(studentForm.get('class'))">{{classInfo.class | classSuffix}}</mat-option>
+                                      (click)="chooseClass(studentForm.get('class'))">{{classInfo.class |
+                                      classSuffix}}</mat-option>
                                   </div>
                                 </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('class')?.valid && studentForm.get('class')?.touched"
+                                <mat-hint *ngIf="!studentForm.get('class')?.valid && studentForm.get('class')?.touched"
                                   class="form-text text-danger">Class is required</mat-hint>
                               </mat-form-field>
                             </div>
@@ -157,8 +148,8 @@
                                   </ng-container>
                                 </mat-select>
                                 <mat-hint
-                                    *ngIf="!studentForm.get('stream')?.valid && studentForm.get('stream')?.touched"
-                                    class="form-text text-danger">Stream is required</mat-hint>
+                                  *ngIf="!studentForm.get('stream')?.valid && studentForm.get('stream')?.touched"
+                                  class="form-text text-danger">Stream is required</mat-hint>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
@@ -166,8 +157,12 @@
                                 <mat-label>Admission Type</mat-label>
                                 <mat-select type="text" matInput formControlName="admissionType">
                                   <div>
-                                    <mat-option value="new" (click)="chooseAdmissionType(studentForm.get('admissionType'))">New Admission</mat-option>
-                                    <mat-option value="old" (click)="chooseAdmissionType(studentForm.get('admissionType'))">Old Admission</mat-option>
+                                    <mat-option value="new"
+                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">New
+                                      Admission</mat-option>
+                                    <mat-option value="old"
+                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">Old
+                                      Admission</mat-option>
                                   </div>
                                 </mat-select>
                                 <mat-hint
@@ -179,7 +174,7 @@
                               <mat-form-field appearance="outline">
                                 <mat-label>Admission No.</mat-label>
                                 <input matInput readonly>
-                              </mat-form-field> 
+                              </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6" *ngIf="admissionType=='new'">
                               <mat-form-field appearance="outline">
@@ -188,7 +183,7 @@
                                 <mat-hint
                                   *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
                                   class="form-text text-danger">Admission no. is required</mat-hint>
-                              </mat-form-field> 
+                              </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6" *ngIf="admissionType=='old'">
                               <mat-form-field appearance="outline">
@@ -197,7 +192,7 @@
                                 <mat-hint
                                   *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
                                   class="form-text text-danger">Admission no. is required</mat-hint>
-                              </mat-form-field> 
+                              </mat-form-field>
                             </div>
                             <ng-container>
                               <h3>Student Info</h3>
@@ -206,8 +201,7 @@
                               <mat-form-field appearance="outline">
                                 <mat-label>Name</mat-label>
                                 <input matInput type="text" formControlName="name">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('name')?.valid && studentForm.get('name')?.touched"
+                                <mat-hint *ngIf="!studentForm.get('name')?.valid && studentForm.get('name')?.touched"
                                   class="form-text text-danger">Name is required</mat-hint>
                               </mat-form-field>
                             </div>
@@ -403,13 +397,6 @@
                       <div class="modal-footer" *ngIf="!deleteMode">
                         <button class="submit-button" mat-raised-button type="submit"
                           [disabled]="!studentForm.valid">Submit</button>
-                      </div>
-                      <div *ngIf="deleteMode">
-                        <h3>To delete student detail, click ok to confirm.</h3>
-                        <div class="modal-footer">
-                          <button class="delete-button" mat-raised-button type="button"
-                            (click)="studentDelete(deleteById)">Ok</button>
-                        </div>
                       </div>
                     </form>
                   </div>

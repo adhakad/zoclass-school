@@ -68,7 +68,7 @@ export class AdmissionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getStudents({ page: 1 });
+    this.getStudentsByAdmission({ page: 1 });
     this.getClass();
     this.allOptions();
   }
@@ -144,11 +144,11 @@ export class AdmissionComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getStudents({ page: this.page });
+      this.getStudentsByAdmission({ page: this.page });
     }, 1000)
   }
 
-  getStudents($event: any) {
+  getStudentsByAdmission($event: any) {
     this.page = $event.page
     return new Promise((resolve, reject) => {
       let params: any = {
@@ -161,7 +161,7 @@ export class AdmissionComponent implements OnInit {
         params["filters"]["searchText"] = this.filters.searchText.trim();
       }
 
-      this.studentService.studentPaginationList(params).subscribe((res: any) => {
+      this.studentService.studentPaginationByAdmission(params).subscribe((res: any) => {
         if (res) {
           this.studentInfo = res.studentList;
           this.number = params.page;
@@ -174,17 +174,17 @@ export class AdmissionComponent implements OnInit {
 
   studentAddUpdate() {
     if (this.studentForm.valid) {
-      if (this.updateMode) {
-        this.studentService.updateStudent(this.studentForm.value).subscribe((res: any) => {
-          if (res) {
-            this.successDone();
-            this.successMsg = res;
-          }
-        }, err => {
-          this.errorCheck = true;
-          this.errorMsg = err.error;
-        })
-      } else {
+      // if (this.updateMode) {
+      //   this.studentService.updateStudent(this.studentForm.value).subscribe((res: any) => {
+      //     if (res) {
+      //       this.successDone();
+      //       this.successMsg = res;
+      //     }
+      //   }, err => {
+      //     this.errorCheck = true;
+      //     this.errorMsg = err.error;
+      //   })
+      // } else {
         this.studentService.addStudent(this.studentForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();
@@ -194,30 +194,8 @@ export class AdmissionComponent implements OnInit {
           this.errorCheck = true;
           this.errorMsg = err.error;
         })
-      }
+      // }
     }
-  }
-  changeStatus(id: any, statusValue: any) {
-    if (id) {
-      let params = {
-        id: id,
-        statusValue: statusValue,
-      }
-      this.studentService.changeStatus(params).subscribe((res: any) => {
-        if (res) {
-          this.getStudents({ page: this.page });
-        }
-      })
-    }
-  }
-  studentDelete(id: String) {
-    this.studentService.deleteStudent(id).subscribe((res: any) => {
-      if (res) {
-        this.successDone();
-        this.successMsg = res;
-        this.deleteById = '';
-      }
-    })
   }
 
   allOptions() {
