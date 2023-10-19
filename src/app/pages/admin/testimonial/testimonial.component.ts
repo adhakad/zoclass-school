@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Testimonial } from 'src/app/modal/testimonial.model';
 import { TestimonialService } from 'src/app/services/testimonial.service';
 
@@ -10,6 +11,7 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
   styleUrls: ['./testimonial.component.css']
 })
 export class TestimonialComponent implements OnInit {
+  public baseUrl = environment.API_URL;
   testimonialForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;

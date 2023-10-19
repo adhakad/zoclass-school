@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchoolService } from 'src/app/services/school.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -7,6 +8,7 @@ import { SchoolService } from 'src/app/services/school.service';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
+  public schoolName = environment.SCHOOL_NAME;
   currentYear: any;
   schoolInfo:any;
   constructor(private schoolService:SchoolService) { }

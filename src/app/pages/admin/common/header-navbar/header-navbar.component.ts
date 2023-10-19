@@ -1,4 +1,5 @@
 import { Component,OnInit} from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header-navbar',
@@ -7,7 +8,7 @@ import { Component,OnInit} from '@angular/core';
   
 })
 export class HeaderNavbarComponent implements OnInit {
-  
+  public schoolName = environment.SCHOOL_NAME;
   nav:boolean = false;
 
   constructor() {}

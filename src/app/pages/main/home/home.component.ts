@@ -7,6 +7,7 @@ import { Teacher } from 'src/app/modal/teacher.model';
 import { Ads } from 'src/app/modal/ads.model';
 import { Topper } from 'src/app/modal/topper.model';
 import { Testimonial } from 'src/app/modal/testimonial.model';
+import { environment } from 'src/environments/environment';
 import { BannerService } from 'src/app/services/banner.service';
 import { AdsService } from 'src/app/services/ads.service';
 import { TopperService } from 'src/app/services/topper.service';
@@ -20,8 +21,7 @@ import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
 })
 export class HomeComponent implements OnInit {
   private isBrowser: boolean = isPlatformBrowser(this.platformId);
-
-
+  public baseUrl = environment.API_URL;
   bannerInfo: any[] = [];
   teacherInfo: any[] = [];
   adsInfo: any[] = [];

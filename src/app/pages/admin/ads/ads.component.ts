@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Ads } from 'src/app/modal/ads.model';
 import { AdsService } from 'src/app/services/ads.service';
 
@@ -10,6 +11,7 @@ import { AdsService } from 'src/app/services/ads.service';
   styleUrls: ['./ads.component.css']
 })
 export class AdsComponent implements OnInit {
+  public baseUrl = environment.API_URL;
   adsForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;

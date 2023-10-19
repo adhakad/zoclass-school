@@ -5,7 +5,7 @@
             <div>
                 <div class="owl-carousel banner-carousel">
                     <div *ngFor="let bannerInfo of bannerInfo,let i = index">
-                        <img class="banner-card" src="http://localhost:3000/public/banner-image/{{bannerInfo.image}}"
+                        <img class="banner-card" src="{{baseUrl}}/public/banner-image/{{bannerInfo.image}}"
                             alt="banner-{{i+1}}">
                     </div>
                 </div>
@@ -15,7 +15,7 @@
                 <div class="owl-carousel topper-carousel">
                     <div *ngFor="let topperInfo of topperInfo,let i = index">
                         <div class="topper-card" matRipple>
-                            <img src="http://localhost:3000/public/topper-image/{{topperInfo.image}}" alt="topper-{{i+1}}">
+                            <img src="{{baseUrl}}/public/topper-image/{{topperInfo.image}}" alt="topper-{{i+1}}">
                         </div>
                         <div class="topper-text-card">
                             <p>{{topperInfo.year}} - {{topperInfo.class | classSuffix}} {{topperInfo.percentile}}%</p>
@@ -29,7 +29,7 @@
             <div style="background-color: #fff;width: 100%;margin-top: 25px;margin-bottom: 25px;padding-top:  75px;padding-bottom: 75px;box-shadow: 0 0 1px -10px #64748d15,0 0 0 1px #64748d15,0 0 4px 0 #64748d15;">
                 <div class="owl-carousel ads-carousel">
                     <div *ngFor="let adsInfo of adsInfo,let i = index">
-                        <img class="ads-card" src="http://localhost:3000/public/ads-image/{{adsInfo.image}}" alt="ads-{{i+1}}">
+                        <img class="ads-card" src="{{baseUrl}}/public/ads-image/{{adsInfo.image}}" alt="ads-{{i+1}}">
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <div class="owl-carousel testimonial-carousel">
                     <div class="row testimonial-card" *ngFor="let testimonialInfo of testimonialInfo,let i = index">
                         <div class="col-12 img-container">
-                            <img src="http://localhost:3000/public/testimonial-image/{{testimonialInfo.image}}" alt="testimonial-{{i+1}}">
+                            <img src="{{baseUrl}}/public/testimonial-image/{{testimonialInfo.image}}" alt="testimonial-{{i+1}}">
                         </div>
                         <div class="col-12">
                             <h3>{{testimonialInfo.name}}</h3>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from  'rxjs';
+import { environment } from 'src/environments/environment';
 import { Banner } from 'src/app/modal/banner.model';
 import { BannerService } from 'src/app/services/banner.service';
 
@@ -10,6 +11,7 @@ import { BannerService } from 'src/app/services/banner.service';
   styleUrls: ['./banner.component.css']
 })
 export class BannerComponent implements OnInit {
+  public baseUrl = environment.API_URL;
   bannerForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;

@@ -3,6 +3,7 @@ import { Subscription } from "rxjs";
 import { AdminAuthService } from "src/app/services/auth/admin-auth.service";
 import { TeacherAuthService } from "src/app/services/auth/teacher-auth.service";
 import { StudentAuthService } from "src/app/services/auth/student-auth.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ import { StudentAuthService } from "src/app/services/auth/student-auth.service";
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  public schoolName = environment.SCHOOL_NAME;
   nav:boolean = false;
   panelOpenState:boolean = false
 

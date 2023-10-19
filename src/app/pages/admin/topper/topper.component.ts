@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Topper } from 'src/app/modal/topper.model';
 import { Class } from 'src/app/modal/class.model';
 import { TopperService } from 'src/app/services/topper.service';
 import { ClassService } from 'src/app/services/class.service';
+
 @Component({
   selector: 'app-topper',
   templateUrl: './topper.component.html',
   styleUrls: ['./topper.component.css']
 })
 export class TopperComponent implements OnInit {
+  public baseUrl = environment.API_URL;
   topperForm: FormGroup;
   showModal: boolean = false;
   updateMode: boolean = false;
