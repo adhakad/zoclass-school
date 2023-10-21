@@ -84,7 +84,7 @@
 
                   <div class="modal-content" *ngIf="!successMsg">
                     <div class="modal-header">
-                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Create New'}} Student</h5>
+                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'New'}} Admission</h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
 
@@ -103,6 +103,15 @@
                             </ng-container>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
+                                <mat-label>Admission No.</mat-label>
+                                <input matInput type="number" formControlName="admissionNo" readonly>
+                                <mat-hint
+                                  *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
+                                  class="form-text text-danger">Admission no. is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
                                 <mat-label>Session</mat-label>
                                 <mat-select type="text" matInput formControlName="session">
                                   <div *ngFor="let session of sessions">
@@ -114,12 +123,7 @@
                                   class="form-text text-danger">Session is required</mat-hint>
                               </mat-form-field>
                             </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Last School Optional</mat-label>
-                                <input matInput type="text" formControlName="lastSchool">
-                              </mat-form-field>
-                            </div>
+                            
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>class</mat-label>
@@ -158,46 +162,58 @@
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Admission Type</mat-label>
-                                <mat-select type="text" matInput formControlName="admissionType">
+                                <mat-label>Roll Number Type</mat-label>
+                                <mat-select type="text" matInput formControlName="rollNumberType">
                                   <div>
-                                    <mat-option value="new"
-                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">New
-                                      Admission</mat-option>
-                                    <mat-option value="old"
-                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">Old
-                                      Admission</mat-option>
+                                    <mat-option value="generate"
+                                      (click)="chooseRollNumberType(studentForm.get('rollNumberType'))">Generate</mat-option>
+                                    <mat-option value="manualFill"
+                                      (click)="chooseRollNumberType(studentForm.get('rollNumberType'))">Manual Fill</mat-option>
                                   </div>
                                 </mat-select>
                                 <mat-hint
-                                  *ngIf="!studentForm.get('admissionType')?.valid && studentForm.get('admissionType')?.touched"
+                                  *ngIf="!studentForm.get('rollNumberType')?.valid && studentForm.get('rollNumberType')?.touched"
                                   class="form-text text-danger">Admission type is required</mat-hint>
                               </mat-form-field>
                             </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType !=='new' && admissionType !=='old'">
+                            <div class="col-12 col-lg-6" *ngIf="rollNumberType !=='generate' && rollNumberType !=='manualFill'">
                               <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
+                                <mat-label>Roll Number </mat-label>
                                 <input matInput readonly>
                               </mat-form-field>
                             </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType=='new'">
+                            <div class="col-12 col-lg-6" *ngIf="rollNumberType=='generate'">
                               <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
-                                <input matInput type="number" formControlName="admissionNo" readonly>
+                                <mat-label>Roll Number</mat-label>
+                                <input matInput type="number" formControlName="rollNumber" readonly>
                                 <mat-hint
-                                  *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
-                                  class="form-text text-danger">Admission no. is required</mat-hint>
+                                  *ngIf="!studentForm.get('rollNumber')?.valid && studentForm.get('rollNumber')?.touched"
+                                  class="form-text text-danger">Roll number is required</mat-hint>
                               </mat-form-field>
                             </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType=='old'">
+                            <div class="col-12 col-lg-6" *ngIf="rollNumberType=='manualFill'">
                               <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
-                                <input matInput type="number" formControlName="admissionNo">
+                                <mat-label>Roll Number</mat-label>
+                                <input matInput type="number" formControlName="rollNumber">
                                 <mat-hint
-                                  *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
-                                  class="form-text text-danger">Admission no. is required</mat-hint>
+                                  *ngIf="!studentForm.get('rollNumber')?.valid && studentForm.get('rollNumber')?.touched"
+                                  class="form-text text-danger">Roll number is required</mat-hint>
                               </mat-form-field>
                             </div>
+
+
+
+
+                            <!-- <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Roll Number</mat-label>
+                                <input matInput type="number" formControlName="rollNumber">
+                                <mat-hint
+                                  *ngIf="!studentForm.get('rollNumber')?.valid && studentForm.get('rollNumber')?.touched"
+                                  class="form-text text-danger">Roll number is required</mat-hint>
+                              </mat-form-field>
+                            </div> -->
+                            
                             <ng-container>
                               <h3>Student Info</h3>
                             </ng-container>
@@ -207,15 +223,6 @@
                                 <input matInput type="text" formControlName="name">
                                 <mat-hint *ngIf="!studentForm.get('name')?.valid && studentForm.get('name')?.touched"
                                   class="form-text text-danger">Name is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Roll Number</mat-label>
-                                <input matInput type="number" formControlName="rollNumber">
-                                <mat-hint
-                                  *ngIf="!studentForm.get('rollNumber')?.valid && studentForm.get('rollNumber')?.touched"
-                                  class="form-text text-danger">Roll number is required</mat-hint>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
@@ -297,6 +304,12 @@
                                 <mat-hint
                                   *ngIf="!studentForm.get('address')?.valid && studentForm.get('address')?.touched"
                                   class="form-text text-danger">Address is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Last School (Optional)</mat-label>
+                                <input matInput type="text" formControlName="lastSchool">
                               </mat-form-field>
                             </div>
                             <ng-container>

@@ -20,11 +20,11 @@ let GetStudentPaginationByAdmission = async (req, res, next) => {
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
-        const studentList = await StudentModel.find({ admissionType: 'new' }).find(searchObj)
+        const studentList = await StudentModel.find({ admissionType: 'New' }).find(searchObj)
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
-        const countStudent = await StudentModel.count({ admissionType: 'new' });
+        const countStudent = await StudentModel.count({ admissionType: 'New' });
 
         let studentData = { countStudent: 0 };
         studentData.studentList = studentList;
@@ -65,7 +65,7 @@ let GetStudentPaginationByClass = async (req, res, next) => {
 
 let GetAllStudentByClass = async (req, res, next) => {
     try {
-        const singleStudent = await StudentModel.find({ class: req.params.class }, '-_id -session -admissionType -otp -status -__v');
+        const singleStudent = await StudentModel.find({ class: req.params.class }, '-_id -otp -status -__v');
         return res.status(200).json(singleStudent);
     } catch (error) {
         console.log(error);
@@ -148,6 +148,7 @@ let CreateBulkStudentRecord = async (req, res, next) => {
             name: student.name,
             rollNumber: student.rollNumber,
             otp: otp,
+            session:student.session,
             admissionType: student.admissionType,
             stream: student.stream,
             admissionNo: student.admissionNo,

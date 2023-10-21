@@ -255,19 +255,19 @@ table mat-icon {
 }
 
 .modal-header {
-  background-color: #fff;
+  background-color: #8d6dff;
   top: 0;
   position: sticky;
   z-index: 1;
 }
 
 .modal-header .modal-title {
-  color: #4e4caac1;
+  color: #fff;
 }
 
 .modal-header .mat-icon {
   cursor: pointer;
-  color: #4e4caac1;
+  color: #fff;
 }
 
 .modal-footer {

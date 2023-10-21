@@ -106,12 +106,12 @@ export class StudentComponent implements OnInit {
   }
   chooseAdmissionType(event: any) {
     if (event) {
-      if (event.value == 'new') {
+      if (event.value == 'New') {
         this.admissionType = event.value;
         const admissionNo = Math.floor(Math.random() * 89999999 + 10000000);
         this.studentForm.get('admissionNo')?.setValue(admissionNo);
       }
-      if (event.value == 'old') {
+      if (event.value == 'Old') {
         this.admissionType = event.value;
         this.studentForm.get('admissionNo')?.setValue(null);
       }
@@ -392,6 +392,8 @@ export class StudentComponent implements OnInit {
       'stream',
       'dob',
       'doa',
+      'session',
+      'admissionType',
       'gender',
       'category',
       'religion',
@@ -409,6 +411,7 @@ export class StudentComponent implements OnInit {
     ];
 
     function orderObjectsByHeaders(studentInfoByClass: any, header: any) {
+      console.log(studentInfoByClass)
       return studentInfoByClass.map((obj: any) => {
         const orderedObj: any = {};
         header.forEach((header: any) => {

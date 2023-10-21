@@ -26,21 +26,22 @@ export class AdmissionComponent implements OnInit {
   paginationValues: Subject<any> = new Subject();
   page: Number = 0;
 
-  sessions:any;
-  categorys:any;
-  religions:any;
-  qualifications:any;
-  occupations:any;
-  stream: string='';
+  sessions: any;
+  categorys: any;
+  religions: any;
+  qualifications: any;
+  occupations: any;
+  stream: string = '';
   notApplicable: String = "stream";
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
-  cls:number =0;
-  admissionType:string='';
+  cls: number = 0;
+  rollNumberType: string = '';
   constructor(private fb: FormBuilder, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
       session: ['', Validators.required],
-      admissionType: ['', Validators.required],
+      admissionType: [''],
+      rollNumberType: ['', Validators.required],
       class: ['', Validators.required],
       rollNumber: ['', Validators.required],
       stream: ['', Validators.required],
@@ -72,32 +73,33 @@ export class AdmissionComponent implements OnInit {
     this.getClass();
     this.allOptions();
   }
-  chooseAdmissionType(event:any){
-    if(event){
-      if(event.value=='new'){
-        this.admissionType = event.value;
-        const admissionNo = Math.floor(Math.random() * 89999999 + 10000000);
-        this.studentForm.get('admissionNo')?.setValue(admissionNo);
+  chooseRollNumberType(event: any) {
+    if (event) {
+      if (event.value == 'generate') {
+        this.rollNumberType = event.value;
+        const rollNumber = Math.floor(Math.random() * 89999999 + 10000000);
+        this.studentForm.get('rollNumber')?.setValue(rollNumber);
+
       }
-      if(event.value=='old'){
-        this.admissionType = event.value;
-        this.studentForm.get('admissionNo')?.setValue(null);
+      if (event.value == 'manualFill') {
+        this.rollNumberType = event.value;
+        this.studentForm.get('rollNumber')?.setValue(null);
       }
     }
   }
   chooseClass(event: any) {
-    if(event){
-      if(this.stream){
+    if (event) {
+      if (this.stream) {
         this.studentForm.get('stream')?.setValue(null);
       }
       this.cls = event.value;
     }
   }
-  chooseStream(event:any){
+  chooseStream(event: any) {
     this.stream = event.value;
   }
 
-  date(e:any) {
+  date(e: any) {
     var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
     this.studentForm.get('dob')?.setValue(convertDate, {
       onlyself: true,
@@ -111,7 +113,7 @@ export class AdmissionComponent implements OnInit {
     this.errorMsg = '';
     this.stream = '';
     this.cls = 0;
-    this.admissionType='';
+    this.rollNumberType = '';
     this.studentForm.reset();
   }
   addStudentModel() {
@@ -119,6 +121,8 @@ export class AdmissionComponent implements OnInit {
     this.deleteMode = false;
     this.updateMode = false;
     this.studentForm.reset();
+    const admissionNo = Math.floor(Math.random() * 89999999 + 10000000);
+    this.studentForm.get('admissionNo')?.setValue(admissionNo);
   }
   updateStudentModel(student: any) {
     this.showModal = true;
@@ -185,17 +189,18 @@ export class AdmissionComponent implements OnInit {
       //     this.errorMsg = err.error;
       //   })
       // } else {
-        this.studentService.addStudent(this.studentForm.value).subscribe((res: any) => {
-          if (res) {
-            this.successDone();
-            this.successMsg = res;
-          }
-        }, err => {
-          this.errorCheck = true;
-          this.errorMsg = err.error;
-        })
-      // }
+      this.studentForm.value.admissionType = 'New';
+      this.studentService.addStudent(this.studentForm.value).subscribe((res: any) => {
+        if (res) {
+          this.successDone();
+          this.successMsg = res;
+        }
+      }, err => {
+        this.errorCheck = true;
+        this.errorMsg = err.error;
+      })
     }
+    // }
   }
 
   allOptions() {
