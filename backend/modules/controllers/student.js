@@ -108,16 +108,24 @@ let CreateStudent = async (req, res, next) => {
         if (checkRollNumber) {
             return res.status(400).json(`Roll number already exist for class ${className} !`);
         }
-        const totalFees = checkFeesStr.totalFees;
-        const installment = checkFeesStr.installment;
+        let totalFees = checkFeesStr.totalFees;
+        let installment = checkFeesStr.installment;
         installment.forEach((item) => {
             Object.keys(item).forEach((key) => {
                 item[key] = 0;
             });
         });
+        let admissionFeesPayable = false;
+        if(admissionType=='New'){
+            admissionFeesPayable = true;
+            admissionFees = checkFeesStr.admissionFees;
+            totalFees = totalFees + admissionFees;
+        }
+        
 
         const studentFeesData = {
             class: className,
+            admissionFeesPayable:admissionFeesPayable,
             totalFees: totalFees,
             paidFees: 0,
             dueFees: totalFees,

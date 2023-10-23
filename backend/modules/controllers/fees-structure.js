@@ -14,7 +14,7 @@ let GetSingleClassFeesStructure = async(req,res,next) => {
 
 let CreateFeesStructure = async (req, res, next) => {
     let className = req.body.class;
-    let { totalFees } = req.body;
+    let { admissionFees,totalFees } = req.body;
     let feesType = req.body.type.feesType;
     let feesPayType = req.body.type.feesPayType;
     let feesTypeTotal = feesType.reduce((total, obj) => {
@@ -44,6 +44,7 @@ let CreateFeesStructure = async (req, res, next) => {
         
         let feesStructureData = {
             class: className,
+            admissionFees:admissionFees,
             totalFees: totalFees,
             feesType:feesType,
             installment:feesPayType,

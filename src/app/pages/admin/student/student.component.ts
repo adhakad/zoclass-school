@@ -241,6 +241,7 @@ export class StudentComponent implements OnInit {
           this.errorMsg = err.error;
         })
       } else {
+        this.studentForm.value.admissionType = 'Old';
         this.studentService.addStudent(this.studentForm.value).subscribe((res: any) => {
           if (res) {
             this.successDone();

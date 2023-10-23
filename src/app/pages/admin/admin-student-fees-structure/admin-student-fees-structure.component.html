@@ -32,7 +32,7 @@
                                             <th>S.No.</th>
                                             <th>Fee Structure</th>
                                             <th>Class</th>
-                                            <th>Total Fees</th>
+                                            <th>Particular Total Fees</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -127,19 +127,12 @@
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
                                         <div class="modal-body" *ngIf="feesTypeMode">
-                                            <!-- <div class="col-10 mb-4 example-margin">
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Total
-                                                        Fees</mat-label>
-                                                    <input matInput type="number" [(ngModel)]="totalFees">
-                                                </mat-form-field>
-                                            </div> -->
                                             <ng-container>
                                                 <h3>Particular's</h3>
                                               </ng-container>
                                             <div class="col-10 mb-4 example-margin">
                                                 <mat-form-field appearance="outline">
-                                                    <mat-label>Total
+                                                    <mat-label>Perticular Total
                                                         Fees</mat-label>
                                                     <input matInput type="number" [(ngModel)]="totalFees">
                                                 </mat-form-field>
@@ -264,7 +257,14 @@
                                                 <div *ngIf="errorCheck">
                                                     <p class="error-message">{{errorMsg}}</p>
                                                 </div>
-                                                <p>Total Fees : {{totalFees | currency:'INR'}}
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Admission Fees</mat-label>
+                                                    <input matInput type="number" formControlName="admissionFees">
+                                                    <mat-hint
+                                                        *ngIf="!feesForm.get('admissionFees')?.valid && feesForm.get('admissionFees')?.touched"
+                                                        class="form-text text-danger">admission fees is required</mat-hint>
+                                                </mat-form-field>
+                                                <p>Perticular Total Fees : {{totalFees | currency:'INR'}}
                                                 </p>
                                                 <h3>Fees Particulars</h3>
                                                 <div formGroupName="type">
@@ -299,7 +299,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button class="submit-button" mat-raised-button
+                                                <button class="submit-button" mat-raised-button [disabled]="!feesForm.valid"
                                                     type="submit">Submit</button>
                                             </div>
                                         </form>

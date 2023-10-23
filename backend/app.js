@@ -11,11 +11,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const path = require('path');
+const helmet = require('helmet');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.use(helmet());
 DbConnect();
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");

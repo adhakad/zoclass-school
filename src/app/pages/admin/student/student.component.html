@@ -181,15 +181,15 @@
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Admission Type</mat-label>
+                                <mat-label>Admission No. Type</mat-label>
                                 <mat-select type="text" matInput formControlName="admissionType">
                                   <div>
-                                    <mat-option value="new"
-                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">New
-                                      Admission</mat-option>
-                                    <mat-option value="old"
-                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">Old
-                                      Admission</mat-option>
+                                    <mat-option value="New"
+                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">Generate
+                                      Admission No.</mat-option>
+                                    <mat-option value="Old"
+                                      (click)="chooseAdmissionType(studentForm.get('admissionType'))">Manual Fill
+                                      Admission No.</mat-option>
                                   </div>
                                 </mat-select>
                                 <mat-hint
@@ -197,13 +197,13 @@
                                   class="form-text text-danger">Admission type is required</mat-hint>
                               </mat-form-field>
                             </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType !=='new' && admissionType !=='old'">
+                            <div class="col-12 col-lg-6" *ngIf="admissionType !=='New' && admissionType !=='Old'">
                               <mat-form-field appearance="outline">
                                 <mat-label>Admission No.</mat-label>
                                 <input matInput readonly>
                               </mat-form-field>
                             </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType=='new'">
+                            <div class="col-12 col-lg-6" *ngIf="admissionType=='New'">
                               <mat-form-field appearance="outline">
                                 <mat-label>Admission No.</mat-label>
                                 <input matInput type="number" formControlName="admissionNo" readonly>
@@ -212,7 +212,7 @@
                                   class="form-text text-danger">Admission no. is required</mat-hint>
                               </mat-form-field>
                             </div>
-                            <div class="col-12 col-lg-6" *ngIf="admissionType=='old'">
+                            <div class="col-12 col-lg-6" *ngIf="admissionType=='Old'">
                               <mat-form-field appearance="outline">
                                 <mat-label>Admission No.</mat-label>
                                 <input matInput type="number" formControlName="admissionNo">
