@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { StudentService } from 'src/app/services/student.service';
 import { ClassService } from 'src/app/services/class.service';
+import { FeesStructureService } from 'src/app/services/fees-structure.service';
 
 @Component({
   selector: 'app-admission',
@@ -36,11 +37,14 @@ export class AdmissionComponent implements OnInit {
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
   cls: number = 0;
   rollNumberType: string = '';
-  constructor(private fb: FormBuilder, private classService: ClassService, private studentService: StudentService) {
+  admissionFeesPaymentType: string = '';
+  clsFeesStructure:any;
+  constructor(private fb: FormBuilder, private classService: ClassService, private studentService: StudentService,private feesStructureService: FeesStructureService) {
     this.studentForm = this.fb.group({
       _id: [''],
       session: ['', Validators.required],
-      admissionType: [''],
+      admissionFees:['',Validators.required],
+      admissionFeesPaymentType: ['',Validators.required],
       rollNumberType: ['', Validators.required],
       class: ['', Validators.required],
       rollNumber: ['', Validators.required],
@@ -73,6 +77,45 @@ export class AdmissionComponent implements OnInit {
     this.getClass();
     this.allOptions();
   }
+
+  chooseClass(event: any) {
+    if (event) {
+      if (this.stream) {
+        this.studentForm.get('stream')?.setValue(null);
+      }
+      this.cls = event.value;
+      if(this.cls){
+        const cls = this.cls;
+        this.feesStructureByClass(cls);
+      }
+    }
+  }
+  chooseStream(event: any) {
+    this.stream = event.value;
+  }
+  feesStructureByClass(cls:any){
+    this.feesStructureService.feesStructureByClass(cls).subscribe((res:any)=> {
+      if(res){
+        this.clsFeesStructure = res;
+      }
+    })
+  }
+
+  chooseAdmissionFeesPayment(event: any) {
+    if (event) {
+      if (event.value == 'Immediate') {
+        this.admissionFeesPaymentType = event.value;
+        const admissionFees = this.clsFeesStructure?.admissionFees;
+        this.studentForm.get('admissionFees')?.setValue(admissionFees);
+
+      }
+      if (event.value == 'Later') {
+        this.admissionFeesPaymentType = event.value;
+        const admissionFees = 0;
+        this.studentForm.get('admissionFees')?.setValue(admissionFees);
+      }
+    }
+  }
   chooseRollNumberType(event: any) {
     if (event) {
       if (event.value == 'generate') {
@@ -86,17 +129,6 @@ export class AdmissionComponent implements OnInit {
         this.studentForm.get('rollNumber')?.setValue(null);
       }
     }
-  }
-  chooseClass(event: any) {
-    if (event) {
-      if (this.stream) {
-        this.studentForm.get('stream')?.setValue(null);
-      }
-      this.cls = event.value;
-    }
-  }
-  chooseStream(event: any) {
-    this.stream = event.value;
   }
 
   date(e: any) {

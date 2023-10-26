@@ -264,9 +264,8 @@
                                                         *ngIf="!feesForm.get('admissionFees')?.valid && feesForm.get('admissionFees')?.touched"
                                                         class="form-text text-danger">admission fees is required</mat-hint>
                                                 </mat-form-field>
-                                                <p>Perticular Total Fees : {{totalFees | currency:'INR'}}
-                                                </p>
                                                 <h3>Fees Particulars</h3>
+                                                <p>Perticular Total Fees :&#8377; {{totalFees}}</p>
                                                 <div formGroupName="type">
                                                     <div formArrayName="feesType">
                                                         <div

@@ -1,4 +1,4 @@
-import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -42,20 +42,20 @@ export class AdminStudentFeesComponent implements OnInit {
   existRollnumber: number[] = [];
   clsFeesStructure: any;
 
-  schoolInfo:any;
-  studentList:any[]=[];
-  singleStudent:any;
-  paybleInstallment:any;
-  payNow:boolean=false;
-  receiptInstallment:any={};
-  receiptMode:boolean = false;
+  schoolInfo: any;
+  studentList: any[] = [];
+  singleStudent: any;
+  paybleInstallment: any;
+  payNow: boolean = false;
+  receiptInstallment: any = {};
+  receiptMode: boolean = false;
 
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private schoolService:SchoolService,private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
-      class:[''],
-      studentId:[''],
+      class: [''],
+      studentId: [''],
       feesAmount: [''],
-      feesInstallment:['']
+      feesInstallment: ['']
     });
   }
 
@@ -74,21 +74,21 @@ export class AdminStudentFeesComponent implements OnInit {
     this.closeModal();
   }
 
-  getSchool(){
-    this.schoolService.getSchool().subscribe((res:any)=> {
-      if(res){
+  getSchool() {
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
         this.schoolInfo = res;
       }
     })
   }
 
-  getAllStudentFeesCollectionByClass(cls:any){
-    this.feesService.getAllStudentFeesCollectionByClass(cls).subscribe((res:any) => {
-      if(res){
+  getAllStudentFeesCollectionByClass(cls: any) {
+    this.feesService.getAllStudentFeesCollectionByClass(cls).subscribe((res: any) => {
+      if (res) {
         let studentFeesCollection = res.studentFeesCollection;
         let studentInfo = res.studentInfo;
-        const studentMap:any = new Map(studentInfo.map((student:any) => [student._id, student]));
-        const combinedData = studentFeesCollection.map((feeCollection:any)=> ({
+        const studentMap: any = new Map(studentInfo.map((student: any) => [student._id, student]));
+        const combinedData = studentFeesCollection.map((feeCollection: any) => ({
           ...studentMap.get(feeCollection.studentId),
           ...feeCollection
         }));
@@ -98,9 +98,11 @@ export class AdminStudentFeesComponent implements OnInit {
     })
   }
 
-  feesStructureByClass(cls:any) {
+  feesStructureByClass(cls: any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
-      this.clsFeesStructure = res;
+      if (res) {
+        this.clsFeesStructure = res;
+      }
     })
   }
 
@@ -111,35 +113,45 @@ export class AdminStudentFeesComponent implements OnInit {
     this.updateMode = false;
     this.successMsg = '';
     this.errorMsg = '';
-    this.payNow=false;
+    this.payNow = false;
     this.paybleInstallment = [];
-    this.paybleInstallment = [0,0];
-    this.receiptInstallment={};
+    this.paybleInstallment = [0, 0];
+    this.receiptInstallment = {};
     this.receiptMode = false;
     this.getAllStudentFeesCollectionByClass(this.cls)
   }
-  feesPay(pay:boolean){
-    if(pay===false){
-      this.payNow=true;
+  feesPay(pay: boolean) {
+    if (pay === false) {
+      this.payNow = true;
     }
-    if(pay===true){
-      this.payNow=false;
+    if (pay === true) {
+      this.payNow = false;
     }
   }
-  studentFeesPay(student:any) {
+  studentFeesPay(student: any) {
     this.singleStudent = student;
-    const installment = this.singleStudent.installment;
-    const result = installment.find((installment:any) => {
-      const [key, value] = Object.entries(installment)[0];
-      return value === 0;
-    });
-    if (result) {
-      const [key, value] = Object.entries(result)[0];
-      this.paybleInstallment = this.clsFeesStructure.installment.flatMap((item:any) => Object.entries(item).filter(([keys, values]) => keys === key));
-    } else {
-      this.paybleInstallment = [0,0];
+    console.log(student)
+    const admissionFees = student.admissionFees;
+    const admissionFeesAmount = this.clsFeesStructure.admissionFees;
+    const admissionFeesPayable = student.admissionFeesPayable;
+    if (admissionFees == 0 && admissionFeesPayable == true) {
+      this.paybleInstallment = [["Admission Fees", admissionFeesAmount]];
     }
 
+    if (admissionFees > 0 && admissionFeesPayable == true || admissionFees == 0 && admissionFeesPayable == false) {
+      const installment = this.singleStudent.installment;
+      const result = installment.find((installment: any) => {
+        const [key, value] = Object.entries(installment)[0];
+        return value === 0;
+      });
+      if (result) {
+        const [key, value] = Object.entries(result)[0];
+        this.paybleInstallment = this.clsFeesStructure.installment.flatMap((item: any) => Object.entries(item).filter(([keys, values]) => keys === key));
+        console.log(this.paybleInstallment);
+      } else {
+        this.paybleInstallment = [0, 0];
+      }
+    }
     this.showModal = true;
     this.deleteMode = false;
     this.updateMode = false;
@@ -201,15 +213,40 @@ export class AdminStudentFeesComponent implements OnInit {
         this.feesForm.value.studentId = this.singleStudent.studentId;
         this.feesForm.value.feesInstallment = this.paybleInstallment[0][0];
         this.feesForm.value.feesAmount = this.paybleInstallment[0][1];
-        this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
-          if (res) {
-            this.receiptMode = true;
-            this.receiptInstallment = res;
-          }
-        }, err => {
-          this.errorCheck = true;
-          this.errorMsg = err.error;
-        })
+        if (this.paybleInstallment[0][0] == "Admission Fees") {
+          this.feesService.addAdmissionFees(this.feesForm.value).subscribe((res: any) => {
+            if (res) {
+              this.receiptMode = true;
+              this.receiptInstallment = {
+                class: res.className,
+                receiptNo: res.admissionFeesReceiptNo,
+                studentId: res.studentId,
+                totalFees: res.totalFees,
+                paidFees: res.paidFees,
+                dueFees: res.dueFees,
+                feesInstallment: 'Admission Fees',
+                feesAmount: res.admissionFees,
+                paymentDate: res.admissionFeesPaymentDate
+              };
+
+              console.log(this.receiptInstallment);
+            }
+          }, err => {
+            this.errorCheck = true;
+            this.errorMsg = err.error;
+          })
+        } else {
+          this.feesService.addFees(this.feesForm.value).subscribe((res: any) => {
+            if (res) {
+              this.receiptMode = true;
+              this.receiptInstallment = res;
+              console.log(this.receiptInstallment)
+            }
+          }, err => {
+            this.errorCheck = true;
+            this.errorMsg = err.error;
+          })
+        }
       }
     }
   }

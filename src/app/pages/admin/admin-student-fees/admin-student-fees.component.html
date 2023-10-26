@@ -157,9 +157,11 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer" *ngIf="paybleInstallment[0][1]>0 && !receiptMode">
-                                                <mat-checkbox style="margin-right: 10px;" class="example-margin"
+                                                <mat-checkbox *ngIf="paybleInstallment[0][0]!=='Admission Fees'" style="margin-right: 8px;" class="example-margin"
                                                     (click)="feesPay(payNow)">Allow {{paybleInstallment[0][0]}}
                                                     Installment</mat-checkbox>
+                                                    <mat-checkbox *ngIf="paybleInstallment[0][0]=='Admission Fees'" style="margin-right: 8px;" class="example-margin"
+                                                    (click)="feesPay(payNow)">Allow {{paybleInstallment[0][0]}}</mat-checkbox>
 
                                                 <button class="submit-button" mat-raised-button type="button"
                                                     (click)="feesAddUpdate()" [disabled]="!payNow">Pay

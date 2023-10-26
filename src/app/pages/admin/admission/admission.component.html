@@ -96,34 +96,10 @@
                         </div>
 
                         <div class="container">
-
                           <div class="row">
                             <ng-container>
-                              <h3>Academic Info</h3>
+                              <h3>Admission Fees</h3>
                             </ng-container>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
-                                <input matInput type="number" formControlName="admissionNo" readonly>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
-                                  class="form-text text-danger">Admission no. is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                              <mat-form-field appearance="outline">
-                                <mat-label>Session</mat-label>
-                                <mat-select type="text" matInput formControlName="session">
-                                  <div *ngFor="let session of sessions">
-                                    <mat-option value="{{session.year}}">{{session.year}}</mat-option>
-                                  </div>
-                                </mat-select>
-                                <mat-hint
-                                  *ngIf="!studentForm.get('session')?.valid && studentForm.get('session')?.touched"
-                                  class="form-text text-danger">Session is required</mat-hint>
-                              </mat-form-field>
-                            </div>
-                            
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>class</mat-label>
@@ -158,6 +134,68 @@
                                 <mat-hint
                                   *ngIf="!studentForm.get('stream')?.valid && studentForm.get('stream')?.touched"
                                   class="form-text text-danger">Stream is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Admission Fees Payment</mat-label>
+                                <mat-select type="text" matInput formControlName="admissionFeesPaymentType">
+                                  <div>
+                                    <mat-option value="Immediate"
+                                      (click)="chooseAdmissionFeesPayment(studentForm.get('admissionFeesPaymentType'))">Admission Fees Payment Immediate</mat-option>
+                                    <mat-option value="Later"
+                                      (click)="chooseAdmissionFeesPayment(studentForm.get('admissionFeesPaymentType'))">Admission Fees Payment Later</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!studentForm.get('admissionFeesPaymentType')?.valid && studentForm.get('admissionFeesPaymentType')?.touched"
+                                  class="form-text text-danger">Admission Fees Payment is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6" *ngIf="admissionFeesPaymentType !=='Immediate' && admissionFeesPaymentType !=='Later'">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Admission Fees</mat-label>
+                                <input matInput readonly>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6" *ngIf="admissionFeesPaymentType=='Immediate'">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Admission Fees In &#8377;</mat-label>
+                                  <input matInput type="number" formControlName="admissionFees" readonly>
+                                <mat-hint
+                                  *ngIf="!studentForm.get('admissionFees')?.valid && studentForm.get('admissionFees')?.touched"
+                                  class="form-text text-danger">Admission fees is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6" *ngIf="admissionFeesPaymentType=='Later'">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Admission Fees</mat-label>
+                                <input matInput readonly>
+                              </mat-form-field>
+                            </div>
+                            <ng-container>
+                              <h3>Academic Info</h3>
+                            </ng-container>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Admission No.</mat-label>
+                                <input matInput type="number" formControlName="admissionNo" readonly>
+                                <mat-hint
+                                  *ngIf="!studentForm.get('admissionNo')?.valid && studentForm.get('admissionNo')?.touched"
+                                  class="form-text text-danger">Admission no. is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Session</mat-label>
+                                <mat-select type="text" matInput formControlName="session">
+                                  <div *ngFor="let session of sessions">
+                                    <mat-option value="{{session.year}}">{{session.year}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-hint
+                                  *ngIf="!studentForm.get('session')?.valid && studentForm.get('session')?.touched"
+                                  class="form-text text-danger">Session is required</mat-hint>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">

@@ -13,6 +13,9 @@ export class FeesService {
   addFees(feesForm:any) {
     return this.http.post(`${this.url}`,feesForm);
   }
+  addAdmissionFees(feesForm:any) {
+    return this.http.post(`${this.url}/admission-fees`,feesForm);
+  }
   addBulkFees(feesBulkResult:any) {
     return this.http.post(`${this.url}/bulk-fees`,feesBulkResult);
   }

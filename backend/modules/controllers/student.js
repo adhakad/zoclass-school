@@ -83,7 +83,7 @@ let CreateStudent = async (req, res, next) => {
 
     const todayDate = new Date();
     let otp = Math.floor(Math.random() * 899999 + 100000);
-    let { name, rollNumber, session, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
+    let { name, rollNumber, session,admissionFees,admissionFeesPaymentType, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
     let className = req.body.class;
     if (stream === "stream") {
         stream = "N/A";
@@ -110,25 +110,37 @@ let CreateStudent = async (req, res, next) => {
         }
         let totalFees = checkFeesStr.totalFees;
         let installment = checkFeesStr.installment;
+        const admissionFee = checkFeesStr.admissionFees;
         installment.forEach((item) => {
             Object.keys(item).forEach((key) => {
                 item[key] = 0;
             });
         });
         let admissionFeesPayable = false;
-        if(admissionType=='New'){
+        paidFees = 0;
+        dueFees = totalFees - paidFees;
+        if(admissionType=='New' && admissionFeesPaymentType=='Immediate'){
             admissionFeesPayable = true;
-            admissionFees = checkFeesStr.admissionFees;
+            admissionFees = admissionFees;
             totalFees = totalFees + admissionFees;
+            paidFees = admissionFees;
+            dueFees = totalFees - admissionFees;
+        }
+        if(admissionType=='New' && admissionFeesPaymentType=='Later'){
+            admissionFeesPayable = true;
+            admissionFees = 0;
+            totalFees = totalFees + admissionFee;
+            paidFees = admissionFees;
+            dueFees = totalFees - admissionFees;
         }
         
-
         const studentFeesData = {
             class: className,
+            admissionFees:admissionFees,
             admissionFeesPayable:admissionFeesPayable,
             totalFees: totalFees,
-            paidFees: 0,
-            dueFees: totalFees,
+            paidFees: paidFees,
+            dueFees: dueFees,
             receipt: installment,
             installment: installment,
             paymentDate: installment
