@@ -1,6 +1,7 @@
 const StudentModel = require('../models/student');
 const FeesStructureModel = require('../models/fees-structure');
 const FeesCollectionModel = require('../models/fees-collection');
+const { DateTime } = require('luxon');
 
 let countStudent = async (req, res, next) => {
     let countStudent = await StudentModel.count();
@@ -13,7 +14,7 @@ let GetStudentPaginationByAdmission = async (req, res, next) => {
     let className = req.body.class;
     let searchObj = {};
     if (searchText) {
-        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText },{ admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
+        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText }, { admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
 
     }
 
@@ -41,7 +42,7 @@ let GetStudentPaginationByClass = async (req, res, next) => {
     let className = req.body.class;
     let searchObj = {};
     if (searchText) {
-        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText },{ admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
+        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText }, { admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
 
     }
 
@@ -80,22 +81,17 @@ let GetSingleStudent = async (req, res, next) => {
     }
 }
 let CreateStudent = async (req, res, next) => {
-
-    const todayDate = new Date();
     let otp = Math.floor(Math.random() * 899999 + 100000);
-    let { name, rollNumber, session,admissionFees,admissionFeesPaymentType, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
+    let receiptNo = Math.floor(Math.random() * 899999 + 100000);
+    const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
+    const istDateTimeString = currentDateIst.toFormat('dd-MM-yyyy hh:mm:ss a');
+    const doa = currentDateIst.toFormat('dd-MM-yyyy');
+    let { name, rollNumber, session, admissionFees, admissionFeesPaymentType, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
     let className = req.body.class;
     if (stream === "stream") {
         stream = "N/A";
     }
-    const date = new Date(dob);
-    const options = {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric'
-    };
-    dob = date.toLocaleDateString(undefined, options);
-    const doa = todayDate.toLocaleDateString(undefined, options);
+    dob = DateTime.fromISO(dob).toFormat("dd-MM-yyyy");
     const studentData = {
         name, rollNumber, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
     }
@@ -106,7 +102,7 @@ let CreateStudent = async (req, res, next) => {
         }
         const checkRollNumber = await StudentModel.findOne({ rollNumber: rollNumber, class: className });
         if (checkRollNumber) {
-            return res.status(400).json(`Roll number already exist for class ${className} !`);
+            // return res.status(400).json(`Roll number already exist for class ${className} !`);
         }
         let totalFees = checkFeesStr.totalFees;
         let installment = checkFeesStr.installment;
@@ -119,38 +115,62 @@ let CreateStudent = async (req, res, next) => {
         let admissionFeesPayable = false;
         paidFees = 0;
         dueFees = totalFees - paidFees;
-        if(admissionType=='New' && admissionFeesPaymentType=='Immediate'){
+        if (admissionType == 'New' && admissionFeesPaymentType == 'Immediate') {
             admissionFeesPayable = true;
             admissionFees = admissionFees;
             totalFees = totalFees + admissionFees;
             paidFees = admissionFees;
             dueFees = totalFees - admissionFees;
         }
-        if(admissionType=='New' && admissionFeesPaymentType=='Later'){
+        if (admissionType == 'New' && admissionFeesPaymentType == 'Later') {
             admissionFeesPayable = true;
             admissionFees = 0;
             totalFees = totalFees + admissionFee;
             paidFees = admissionFees;
             dueFees = totalFees - admissionFees;
         }
-        
+
         const studentFeesData = {
             class: className,
-            admissionFees:admissionFees,
-            admissionFeesPayable:admissionFeesPayable,
+            admissionFees: admissionFees,
+            admissionFeesPayable: admissionFeesPayable,
             totalFees: totalFees,
             paidFees: paidFees,
             dueFees: dueFees,
             receipt: installment,
             installment: installment,
-            paymentDate: installment
+            paymentDate: installment,
         }
-        const createStudent = await StudentModel.create(studentData);
+        if (admissionType == 'New' && admissionFeesPaymentType == 'Immediate') {
+            studentFeesData.admissionFeesReceiptNo = receiptNo,
+            studentFeesData.admissionFeesPaymentDate = istDateTimeString
+        }
+        let createStudent = await StudentModel.create(studentData);
         if (createStudent) {
             let studentId = createStudent._id;
             studentFeesData.studentId = studentId;
-            const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-            return res.status(200).json('Student created succesfuly.');
+            let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
+            if (createStudentFeesData) {
+                let studentAdmissionData = {
+                    session: createStudent.session,
+                    name: createStudent.name,
+                    class: createStudent.class,
+                    admissionNo: createStudent.admissionNo,
+                    rollNumber: createStudent.rollNumber,
+                    dob: createStudent.dob,
+                    fatherName: createStudent.fatherName,
+                    motherName: createStudent.motherName,
+                    admissionType:admissionType,
+                    admissionFeesPaymentType:admissionFeesPaymentType,
+                    admissionFees: createStudentFeesData.admissionFees,
+                    admissionFeesReceiptNo: createStudentFeesData.admissionFeesReceiptNo,
+                    admissionFeesPaymentDate: createStudentFeesData.admissionFeesPaymentDate,
+                    totalFees: createStudentFeesData.totalFees,
+                    paidFees: createStudentFeesData.paidFees,
+                    dueFees: createStudentFeesData.dueFees
+                }
+                return res.status(200).json({studentAdmissionData:studentAdmissionData,successMsg:'Student created succesfully'});
+            }
         }
     } catch (error) {
         console.log(error);
@@ -168,7 +188,7 @@ let CreateBulkStudentRecord = async (req, res, next) => {
             name: student.name,
             rollNumber: student.rollNumber,
             otp: otp,
-            session:student.session,
+            session: student.session,
             admissionType: student.admissionType,
             stream: student.stream,
             admissionNo: student.admissionNo,
@@ -264,11 +284,11 @@ let CreateBulkStudentRecord = async (req, res, next) => {
                 paymentDate: installment
             });
         }
-        if (createStudent && studentFeesData.length>0) {
+        if (createStudent && studentFeesData.length > 0) {
             const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-            if(createStudentFeesData){
+            if (createStudentFeesData) {
                 return res.status(200).json('Student created succesfuly.');
-            } 
+            }
         }
     } catch (error) {
         console.log(error);

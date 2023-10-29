@@ -84,12 +84,12 @@
 
                   <div class="modal-content" *ngIf="!successMsg">
                     <div class="modal-header">
-                      <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'New'}} Admission</h5>
+                      <h5 class="modal-title">New Admission</h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
 
-                    <form [formGroup]="studentForm" (ngSubmit)="studentAddUpdate()">
-                      <div class="modal-body" *ngIf="!deleteMode">
+                    <form [formGroup]="studentForm" (ngSubmit)="studentAddUpdate()" *ngIf="!deleteMode && !receiptMode && !admissionrReceiptInfo">
+                      <div class="modal-body">
 
                         <div *ngIf="errorCheck">
                           <p class="error-message">{{errorMsg}}</p>
@@ -454,6 +454,133 @@
                           [disabled]="!studentForm.valid">Submit</button>
                       </div>
                     </form>
+
+
+
+
+                    <div class="modal-body"
+                    *ngIf="receiptMode && admissionrReceiptInfo">
+                    <div class="row">
+                        <div #receipt class="custom-container">
+                            <div class="table-container">
+                                <table class="logo-table text-bold text-center">
+                                    <tr>
+                                        <td>
+                                        <td>
+                                            <img src="../../../../assets/logo.png" alt="">
+                                            {{schoolInfo?.schoolName}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="info-table text-center">
+                                    <tr>
+                                        <td>
+                                            School Code : {{schoolInfo?.schoolCode}}
+                                        </td>
+                                        <td>
+                                            Affiliation No. : {{schoolInfo?.affiliationNumber}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="info-table text-center">
+                                    <tr>
+                                        <td class="text-bold">Receipt No. :</td>
+                                        <td>{{admissionrReceiptInfo.admissionFeesReceiptNo}}</td>
+                                        <td class="text-bold">Admission No. :</td>
+                                        <td>{{admissionrReceiptInfo.admissionNo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold">Class :</td>
+                                        <td>{{admissionrReceiptInfo.class | classSuffix}}</td>
+                                        <td class="text-bold">Date Of Birth :</td>
+                                        <td>{{admissionrReceiptInfo.dob}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold">Student Name :</td>
+                                        <td>{{admissionrReceiptInfo.name |
+                                            titlecase}}</td>
+                                        <td class="text-bold">Father Name :</td>
+                                        <td>{{admissionrReceiptInfo.fatherName}}</td>
+                                    </tr>
+                                </table>
+                                <table class="receipt-table">
+                                    <tr class="text-center">
+                                        <th class="border">S. No.</th>
+                                        <th class="border">Particulars</th>
+                                        <th class="border">Fee Amount</th>
+                                    </tr>
+
+                                    <tr class="text-center"
+                                        *ngFor="let item of clsFeesStructure?.feesType,let i = index">
+                                        <td class="border">{{i+1}}.</td>
+                                        <td class="border" *ngFor="let fee of item | keyvalue">
+                                            {{ fee.key}} Fee</td>
+                                        <td class="border" *ngFor="let fee of item | keyvalue">
+                                            &#8377; {{ fee.value}}</td>
+                                    </tr>
+                                    <tr class="text-center receipt-row">
+                                        <td></td>
+                                        <td class="text-bold text-right">Total Fee</td>
+                                        <td class="text-bold">&#8377;
+                                            {{admissionrReceiptInfo.totalFees}}</td>
+                                    </tr>
+                                    <tr class="text-center receipt-row">
+                                        <td></td>
+                                        <td class="text-bold text-right">Paid Fee</td>
+                                        <td class="text-bold">&#8377;
+                                            {{admissionrReceiptInfo.paidFees}}</td>
+                                    </tr>
+                                    <tr class="text-center receipt-row">
+                                        <td></td>
+                                        <td class="text-bold text-right">Due Fee</td>
+                                        <td class="text-bold">&#8377;
+                                            {{admissionrReceiptInfo.dueFees}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <p class="text-center"><span class="text-bold">
+                                                    Admission Fees </span>amount deposited <span
+                                                    class="text-bold">&#8377;
+                                                    {{admissionrReceiptInfo.admissionFees}} /-</span>
+                                            </p>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+                                <p>Date : {{ admissionrReceiptInfo.admissionFeesPaymentDate }}</p>
+                                <div>
+                                    <h4 class="text-bold">Disclaimer:</h4>
+                                    <p>1. Payment Responsibility: Confirms your obligation to
+                                        {{schoolInfo?.schoolName}} for listed fees.</p>
+                                    <p>2. Verification: Review receipt details for accuracy,
+                                        including payment amount and purpose. Report
+                                        discrepancies to the School Office for correction.</p>
+                                    <p>3. Non-Transferable: Intended for your use only; do not
+                                        share it.</p>
+                                    <p>4. Record Keeping: Keep this receipt for future
+                                        reference, reimbursement, or tax purposes.</p>
+                                    <p>5. Lost Receipt: If lost or damaged, contact the School
+                                        Office for a duplicate. A fee may apply.</p>
+                                    <p>6. Refund Policy: Refer to our institution's refund
+                                        policy for fee refund information. Generally, fees are
+                                        non-refundable. Exceptions may apply for duplicate
+                                        payments or inadvertent overpayments with proper
+                                        documentation and school policy approval.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" *ngIf="receiptMode">
+                    <button class="submit-button print-pdf" mat-raised-button
+                        (click)="printReceipt()">Print</button>
+                </div>
+
+
+
+
                   </div>
                 </div>
               </div>

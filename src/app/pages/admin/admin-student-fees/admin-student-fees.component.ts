@@ -3,12 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
-import { ClassService } from 'src/app/services/class.service';
-import { ClassSubjectService } from 'src/app/services/class-subject.service';
 import { FeesService } from 'src/app/services/fees.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { FeesStructureService } from 'src/app/services/fees-structure.service';
-import { StudentService } from 'src/app/services/student.service';
 import { PrintPdfService } from 'src/app/services/print-pdf/print-pdf.service';
 import { SchoolService } from 'src/app/services/school.service';
 
@@ -130,7 +127,6 @@ export class AdminStudentFeesComponent implements OnInit {
   }
   studentFeesPay(student: any) {
     this.singleStudent = student;
-    console.log(student)
     const admissionFees = student.admissionFees;
     const admissionFeesAmount = this.clsFeesStructure.admissionFees;
     const admissionFeesPayable = student.admissionFeesPayable;
@@ -228,8 +224,6 @@ export class AdminStudentFeesComponent implements OnInit {
                 feesAmount: res.admissionFees,
                 paymentDate: res.admissionFeesPaymentDate
               };
-
-              console.log(this.receiptInstallment);
             }
           }, err => {
             this.errorCheck = true;
@@ -240,7 +234,6 @@ export class AdminStudentFeesComponent implements OnInit {
             if (res) {
               this.receiptMode = true;
               this.receiptInstallment = res;
-              console.log(this.receiptInstallment)
             }
           }, err => {
             this.errorCheck = true;
@@ -254,7 +247,6 @@ export class AdminStudentFeesComponent implements OnInit {
 
 
   handleImport($event: any) {
-    console.log("xlsx file")
     this.fileChoose = true;
     const files = $event.target.files;
     if (files.length) {
