@@ -114,6 +114,7 @@ export class AdmissionComponent implements OnInit {
   feesStructureByClass(cls: any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       if (res) {
+        res.feesType = [{Admission:res.admissionFees},...res.feesType];
         this.clsFeesStructure = res;
       }
     })
@@ -244,14 +245,12 @@ export class AdmissionComponent implements OnInit {
       this.studentForm.value.admissionType = 'New';
       this.studentService.addStudent(this.studentForm.value).subscribe((res: any) => {
         if (res) {
-          console.log(res);
           if (res.studentAdmissionData.admissionType == "New" && res.studentAdmissionData.admissionFeesPaymentType == 'Immediate') {
             this.receiptMode = true;
             this.admissionrReceiptInfo = res.studentAdmissionData;
           }
           if (res.studentAdmissionData.admissionType == "New" && res.studentAdmissionData.admissionFeesPaymentType == 'Later') {
             this.successDone();
-            console.log(res);
             this.successMsg = res.successMsg;
           }
         }

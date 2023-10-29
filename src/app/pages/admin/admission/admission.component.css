@@ -33,6 +33,9 @@
 img{
   height: 35px;
 }
+.table th,.table td {
+  height: 42px;
+}
 .info-table th,
 .info-table td {
   height: 40px;
