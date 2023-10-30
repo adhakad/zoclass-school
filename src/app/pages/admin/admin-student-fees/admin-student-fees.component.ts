@@ -130,6 +130,15 @@ export class AdminStudentFeesComponent implements OnInit {
     const admissionFees = student.admissionFees;
     const admissionFeesAmount = this.clsFeesStructure.admissionFees;
     const admissionFeesPayable = student.admissionFeesPayable;
+    if ("Admission" in this.clsFeesStructure.feesType[0]) {
+      this.clsFeesStructure.feesType.shift();
+    }
+    if (admissionFeesPayable == true) {
+      this.clsFeesStructure.feesType = [{ Admission: this.clsFeesStructure.admissionFees }, ...this.clsFeesStructure.feesType];
+    }
+    console.log(this.clsFeesStructure)
+
+
     if (admissionFees == 0 && admissionFeesPayable == true) {
       this.paybleInstallment = [["Admission Fees", admissionFeesAmount]];
     }
@@ -143,7 +152,6 @@ export class AdminStudentFeesComponent implements OnInit {
       if (result) {
         const [key, value] = Object.entries(result)[0];
         this.paybleInstallment = this.clsFeesStructure.installment.flatMap((item: any) => Object.entries(item).filter(([keys, values]) => keys === key));
-        console.log(this.paybleInstallment);
       } else {
         this.paybleInstallment = [0, 0];
       }
