@@ -36,7 +36,8 @@
                                         </tr>
                                     </table>
                                     <table class="info-table">
-                                        <tr>
+                                        <tr
+                                            *ngIf="studentFeesCollection.admissionFeesPayable==true && studentFeesCollection.admissionFees>0 || studentFeesCollection.admissionFeesPayable==false && studentFeesCollection.admissionFees==0">
                                             <td *ngIf="paybleInstallment.length>0 && paybleInstallment[0]!=='abc'">
                                                 <ng-container
                                                     *ngFor="let installment of paybleInstallment[0] | keyvalue">
@@ -52,7 +53,13 @@
                                             <td *ngIf="paybleInstallment.length==0 && paybleInstallment[0]!=='abc'">
                                                 <p class="text-bold" style="display: inline-block;margin-right: 25px;">*
                                                     All Fee Already Paid</p>
-
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="studentFeesCollection.admissionFeesPayable==true && studentFeesCollection.admissionFees==0">
+                                            <td>
+                                                <p class="text-bold" style="display: inline-block;margin-right: 25px;">*
+                                                    Please Admission Fees Pay Now ! </p>
                                             </td>
                                         </tr>
                                     </table>

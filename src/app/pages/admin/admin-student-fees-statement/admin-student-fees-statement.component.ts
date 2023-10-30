@@ -14,26 +14,25 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
   @ViewChild('receipt') receipt!: ElementRef;
   cls: any;
-  showModal:boolean = false;
+  showModal: boolean = false;
   clsFeesStructure: any;
   studentFeesCollection: any;
   studentId: any;
   processedData: any[] = [];
-  singleReceiptInstallment:any[] = [];
-  studentInfo:any[] = [];
-  schoolInfo:any;
-  constructor(public activatedRoute: ActivatedRoute,private schoolService:SchoolService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
+  singleReceiptInstallment: any[] = [];
+  studentInfo: any[] = [];
+  schoolInfo: any;
+  constructor(public activatedRoute: ActivatedRoute, private schoolService: SchoolService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
     this.getSchool();
     this.cls = this.activatedRoute.snapshot.paramMap.get('class');
     this.studentId = this.activatedRoute.snapshot.paramMap.get('id');
     this.singleStudentFeesCollectionById(this.studentId)
-    this.feesStructureByClass(this.cls)
   }
-  getSchool(){
-    this.schoolService.getSchool().subscribe((res:any)=> {
-      if(res){
+  getSchool() {
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
         this.schoolInfo = res;
       }
     })
@@ -54,22 +53,23 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   }
   closeModal() {
     this.showModal = false;
-    
+
   }
-  feeReceipt(singleInstallment:any) {
-    const data:any = this.processedData
+  feeReceipt(singleInstallment: any) {
+    const data: any = this.processedData
 
     const desiredInstallment = singleInstallment;
 
-    this.singleReceiptInstallment = Object.values(data).filter((item:any) => item.installment === desiredInstallment);
+    this.singleReceiptInstallment = Object.values(data).filter((item: any) => item.installment === desiredInstallment);
     this.showModal = true;
 
   }
-  singleStudentFeesCollectionById(studentId:any) {
+  singleStudentFeesCollectionById(studentId: any) {
     this.feesService.singleStudentFeesCollectionById(studentId).subscribe((res: any) => {
       if (res) {
         this.studentFeesCollection = res.studentFeesCollection;
         this.studentInfo = res.studentInfo;
+        this.feesStructureByClass(this.cls);
         this.processData();
       }
     })
@@ -78,8 +78,13 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   feesStructureByClass(cls: any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       if (res) {
-        this.clsFeesStructure = res;
-        
+        if (this.studentFeesCollection.admissionFeesPayable == true) {
+          res.feesType = [{ Admission: res.admissionFees }, ...res.feesType];
+          this.clsFeesStructure = res;
+        }
+        if (this.studentFeesCollection.admissionFeesPayable == false) {
+          this.clsFeesStructure = res;
+        }
       }
     })
   }
