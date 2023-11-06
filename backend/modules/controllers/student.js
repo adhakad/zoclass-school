@@ -131,7 +131,10 @@ let CreateStudent = async (req, res, next) => {
     if (stream === "stream") {
         stream = "N/A";
     }
-    dob = DateTime.fromISO(dob).toFormat("dd-MM-yyyy");
+      const parsedDate = DateTime.fromFormat(dob, 'dd-MM-yyyy');
+      if (!parsedDate.isValid) {
+        dob = DateTime.fromISO(dob).toFormat("dd-MM-yyyy");
+      }
     const studentData = {
         name, rollNumber, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
     }

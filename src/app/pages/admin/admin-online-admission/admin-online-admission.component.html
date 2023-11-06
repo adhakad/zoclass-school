@@ -95,17 +95,6 @@
                                                     <div class="row">
                                                         <div class="col-12 col-lg-6">
                                                             <mat-form-field appearance="outline">
-                                                                <mat-label>Admission No.</mat-label>
-                                                                <input matInput type="number"
-                                                                    formControlName="admissionNo" readonly>
-                                                                <mat-hint
-                                                                    *ngIf="!admissionEnquiryForm.get('admissionNo')?.valid && admissionEnquiryForm.get('admissionNo')?.touched"
-                                                                    class="form-text text-danger">Admission no. is
-                                                                    required</mat-hint>
-                                                            </mat-form-field>
-                                                        </div>
-                                                        <div class="col-12 col-lg-6">
-                                                            <mat-form-field appearance="outline">
                                                                 <mat-label>Roll Number Type</mat-label>
                                                                 <mat-select type="text" matInput
                                                                     formControlName="rollNumberType">
@@ -165,6 +154,17 @@
                                                         </div>
                                                         <div class="col-12 col-lg-6">
                                                             <mat-form-field appearance="outline">
+                                                                <mat-label>Admission No.</mat-label>
+                                                                <input matInput type="number"
+                                                                    formControlName="admissionNo" readonly>
+                                                                <mat-hint
+                                                                    *ngIf="!admissionEnquiryForm.get('admissionNo')?.valid && admissionEnquiryForm.get('admissionNo')?.touched"
+                                                                    class="form-text text-danger">Admission no. is
+                                                                    required</mat-hint>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="col-12 col-lg-6">
+                                                            <mat-form-field appearance="outline">
                                                                 <mat-label>Class</mat-label>
                                                                 <input matInput type="text" formControlName="class"
                                                                     readonly>
@@ -177,14 +177,6 @@
                                                                     readonly>
                                                             </mat-form-field>
                                                         </div>
-                                                        <div class="col-12 col-lg-6">
-                                                            <mat-form-field appearance="outline">
-                                                                <mat-label>Last School (Optional)</mat-label>
-                                                                <input matInput type="text" formControlName="lastSchool"
-                                                                    readonly>
-                                                            </mat-form-field>
-                                                        </div>
-
                                                         <ng-container>
                                                             <h3>Student Info</h3>
                                                         </ng-container>
@@ -252,7 +244,13 @@
                                                                     readonly>
                                                             </mat-form-field>
                                                         </div>
-
+                                                        <div class="col-12 col-lg-6">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Last School (Optional)</mat-label>
+                                                                <input matInput type="text" formControlName="lastSchool"
+                                                                    readonly>
+                                                            </mat-form-field>
+                                                        </div>
                                                         <ng-container>
                                                             <h3>Parent's Info</h3>
                                                         </ng-container>
