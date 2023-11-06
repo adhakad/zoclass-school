@@ -27,6 +27,7 @@
                     <th>Student</th>
                     <th>Roll Number</th>
                     <th>Class</th>
+                    <th>Exam</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -46,6 +47,9 @@
                     </td>
                     <td>
                       <p class="mb-0">{{students.class | classSuffix}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{students.examType | titlecase}}</p>
                     </td>
                     <td>
                       <a class="mb-0 status-active" (click)="changeStatus(students.studentId,0)"

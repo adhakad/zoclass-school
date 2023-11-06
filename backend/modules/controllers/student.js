@@ -239,7 +239,7 @@ let CreateStudentAdmissionEnquiry = async (req, res, next) => {
         name, session, stream, class: className, dob: dob, doae: doae, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
     }
     try {
-        const checkContact = await AdmissionEnquiryModel.findOne({ name: name, contact: contact, fatherContact: fatherContact, motherContact: motherContact });
+        const checkContact = await AdmissionEnquiryModel.findOne({ name: name, contact: contact});
         if (checkContact) {
             return res.status(400).json(`Name: ${name} phone ${contact} is already fill online admission form, please visit school and confirm your admission !`);
         }

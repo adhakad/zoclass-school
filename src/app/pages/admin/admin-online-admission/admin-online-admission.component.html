@@ -20,10 +20,11 @@
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>No.</th>
-                                        <th>Admission</th>
+                                        <th>Admission Form</th>
                                         <th>Name</th>
                                         <th>Father Name</th>
                                         <th>Contact</th>
+                                        <th>Admission</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -32,11 +33,12 @@
                                         <td>
                                             <p class="mb-0">{{number*10+i+1-10}}</p>
                                         </td>
-                                        <td>
-                                            <a class="mb-0 status-active" *ngIf="admissionEnquiry.status=='Complete'"
-                                                href="javascript:void(0)">{{admissionEnquiry.status}}</a>
-                                            <a class="mb-0 status-inactive" *ngIf="admissionEnquiry.status=='Panding'"
-                                                href="javascript:void(0)">{{admissionEnquiry.status}}</a>
+                                        <td class="mb-0">
+                                            <button class="submit-button" *ngIf="admissionEnquiry.status=='Panding'"
+                                                mat-raised-button (click)="updateAdmissionEnquiryModel(admissionEnquiry)">Form Open</button>
+                                            <button class="submit-button"
+                                                mat-raised-button *ngIf="admissionEnquiry.status=='Complete'" [disabled]="admissionEnquiry.status=='Complete'"
+                                                style="background-color: transparent;">Submitted</button>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{admissionEnquiry.name}}</p>
@@ -47,10 +49,13 @@
                                         <td>
                                             <p class="mb-0">{{admissionEnquiry.contact}}</p>
                                         </td>
+                                        <td>
+                                            <a class="mb-0 status-active" *ngIf="admissionEnquiry.status=='Complete'"
+                                                href="javascript:void(0)">{{admissionEnquiry.status}}</a>
+                                            <a class="mb-0 status-inactive" *ngIf="admissionEnquiry.status=='Panding'"
+                                                href="javascript:void(0)">{{admissionEnquiry.status}}</a>
+                                        </td>
                                         <td class="mb-0">
-                                            <mat-icon *ngIf="admissionEnquiry.status=='Panding'"
-                                                (click)="updateAdmissionEnquiryModel(admissionEnquiry)">edit_note</mat-icon>
-                                            <mat-icon *ngIf="admissionEnquiry.status=='Complete'">edit_note</mat-icon>
                                             <mat-icon
                                                 (click)="deleteAdmissionEnquiryModel(admissionEnquiry._id)">delete</mat-icon>
                                         </td>
@@ -63,7 +68,7 @@
                                 </app-pagination>
                             </div>
                             <div class="modal fade show" [class.show]="showModal">
-                                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!successMsg">
+                                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!successMsg && !deleteMode">
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-name" style="color: transparent;">&nbsp;</h5>
@@ -77,9 +82,8 @@
                                     </div>
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
-                                            <h5 class="modal-name">{{updateMode?'Update': deleteMode ? 'Delete':'Create
-                                                New'}}
-                                                AdmissionEnquiry</h5>
+                                            <h5 class="modal-title">{{updateMode?'Online': deleteMode ? 'Delete Online':'Create'}}
+                                                Admission Form</h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
 
@@ -318,7 +322,9 @@
                                             </div>
                                         </form>
                                         <div *ngIf="deleteMode">
-                                            <h4>To delete class, click ok to confirm.</h4>
+                                            <div class="modal-body">
+                                                <h4>To delete online admission form, click ok to confirm.</h4>
+                                            </div>
                                             <div class="modal-footer">
                                                 <button class="delete-button" mat-raised-button type="button"
                                                     (click)="admissionEnquiryDelete(deleteById)">Ok</button>
