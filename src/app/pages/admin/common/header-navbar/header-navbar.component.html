@@ -17,125 +17,68 @@
   <mat-toolbar class="hamburger-menu">
     <mat-icon class="close-icon" (click)="hamburgerMenu(false)">close</mat-icon>
     <button mat-menu-item [routerLink]="['/admin/dashboard']" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
-      <mat-icon>home</mat-icon>
+      <!-- <mat-icon>home</mat-icon> -->
       <span>Dashboard</span>
     </button>
     <button mat-menu-item class="menu-button" [routerLink]="['/admin/setting']" routerLinkActive="active-link">
-      <mat-icon>settings</mat-icon>
+      <!-- <mat-icon>settings</mat-icon> -->
       <span>Settings</span>
     </button>
     <button mat-menu-item class="menu-button" [routerLink]="['/admin/admission']" routerLinkActive="active-link">
-      <mat-icon>settings</mat-icon>
-      <span>Admission</span>
+      <!-- <mat-icon>settings</mat-icon> -->
+      <span>Admissions</span>
     </button>
     <button mat-menu-item class="menu-button" [routerLink]="['/admin/students/student']" routerLinkActive="active-link">
-      <mat-icon>person</mat-icon>
-      <span>Student</span>
+      <!-- <mat-icon>person</mat-icon> -->
+      <span>Students</span>
     </button>
       <button mat-menu-item class="menu-button" routerLink="['/admin/students/fees']" routerLinkActive="active-link">
-        <mat-icon>currency_rupee</mat-icon>
-        <span>Fee Management</span>
+        <!-- <mat-icon>currency_rupee</mat-icon> -->
+        <span>Fee Managements</span>
       </button>
       <button mat-menu-item class="menu-button" routerLink="['/admin/students/admit-card']" routerLinkActive="active-link">
-        <mat-icon>list alt</mat-icon>
+        <!-- <mat-icon>list alt</mat-icon> -->
         <span>Admit Cards</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/students/result']" routerLinkActive="active-link">
-        <mat-icon>person</mat-icon>
-        <span>Students Result</span>
+        <!-- <mat-icon>person</mat-icon> -->
+        <span>Students Results</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/teacher']" routerLinkActive="active-link">
-        <mat-icon>person_add</mat-icon>
-        <span>Teacher</span>
+        <!-- <mat-icon>person_add</mat-icon> -->
+        <span>Teachers</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/notification']" routerLinkActive="active-link">
-        <mat-icon>notifications</mat-icon>
-        <span>Notification</span>
+        <!-- <mat-icon>notifications</mat-icon> -->
+        <span>Notifications</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/class']" routerLinkActive="active-link">
-        <mat-icon>note_add</mat-icon>
-        <span>Class </span>
+        <!-- <mat-icon>note_add</mat-icon> -->
+        <span>Classes</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/subject']" routerLinkActive="active-link">
-        <mat-icon>books</mat-icon>
-        <span>Subject</span>
+        <!-- <mat-icon>books</mat-icon> -->
+        <span>Subjects</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/class-subject']" routerLinkActive="active-link">
-        <mat-icon>bookmark</mat-icon>
-        <span>Class Subject Group</span>
+        <!-- <mat-icon>bookmark</mat-icon> -->
+        <span>Class Subject Groups</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/banner']" routerLinkActive="active-link">
-        <mat-icon>pages</mat-icon>
-        <span>Banner</span>
+        <!-- <mat-icon>pages</mat-icon> -->
+        <span>Banners</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/topper']" routerLinkActive="active-link">
-        <mat-icon>library_add</mat-icon>
-        <span>Topper</span>
+        <!-- <mat-icon>library_add</mat-icon> -->
+        <span>Toppers</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/testimonial']" routerLinkActive="active-link">
-        <mat-icon>verified_user</mat-icon>
-        <span>Testimonial</span>
+        <!-- <mat-icon>verified_user</mat-icon> -->
+        <span>Testimonials</span>
       </button>
       <button mat-menu-item class="menu-button" [routerLink]="['/admin/ads']" routerLinkActive="active-link">
-        <mat-icon>list alt</mat-icon>
+        <!-- <mat-icon>list alt</mat-icon> -->
         <span>Ads</span>
       </button>
   </mat-toolbar>
 </div>
-<!-- <div [ngClass]="{'top-hamburger-menu' : false==nav}">
-  <mat-toolbar class="hamburger-menu">
-    <mat-icon class="close-icon" (click)="hamburgerMenu(false)">close</mat-icon>
-    <button mat-menu-item routerLink="/" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
-      <mat-icon>home</mat-icon>
-      <span>Dashboard</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/teacher" routerLinkActive="active-link">
-      <mat-icon>person_add</mat-icon>
-      <span>Teacher</span>
-    </button>
-    <button mat-menu-item  [routerLink]="['/admin/student']" routerLinkActive="active-link">
-      <mat-icon>person</mat-icon>
-      <span>Student</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/test" routerLinkActive="active-link">
-      <mat-icon>assignment</mat-icon>
-      <span>Test</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/notification" routerLinkActive="active-link">
-      <mat-icon>notifications</mat-icon>
-      <span>Notification</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/class" routerLinkActive="active-link">
-      <mat-icon>note_add</mat-icon>
-      <span>Class</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/subject" routerLinkActive="active-link">
-      <mat-icon>books</mat-icon>
-      <span>Subject</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/class-subject" routerLinkActive="active-link">
-      <mat-icon>bookmark</mat-icon>
-      <span>Class Subject</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/study-material" routerLinkActive="active-link">
-      <mat-icon>post_add</mat-icon>
-      <span>Study Material</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/banner" routerLinkActive="active-link">
-      <mat-icon>pages</mat-icon>
-      <span>Banner</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/ads" routerLinkActive="active-link">
-      <mat-icon>info</mat-icon>
-      <span>Ads</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/topper" routerLinkActive="active-link">
-      <mat-icon>library_add</mat-icon>
-      <span>Topper</span>
-    </button>
-    <button mat-menu-item  routerLink="/admin/testimonial" routerLinkActive="active-link">
-      <mat-icon>verified_user</mat-icon>
-      <span>Testimonial</span>
-    </button>
-  </mat-toolbar>
-</div> -->

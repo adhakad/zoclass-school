@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy, } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from "rxjs";
 import { AdminAuthService } from "src/app/services/auth/admin-auth.service";
 import { TeacherAuthService } from "src/app/services/auth/teacher-auth.service";
 import { StudentAuthService } from "src/app/services/auth/student-auth.service";
 import { environment } from "src/environments/environment";
+import { ClassService } from "src/app/services/class.service";
+import { StudentService } from "src/app/services/student.service";
 
 @Component({
   selector: 'app-header',
@@ -11,6 +14,8 @@ import { environment } from "src/environments/environment";
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  showModal: boolean = false;
+  studentForm: FormGroup;
   public schoolName = environment.SCHOOL_NAME;
   nav:boolean = false;
   panelOpenState:boolean = false
@@ -26,6 +31,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isMatMenu2Open = false;
   prevButtonTrigger: any;
   modulesList: any;
+
+  successMsg: String = '';
+  errorMsg: String = '';
+  errorCheck: Boolean = false;
+  classInfo: any[] = [];
+  sessions: any;
+  categorys: any;
+  religions: any;
+  qualifications: any;
+  occupations: any;
+  stream: string = '';
+  notApplicable: String = "stream";
+  streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
+  cls: number = 0;
 
   ModulesList: any = [{
     label: 'User',
@@ -57,8 +76,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }];
 
 
-  constructor(private adminAuthService: AdminAuthService, private teacherAuthService: TeacherAuthService, private studentAuthService: StudentAuthService) {
+  constructor(private fb: FormBuilder,private classService: ClassService, private adminAuthService: AdminAuthService, private teacherAuthService: TeacherAuthService, private studentAuthService: StudentAuthService,private studentService: StudentService,) {
     this.modulesList = this.ModulesList;
+    this.studentForm = this.fb.group({
+      _id: [''],
+      session: ['', Validators.required],
+      class: ['', Validators.required],
+      stream: ['', Validators.required],
+      name: ['', Validators.required],
+      dob: ['', Validators.required],
+      gender: ['', Validators.required],
+      category: ['', Validators.required],
+      religion: ['', Validators.required],
+      nationality: ['', Validators.required],
+      contact: ['', Validators.required],
+      address: ['', Validators.required],
+      lastSchool: [''],
+      fatherName: ['', Validators.required],
+      fatherQualification: ['', Validators.required],
+      fatherOccupation: ['', Validators.required],
+      fatherContact: ['', Validators.required],
+      fatherAnnualIncome: ['', Validators.required],
+      motherName: ['', Validators.required],
+      motherQualification: ['', Validators.required],
+      motherOccupation: ['', Validators.required],
+      motherContact: ['', Validators.required],
+      motherAnnualIncome: ['', Validators.required],
+    })
   }
 
 
@@ -91,6 +135,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(isStudentAuthenticated => {
         this.isStudentAuthenticated = isStudentAuthenticated;
       });
+
+
+      this.getClass();
+    this.allOptions();
   }
   hamburgerMenu(val:boolean){
     if(val==true){
@@ -110,7 +158,66 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  closeModal() {
+    this.showModal = false;
+    this.errorMsg = '';
+    this.errorCheck = false;
+  }
+  addBannerModel() {
+    this.nav = false;
+    this.showModal = true;
+  }
+  chooseClass(event: any) {
+    if (event) {
+      if (this.stream) {
+        this.studentForm.get('stream')?.setValue(null);
+      }
+      this.cls = event.value;
+      if (this.cls) {
+        const cls = this.cls;
+      }
+    }
+  }
+  getClass() {
+    this.classService.getClassList().subscribe((res: any) => {
+      if (res) {
+        this.classInfo = res;
+      }
+    })
+  }
+  chooseStream(event: any) {
+    this.stream = event.value;
+  }
+  allOptions() {
+    this.sessions = [{ year: '2023-24' }, { year: '2024-25' }, { year: '2025-26' }, { year: '2026-27' }, { year: '2027-28' }, { year: '2028-29' }, { year: '2029-30' }]
+    this.categorys = [{ category: 'General' }, { category: 'OBC' }, { category: 'SC' }, { category: 'ST' }, { category: 'Other' }]
+    this.religions = [{ religion: 'Hinduism' }, { religion: 'Buddhism' }, { religion: 'Christanity' }, { religion: 'Jainism' }, { religion: 'Sikhism' }, { religion: 'Other' }]
+    this.qualifications = [{ qualification: 'Doctoral Degree' }, { qualification: 'Masters Degree' }, { qualification: 'Graduate Diploma' }, { qualification: 'Graduate Certificate' }, { qualification: 'Graduate Certificate' }, { qualification: 'Bachelor Degree' }, { qualification: 'Advanced Diploma' }, { qualification: 'Primary School' }, { qualification: 'High School' }, { qualification: 'Higher Secondary School' }, { qualification: 'Illiterate' }, { qualification: 'Other' }]
+    this.occupations = [{ occupation: 'Agriculture(Farmer)' }, { occupation: 'Laborer' }, { occupation: 'Self Employed' }, { occupation: 'Private Job' }, { occupation: 'State Govt. Employee' }, { occupation: 'Central Govt. Employee' }, { occupation: 'Military Job' }, { occupation: 'Para-Military Job' }, { occupation: 'PSU Employee' }, { occupation: 'Other' }]
+  }
+  successDone() {
+    setTimeout(() => {
+      this.closeModal();
+      this.successMsg = '';
+    }, 5000)
+  }
+  studentAddUpdate() {
+    if (this.studentForm.valid) {
+      
+      this.studentService.addOnlineAdmission(this.studentForm.value).subscribe((res: any) => {
+        if (res) {
+          
+          if (res) {
+            this.successDone();
+            this.successMsg = res.successMsg;
+          }
+        }
+      }, err => {
+        this.errorCheck = true;
+        this.errorMsg = err.error;
+      })
+    }
+  }
   ngOnDestroy() {
     this.authListenerSubs?.unsubscribe();
   }

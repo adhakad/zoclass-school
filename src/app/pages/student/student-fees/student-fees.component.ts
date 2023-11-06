@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit,Renderer2 } from '@angular/core';
 declare var Razorpay: any;
 import { Router } from '@angular/router';
 import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
@@ -25,9 +25,18 @@ export class StudentFeesComponent implements OnInit {
   check: boolean = false;
   student:any;
   schoolInfo:any;
-  constructor(private schoolService:SchoolService, private paymentService: PaymentService, private studentAuthService: StudentAuthService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
+  constructor(private renderer: Renderer2, private el: ElementRef,private schoolService:SchoolService, private paymentService: PaymentService, private studentAuthService: StudentAuthService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
+    const script = this.renderer.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+
+    script.onload = () => {
+      console.log('Razorpay script has loaded successfully. You can now initiate payments.');
+    };
+
+    this.renderer.appendChild(this.el.nativeElement, script);
     this.getSchool;
     this.student = this.studentAuthService.getLoggedInStudentInfo();
     this.cls = this.student.class;

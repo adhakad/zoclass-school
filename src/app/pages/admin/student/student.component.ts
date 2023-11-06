@@ -438,6 +438,7 @@ export class StudentComponent implements OnInit {
     };
 
     this.ete.exportExcel(reportData);
+    this.successDone();
   }
 
   allOptions() {

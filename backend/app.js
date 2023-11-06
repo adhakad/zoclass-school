@@ -11,13 +11,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const path = require('path');
-const helmet = require('helmet');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
-app.use(helmet());
 DbConnect();
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -30,12 +28,9 @@ app.use('/public', express.static('public'));
 
 require('./routes')(app);
 
-
-
 // app.get('/*',(req,res) => {
 //   res.sendFile(path.join(__dirname ,'./dist/zoclass/index.html'));
 // })
-
 
 let port = Number(process.config.global_config.server.port);
 let server = app.listen(port, function () {

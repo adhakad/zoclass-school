@@ -33,6 +33,7 @@
                                             <th>Fee Structure</th>
                                             <th>Class</th>
                                             <th>Particular Total Fees</th>
+                                            <th>Admission Fees</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -49,6 +50,9 @@
                                             </td>
                                             <td>
                                                 <p class="mb-0">&#8377; {{clsFeesStructure?.totalFees}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">&#8377; {{clsFeesStructure?.admissionFees}}</p>
                                             </td>
                                             <td class="mb-0">
                                                 <mat-icon>delete</mat-icon>
@@ -257,6 +261,9 @@
                                                 <div *ngIf="errorCheck">
                                                     <p class="error-message">{{errorMsg}}</p>
                                                 </div>
+                                                <ng-container>
+                                                    <h3>Admission Fees</h3>
+                                                  </ng-container>
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Admission Fees</mat-label>
                                                     <input matInput type="number" formControlName="admissionFees">

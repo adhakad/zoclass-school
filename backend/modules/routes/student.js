@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const {GetAllStudentByClass,countStudent,GetSingleStudent,CreateStudent,CreateBulkStudentRecord,UpdateStudent,ChangeStatus,DeleteStudent, GetStudentPaginationByClass,GetStudentPaginationByAdmission} = require('../controllers/student');
+const { GetAllStudentByClass, countStudent, GetSingleStudent, CreateStudent, CreateStudentAdmissionEnquiry, CreateBulkStudentRecord, UpdateStudent, ChangeStatus, DeleteStudent, GetStudentPaginationByClass, GetStudentPaginationByAdmission, GetStudentAdmissionEnquiryPagination } = require('../controllers/student');
 
-router.get('/student-count',countStudent);
-router.get('/student/:class',GetAllStudentByClass);
-router.post('/student-pagination',GetStudentPaginationByClass);
-router.post('/student-admission-pagination',GetStudentPaginationByAdmission);
-router.get('/:id',GetSingleStudent);
-router.post('/',CreateStudent);
-router.post('/bulk-student-record',CreateBulkStudentRecord);
-router.put('/:id',UpdateStudent);
-router.put('/status/:id',ChangeStatus);
-router.delete('/:id',DeleteStudent);
+router.get('/student-count', countStudent);
+router.get('/student/:class', GetAllStudentByClass);
+router.post('/student-pagination', GetStudentPaginationByClass);
+router.post('/student-admission-pagination', GetStudentPaginationByAdmission);
+router.post('/student-admission-enquiry-pagination', GetStudentAdmissionEnquiryPagination);
+router.get('/:id', GetSingleStudent);
+router.post('/', CreateStudent);
+router.post('/online-admission', CreateStudentAdmissionEnquiry);
+router.post('/bulk-student-record', CreateBulkStudentRecord);
+router.put('/:id', UpdateStudent);
+router.put('/status/:id', ChangeStatus);
+router.delete('/:id', DeleteStudent);
 
 
 

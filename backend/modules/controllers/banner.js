@@ -38,23 +38,23 @@ let GetBannerPagination = async(req,res,next) => {
 }
 let GetAllBanner = async(req,res,next) => {
 
-    function generateComplexLicenseKey(length) {
-      const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      const charsetLength = charset.length;
+    // function generateComplexLicenseKey(length) {
+    //   const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    //   const charsetLength = charset.length;
     
-      let licenseKey = '';
-      const randomBytes = crypto.randomBytes(length);
+    //   let licenseKey = '';
+    //   const randomBytes = crypto.randomBytes(length);
     
-      for (let i = 0; i < length; i++) {
-        const randomIndex = randomBytes.readUInt8(i) % charsetLength;
-        licenseKey += charset.charAt(randomIndex);
-      }
+    //   for (let i = 0; i < length; i++) {
+    //     const randomIndex = randomBytes.readUInt8(i) % charsetLength;
+    //     licenseKey += charset.charAt(randomIndex);
+    //   }
     
-      return licenseKey;
-    }
+    //   return licenseKey;
+    // }
     
-    const complexLicenseKey = generateComplexLicenseKey(32); // 32-character key
-    console.log('Generated Complex License Key:', complexLicenseKey);
+    // const complexLicenseKey = generateComplexLicenseKey(32); // 32-character key
+    // console.log('Generated Complex License Key:', complexLicenseKey);
     
 
 

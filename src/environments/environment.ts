@@ -6,9 +6,9 @@
 
 
 export const environment = {
-  production: false,
+  production: true,
   API_URL: 'http://localhost:3000',
-  SCHOOL_NAME:'Zoclass Convent School',
+  SCHOOL_NAME:'Dn Gurukul Public School',
 };
 
 /*

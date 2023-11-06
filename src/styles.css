@@ -46,7 +46,7 @@ Header section
 }
 
 .hamburger {
-  margin-left: 15% !important;
+  /* margin-left: 15% !important; */
 }
 
 .hamburger-icon {
@@ -488,20 +488,19 @@ Side navigation section
     display: inline-block;
     margin-left: 5px;
   }
-
   .side-navbar li button span {
     display: inline-block;
     font-size: 1.12em;
     font-weight: 400;
+    text-align: center;
     /* margin-top: 2px; */
-    margin-left: 10px;
+    margin-left: 15px;
   }
 
   .side-navbar li button.active-link {
     background: #8d6dff;
     color: #fff;
   }
-
   /* 
   Dashboard section 
   */
@@ -511,7 +510,7 @@ Side navigation section
     background-color: #64748d15;
     padding-bottom: 1.5vh;
   }
-
+  
   .big-container {
     background-color: #fff;
     min-height: 87vh;

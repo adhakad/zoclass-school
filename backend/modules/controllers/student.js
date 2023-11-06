@@ -1,4 +1,5 @@
 const StudentModel = require('../models/student');
+const AdmissionEnquiryModel = require('../models/admission-enquiry');
 const FeesStructureModel = require('../models/fees-structure');
 const FeesCollectionModel = require('../models/fees-collection');
 const { DateTime } = require('luxon');
@@ -31,6 +32,35 @@ let GetStudentPaginationByAdmission = async (req, res, next) => {
         studentData.studentList = studentList;
         studentData.countStudent = countStudent;
         return res.json(studentData);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+let GetStudentAdmissionEnquiryPagination = async (req, res, next) => {
+    let searchText = req.body.filters.searchText;
+    let searchObj = {};
+    if (searchText) {
+        searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText)
+            ? {
+                $or: [{ contact: searchText }],
+            }
+            : { name: new RegExp(`${searchText.toString().trim()}`, 'i') };
+    }
+
+    try {
+        let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
+        let page = req.body.page || 1;
+        const admissionEnquiryList = await AdmissionEnquiryModel.find(searchObj)
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .exec();
+        const countAdmissionEnquiry = await AdmissionEnquiryModel.count();
+
+        let admissionEnquiryData = { countAdmissionEnquiry: 0 };
+        admissionEnquiryData.admissionEnquiryList = admissionEnquiryList;
+        admissionEnquiryData.countAdmissionEnquiry = countAdmissionEnquiry;
+        return res.json(admissionEnquiryData);
     } catch (error) {
         console.log(error);
     }
@@ -88,6 +118,16 @@ let CreateStudent = async (req, res, next) => {
     const doa = currentDateIst.toFormat('dd-MM-yyyy');
     let { name, rollNumber, session, admissionFees, admissionFeesPaymentType, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
     let className = req.body.class;
+    let onlineAdmissionStatus = req.body.status;
+    let onlineAdmObjId = req.body._id;
+    let objectId;
+    if (onlineAdmObjId) {
+        objectId = onlineAdmObjId;
+    }
+    let status;
+    if (onlineAdmissionStatus === 'Complete') {
+        status = onlineAdmissionStatus;
+    }
     if (stream === "stream") {
         stream = "N/A";
     }
@@ -143,13 +183,19 @@ let CreateStudent = async (req, res, next) => {
         }
         if (admissionType == 'New' && admissionFeesPaymentType == 'Immediate') {
             studentFeesData.admissionFeesReceiptNo = receiptNo,
-            studentFeesData.admissionFeesPaymentDate = istDateTimeString
+                studentFeesData.admissionFeesPaymentDate = istDateTimeString
         }
         let createStudent = await StudentModel.create(studentData);
         if (createStudent) {
             let studentId = createStudent._id;
             studentFeesData.studentId = studentId;
             let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
+            if(status==='Complete' && objectId !==null && objectId !==undefined){
+                const admissionData = {
+                    status: status
+                }
+                const updateStatus = await AdmissionEnquiryModel.findByIdAndUpdate(objectId, { $set: admissionData }, { new: true });
+            }
             if (createStudentFeesData) {
                 let studentAdmissionData = {
                     session: createStudent.session,
@@ -160,8 +206,8 @@ let CreateStudent = async (req, res, next) => {
                     dob: createStudent.dob,
                     fatherName: createStudent.fatherName,
                     motherName: createStudent.motherName,
-                    admissionType:admissionType,
-                    admissionFeesPaymentType:admissionFeesPaymentType,
+                    admissionType: admissionType,
+                    admissionFeesPaymentType: admissionFeesPaymentType,
                     admissionFees: createStudentFeesData.admissionFees,
                     admissionFeesReceiptNo: createStudentFeesData.admissionFeesReceiptNo,
                     admissionFeesPaymentDate: createStudentFeesData.admissionFeesPaymentDate,
@@ -169,8 +215,34 @@ let CreateStudent = async (req, res, next) => {
                     paidFees: createStudentFeesData.paidFees,
                     dueFees: createStudentFeesData.dueFees
                 }
-                return res.status(200).json({studentAdmissionData:studentAdmissionData,successMsg:'Student created succesfully'});
+                return res.status(200).json({ studentAdmissionData: studentAdmissionData, successMsg: 'Student created succesfully' });
             }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+let CreateStudentAdmissionEnquiry = async (req, res, next) => {
+    const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
+    const doae = currentDateIst.toFormat('dd-MM-yyyy');
+    let { name, session, stream, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
+    let className = req.body.class;
+    if (stream === "stream") {
+        stream = "N/A";
+    }
+    dob = DateTime.fromISO(dob).toFormat("dd-MM-yyyy");
+    const studentData = {
+        name, session, stream, class: className, dob: dob, doae: doae, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
+    }
+    try {
+        const checkContact = await AdmissionEnquiryModel.findOne({ name: name, contact: contact, fatherContact: fatherContact, motherContact: motherContact });
+        if (checkContact) {
+            return res.status(400).json(`Name: ${name} phone ${contact} is already fill online admission form, please visit school and confirm your admission !`);
+        }
+        let createAdmissionEnquiryModel = await AdmissionEnquiryModel.create(studentData);
+        if (createAdmissionEnquiryModel) {
+            return res.status(200).json({ successMsg: 'Online admission form submited succesfully' });
         }
     } catch (error) {
         console.log(error);
@@ -338,10 +410,12 @@ let DeleteStudent = async (req, res, next) => {
 module.exports = {
     countStudent,
     GetStudentPaginationByAdmission,
+    GetStudentAdmissionEnquiryPagination,
     GetStudentPaginationByClass,
     GetAllStudentByClass,
     GetSingleStudent,
     CreateStudent,
+    CreateStudentAdmissionEnquiry,
     CreateBulkStudentRecord,
     UpdateStudent,
     ChangeStatus,

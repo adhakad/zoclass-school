@@ -13,6 +13,9 @@ export class StudentService {
   addStudent(studentData:any){
     return this.http.post(this.url,studentData);
   }
+  addOnlineAdmission(studentData:any){
+    return this.http.post(`${this.url}/online-admission`,studentData);
+  }
   addBulkStudentRecord(bulkStudentRecord:any) {
     return this.http.post(`${this.url}/bulk-student-record`,bulkStudentRecord);
   }
@@ -30,6 +33,9 @@ export class StudentService {
   }
   studentPaginationByAdmission(studentData:any){
     return this.http.post(`${this.url}/student-admission-pagination`,studentData);
+  }
+  studentAdmissionEnquiryPagination(studentData:any){
+    return this.http.post(`${this.url}/student-admission-enquiry-pagination`,studentData);
   }
   updateStudent(studentData:any){
     return this.http.put(`${this.url}/${studentData._id}`, studentData);

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
 import { MaterialUiModule } from 'src/app/material/material-ui/material-ui.module';
 import { HomeRoutingModule } from 'src/app/pages/main/home/home-routing.module';
+import { SharedPipeModule } from 'src/app/pipes/shared-pipe/shared-pipe.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,10 +15,12 @@ import { HomeRoutingModule } from 'src/app/pages/main/home/home-routing.module';
   imports: [
     CommonModule,
     MaterialUiModule,
-    HomeRoutingModule
+    ReactiveFormsModule,
+    HomeRoutingModule,
+    SharedPipeModule,
   ],
   exports:[
-    HeaderComponent
+    HeaderComponent,
   ]
 })
 export class HeaderModule { }
