@@ -26,8 +26,8 @@ const AdmissionEnquiryModel = mongoose.model('admission-enquiry', {
     motherAnnualIncome: { type: String },
     status:{
         type:String,
-        enum:['Pending','Complete'],
-        default:'Pending'
+        enum:['Panding','Complete'],
+        default:'Panding',
     },
 });
 module.exports = AdmissionEnquiryModel;

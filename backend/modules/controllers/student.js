@@ -249,7 +249,6 @@ let CreateStudentAdmissionEnquiry = async (req, res, next) => {
     }
 }
 
-
 let CreateBulkStudentRecord = async (req, res, next) => {
     let bulkStudentRecord = req.body.bulkStudentRecord;
     let className = req.body.class;
