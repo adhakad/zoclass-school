@@ -59,23 +59,25 @@ let ValidatePayment = async (req, res) => {
         let receiptNo = Math.floor(Math.random() * 899999 + 100000);
         const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
         const istDateTimeString = currentDateIst.toFormat('dd-MM-yyyy hh:mm:ss a');
-        const checkFeesCollection = await FeesCollectionModel.findOne({studentId:studentId, class: className });
+        const checkFeesCollection = await FeesCollectionModel.findOne({ studentId: studentId, class: className });
         const id = checkFeesCollection._id;
         const totalFees = checkFeesCollection.totalFees;
         const installments = checkFeesCollection.installment;
+        const admissionFees = checkFeesCollection.admissionFees;
         const totalInstallment = installments.reduce((acc, installment) => {
           const value = Object.values(installment)[0];
           return acc + value;
         }, 0);
-        const paidFees = totalInstallment + feesAmount;
+        const paidFees = totalInstallment + feesAmount + admissionFees;
         const dueFees = totalFees - paidFees;
         const updatedDocument = await FeesCollectionModel.findOneAndUpdate(
           { _id: id, 'installment': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'receipt': { $elemMatch: { [feesInstallment]: { $exists: true } } }, 'paymentDate': { $elemMatch: { [feesInstallment]: { $exists: true } } } },
           { $set: { [`installment.$.${feesInstallment}`]: feesAmount, [`receipt.$.${feesInstallment}`]: receiptNo, [`paymentDate.$.${feesInstallment}`]: istDateTimeString, paidFees: paidFees, dueFees: dueFees } },
           { new: true }
         );
-        console.log("abc")
-        return res.status(200).json({ success: true, message: 'Payment successfully validated.' });
+        if (updatedDocument) {
+          return res.status(200).json({ success: true, message: 'Payment successfully validated.' });
+        }
       }
       if (!updatedPayment) {
         return res.status(400).json({ success: false, message: 'Failed to update payment status.' });

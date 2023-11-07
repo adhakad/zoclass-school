@@ -136,9 +136,7 @@ export class AdminStudentFeesComponent implements OnInit {
     if (admissionFeesPayable == true) {
       this.clsFeesStructure.feesType = [{ Admission: this.clsFeesStructure.admissionFees }, ...this.clsFeesStructure.feesType];
     }
-    console.log(this.clsFeesStructure)
-
-
+    
     if (admissionFees == 0 && admissionFeesPayable == true) {
       this.paybleInstallment = [["Admission Fees", admissionFeesAmount]];
     }

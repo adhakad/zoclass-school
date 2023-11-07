@@ -30,7 +30,6 @@ export class StudentFeesStatementComponent implements OnInit {
     this.cls = this.activatedRoute.snapshot.paramMap.get('class');
     this.studentId = this.activatedRoute.snapshot.paramMap.get('id');
     this.singleStudentFeesCollectionById(this.studentId)
-    this.feesStructureByClass(this.cls)
   }
   getSchool(){
     this.schoolService.getSchool().subscribe((res:any)=> {
@@ -69,7 +68,7 @@ export class StudentFeesStatementComponent implements OnInit {
       if (res) {
         this.studentFeesCollection = res.studentFeesCollection;
         this.studentInfo = res.studentInfo;
-        console.log(this.studentInfo)
+        this.feesStructureByClass(this.cls)
         this.processData();
       }
     })
@@ -78,20 +77,28 @@ export class StudentFeesStatementComponent implements OnInit {
   feesStructureByClass(cls: any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       if (res) {
-        this.clsFeesStructure = res;
+        if (this.studentFeesCollection.admissionFeesPayable == true) {
+          res.feesType = [{ Admission: res.admissionFees }, ...res.feesType];
+          this.clsFeesStructure = res;
+        }
+        if (this.studentFeesCollection.admissionFeesPayable == false) {
+          this.clsFeesStructure = res;
+        }
         
       }
     })
   }
 
   processData() {
+    let allPaidAmount = this.studentFeesCollection.admissionFees;
     for (let i = 0; i < this.studentFeesCollection.installment.length; i++) {
       const receiptNo = Object.values(this.studentFeesCollection.receipt[i])[0];
       const installment = Object.keys(this.studentFeesCollection.installment[i])[0];
       const paidAmount = Object.values(this.studentFeesCollection.installment[i])[0];
       const paymentDate = Object.values(this.studentFeesCollection.paymentDate[i])[0];
-
+      allPaidAmount += paidAmount;
       this.processedData.push({
+        allPaidAmount,
         receiptNo,
         installment,
         paidAmount,

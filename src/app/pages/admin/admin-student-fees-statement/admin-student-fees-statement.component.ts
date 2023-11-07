@@ -57,11 +57,8 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   }
   feeReceipt(singleInstallment: any) {
     const data: any = this.processedData
-
     const desiredInstallment = singleInstallment;
-
     this.singleReceiptInstallment = Object.values(data).filter((item: any) => item.installment === desiredInstallment);
-    console.log(this.singleReceiptInstallment)
     this.showModal = true;
 
   }
