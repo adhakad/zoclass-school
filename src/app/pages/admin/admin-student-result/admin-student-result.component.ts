@@ -42,7 +42,7 @@ export class AdminStudentResultComponent implements OnInit {
   notApplicable: String = "stream";
   examType: any[] = ["quarterly", "half yearly", "final"];
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
-
+  loader:Boolean=true;
 
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private examResultService: ExamResultService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
@@ -152,6 +152,9 @@ export class AdminStudentResultComponent implements OnInit {
         }, []);
         if (combinedData) {
           this.allExamResults = combinedData;
+          setTimeout(()=>{
+            this.loader = false;
+          },1000);
         }
       }
     })

@@ -35,9 +35,12 @@
                                         </td>
                                         <td class="mb-0">
                                             <button class="submit-button" *ngIf="admissionEnquiry.status=='Panding'"
-                                                mat-raised-button (click)="updateAdmissionEnquiryModel(admissionEnquiry)">Form Open</button>
-                                            <button class="submit-button"
-                                                mat-raised-button *ngIf="admissionEnquiry.status=='Complete'" [disabled]="admissionEnquiry.status=='Complete'"
+                                                mat-raised-button
+                                                (click)="updateAdmissionEnquiryModel(admissionEnquiry)">Form
+                                                Open</button>
+                                            <button class="submit-button" mat-raised-button
+                                                *ngIf="admissionEnquiry.status=='Complete'"
+                                                [disabled]="admissionEnquiry.status=='Complete'"
                                                 style="background-color: transparent;">Submitted</button>
                                         </td>
                                         <td>
@@ -68,7 +71,8 @@
                                 </app-pagination>
                             </div>
                             <div class="modal fade show" [class.show]="showModal">
-                                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!successMsg && !deleteMode">
+                                <div class="modal-dialog modal-dialog-scrollable"
+                                    [class.modal-lg]="!successMsg && !deleteMode">
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-name" style="color: transparent;">&nbsp;</h5>
@@ -82,7 +86,8 @@
                                     </div>
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">{{updateMode?'Online': deleteMode ? 'Delete Online':'Create'}}
+                                            <h5 class="modal-title">{{updateMode?'Online': deleteMode ? 'Delete
+                                                Online':'Create'}}
                                                 Admission Form</h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
@@ -338,3 +343,11 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="spinner-container" *ngIf="loader">
+    <div class="spinner-overlay" *ngIf="loader">
+      <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate"
+        strokeWidth="3"></mat-progress-spinner>
+    </div>
+  </div>

@@ -52,7 +52,7 @@ export class StudentComponent implements OnInit {
   schoolInfo: any;
   bulkStudentRecord: any;
   fileChoose: boolean = false;
-
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, private http: HttpClient, private schoolService: SchoolService, public ete: ExcelService, public activatedRoute: ActivatedRoute, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
@@ -91,7 +91,12 @@ export class StudentComponent implements OnInit {
   ngOnInit(): void {
     this.className = this.activatedRoute.snapshot.paramMap.get('id');
     if (this.className) {
-      this.getStudents({ page: 1 });
+      let load:any=this.getStudents({ page: 1 });
+      if(load){
+        setTimeout(()=>{
+          this.loader = false;
+        },1000);
+      }
     }
     this.getSchool();
     this.getClass();

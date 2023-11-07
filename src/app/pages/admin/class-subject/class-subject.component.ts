@@ -33,6 +33,7 @@ export class ClassSubjectComponent implements OnInit {
   filters:any = {};
   number:number=0;
   paginationValues: Subject<any> = new Subject();
+  loader:Boolean=true;
   constructor(private fb: FormBuilder,private classService:ClassService, private subjectService: SubjectService,private classSubjectService:ClassSubjectService) {
     this.classSubjectForm = this.fb.group({
       _id: [''],
@@ -45,7 +46,12 @@ export class ClassSubjectComponent implements OnInit {
   ngOnInit(): void {
     this.getClass();
     this.getSubject();
-    this.getClassSubject({page:1});
+    let load:any=this.getClassSubject({page:1});
+    if(load){
+      setTimeout(()=>{
+        this.loader = false;
+      },1000);
+    }
   }
 
   closeModal() {

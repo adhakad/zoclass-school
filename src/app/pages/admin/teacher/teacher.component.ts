@@ -25,6 +25,7 @@ export class TeacherComponent implements OnInit {
   number: number = 0;
   paginationValues: Subject<any> = new Subject();
   page: Number = 0;
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, private teacherService: TeacherService) {
     this.teacherForm = this.fb.group({
       _id: [''],
@@ -36,7 +37,12 @@ export class TeacherComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTeacher({ page: 1 });
+    let load:any =this.getTeacher({ page: 1 });
+    if(load){
+      setTimeout(()=>{
+        this.loader = false;
+      },1000);
+    }
   }
 
   getTeacher($event: any) {

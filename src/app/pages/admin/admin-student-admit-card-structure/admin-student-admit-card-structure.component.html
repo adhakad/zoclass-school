@@ -220,7 +220,8 @@
                                                 </div>
                                                 <ng-container>
                                                     <h3 style="font-size: 16px;letter-spacing: normal;">Note : As soon
-                                                        as the admit card structure for the {{cls | classSuffix}} class is
+                                                        as the admit card structure for the {{cls | classSuffix}} class
+                                                        is
                                                         created, the admit cards for all the students will be
                                                         automatically generated.</h3>
                                                 </ng-container>
@@ -231,9 +232,12 @@
                                             </div>
                                             <div *ngIf="deleteMode">
                                                 <div class="modal-body">
-                                                <ng-container>
-                                                    <h3 style="font-size: 16px;letter-spacing: normal;">Note : As soon as the admit card structure for the 10th class is deleted, the admit cards for all the students will be automatically deleted.</h3>
-                                                </ng-container>
+                                                    <ng-container>
+                                                        <h3 style="font-size: 16px;letter-spacing: normal;">Note : As
+                                                            soon as the admit card structure for the 10th class is
+                                                            deleted, the admit cards for all the students will be
+                                                            automatically deleted.</h3>
+                                                    </ng-container>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="delete-button" mat-raised-button type="button"
@@ -249,5 +253,10 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="spinner-container" *ngIf="loader">
+    <div class="spinner-overlay" *ngIf="loader">
+        <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
     </div>
 </div>

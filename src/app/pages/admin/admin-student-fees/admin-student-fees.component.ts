@@ -46,7 +46,7 @@ export class AdminStudentFeesComponent implements OnInit {
   payNow: boolean = false;
   receiptInstallment: any = {};
   receiptMode: boolean = false;
-
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
       class: [''],
@@ -91,6 +91,9 @@ export class AdminStudentFeesComponent implements OnInit {
         }));
 
         this.studentList = combinedData;
+        setTimeout(()=>{
+          this.loader = false;
+        },1000)
       }
     })
   }

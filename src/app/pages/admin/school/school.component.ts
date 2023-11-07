@@ -18,6 +18,7 @@ export class SchoolComponent implements OnInit {
   errorMsg: String = '';
   errorCheck: Boolean = false;
   schoolInfo: any;
+  loader:Boolean=true;
   constructor(private fb: FormBuilder,private schoolService: SchoolService) {
     this.schoolForm = this.fb.group({
       _id: [''],
@@ -75,6 +76,9 @@ export class SchoolComponent implements OnInit {
       this.schoolService.getSchool().subscribe((res: any) => {
         if (res) {
           this.schoolInfo = res;
+          setTimeout(()=>{
+            this.loader=false;
+          },1000)
         }
       });
   }

@@ -26,7 +26,7 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   examTypes: any[] = ["quarterly", "half yearly", "final"];
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
   examTime: any[] = ["8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM"];
-
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private admitCardStructureService: AdmitCardStructureService) {
     this.admitcardForm = this.fb.group({
       class: [''],
@@ -91,8 +91,10 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     this.admitCardStructureService.admitCardStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.examAdmitCard = res;
-
-        console.log(this.examAdmitCard)
+        setTimeout(()=>{
+          this.loader = false;
+        },1000)
+        
 
         let date = new Date();
         let examDate: any = this.examAdmitCard[0]?.examDate;

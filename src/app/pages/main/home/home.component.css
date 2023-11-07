@@ -1,10 +1,11 @@
+@import'../../../app.component.css';
 .home {}
-
 /************************Banner*************************/
 .main-card {
    background-color: #64748d15;
    padding-bottom: 3vh;
 }
+
 .banner-card {
    height: 30vh;
 }
@@ -33,6 +34,7 @@
 }
 
 .slider-main-card {
+   min-height: 200px;
    background-color: #fff;
    margin: 12px;
    border-radius: 15px;
@@ -113,6 +115,7 @@
 @media (min-width: 992px) {
 
    .home {}
+
    /************************Banner*************************/
    .banner-card {
       height: 50vh !important;

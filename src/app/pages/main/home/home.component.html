@@ -26,7 +26,8 @@
                     </div>
                 </div>
             </div>
-            <div style="background-color: #fff;width: 100%;margin-top: 25px;margin-bottom: 25px;padding-top:  75px;padding-bottom: 75px;box-shadow: 0 0 1px -10px #64748d15,0 0 0 1px #64748d15,0 0 4px 0 #64748d15;">
+            <div
+                style="background-color: #fff;width: 100%;margin-top: 25px;margin-bottom: 25px;padding-top:  75px;padding-bottom: 75px;box-shadow: 0 0 1px -10px #64748d15,0 0 0 1px #64748d15,0 0 4px 0 #64748d15;">
                 <div class="owl-carousel ads-carousel">
                     <div *ngFor="let adsInfo of adsInfo,let i = index">
                         <img class="ads-card" src="{{baseUrl}}/public/ads-image/{{adsInfo.image}}" alt="ads-{{i+1}}">
@@ -38,7 +39,8 @@
                 <div class="owl-carousel testimonial-carousel">
                     <div class="row testimonial-card" *ngFor="let testimonialInfo of testimonialInfo,let i = index">
                         <div class="col-12 img-container">
-                            <img src="{{baseUrl}}/public/testimonial-image/{{testimonialInfo.image}}" alt="testimonial-{{i+1}}">
+                            <img src="{{baseUrl}}/public/testimonial-image/{{testimonialInfo.image}}"
+                                alt="testimonial-{{i+1}}">
                         </div>
                         <div class="col-12">
                             <h3>{{testimonialInfo.name}}</h3>
@@ -52,4 +54,9 @@
         </div>
     </div>
     <app-footer></app-footer>
+</div>
+<div class="spinner-container" *ngIf="loader">
+    <div class="spinner-overlay" *ngIf="loader">
+        <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
+    </div>
 </div>

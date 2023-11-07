@@ -26,6 +26,7 @@ export class AdminOnlineAdmissionComponent implements OnInit {
   filters: any = {};
   number: number = 0;
   paginationValues: Subject<any> = new Subject();
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, private studentService: StudentService) {
     this.admissionEnquiryForm = this.fb.group({
       _id: [''],
@@ -61,7 +62,12 @@ export class AdminOnlineAdmissionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAdmissionEnquiry({ page: 1 });
+    let a:any = this.getAdmissionEnquiry({ page: 1 });
+    if(a){
+      setTimeout(()=>{
+        this.loader = false;
+      },1000)
+    }
   }
 
   chooseRollNumberType(event: any) {

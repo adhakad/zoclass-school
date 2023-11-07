@@ -46,6 +46,7 @@ export class AdmissionComponent implements OnInit {
   schoolInfo: any;
   admissionrReceiptInfo: any;
   receiptMode: boolean = false;
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, private schoolService: SchoolService, private printPdfService: PrintPdfService, private classService: ClassService, private studentService: StudentService, private feesStructureService: FeesStructureService) {
     this.studentForm = this.fb.group({
       _id: [''],
@@ -81,9 +82,14 @@ export class AdmissionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSchool();
-    this.getStudentsByAdmission({ page: 1 });
+    let load:any = this.getStudentsByAdmission({ page: 1 });
     this.getClass();
     this.allOptions();
+    if(load){
+      setTimeout(()=>{
+        this.loader = false;
+      },1000);
+    }
   }
   printReceipt() {
     this.printPdfService.printElement(this.receipt.nativeElement);

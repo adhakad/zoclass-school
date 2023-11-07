@@ -33,10 +33,10 @@ export class DashboardComponent implements OnInit {
   testimonialCountInfo:any;
   topperCountInfo:any;
   classList:any[]=[];
+  loader:Boolean=true;
   constructor(private adminAuthService:AdminAuthService,private adsService:AdsService,private bannerService:BannerService,private classSubjectService:ClassSubjectService,private classService:ClassService,private notificationService:NotificationService,private studentService:StudentService,private subjectService:SubjectService,private teacherService:TeacherService,private testimonialService:TestimonialService,private topperService:TopperService) {}
   
   ngOnInit(): void {
-    console.log(this.adminAuthService.getLoggedInAdminInfo());
     this.adsCount();
     this.bannerCount();
     this.classSubjectCount();
@@ -53,7 +53,6 @@ export class DashboardComponent implements OnInit {
   adsCount(){
     this.adsService.getAdsCount().subscribe((res:any)=> {
       this.adsCountInfo = res.countAds;
-      console.log(this.adsCountInfo)
     })
   }
   bannerCount(){
@@ -99,19 +98,10 @@ export class DashboardComponent implements OnInit {
   topperCount(){
     this.topperService.getTopperCount().subscribe((res:any)=> {
       this.topperCountInfo = res.countTopper;
+      setTimeout(()=>{
+        this.loader = false;
+      },1000)
     })
   }
-
-  getAllClass(){
-    this.classService.getClassList().subscribe((res:any) => {
-      if(res){
-        this.classList = res;
-      }
-    })
-  }
-
-  // admitCardVailidation(){
-
-  // }
-
+  
 }

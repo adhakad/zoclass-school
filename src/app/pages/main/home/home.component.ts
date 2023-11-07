@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   loggedInStudentInfo: any;
   no: number = 0;
   loadTitle = false;
+  loader: Boolean = true;
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private bannerService: BannerService, private topperService: TopperService, private testimonialService: TestimonialService, private adsService: AdsService, private studentAuthService: StudentAuthService) { }
 
   async ngOnInit() {
@@ -49,8 +50,8 @@ export class HomeComponent implements OnInit {
   }
   ngAfterViewInit() {
     if (this.isBrowser) {
-      
-      setTimeout(() =>  {
+
+      setTimeout(() => {
         jQuery('.banner-carousel').owlCarousel({
           items: 1,
           autoplay: true,
@@ -130,7 +131,9 @@ export class HomeComponent implements OnInit {
             },
           }
         });
-      }, 1500);
+        this.loader = false;
+      }, 3000);
+
     }
   }
 
@@ -167,4 +170,3 @@ export class HomeComponent implements OnInit {
     })
   }
 }
- 

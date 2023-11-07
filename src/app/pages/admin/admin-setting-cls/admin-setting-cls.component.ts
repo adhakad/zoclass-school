@@ -12,6 +12,7 @@ export class AdminSettingClsComponent implements OnInit {
 
   classInfo:any;
   id:any;
+  loader:Boolean = true;
   constructor(public activatedRoute:ActivatedRoute,private classService:ClassService) { }
 
   ngOnInit(): void {
@@ -22,6 +23,9 @@ export class AdminSettingClsComponent implements OnInit {
     this.classService.getClassList().subscribe((res:any)=>{
       if(res){
         this.classInfo = res
+        setTimeout(()=>{
+          this.loader = false;
+        },1000)
       }
     })
   }

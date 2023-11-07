@@ -30,7 +30,7 @@ export class NotificationPageComponent implements OnInit {
   date:any;
   time:any;
   paginationValues: Subject<any> = new Subject();
-
+ loader:Boolean=true;
   constructor(private fb: FormBuilder, private classService: ClassService, private notificationService: NotificationService) {
     this.notificationForm = this.fb.group({
       _id: [''],
@@ -42,9 +42,14 @@ export class NotificationPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getNotifications({ page: 1 });
+    let load:any=this.getNotifications({ page: 1 });
     this.getClass();
     this.getRole();
+    if(load){
+      setTimeout(()=>{
+        this.loader = false;
+      },1000);
+    }
   }
   closeModal() {
     this.showModal = false;

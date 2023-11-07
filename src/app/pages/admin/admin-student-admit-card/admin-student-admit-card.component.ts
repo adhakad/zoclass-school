@@ -13,7 +13,7 @@ export class AdminStudentAdmitCardComponent implements OnInit {
   cls: any;
   admitCardInfo: any;
   studentInfo: any;
-
+  loader:Boolean=true;
   constructor(public activatedRoute: ActivatedRoute, private admitCardService: AdmitCardService) {
 
   }
@@ -54,6 +54,9 @@ export class AdminStudentAdmitCardComponent implements OnInit {
         }, []);
         if (combinedData) {
           this.allAdmitCards = combinedData;
+          setTimeout(()=>{
+            this.loader = false;
+          },1000)
         }
       }
     })

@@ -38,7 +38,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
   gradeMaxMarks: any = [{ "A+": 100 }, { "A": 90 }, { "B+": 80 }, { "B": 70 }, { "C+": 60 }, { "C": 50 }, { "D": 40 }, { "E": 32 }];
   examType: any[] = ["quarterly", "half yearly", "final"];
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
-
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
       class: [''],
@@ -112,6 +112,9 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.examResultStructureService.examResultStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.examResultStr = res;
+        setTimeout(()=>{
+          this.loader = false;
+        },1000);
       }
     })
   }

@@ -22,6 +22,7 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   singleReceiptInstallment: any[] = [];
   studentInfo: any[] = [];
   schoolInfo: any;
+  loader:Boolean=true;
   constructor(public activatedRoute: ActivatedRoute, private schoolService: SchoolService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
@@ -103,6 +104,9 @@ export class AdminStudentFeesStatementComponent implements OnInit {
         paymentDate
       });
     }
+    setTimeout(()=>{
+      this.loader = false;
+    },1000);
   }
 
 }

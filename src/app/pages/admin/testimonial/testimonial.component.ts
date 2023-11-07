@@ -26,6 +26,7 @@ export class TestimonialComponent implements OnInit {
   filters: any = {};
   number: number = 0;
   paginationValues: Subject<any> = new Subject();
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, private testimonialService: TestimonialService) {
     this.testimonialForm = this.fb.group({
       _id: [''],
@@ -37,7 +38,12 @@ export class TestimonialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTestimonial({ page: 1 });
+    let load:any=this.getTestimonial({ page: 1 });
+    if(load){
+      setTimeout(()=>{
+        this.loader = false;
+      },1000);
+    }
   }
 
   getTestimonial($event: any) {

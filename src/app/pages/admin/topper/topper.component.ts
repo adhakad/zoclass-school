@@ -29,6 +29,7 @@ export class TopperComponent implements OnInit {
   filters:any = {};
   number:number=0;
   paginationValues: Subject<any> = new Subject();
+  loader:Boolean=true;
   constructor(private fb: FormBuilder, private topperService: TopperService, private classService: ClassService) {
     this.topperForm = this.fb.group({
       _id: [''],
@@ -41,8 +42,13 @@ export class TopperComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTopper({page:1});
+    let load:any=this.getTopper({page:1});
     this.getClass();
+    if(load){
+      setTimeout(()=>{
+        this.loader = false;
+      },1000);
+    }
   }
 
   getClass() {
