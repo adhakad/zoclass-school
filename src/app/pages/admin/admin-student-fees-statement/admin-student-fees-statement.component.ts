@@ -61,6 +61,7 @@ export class AdminStudentFeesStatementComponent implements OnInit {
     const desiredInstallment = singleInstallment;
 
     this.singleReceiptInstallment = Object.values(data).filter((item: any) => item.installment === desiredInstallment);
+    console.log(this.singleReceiptInstallment)
     this.showModal = true;
 
   }
@@ -90,13 +91,15 @@ export class AdminStudentFeesStatementComponent implements OnInit {
   }
 
   processData() {
+    let allPaidAmount = this.studentFeesCollection.admissionFees;
     for (let i = 0; i < this.studentFeesCollection.installment.length; i++) {
       const receiptNo = Object.values(this.studentFeesCollection.receipt[i])[0];
       const installment = Object.keys(this.studentFeesCollection.installment[i])[0];
-      const paidAmount = Object.values(this.studentFeesCollection.installment[i])[0];
+      const paidAmount:any = Object.values(this.studentFeesCollection.installment[i])[0];
       const paymentDate = Object.values(this.studentFeesCollection.paymentDate[i])[0];
-
+      allPaidAmount += paidAmount;
       this.processedData.push({
+        allPaidAmount,
         receiptNo,
         installment,
         paidAmount,

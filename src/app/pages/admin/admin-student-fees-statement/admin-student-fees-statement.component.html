@@ -115,14 +115,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-12">
-                            <button class="submit-button print-pdf mx-4" mat-raised-button
-                                (click)="downloadPDF()">PDF</button>
-                            <button class="submit-button print-pdf" mat-raised-button
-                                (click)="printContent()">Print</button>
-                        </div>
-                    </div> -->
                 </div>
             </div>
 
@@ -203,13 +195,13 @@
                                                 <td></td>
                                                 <td class="text-bold text-right">Paid Fee</td>
                                                 <td class="text-bold">&#8377;
-                                                    {{studentFeesCollection?.paidFees}}</td>
+                                                    {{singleReceiptInstallment[0]?.allPaidAmount}}</td>
                                             </tr>
                                             <tr class="text-center receipt-row">
                                                 <td></td>
                                                 <td class="text-bold text-right">Due Fee</td>
                                                 <td class="text-bold">&#8377;
-                                                    {{studentFeesCollection?.dueFees}}</td>
+                                                    {{studentFeesCollection?.totalFees - singleReceiptInstallment[0]?.allPaidAmount}}</td>
                                             </tr>
                                             <tr>
                                                 <td></td>
