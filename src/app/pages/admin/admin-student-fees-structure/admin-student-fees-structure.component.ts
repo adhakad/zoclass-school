@@ -56,6 +56,10 @@ export class AdminStudentFeesStructureComponent implements OnInit {
         setTimeout(()=>{
           this.loader = false;
         },1000);
+      }else{
+        setTimeout(()=>{
+          this.loader = false;
+        },1000);
       }
     })
   }

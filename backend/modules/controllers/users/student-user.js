@@ -7,7 +7,7 @@ let SignupStudent = async (req, res, next) => {
     try {
         const checkUser = await StudentUserModel.findOne({ email: email });
         if (checkUser) {
-            return res.status(400).json("Student already signup");
+            return res.status(400).json("Student email already register !");
         }
         const student = await StudentModel.findOne({ rollNumber: rollNumber, class: req.body.class });
         if (!student) {

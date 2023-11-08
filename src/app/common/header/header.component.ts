@@ -7,6 +7,9 @@ import { StudentAuthService } from "src/app/services/auth/student-auth.service";
 import { environment } from "src/environments/environment";
 import { ClassService } from "src/app/services/class.service";
 import { StudentService } from "src/app/services/student.service";
+import { CookieService } from "ngx-cookie-service";
+import { NotificationService } from "src/app/services/notification.service";
+
 
 @Component({
   selector: 'app-header',
@@ -31,6 +34,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isMatMenu2Open = false;
   prevButtonTrigger: any;
   modulesList: any;
+
+  notification: any;
+  notificationCount: any;
+  notificationCookie: any;
 
   successMsg: String = '';
   errorMsg: String = '';
@@ -76,7 +83,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }];
 
 
-  constructor(private fb: FormBuilder,private classService: ClassService, private adminAuthService: AdminAuthService, private teacherAuthService: TeacherAuthService, private studentAuthService: StudentAuthService,private studentService: StudentService,) {
+  constructor(private fb: FormBuilder,private notificationService: NotificationService, private cookieService: CookieService,private classService: ClassService, private adminAuthService: AdminAuthService, private teacherAuthService: TeacherAuthService, private studentAuthService: StudentAuthService,private studentService: StudentService,) {
     this.modulesList = this.ModulesList;
     this.studentForm = this.fb.group({
       _id: [''],
@@ -136,7 +143,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isStudentAuthenticated = isStudentAuthenticated;
       });
 
-
+      this.getNotification();
       this.getClass();
     this.allOptions();
   }
@@ -157,7 +164,50 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.studentAuthService.logout();
     }
   }
+  getNotification() {
+    this.notificationService.getNotificationList().subscribe((res: any) => {
+      if (res) {
+        this.notification = res;
+        if (this.cookieService.get("_vN")) {
+          this.notificationCookie = JSON.parse(this.cookieService.get("_vN"));
+          let filterNotification = this.notification.filter(({ _id: id1 }: any) => this.notificationCookie.some(({ _id: id2 }: any) => id2 === id1))
+            .map((item: any) => {
+              return { "_id": item._id }
+            });
+          let checkCookie = this.notificationCookie.filter(({ _id: id1 }: any) => !filterNotification.some(({ _id: id2 }: any) => id2 === id1))
+          if (checkCookie.length > 0) {
+            this.notificationService.storeViewNotification(filterNotification);
+          }
+          this.notificationCount = this.notification.length - filterNotification?.length;
+          return;
+        }
+        this.notificationCount = this.notification.length;
+      }
+    })
+  }
 
+  viewNotification() {
+    if (this.notification) {
+      console.log(this.notification);
+      let data: any = [];
+      if (this.notificationCookie) {
+        let filterNotification = this.notification.filter(({ _id: id1 }: any) => !this.notificationCookie.some(({ _id: id2 }: any) => id2 === id1));
+        console.log(filterNotification)
+        for (let i = 0; i < filterNotification.length; i++) {
+          let newNotification = { "_id": filterNotification[i]._id };
+          data.push(newNotification, ...this.notificationCookie)
+        }
+        if (data.length > 0) {
+          this.notificationService.storeViewNotification(data)
+        }
+        return
+      }
+      data = this.notification.map((item: any) => {
+        return { "_id": item._id };
+      })
+      this.notificationService.storeViewNotification(data)
+    }
+  }
   closeModal() {
     this.showModal = false;
     this.errorMsg = '';

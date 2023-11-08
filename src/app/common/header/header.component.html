@@ -1,5 +1,5 @@
 <!-- <mat-toolbar style="height: 5vh;width: 100%;background-color: #352575f1;text-align: center;">
-  <div style="width: 50%;"><span style="font-size: .65em;color: #fff;">Krisnani Nagar, Guna, Madhya Pradesh</span></div>
+  <div style="width: 50%;"><span style="font-size: .65em;color: #fff;">Krisnani Nagar, Guna, (M.P.)</span></div>
   <div style="width: 50%;"><span style="font-size: .65em;color: #fff;">Affiliate : 16652</span></div>
 </mat-toolbar> -->
 <mat-toolbar class="header">
@@ -33,42 +33,43 @@
     <button mat-button [matMenuTriggerFor]="accountMenu">
       <span class="menu-item">Account</span><mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-    <button mat-button routerLink="/notice">
-      <mat-icon class="material-icons mat-badge-small" [matBadge]="1" matBadgeColor="accent"
-        matBadgeSize="small">notifications</mat-icon>
+    <button mat-button routerLink="/notice" routerLinkActive="active-link" (click)="viewNotification()">
+      <mat-icon *ngIf="notificationCount" class="material-icons mat-badge-small" [matBadge]="notificationCount"
+        matBadgeColor="accent" matBadgeSize="small">notifications</mat-icon>
+      <mat-icon *ngIf="!notificationCount" class="material-icons mat-badge-small">notifications</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
 
-<mat-menu #aboutMenu="matMenu">
-  <button mat-menu-item routerLink="/teacher/login">
+<mat-menu #aboutMenu="matMenu" class="desktop-menu">
+  <button mat-menu-item>
     <mat-icon>account_box</mat-icon>
     <span>School Information</span>
   </button>
   <button mat-menu-item routerLink="/about">
-    <mat-icon>account_box</mat-icon>
+    <mat-icon>apartment</mat-icon>
     <span>About School</span>
   </button>
 
 </mat-menu>
 
-<mat-menu #examMenu="matMenu">
-  <button mat-menu-item routerLink="/result">
-    <mat-icon>account_box</mat-icon>
-    <span>Exam Results</span>
-  </button>
+<mat-menu #examMenu="matMenu" class="desktop-menu">
   <button mat-menu-item routerLink="/admit-card">
-    <mat-icon>account_box</mat-icon>
+    <mat-icon>assignment</mat-icon>
     <span>Admit Card</span>
+  </button>
+  <button mat-menu-item routerLink="/result">
+    <mat-icon>content_paste_search</mat-icon>
+    <span>Exam Results</span>
   </button>
 </mat-menu>
 
 
-<mat-menu #accountMenu="matMenu">
+<mat-menu #accountMenu="matMenu" class="desktop-menu">
   <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
     routerLink="/admin/login">
-    <mat-icon>account_box</mat-icon>
+    <mat-icon>admin_panel_settings</mat-icon>
     <span>Admin Login</span>
   </button>
   <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
@@ -78,31 +79,31 @@
   </button>
   <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
     routerLink="/student/login">
-    <mat-icon>account_box</mat-icon>
+    <mat-icon>person</mat-icon>
     <span>Student Login</span>
   </button>
   <button mat-menu-item *ngIf="isAdminAuthenticated" routerLink="/admin/dashboard">
-    <mat-icon>dialpad</mat-icon>
+    <mat-icon>dashboard</mat-icon>
     <span>Admin Dashboard</span>
   </button>
   <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
-    <mat-icon>dialpad</mat-icon>
+    <mat-icon>dashboard</mat-icon>
     <span>Teacher Dashboard</span>
   </button>
   <button mat-menu-item *ngIf="isStudentAuthenticated" routerLink="/student/dashboard">
-    <mat-icon>dialpad</mat-icon>
+    <mat-icon>dashboard</mat-icon>
     <span>Student Dashboard</span>
   </button>
   <button mat-menu-item *ngIf="isAdminAuthenticated" (click)="onLogout('admin')">
-    <mat-icon>dialpad</mat-icon>
+    <mat-icon>logout</mat-icon>
     <span>Logout</span>
   </button>
   <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
-    <mat-icon>dialpad</mat-icon>
+    <mat-icon>logout</mat-icon>
     <span>Logout</span>
   </button>
   <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">
-    <mat-icon>dialpad</mat-icon>
+    <mat-icon>logout</mat-icon>
     <span>Logout</span>
   </button>
 </mat-menu>
@@ -112,58 +113,64 @@
   <mat-toolbar class="hamburger-menu">
     <mat-icon class="close-icon" (click)="hamburgerMenu(false)">close</mat-icon>
     <button mat-menu-item routerLink="/" routerLinkActive="active-link" (click)="hamburgerMenu(true)">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>home</mat-icon>
       <span>Home</span>
     </button>
+    <button mat-menu-item routerLink="/notice" routerLinkActive="active-link" (click)="viewNotification()">
+      <mat-icon *ngIf="notificationCount" class="material-icons mat-badge-small" [matBadge]="notificationCount"
+        matBadgeColor="accent" matBadgeSize="small">notifications</mat-icon>
+      <mat-icon *ngIf="!notificationCount" class="material-icons mat-badge-small">notifications</mat-icon>
+      <span>Notification</span>
+    </button>
     <button mat-menu-item (click)="addBannerModel()">
-      <!-- <mat-icon>dialpad</mat-icon> -->
-      <span>Admission</span>
+      <mat-icon>app_registration</mat-icon>
+      <span>Online Admission</span>
     </button>
     <button mat-menu-item routerLink="/about">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>apartment</mat-icon>
       <span>About school</span>
     </button>
-    <button mat-menu-item>
-      <!-- <mat-icon>dialpad</mat-icon> -->
+    <!-- <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
       <span>School Information</span>
-    </button>
+    </button> -->
     <button mat-menu-item routerLink="/admit-card">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>assignment</mat-icon>
       <span>Admit Card</span>
     </button>
     <button mat-menu-item routerLink="/result">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>content_paste_search</mat-icon>
       <span>Exam Result</span>
     </button>
     <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/admin/login">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>admin_panel_settings</mat-icon>
       <span>Admin Login</span>
     </button>
     <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/teacher/login">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>account_box</mat-icon>
       <span>Teacher Login</span>
     </button>
     <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/student/login">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>person</mat-icon>
       <span>Student Login</span>
     </button>
     <button mat-menu-item *ngIf="isAdminAuthenticated" routerLink="/admin/dashboard">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>dashboard</mat-icon>
       <span>Admin Dashboard</span>
     </button>
     <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>dashboard</mat-icon>
       <span>Teacher Dashboard</span>
     </button>
     <button mat-menu-item *ngIf="isStudentAuthenticated" routerLink="/student/dashboard">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>dashboard</mat-icon>
       <span>Student Dashboard</span>
     </button>
     <button mat-menu-item *ngIf="isAdminAuthenticated" (click)="onLogout('admin')">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <!-- <mat-icon>dashboard</mat-icon> -->
       <span>Logout</span>
     </button>
     <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
@@ -171,7 +178,7 @@
       <span>Logout</span>
     </button>
     <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
   </mat-toolbar>

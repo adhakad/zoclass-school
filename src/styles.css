@@ -69,15 +69,14 @@ Header section
 
 .hamburger-menu button {
   font-size: large;
-  color: #4e4caacd !important;
+  color: #525098eb !important;
 }
-
 .hamburger-menu .mat-icon {
-  color: #4e4caacd !important;
+  color: #525098eb !important;
 }
 
 .close-icon {
-  color: #4e4caacd !important;
+  color: #525098eb !important;
   font-size: 28px;
   margin-top: 3.5vh;
   margin-left: 88%;
@@ -440,11 +439,15 @@ Header section
     cursor: pointer;
   }
 
+
   .header .main-menu .menu-item {
+    color: #8d6dff;
     font: 1.20em sans-serif;
     letter-spacing: .85px;
   }
-
+  .desktop-menu .mat-icon,.desktop-menu span{
+    color: #525098eb;
+  }
   .hamburger {
     display: none;
   }
