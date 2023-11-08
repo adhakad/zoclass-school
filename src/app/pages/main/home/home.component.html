@@ -2,7 +2,7 @@
 <div class="home">
     <div class="row">
         <div class="main-card">
-            <div>
+            <div class="banner-background">
                 <div class="owl-carousel banner-carousel">
                     <div *ngFor="let bannerInfo of bannerInfo,let i = index">
                         <img class="banner-card" src="{{baseUrl}}/public/banner-image/{{bannerInfo.image}}"
@@ -26,8 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div
-                style="background-color: #fff;width: 100%;margin-top: 25px;margin-bottom: 25px;padding-top:  75px;padding-bottom: 75px;box-shadow: 0 0 1px -10px #64748d15,0 0 0 1px #64748d15,0 0 4px 0 #64748d15;">
+            <div class="ads-background">
                 <div class="owl-carousel ads-carousel">
                     <div *ngFor="let adsInfo of adsInfo,let i = index">
                         <img class="ads-card" src="{{baseUrl}}/public/ads-image/{{adsInfo.image}}" alt="ads-{{i+1}}">

@@ -25,6 +25,7 @@ export class StudentFeesComponent implements OnInit {
   check: boolean = false;
   student:any;
   schoolInfo:any;
+  loader:Boolean=true;
   constructor(private renderer: Renderer2, private el: ElementRef,private schoolService:SchoolService, private paymentService: PaymentService, private studentAuthService: StudentAuthService, private printPdfService: PrintPdfService, private feesService: FeesService, private feesStructureService: FeesStructureService) { }
 
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class StudentFeesComponent implements OnInit {
     };
 
     this.renderer.appendChild(this.el.nativeElement, script);
-    this.getSchool;
+    this.getSchool();
     this.student = this.studentAuthService.getLoggedInStudentInfo();
     this.cls = this.student.class;
     this.studentId = this.student.id;
@@ -47,6 +48,7 @@ export class StudentFeesComponent implements OnInit {
     this.schoolService.getSchool().subscribe((res:any)=>{
       if(res){
         this.schoolInfo = res;
+        console.log(this.schoolInfo);
       }
     })
   }
@@ -77,6 +79,9 @@ export class StudentFeesComponent implements OnInit {
           this.check = true;
         }
         this.check = true;
+        setTimeout(()=>{
+          this.loader = false;
+        },1000)
       }
     })
   }
@@ -100,7 +105,7 @@ export class StudentFeesComponent implements OnInit {
           key: 'rzp_test_ARoUa9Hxw3scSz',
           amount: response.order.feesAmount,
           currency: response.order.currency,
-          name: 'zoclass',
+          name: this.schoolInfo?.schoolName,
           description: 'Payment for Your Product',
           image: '../../../../assets/logo.png',
           prefill: {

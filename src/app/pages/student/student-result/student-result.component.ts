@@ -16,6 +16,7 @@ export class StudentResultComponent implements OnInit {
   resultStructureInfo: any;
   processedData: any[] = [];
   schoolInfo:any;
+  loader:Boolean=true;
   constructor(private schoolService:SchoolService,private studentAuthService: StudentAuthService,private printPdfService:PrintPdfService, private examResultService: ExamResultService) {}
   ngOnInit(): void {
     this.getSchool();
@@ -197,9 +198,15 @@ export class StudentResultComponent implements OnInit {
           this.examResultInfo.percentile = percentile;
           this.examResultInfo.percentileGrade = percentileGrade;
         }
+        setTimeout(()=>{
+          this.loader = false;
+        },1000)
       }
     }, err => {
       this.errorMsg = err.error.errorMsg;
+      setTimeout(()=>{
+        this.loader = false;
+      },1000)
     })
   }
 }

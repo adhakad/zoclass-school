@@ -17,7 +17,7 @@ export class StudentAdmitCardComponent implements OnInit {
   studentInfo: any;
   admitCardInfo: any;
   processedData: any[] = [];
-
+  loader:Boolean=true;
   constructor(private schoolService:SchoolService,private studentAuthService: StudentAuthService,private printPdfService: PrintPdfService, private admitCardService: AdmitCardService) {}
   ngOnInit(): void {
     this.getSchool();
@@ -53,6 +53,9 @@ export class StudentAdmitCardComponent implements OnInit {
       }
     }, err => {
       this.errorMsg = err.error.errorMsg;
+      setTimeout(()=>{
+        this.loader = false;
+      },1000)
     })
   }
   processData() {
@@ -68,6 +71,9 @@ export class StudentAdmitCardComponent implements OnInit {
         timing: `${startTime} to ${endTime}`
       });
     }
+    setTimeout(()=>{
+      this.loader = false;
+    },1000)
   }
 
 

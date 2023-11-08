@@ -18,23 +18,23 @@ import { TopperService } from 'src/app/services/topper.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  cookieValue:any;
-  
-  adsCountInfo:any;
-  bannerCountInfo:any;
-  classSubjectCountInfo:any;
-  classCountInfo:any;
-  notificationCountInfo:any;
-  studentCountInfo:any;
-  studyMaterialCountInfo:any;
-  subjectCountInfo:any;
-  teacherCountInfo:any;
-  testCountInfo:any;
-  testimonialCountInfo:any;
-  topperCountInfo:any;
-  loader:Boolean=true;
-  constructor(private adminAuthService:AdminAuthService,private adsService:AdsService,private bannerService:BannerService,private classSubjectService:ClassSubjectService,private classService:ClassService,private notificationService:NotificationService,private studentService:StudentService,private subjectService:SubjectService,private teacherService:TeacherService,private testimonialService:TestimonialService,private topperService:TopperService) {}
-  
+  cookieValue: any;
+
+  adsCountInfo: any;
+  bannerCountInfo: any;
+  classSubjectCountInfo: any;
+  classCountInfo: any;
+  notificationCountInfo: any;
+  studentCountInfo: any;
+  studyMaterialCountInfo: any;
+  subjectCountInfo: any;
+  teacherCountInfo: any;
+  testCountInfo: any;
+  testimonialCountInfo: any;
+  topperCountInfo: any;
+  loader: Boolean = true;
+  constructor(private adminAuthService: AdminAuthService, private adsService: AdsService, private bannerService: BannerService, private classSubjectService: ClassSubjectService, private classService: ClassService, private notificationService: NotificationService, private studentService: StudentService, private subjectService: SubjectService, private teacherService: TeacherService, private testimonialService: TestimonialService, private topperService: TopperService) { }
+
   ngOnInit(): void {
     this.adsCount();
     this.bannerCount();
@@ -49,60 +49,58 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  adsCount(){
-    this.adsService.getAdsCount().subscribe((res:any)=> {
+  adsCount() {
+    this.adsService.getAdsCount().subscribe((res: any) => {
       this.adsCountInfo = res.countAds;
     })
   }
-  bannerCount(){
-    this.bannerService.getBannerCount().subscribe((res:any)=> {
+  bannerCount() {
+    this.bannerService.getBannerCount().subscribe((res: any) => {
       this.bannerCountInfo = res.countBanner;
     })
   }
-  classSubjectCount(){
-    this.classSubjectService.getClassSubjectCount().subscribe((res:any)=> {
+  classSubjectCount() {
+    this.classSubjectService.getClassSubjectCount().subscribe((res: any) => {
       this.classSubjectCountInfo = res.countClassSubject;
     })
   }
-  classCount(){
-    this.classService.getClassCount().subscribe((res:any)=> {
+  classCount() {
+    this.classService.getClassCount().subscribe((res: any) => {
       this.classCountInfo = res.countClass;
     })
   }
-  studentCount(){
-    this.studentService.getStudentCount().subscribe((res:any)=> {
+  studentCount() {
+    this.studentService.getStudentCount().subscribe((res: any) => {
       this.studentCountInfo = res.countStudent;
     })
   }
-  notificationCount(){
-    this.notificationService.getNotificationCount().subscribe((res:any)=> {
+  notificationCount() {
+    this.notificationService.getNotificationCount().subscribe((res: any) => {
       this.notificationCountInfo = res.countNotification;
     })
   }
-  subjectCount(){
-    this.subjectService.getSubjectCount().subscribe((res:any)=> {
+  subjectCount() {
+    this.subjectService.getSubjectCount().subscribe((res: any) => {
       this.subjectCountInfo = res.countSubject;
     })
   }
-  teacherCount(){
-    this.teacherService.getTeacherCount().subscribe((res:any)=> {
+  teacherCount() {
+    this.teacherService.getTeacherCount().subscribe((res: any) => {
       this.teacherCountInfo = res.countTeacher;
     })
   }
-  testimonialCount(){
-    this.testimonialService.getTestimonialCount().subscribe((res:any)=> {
+  testimonialCount() {
+    this.testimonialService.getTestimonialCount().subscribe((res: any) => {
       this.testimonialCountInfo = res.countTestimonial;
     })
   }
-  topperCount(){
-    this.topperService.getTopperCount().subscribe((res:any)=> {
+  topperCount() {
+    this.topperService.getTopperCount().subscribe((res: any) => {
       this.topperCountInfo = res.countTopper;
-      if(this.adsCountInfo && this.bannerCountInfo && this.teacherCountInfo && this.classCountInfo && this.classSubjectCountInfo && this.studentCountInfo){
-        setTimeout(()=>{
-          this.loader = false;
-        },1000)
-      }
+      setTimeout(() => {
+        this.loader = false;
+      }, 1000)
     })
   }
-  
+
 }
