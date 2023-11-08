@@ -131,7 +131,9 @@ export class HomeComponent implements OnInit {
             },
           }
         });
-        this.loader = false;
+        if(this.bannerInfo.length>0 && this.topperInfo.length>0 && this.adsInfo.length>0 && this.testimonialInfo.length>0){
+          this.loader = false;
+        }
       }, 3000);
 
     }

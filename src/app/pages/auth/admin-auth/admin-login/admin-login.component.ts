@@ -12,7 +12,6 @@ import { TeacherAuthService } from 'src/app/services/auth/teacher-auth.service';
 export class AdminLoginComponent implements OnInit{
   errorMsg:string ='';
   loginForm: FormGroup;
-  loader:Boolean =false;
   constructor(private fb: FormBuilder,private router:Router,private studentAuthService: StudentAuthService,private adminAuthService: AdminAuthService,private teacherAuthService: TeacherAuthService) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -23,7 +22,6 @@ export class AdminLoginComponent implements OnInit{
   }
 
   login() {
-    this.loader = true;
     if (this.loginForm.valid) {
       if(this.studentAuthService.getAccessToken() || this.teacherAuthService.getAccessToken()){
         this.errorMsg = "Login not valid";
@@ -42,7 +40,5 @@ export class AdminLoginComponent implements OnInit{
       })
     }
   }
-
-  
 
 }

@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class NoticeComponent implements OnInit {
 
   notifications:any[]=[];
+  loader:Boolean=true;
 
   constructor(private notificationService:NotificationService) { }
 
@@ -22,6 +23,9 @@ export class NoticeComponent implements OnInit {
     this.notificationService.getNotificationList().subscribe((res:any) => {
       if(res){
         this.notifications = res;
+        setTimeout(() => {
+          this.loader = false;
+        }, 1000)
       }
     })
   }

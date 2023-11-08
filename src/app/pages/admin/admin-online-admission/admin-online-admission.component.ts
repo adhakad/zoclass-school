@@ -62,8 +62,8 @@ export class AdminOnlineAdmissionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let a:any = this.getAdmissionEnquiry({ page: 1 });
-    if(a){
+    let load:any = this.getAdmissionEnquiry({ page: 1 });
+    if(load){
       setTimeout(()=>{
         this.loader = false;
       },1000)

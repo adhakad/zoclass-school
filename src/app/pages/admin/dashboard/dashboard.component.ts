@@ -32,7 +32,6 @@ export class DashboardComponent implements OnInit {
   testCountInfo:any;
   testimonialCountInfo:any;
   topperCountInfo:any;
-  classList:any[]=[];
   loader:Boolean=true;
   constructor(private adminAuthService:AdminAuthService,private adsService:AdsService,private bannerService:BannerService,private classSubjectService:ClassSubjectService,private classService:ClassService,private notificationService:NotificationService,private studentService:StudentService,private subjectService:SubjectService,private teacherService:TeacherService,private testimonialService:TestimonialService,private topperService:TopperService) {}
   
@@ -98,9 +97,11 @@ export class DashboardComponent implements OnInit {
   topperCount(){
     this.topperService.getTopperCount().subscribe((res:any)=> {
       this.topperCountInfo = res.countTopper;
-      setTimeout(()=>{
-        this.loader = false;
-      },1000)
+      if(this.adsCountInfo && this.bannerCountInfo && this.teacherCountInfo && this.classCountInfo && this.classSubjectCountInfo && this.studentCountInfo){
+        setTimeout(()=>{
+          this.loader = false;
+        },1000)
+      }
     })
   }
   

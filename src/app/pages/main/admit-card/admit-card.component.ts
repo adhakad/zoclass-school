@@ -16,13 +16,14 @@ export class AdmitCardComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
   errorMsg: string = '';
   admitCardForm: FormGroup;
-  schoolInfo:any;
+  schoolInfo: any;
   classInfo: any;
   studentAdmitCardInfo: any;
   admitCardInfo: any;
   processedData: any[] = [];
+  loader: Boolean = false;
 
-  constructor(private fb: FormBuilder,private schoolService:SchoolService, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
+  constructor(private fb: FormBuilder, private schoolService: SchoolService, private printPdfService: PrintPdfService, private admitCardService: AdmitCardService, private classService: ClassService) {
     this.admitCardForm = this.fb.group({
       admissionNo: ['', Validators.required],
       class: ['', Validators.required],
@@ -41,9 +42,9 @@ export class AdmitCardComponent implements OnInit {
   downloadPDF() {
     this.printPdfService.generatePDF(this.content.nativeElement, "Admitcard.pdf");
   }
-  getSchool(){
-    this.schoolService.getSchool().subscribe((res:any)=> {
-      if(res){
+  getSchool() {
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
         this.schoolInfo = res;
       }
     })
@@ -58,8 +59,9 @@ export class AdmitCardComponent implements OnInit {
   admitCard() {
     this.admitCardService.singleStudentAdmitCard(this.admitCardForm.value).subscribe((res: any) => {
       if (res) {
+        this.loader=true;
         if (!this.processedData || !this.studentAdmitCardInfo || !this.admitCardInfo) {
-          this.studentAdmitCardInfo = {...res.studentInfo,...res.admitCard};
+          this.studentAdmitCardInfo = { ...res.studentInfo, ...res.admitCard };
           this.admitCardInfo = res.admitCardStructure;
           this.processData();
         }
@@ -82,6 +84,10 @@ export class AdmitCardComponent implements OnInit {
         timing: `${startTime} to ${endTime}`
       });
     }
+    setTimeout(() => {
+      this.loader = false;
+    }, 1500)
+
   }
 
 }

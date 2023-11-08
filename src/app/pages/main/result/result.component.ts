@@ -1,4 +1,4 @@
-import { Component,ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ExamResultService } from 'src/app/services/exam-result.service';
@@ -16,14 +16,15 @@ export class ResultComponent implements OnInit {
   @ViewChild('content') content!: ElementRef;
   errorMsg: string = '';
   examResultForm: FormGroup;
-  schoolInfo:any;
+  schoolInfo: any;
   classInfo: any;
   studentInfo: any;
   examResultInfo: any;
   resultStructureInfo: any;
   processedData: any[] = [];
-  
-  constructor(private fb: FormBuilder, private schoolService:SchoolService,private printPdfService:PrintPdfService, private examResultService: ExamResultService, private classService: ClassService) {
+  loader: Boolean = false;
+
+  constructor(private fb: FormBuilder, private schoolService: SchoolService, private printPdfService: PrintPdfService, private examResultService: ExamResultService, private classService: ClassService) {
     this.examResultForm = this.fb.group({
       admissionNo: ['', Validators.required],
       class: ['', Validators.required],
@@ -41,12 +42,12 @@ export class ResultComponent implements OnInit {
   }
 
   downloadPDF() {
-    this.printPdfService.generatePDF(this.content.nativeElement,"Result.pdf");
+    this.printPdfService.generatePDF(this.content.nativeElement, "Result.pdf");
   }
 
-  getSchool(){
-    this.schoolService.getSchool().subscribe((res:any)=> {
-      if(res){
+  getSchool() {
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
         this.schoolInfo = res;
       }
     })
@@ -61,33 +62,33 @@ export class ResultComponent implements OnInit {
   examResult() {
     this.examResultService.singleStudentExamResult(this.examResultForm.value).subscribe((res: any) => {
       if (res) {
+        this.loader =true;
         this.studentInfo = res.studentInfo;
         let examResult = res.examResult;
-
         this.resultStructureInfo = res.examResultStructure;
 
         let grandTotalMarks = 0;
         let percentileGrade: string = "";
-        let percentile:number = 0;
+        let percentile: number = 0;
         if (examResult.practicalMarks) {
           this.examResultInfo = {};
           const totalTheoryMaxMarks: number = this.resultStructureInfo.theoryMaxMarks.reduce((total: number, subjectMarks: any) => {
             const subjectName: string = Object.keys(subjectMarks)[0];
             const maxMarksObject: any = this.resultStructureInfo.theoryMaxMarks.find((maxMarks: any) => Object.keys(maxMarks)[0] === subjectName);
             const maxMarks: number = maxMarksObject ? parseFloat(maxMarksObject[subjectName]) : 0;
-  
+
             return total + maxMarks;
           }, 0);
-  
+
           const totalPracticalMaxMarks: number = this.resultStructureInfo.practicalMaxMarks.reduce((total: number, subjectMarks: any) => {
             const subjectName: string = Object.keys(subjectMarks)[0];
 
             const maxMarksObject: any = this.resultStructureInfo.practicalMaxMarks.find((maxMarks: any) => Object.keys(maxMarks)[0] === subjectName);
             const maxMarks: number = maxMarksObject ? parseFloat(maxMarksObject[subjectName]) : 0;
-  
+
             return total + maxMarks;
           }, 0);
-  
+
           const totalMaxMarks: number = totalTheoryMaxMarks + totalPracticalMaxMarks;
 
 
@@ -107,7 +108,7 @@ export class ResultComponent implements OnInit {
               let grade = '';
               const gradeMaxMarks = this.resultStructureInfo.gradeMaxMarks;
               const gradeMinMarks = this.resultStructureInfo.gradeMinMarks;
-              
+
               for (let i = 0; i < gradeMaxMarks.length; i++) {
                 const gradeRange: any = Object.values(gradeMaxMarks[i])[0];
                 if (totalMarks >= gradeMinMarks[i][Object.keys(gradeMinMarks[i])[0]] &&
@@ -127,9 +128,9 @@ export class ResultComponent implements OnInit {
           };
 
 
-          grandTotalMarks = this.examResultInfo.marks.reduce((total:number,item:any) => {
+          grandTotalMarks = this.examResultInfo.marks.reduce((total: number, item: any) => {
             return total + item.totalMarks;
-          },0);
+          }, 0);
           percentile = (grandTotalMarks / totalMaxMarks) * 100;
           percentile = parseFloat(percentile.toFixed(2));
           const basePercentile = parseFloat(percentile.toFixed(0));
@@ -141,9 +142,9 @@ export class ResultComponent implements OnInit {
                 percentileGrade = Object.keys(this.resultStructureInfo.gradeMaxMarks[i])[0];
                 break;
               }
-            }  
+            }
           }
-          
+
           this.examResultInfo.grandTotalMarks = grandTotalMarks;
           this.examResultInfo.totalMaxMarks = totalMaxMarks;
           this.examResultInfo.percentile = percentile;
@@ -156,12 +157,12 @@ export class ResultComponent implements OnInit {
             const subjectName: string = Object.keys(subjectMarks)[0];
             const maxMarksObject: any = this.resultStructureInfo.theoryMaxMarks.find((maxMarks: any) => Object.keys(maxMarks)[0] === subjectName);
             const maxMarks: number = maxMarksObject ? parseFloat(maxMarksObject[subjectName]) : 0;
-  
+
             return total + maxMarks;
           }, 0);
-  
+
           const totalPracticalMaxMarks: number = 0;
-  
+
           const totalMaxMarks: number = totalTheoryMaxMarks + totalPracticalMaxMarks;
 
 
@@ -195,9 +196,9 @@ export class ResultComponent implements OnInit {
               };
             })
           };
-          grandTotalMarks = this.examResultInfo.marks.reduce((total:number,item:any) => {
+          grandTotalMarks = this.examResultInfo.marks.reduce((total: number, item: any) => {
             return total + item.totalMarks;
-          },0);
+          }, 0);
           percentile = (grandTotalMarks / totalMaxMarks) * 100;
           percentile = parseFloat(percentile.toFixed(2));
           const basePercentile = parseFloat(percentile.toFixed(0));
@@ -209,13 +210,17 @@ export class ResultComponent implements OnInit {
                 percentileGrade = Object.keys(this.resultStructureInfo.gradeMaxMarks[i])[0];
                 break;
               }
-            }  
+            }
           }
           this.examResultInfo.grandTotalMarks = grandTotalMarks;
           this.examResultInfo.totalMaxMarks = totalMaxMarks;
           this.examResultInfo.percentile = percentile;
           this.examResultInfo.percentileGrade = percentileGrade;
         }
+        setTimeout(() => {
+          this.loader = false;
+        }, 1500)
+
       }
     }, err => {
       this.errorMsg = err.error.errorMsg;

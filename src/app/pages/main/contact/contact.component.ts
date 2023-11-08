@@ -9,6 +9,7 @@ import { SchoolService } from 'src/app/services/school.service';
 export class ContactComponent implements OnInit {
 
   schoolInfo:any;
+  loader:Boolean=true;
   constructor(private schoolService:SchoolService) { }
 
   ngOnInit(): void {
@@ -18,6 +19,9 @@ export class ContactComponent implements OnInit {
     this.schoolService.getSchool().subscribe((res:any)=>{
       if(res){
         this.schoolInfo = res;
+        setTimeout(() => {
+          this.loader = false;
+        }, 1000);
       }
     })
   }

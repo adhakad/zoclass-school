@@ -7,16 +7,20 @@ import { SchoolService } from 'src/app/services/school.service';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
-  schoolInfo:any;
-  constructor(private schoolService:SchoolService) { }
+  schoolInfo: any;
+  loader: Boolean = true;
+  constructor(private schoolService: SchoolService) { }
 
   ngOnInit(): void {
     this.getSchool();
   }
-  getSchool(){
-    this.schoolService.getSchool().subscribe((res:any)=>{
-      if(res){
+  getSchool() {
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
         this.schoolInfo = res;
+        setTimeout(() => {
+          this.loader = false;
+        }, 1000)
       }
     })
   }
