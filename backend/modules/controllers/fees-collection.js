@@ -14,7 +14,7 @@ let GetSingleStudentFeesCollectionById = async (req, res, next) => {
         const studentFeesCollection = await FeesCollectionModel.findOne({ studentId: studentId });
         return res.status(200).json({ studentInfo: student, studentFeesCollection: studentFeesCollection });
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 
@@ -31,7 +31,7 @@ let GetAllStudentFeesCollectionByClass = async (req, res, next) => {
         }
         return res.status(200).json({ studentFeesCollection: studentFeesCollection, studentInfo: student });
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 
@@ -90,7 +90,7 @@ let CreateFeesCollection = async (req, res, next) => {
             return res.status(200).json(installment);
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 
@@ -133,7 +133,7 @@ let CreateAdmissionFeesCollection = async (req, res, next) => {
             return res.status(200).json(updatedDocument);
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

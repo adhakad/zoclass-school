@@ -170,11 +170,11 @@
       <span>Student Dashboard</span>
     </button>
     <button mat-menu-item *ngIf="isAdminAuthenticated" (click)="onLogout('admin')">
-      <!-- <mat-icon>dashboard</mat-icon> -->
+      <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
     <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
-      <!-- <mat-icon>dialpad</mat-icon> -->
+      <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
     <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">

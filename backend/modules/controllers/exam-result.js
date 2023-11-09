@@ -31,7 +31,7 @@ let GetSingleStudentExamResult = async (req, res, next) => {
         }
         return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: student });
     } catch (error) {
-        console.log(error)
+        return res.status(500).json({errorMsg: 'Internal Server Error' });
     }
 }
 let GetSingleStudentExamResultById = async (req, res, next) => {
@@ -61,7 +61,7 @@ let GetSingleStudentExamResultById = async (req, res, next) => {
         }
         return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: student });
     } catch (error) {
-        console.log(error)
+        return res.status(500).json({errorMsg: 'Internal Server Error' });
     }
 }
 let GetAllStudentExamResultByClass = async (req, res, next) => {
@@ -77,7 +77,7 @@ let GetAllStudentExamResultByClass = async (req, res, next) => {
         }
         return res.status(200).json({ examResultInfo: examResult, studentInfo: student });
     } catch (error) {
-        console.log(error);
+        return res.status(500).json({errorMsg: 'Internal Server Error' });
     }
 }
 
@@ -107,7 +107,7 @@ let GetAllStudentExamResultByClass = async (req, res, next) => {
 //         examResultData.countExamResult = countExamResult;
 //         return res.json(examResultData);
 //     } catch (error) {
-//         console.log(error);
+//         return res.status(500).json({errorMsg: 'Internal Server Error' });
 //     }
 // }
 
@@ -146,7 +146,7 @@ let CreateExamResult = async (req, res, next) => {
         return res.status(200).json('Student exam result add successfully');
 
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error' );
     }
 }
 
@@ -235,7 +235,7 @@ let CreateBulkExamResult = async (req, res, next) => {
         return res.status(200).json('Student exam result add successfully');
 
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

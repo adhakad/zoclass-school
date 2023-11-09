@@ -30,7 +30,7 @@ let GetClassPagination = async(req,res,next) => {
         classData.countClass = countClass;
         return res.json(classData);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json( 'Internal Server Error' );;
     }
 }
 
@@ -39,7 +39,7 @@ let GetAllClass = async(req,res,next) => {
         const classList = await ClassModel.find({});
         return res.status(200).json(classList);
     }catch(error){
-        console.log(error)
+        return res.status(500).json( 'Internal Server Error' );
     }
 }
 let GetSingleClass = async(req,res,next) => {
@@ -47,7 +47,7 @@ let GetSingleClass = async(req,res,next) => {
         const singleClass = await ClassModel.findOne({_id:req.params.id});
         return res.status(200).json(singleClass);
     }catch(error){
-        console.log(error)
+        return res.status(500).json( 'Internal Server Error' );
     }
 }
 let CreateClass = async(req,res,next) => {
@@ -67,7 +67,7 @@ let CreateClass = async(req,res,next) => {
         const data = await ClassModel.create(addClass);
         return res.status(200).json('Class Created successfully');
     }catch(error){
-         console.log(error)
+         return res.status(500).json( 'Internal Server Error' );
     }
 }
 let UpdateClass = async(req,res,next) => {
@@ -79,7 +79,7 @@ let UpdateClass = async(req,res,next) => {
         const update = await ClassModel.findByIdAndUpdate(id,{$set:classData}, {new:true});
         return res.status(200).json('Class update successfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json( 'Internal Server Error' );;
     }
 }
 let DeleteClass = async(req,res,next) => {
@@ -88,7 +88,7 @@ let DeleteClass = async(req,res,next) => {
         const dlt = await ClassModel.findByIdAndRemove(id);
         return res.status(200).json('Class delete successfully');
     }catch(error){
-        console.log(error)
+        return res.status(500).json( 'Internal Server Error' );
     }
 
 

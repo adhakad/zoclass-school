@@ -26,7 +26,7 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
         }
         return res.status(200).json({admitCardStructure:admitCardStructure,studentInfo:student,admitCard:admitCard});
     } catch (error) {
-        console.log(error)
+        return res.status(500).json({ errorMsg: 'Internal Server Error' });
     }
 }
 let GetSingleStudentAdmitCardById = async(req,res,next) => {
@@ -51,7 +51,7 @@ let GetSingleStudentAdmitCardById = async(req,res,next) => {
         }
         return res.status(200).json({admitCardStructure:admitCardStructure,admitCard:admitCard,student:student});
     }catch(error){
-        console.log(error);
+        return res.status(500).json({ errorMsg: 'Internal Server Error' });;
     }
 }
 
@@ -68,7 +68,7 @@ let GetAllStudentAdmitCardByClass = async (req, res, next) => {
         }
         return res.status(200).json({admitCardInfo:admitCardInfo,studentInfo:studentInfo});
     }catch(error){
-        console.log(error);
+        return res.status(500).json({ errorMsg: 'Internal Server Error' });;
     }
 }
 
@@ -85,7 +85,7 @@ let ChangeStatus = async (req, res, next) => {
         const updateStatus = await AdmitCardModel.findByIdAndUpdate(objectId, { $set: studentData }, { new: true });
         return res.status(200).json('Student update succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json({ errorMsg: 'Internal Server Error' });;
     }
 }
 

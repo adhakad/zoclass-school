@@ -25,7 +25,7 @@ export class TeacherLoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       if(this.adminAuthService.getAccessToken() || this.studentAuthService.getAccessToken()){
-        this.errorMsg = "Login not valid";
+        this.errorMsg = "Login not valid,you are already logged in another account !";
         return
       }
       this.teacherAuthService.login(this.loginForm.value).subscribe((res:any) => {

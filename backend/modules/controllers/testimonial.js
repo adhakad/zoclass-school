@@ -30,7 +30,7 @@ let GetTestimonialPagination = async(req,res,next) => {
         testimonialData.countTestimonial = countTestimonial;
         return res.json(testimonialData);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let GetAllTestimonial = async(req,res,next) => {
@@ -46,7 +46,7 @@ let GetSingleTestimonial = async(req,res,next) => {
         const singleTestimonial = await TestimonialModel.findOne({_id:req.params.id});
         return res.status(200).json(singleTestimonial);
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let CreateTestimonial = async(req,res,next) => {
@@ -73,7 +73,7 @@ let CreateTestimonial = async(req,res,next) => {
         const createTestimonial = await TestimonialModel.create(testimonialData);
         return res.status(200).json('Testimonial created succesfulLy');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let UpdateTestimonial = async(req,res,next) => {
@@ -87,7 +87,7 @@ let UpdateTestimonial = async(req,res,next) => {
         const updateTestimonial = await TestimonialModel.findByIdAndUpdate(id,{$set:testimonialData},{new:true});
         return res.status(200).json('Testimonial update succesfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let DeleteTestimonial = async(req,res,next) => {
@@ -99,7 +99,7 @@ let DeleteTestimonial = async(req,res,next) => {
         const deleteTestimonial = await TestimonialModel.findByIdAndRemove(id);
         return res.status(200).json('Testimonial delete succesfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

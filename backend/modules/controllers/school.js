@@ -7,7 +7,7 @@ let GetSingleSchoolNameLogo = async (req, res, next) => {
             return res.status(200).json(singleSchool);
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let GetSingleSchool = async (req, res, next) => {
@@ -17,7 +17,7 @@ let GetSingleSchool = async (req, res, next) => {
             return res.status(200).json(singleSchool);
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let CreateSchool = async (req, res, next) => {
@@ -37,7 +37,7 @@ let CreateSchool = async (req, res, next) => {
             return res.status(200).json('School created successfully');
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let UpdateSchool = async (req, res, next) => {
@@ -51,7 +51,7 @@ let UpdateSchool = async (req, res, next) => {
             return res.status(200).json('School update successfully');
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let DeleteSchool = async (req, res, next) => {
@@ -62,7 +62,7 @@ let DeleteSchool = async (req, res, next) => {
             return res.status(200).json('School delete successfully');
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

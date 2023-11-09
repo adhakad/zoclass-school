@@ -30,7 +30,7 @@ let GetTeacherPagination = async (req, res, next) => {
         teacherData.countTeacher = countTeacher;
         return res.json(teacherData);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let GetAllTeacher = async (req, res, next) => {
@@ -46,7 +46,7 @@ let GetSingleTeacher = async (req, res, next) => {
         const singleTeacher = await TeacherModel.findOne({ _id: req.params.id });
         return res.status(200).json(singleTeacher);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let CreateTeacher = async (req, res, next) => {
@@ -67,7 +67,7 @@ let CreateTeacher = async (req, res, next) => {
         const createTeacher = await TeacherModel.create(teacherData);
         return res.status(200).json('Teacher created succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let UpdateTeacher = async (req, res, next) => {
@@ -81,7 +81,7 @@ let UpdateTeacher = async (req, res, next) => {
         const updateTeacher = await TeacherModel.findByIdAndUpdate(id, { $set: teacherData }, { new: true });
         return res.status(200).json('Teacher updated succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let ChangeStatus = async(req,res,next) => {
@@ -95,7 +95,7 @@ let ChangeStatus = async(req,res,next) => {
         const updateStatus = await TeacherModel.findByIdAndUpdate(id, { $set: teacherData }, { new: true });
         return res.status(200).json('Teacher update succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let DeleteTeacher = async (req, res, next) => {
@@ -107,7 +107,7 @@ let DeleteTeacher = async (req, res, next) => {
         const deleteTeacher = await TeacherModel.findByIdAndRemove(id);
         return res.status(200).json('Teacher delete succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

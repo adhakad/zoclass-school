@@ -29,7 +29,7 @@ let GetNotificationPagination = async (req, res, next) => {
         notificationData.countNotification = countNotification;
         return res.json(notificationData);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 
@@ -46,7 +46,7 @@ let GetSingleNotification = async (req, res, next) => {
         const singleNotification = await NotificationModel.findOne({ _id: req.params.id });
         return res.status(200).json(singleNotification);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let CreateNotification = async (req, res, next) => {
@@ -74,7 +74,7 @@ let CreateNotification = async (req, res, next) => {
         const createNotification = await NotificationModel.create(notificationData);
         return res.status(200).json('Notification created successfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let UpdateNotification = async (req, res, next) => {
@@ -91,7 +91,7 @@ let UpdateNotification = async (req, res, next) => {
         const updateNotification = await NotificationModel.findByIdAndUpdate(id, { $set: notificationData }, { new: true });
         return res.status(200).json('Notification update successfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let DeleteNotification = async (req, res, next) => {
@@ -100,7 +100,7 @@ let DeleteNotification = async (req, res, next) => {
         const deleteNotification = await NotificationModel.findByIdAndRemove(id);
         return res.status(200).json('Notification delete successfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 module.exports = {

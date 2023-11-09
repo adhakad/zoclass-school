@@ -30,7 +30,7 @@ let GetTopperPagination = async(req,res,next) => {
         topperData.countTopper = countTopper;
         return res.json(topperData);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let GetAllTopper = async(req,res,next) => {
@@ -46,7 +46,7 @@ let GetSingleTopper = async(req,res,next) => {
         const singleTopper = await TopperModel.find({});
         return res.status(200).json(singleTopper);
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let CreateTopper = async(req,res,next) => {
@@ -72,7 +72,7 @@ let CreateTopper = async(req,res,next) => {
         const createTopper = await TopperModel.create(topperData);
         return res.status(200).json('Topper create succesfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let UpdateTopper = async(req,res,next) => {
@@ -87,7 +87,7 @@ let UpdateTopper = async(req,res,next) => {
         const updateTopper = await TopperModel.findByIdAndUpdate(id,{$set:topperData},{new:true});
         return res.status(200).json('Topper update succesfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let DeleteTopper = async(req,res,next) => {
@@ -99,7 +99,7 @@ let DeleteTopper = async(req,res,next) => {
         const deleteTopper = await TopperModel.findByIdAndRemove(id);
         return res.status(200).json('Topper delete succesfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

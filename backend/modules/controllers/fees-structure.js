@@ -8,7 +8,7 @@ let GetSingleClassFeesStructure = async(req,res,next) => {
         const singleFeesStr = await FeesStructureModel.findOne({class:className});
         return res.status(200).json(singleFeesStr);
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 
@@ -54,7 +54,7 @@ let CreateFeesStructure = async (req, res, next) => {
         return res.status(200).json('Fees structure add successfuly');
 
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

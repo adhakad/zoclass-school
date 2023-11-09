@@ -9,7 +9,7 @@ let GetSingleClassExamResultStructure = async (req, res, next) => {
         const singleExamResultStructureStr = await ExamResultStructureModel.find({ class: className });
         return res.status(200).json(singleExamResultStructureStr);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json( 'Internal Server Error' );;
     }
 }
 
@@ -32,7 +32,7 @@ let GetSingleClassExamResultStructureByStream = async (req, res, next) => {
         }
         return res.status(200).json(singleExamResultStructureStr);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json( 'Internal Server Error' );;
     }
 }
 
@@ -69,7 +69,7 @@ let CreateExamResultStructure = async (req, res, next) => {
         return res.status(200).json('Exam result structure structure add successfuly');
 
     } catch (error) {
-        console.log(error);
+        return res.status(500).json( 'Internal Server Error' );;
     }
 }
 
@@ -92,7 +92,7 @@ let DeleteResultStructure = async (req, res, next) => {
             }
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json( 'Internal Server Error' );;
     }
 }
 

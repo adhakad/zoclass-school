@@ -72,6 +72,8 @@ Header section
   color: #525098eb !important;
 }
 .hamburger-menu .mat-icon {
+  font-size:medium;
+  margin-top: 5px;
   color: #525098eb !important;
 }
 
@@ -445,7 +447,12 @@ Header section
     font: 1.20em sans-serif;
     letter-spacing: .85px;
   }
-  .desktop-menu .mat-icon,.desktop-menu span{
+  .desktop-menu span{
+    color: #525098eb;
+  }
+  .desktop-menu .mat-icon{
+    font-size: medium;
+    margin-top: 2px;
     color: #525098eb;
   }
   .hamburger {
@@ -488,12 +495,14 @@ Side navigation section
   }
 
   .side-navbar li button .mat-icon {
+    font-size:medium;
     display: inline-block;
     margin-left: 5px;
+    margin-top: 5px;
   }
   .side-navbar li button span {
     display: inline-block;
-    font-size: 1.12em;
+    font-size: 1.1em;
     font-weight: 400;
     text-align: center;
     /* margin-top: 2px; */

@@ -8,7 +8,7 @@ let GetSingleClassAdmitCardStructure = async (req, res, next) => {
         const singleAdmitCardStr = await AdmitCardStructureModel.find({ class: className });
         return res.status(200).json(singleAdmitCardStr);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 let CreateAdmitCardStructure = async (req, res, next) => {
@@ -54,7 +54,7 @@ let CreateAdmitCardStructure = async (req, res, next) => {
         }
 
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 let DeleteAdmitCardStructure = async (req, res, next) => {
@@ -70,7 +70,7 @@ let DeleteAdmitCardStructure = async (req, res, next) => {
             return res.status(200).json('Admit card structure delete succesfully');
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 

@@ -30,7 +30,7 @@ let GetSubjectPagination = async (req, res, next) => {
         subjectData.countSubject = countSubject;
         return res.json(subjectData);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let GetAllSubject = async (req, res, next) => {
@@ -46,7 +46,7 @@ let GetSingleSubject = async (req, res, next) => {
         const singleSubject = await SubjectModel.findOne({ _id: req.params.id });
         return res.status(200).json(singleSubject);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let GetSingleSubjectBySubject = async(req,res,next) => {
@@ -54,7 +54,7 @@ let GetSingleSubjectBySubject = async(req,res,next) => {
         const singleSubject = await SubjectModel.findOne({ subject: req.params.id });
         return res.status(200).json(singleSubject);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let CreateSubject = async (req, res, next) => {
@@ -71,7 +71,7 @@ let CreateSubject = async (req, res, next) => {
         const createSubject = await SubjectModel.create(subjectData);
         return res.status(200).json('Subject created succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let UpdateSubject = async (req, res, next) => {
@@ -83,7 +83,7 @@ let UpdateSubject = async (req, res, next) => {
         const updateSubject = await SubjectModel.findByIdAndUpdate(id, { $set: subjectData }, { new: true });
         return res.status(200).json('Subject update succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 let DeleteSubject = async (req, res, next) => {
@@ -92,7 +92,7 @@ let DeleteSubject = async (req, res, next) => {
         const deleteSubject = await SubjectModel.findByIdAndRemove(id);
         return res.status(200).json('Subject delete succesfully');
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');
     }
 }
 

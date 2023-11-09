@@ -31,7 +31,7 @@ let GetAdsPagination = async(req,res,next) => {
         adsData.countAds = countAds;
         return res.json(adsData);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 let GetAllAds = async(req,res,next) => {
@@ -39,7 +39,7 @@ let GetAllAds = async(req,res,next) => {
         const adsList = await AdsModel.find({});
         return res.status(200).json(adsList);
     }catch(error){
-        console.log(error)
+        return res.status(500).json('Internal Server Error' );
     }  
 }
 let GetSingleAds = async(req,res,next) => {
@@ -47,7 +47,7 @@ let GetSingleAds = async(req,res,next) => {
         const singleAds = await AdsModel.findOne({_id:req.params.id});
         return res.status(200).json(singleAds);
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 let CreateAds = async(req,res,next) => {
@@ -63,7 +63,7 @@ let CreateAds = async(req,res,next) => {
         const createAds = await AdsModel.create(adsData);
         return res.status(200).json('Ads created successfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 let UpdateAds = async(req,res,next) => {
@@ -75,7 +75,7 @@ let UpdateAds = async(req,res,next) => {
         const updateAds = await AdsModel.findByIdAndUpdate(id,{$set:adsData},{new:true});
         return res.status(200).json('Ads update successfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 let DeleteAds = async(req,res,next) => {
@@ -87,7 +87,7 @@ let DeleteAds = async(req,res,next) => {
         const deleteAds = await AdsModel.findByIdAndRemove(id);
         return res.status(200).json('Ads delete successfully');
     }catch(error){
-        console.log(error);
+        return res.status(500).json('Internal Server Error');;
     }
 }
 
