@@ -34,7 +34,7 @@ export class StudentFeesComponent implements OnInit {
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
 
     script.onload = () => {
-      console.log('Razorpay script has loaded successfully. You can now initiate payments.');
+      // console.log('Razorpay script has loaded successfully. You can now initiate payments.');
     };
 
     this.renderer.appendChild(this.el.nativeElement, script);

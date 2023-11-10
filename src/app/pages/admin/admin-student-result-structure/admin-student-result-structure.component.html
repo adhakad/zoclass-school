@@ -28,10 +28,11 @@
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>S.No.</th>
-                                        <th>Result Structure</th>
+                                        <th>Exam</th>
                                         <th>Class</th>
                                         <th>Stream</th>
-                                        <th>Exam</th>
+                                        <th>Result Structure</th>
+                                        <th>Result Publish</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -40,8 +41,8 @@
                                         <td>
                                             <p class="mb-0">{{i+1}}</p>
                                         </td>
-                                        <td class="mb-0">
-                                            <mat-icon>launch</mat-icon>
+                                        <td>
+                                            <p class="mb-0">{{examResultStr.examType | titlecase}} Exam</p>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{examResultStr.class | classSuffix}}</p>
@@ -49,18 +50,26 @@
                                         <td>
                                             <p class="mb-0">{{examResultStr.stream}}</p>
                                         </td>
+                                        <td class="mb-0">
+                                            <mat-icon>launch</mat-icon>
+                                        </td>
                                         <td>
-                                            <p class="mb-0">{{examResultStr.examType | titlecase}} Exam</p>
+                                            <mat-slide-toggle [(ngModel)]="examResultStr.resultPublishStatus"
+                                                (change)="onToggleChange(examResultStr._id,examResultStr.resultPublishStatus)">
+                                                {{ resultPublishStatus }}
+                                            </mat-slide-toggle>
                                         </td>
                                         <td class="mb-0">
-                                            <mat-icon (click)="deleteResultStructureModel(examResultStr._id)">delete</mat-icon>
-                                          </td>
+                                            <mat-icon
+                                                (click)="deleteResultStructureModel(examResultStr._id)">delete</mat-icon>
+                                        </td>
                                     </tr>
 
                                 </tbody>
                             </table>
                             <div class="modal fade show" [class.show]="showModal">
-                                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode && !successMsg">
+                                <div class="modal-dialog modal-dialog-scrollable"
+                                    [class.modal-lg]="!deleteMode && !successMsg">
                                     <div class="modal-content" *ngIf="successMsg">
                                         <div class="modal-header">
                                             <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -350,7 +359,7 @@
                                                         [disabled]="!examResultForm.valid || !stream"
                                                         type="submit">Submit</button>
                                                 </div>
-                                                
+
                                             </form>
                                         </ng-container>
                                         <div *ngIf="deleteMode">

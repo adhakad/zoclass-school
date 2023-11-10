@@ -1,5 +1,6 @@
 const ExamResultStructureModel = require('../models/exam-result-structure');
 const ExamResultModel = require('../models/exam-result');
+const NotificationModel = require('../models/notification');
 const classModel = require('../models/class');
 
 
@@ -9,7 +10,7 @@ let GetSingleClassExamResultStructure = async (req, res, next) => {
         const singleExamResultStructureStr = await ExamResultStructureModel.find({ class: className });
         return res.status(200).json(singleExamResultStructureStr);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json('Internal Server Error');;
     }
 }
 
@@ -32,7 +33,7 @@ let GetSingleClassExamResultStructureByStream = async (req, res, next) => {
         }
         return res.status(200).json(singleExamResultStructureStr);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json('Internal Server Error');;
     }
 }
 
@@ -69,7 +70,7 @@ let CreateExamResultStructure = async (req, res, next) => {
         return res.status(200).json('Exam result structure structure add successfuly');
 
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json('Internal Server Error');;
     }
 }
 
@@ -92,7 +93,49 @@ let DeleteResultStructure = async (req, res, next) => {
             }
         }
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json('Internal Server Error');;
+    }
+}
+let ChangeResultPublishStatus = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const examResultStr = await ExamResultStructureModel.findOne({ _id: id });
+        if (!examResultStr) {
+            return res.status(200).json('Exam result structure not found');
+        }
+        const findResultPublishStatus = await examResultStr.resultPublishStatus;
+        const cls = await examResultStr.class;
+        const stream = await examResultStr.stream;
+        const examType = await examResultStr.examType;
+        let title;
+        if (findResultPublishStatus == false) {
+            title = `${examType} exam result for class ${cls}`;
+        }
+        const { resultPublishStatus } = req.body;
+        const resultPublishData = {
+            resultPublishStatus: resultPublishStatus
+        }
+        const updateStatus = await ExamResultStructureModel.findByIdAndUpdate(id, { $set: resultPublishData }, { new: true });
+        if (updateStatus) {
+            const notification = await NotificationModel.findOne({ class: cls, title: title });
+            if (!notification) {
+                const notificationData = {
+                    title: title,
+                    message: title,
+                    role: 'Student',
+                    class: cls,
+                    date: 1234567890
+                }
+                let createNotification = await NotificationModel.create(notificationData);
+                if (createNotification) {
+                    return res.status(200).json('Exam result publish status update succesfully');
+                }
+            }
+            return res.status(200).json('Exam result publish status update succesfully');
+        }
+
+    } catch (error) {
+        return res.status(500).json('Internal Server Error');
     }
 }
 
@@ -100,6 +143,7 @@ module.exports = {
     GetSingleClassExamResultStructure,
     GetSingleClassExamResultStructureByStream,
     CreateExamResultStructure,
+    ChangeResultPublishStatus,
     DeleteResultStructure
 
 }

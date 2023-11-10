@@ -39,6 +39,8 @@ export class AdminStudentResultStructureComponent implements OnInit {
   examType: any[] = ["quarterly", "half yearly", "final"];
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
   loader:Boolean=true;
+  isChecked!:Boolean;
+  resultPublishStatus!: Boolean;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
       class: [''],
@@ -269,6 +271,23 @@ export class AdminStudentResultStructureComponent implements OnInit {
       })
     }
 
+  }
+
+  onToggleChange(id:any,resultPublishStatus:any) {
+    let params = {
+      id:id,
+      resultPublishStatus :resultPublishStatus
+    }
+    console.log(params)
+    this.examResultStructureService.changeResultPublishStatus(params)
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+        },
+        error => {
+          console.error(error);
+        }
+      );
   }
 
   resultStructureDelete(id: String) {

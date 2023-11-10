@@ -106,11 +106,14 @@
         <table class="custom-table">
           <tr>
             <td>
-              <span class="text-bold">Percentage</span> : {{examResultInfo?.percentile}}%
+              <span class="text-bold">Result Status</span> : PASS
             </td>
             <td>
               <span class="text-bold">Grand Total (Theory + Practical/Internal Marks)</span> : {{
               examResultInfo?.grandTotalMarks }}/{{ examResultInfo?.totalMaxMarks}}
+            </td>
+            <td>
+              <span class="text-bold">Percentage</span> : {{examResultInfo?.percentile}}%
             </td>
             <td>
               <span class="text-bold">Overall Grade</span> : {{examResultInfo?.percentileGrade}}
