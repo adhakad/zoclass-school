@@ -26,4 +26,5 @@
   :host ::ng-deep .mat-spinner circle {
     stroke: #8d6dff;
     stroke-opacity: 1 !important;
+    animation-duration: 5s;
   }

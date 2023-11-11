@@ -6,7 +6,12 @@ const AdmitCardStructureModel = mongoose.model('admit-card-structure', {
   examDate: {},
   examStartTime: {},
   examEndTime: {},
-  lastAcceptFees: { type: String } // september
+  lastAcceptFees: { type: String }, // september
+  admitCardPublishStatus: {
+    type: Boolean,
+    enum: [true, false],
+    default: false,
+  }
 });
 
 module.exports = AdmitCardStructureModel;

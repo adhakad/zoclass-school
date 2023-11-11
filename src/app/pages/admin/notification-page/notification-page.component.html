@@ -46,7 +46,7 @@
                       <p class="mb-0" *ngIf="notifications.role=='Student'">{{notifications.class | classSuffix}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{notifications.title}}</p>
+                      <p class="mb-0">{{notifications.title | titlecase}}</p>
                     </td>
                     <td>
                       <p class="mb-0">{{notifications.message}}</p>

@@ -22,10 +22,6 @@ export class ExamResultStructureService {
   changeResultPublishStatus(params:any){
     return this.http.put(`${this.url}/result-publish-status/${params.id}`,params);
   }
-  // addBulkExamResult(examResultBulkResult:any) {
-  //   return this.http.post(`${this.url}/bulk-examResult`,examResultBulkResult);
-  // }
-  
   deleteResultStructure(id:any){
     return this.http.delete(`${this.url}/${id}`);
   }

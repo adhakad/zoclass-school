@@ -20,10 +20,17 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
         if (!admitCard) {
             return res.status(404).json({ errorMsg: 'Admit card not foundd' });
         }
-        let admitCardStructure = await AdmitCardStructureModel.findOne({class:className,stream:stream});
+        let examType = admitCard.examType;
+        let admitCardStructure = await AdmitCardStructureModel.findOne({class:className,stream:stream,examType:examType});
         if(!admitCardStructure){
-            return res.status(404).json({ errorMsg: 'This class any exam not found' });
+            return res.status(404).json({ errorMsg: 'This class any admit card not found' });
         }
+        let admitCardPublishStatus = admitCardStructure.admitCardPublishStatus;
+        if (admitCardPublishStatus==false) {
+            return res.status(404).json({ errorMsg:'Your exam admit card will be release soon' });
+        }
+        
+
         return res.status(200).json({admitCardStructure:admitCardStructure,studentInfo:student,admitCard:admitCard});
     } catch (error) {
         return res.status(500).json({ errorMsg: 'Internal Server Error' });
@@ -45,10 +52,17 @@ let GetSingleStudentAdmitCardById = async(req,res,next) => {
             stream = "N/A";
         }
         let className = admitCard.class;
-        let admitCardStructure = await AdmitCardStructureModel.findOne({class:className,stream:stream});
+        
+        let examType =  admitCard.examType;
+        let admitCardStructure = await AdmitCardStructureModel.findOne({class:className,stream:stream,examType:examType});
         if(!admitCardStructure){
-            return res.status(404).json({ errorMsg: 'This class any exam not found' });
+            return res.status(404).json({ errorMsg: 'This class any admit card not found' });
         }
+        let admitCardPublishStatus = admitCardStructure.admitCardPublishStatus;
+        if (admitCardPublishStatus==false) {
+            return res.status(404).json({ errorMsg:'Your exam admit card will be release soon' });
+        }
+
         return res.status(200).json({admitCardStructure:admitCardStructure,admitCard:admitCard,student:student});
     }catch(error){
         return res.status(500).json({ errorMsg: 'Internal Server Error' });;

@@ -107,9 +107,16 @@ let ChangeResultPublishStatus = async (req, res, next) => {
         const cls = await examResultStr.class;
         const stream = await examResultStr.stream;
         const examType = await examResultStr.examType;
-        let title;
+
+        const isExamResultExist = await ExamResultModel.findOne({ class: cls, stream: stream, examType: examType });
+        if(!isExamResultExist && findResultPublishStatus==false){
+            return res.status(404).json('Exam result not found');
+        }
+        let title='';
+        let message ='';
         if (findResultPublishStatus == false) {
-            title = `${examType} exam result for class ${cls}`;
+            title = `${examType} Exam Results Announcement for Class ${cls}: Check Online and Download Your Results!`;
+            message = `All Class ${cls} students are informed that the online results for their ${examType} exams are being announced. You can check your results by visiting the school's website and download them online using the credentials provided by your school. We wish you the best of luck in achieving good results!`
         }
         const { resultPublishStatus } = req.body;
         const resultPublishData = {
@@ -118,13 +125,13 @@ let ChangeResultPublishStatus = async (req, res, next) => {
         const updateStatus = await ExamResultStructureModel.findByIdAndUpdate(id, { $set: resultPublishData }, { new: true });
         if (updateStatus) {
             const notification = await NotificationModel.findOne({ class: cls, title: title });
-            if (!notification) {
+            if (!notification && title!=='') {
                 const notificationData = {
                     title: title,
-                    message: title,
+                    message: message,
                     role: 'Student',
                     class: cls,
-                    date: 1234567890
+                    date: Date.now(),
                 }
                 let createNotification = await NotificationModel.create(notificationData);
                 if (createNotification) {

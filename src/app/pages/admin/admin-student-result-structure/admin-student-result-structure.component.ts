@@ -40,7 +40,6 @@ export class AdminStudentResultStructureComponent implements OnInit {
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
   loader:Boolean=true;
   isChecked!:Boolean;
-  resultPublishStatus!: Boolean;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
       class: [''],
@@ -278,14 +277,12 @@ export class AdminStudentResultStructureComponent implements OnInit {
       id:id,
       resultPublishStatus :resultPublishStatus
     }
-    console.log(params)
     this.examResultStructureService.changeResultPublishStatus(params)
       .subscribe(
         (response: any) => {
-          console.log(response);
         },
         error => {
-          console.error(error);
+          this.getExamResultStructureByClass(this.cls);
         }
       );
   }

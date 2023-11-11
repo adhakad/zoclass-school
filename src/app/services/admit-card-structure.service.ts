@@ -15,7 +15,9 @@ export class AdmitCardStructureService {
   admitCardStructureByClass(cls: any) {
     return this.http.get(`${this.url}/${cls}`);
   }
-  
+  changeAdmitCardPublishStatus(params:any){
+    return this.http.put(`${this.url}/admitcard-publish-status/${params.id}`,params);
+  }
   deleteAdmitCardStructure(id:any){
     return this.http.delete(`${this.url}/${id}`);
   }

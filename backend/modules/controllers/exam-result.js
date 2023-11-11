@@ -20,12 +20,12 @@ let GetSingleStudentExamResult = async (req, res, next) => {
         if (!examResult) {
             return res.status(404).json({ errorMsg:'Exam result not found' });
         }
-        let examType = await examResult.examType;
+        let examType = examResult.examType;
         let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType, stream: stream });
         if (!examResultStructure) {
             return res.status(404).json({ errorMsg:'This class any exam not found' });
         }
-        let resultPublishStatus = await examResultStructure.resultPublishStatus;
+        let resultPublishStatus = examResultStructure.resultPublishStatus;
         if (resultPublishStatus==false) {
             return res.status(404).json({ errorMsg:'Your exam result will be declared soon' });
         }
@@ -54,12 +54,12 @@ let GetSingleStudentExamResultById = async (req, res, next) => {
         if (!examResult) {
             return res.status(404).json({ errorMsg:'Exam result not found' });
         }
-        let examType = await examResult.examType;
+        let examType = examResult.examType;
         let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType });
         if (!examResultStructure) {
             return res.status(404).json({ errorMsg:'This class any exam not found' });
         }
-        let resultPublishStatus = await examResultStructure.resultPublishStatus;
+        let resultPublishStatus = examResultStructure.resultPublishStatus;
         if (resultPublishStatus==false) {
             return res.status(404).json({ errorMsg:'Your exam result will be declared soon' });
         }

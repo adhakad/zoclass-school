@@ -180,7 +180,7 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
-      this.getAdmitCardStructureByClass(this.cls)
+      this.getAdmitCardStructureByClass(this.cls);
     }, 1000)
   }
 
@@ -254,6 +254,21 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
       })
     }
 
+  }
+
+  onToggleChange(id:any,admitCardPublishStatus:any) {
+    let params = {
+      id:id,
+      admitCardPublishStatus :admitCardPublishStatus
+    }
+    this.admitCardStructureService.changeAdmitCardPublishStatus(params)
+      .subscribe(
+        (response: any) => {
+        },
+        error => {
+            console.log(error)
+        }
+      );
   }
 
   admitCardStructureDelete(id: String) {
