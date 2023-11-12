@@ -42,13 +42,16 @@
 .copyright p span:hover {
    color: #8d6dff;
 }
-.bi-facebook ,.bi-linkedin,.bi-twitter,.bi-youtube{
+.margin-social-media-icon{
+   margin-top: 25px !important;
+}
+.bi-facebook ,.bi-linkedin,.bi-whatsapp,.bi-youtube{
    color: #e0e0ffe2;
    font-size: 2em;
    cursor: pointer;
    margin-right: 20px;
 }
-.bi-facebook:hover ,.bi-linkedin:hover,.bi-twitter:hover,.bi-youtube:hover{
+.bi-facebook:hover ,.bi-linkedin:hover,.bi-whatsapp:hover,.bi-youtube:hover{
    color: #fff;
 }
 .mat-icon{

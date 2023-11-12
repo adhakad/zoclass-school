@@ -210,8 +210,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   closeModal() {
     this.showModal = false;
+    this.successMsg = '';
     this.errorMsg = '';
     this.errorCheck = false;
+    this.studentForm.reset();
   }
   addBannerModel() {
     this.nav = false;
