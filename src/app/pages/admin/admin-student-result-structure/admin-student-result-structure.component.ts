@@ -31,7 +31,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
   stream: string = '';
   notApplicable: String = "stream";
   theoryMaxMarks: any[] = [100, 75];
-  theoryPassMarks: any[] = [33, 25];
+  theoryPassMarks: any[] = [33, 23];
   practicalMaxMarks: any[] = [25];
   practicalPassMarks: any[] = [8];
   gradeMinMarks: any = [{ "A+": 91 }, { "A": 81 }, { "B+": 71 }, { "B": 61 }, { "C+": 51 }, { "C": 41 }, { "D": 33 }, { "E": 0 }];

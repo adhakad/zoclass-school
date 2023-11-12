@@ -66,6 +66,30 @@ export class ResultComponent implements OnInit {
         this.studentInfo = res.studentInfo;
         let examResult = res.examResult;
         this.resultStructureInfo = res.examResultStructure;
+        function countSubjectsBelowPassingMarks(passMarks: any, actualMarks: any): number {
+          let subjectsBelowPassingMarks: number = 0;
+          for (let i = 0; i < passMarks.length; i++) {
+            const passMarkSubject = passMarks[i];
+            const actualMarkSubject = actualMarks[i];
+            const subject = Object.keys(passMarkSubject)[0];
+            const passMark = parseInt(passMarkSubject[subject]);
+            const actualMark = parseInt(actualMarkSubject[subject]);
+            if (actualMark < passMark) {
+              subjectsBelowPassingMarks++;
+            }
+          }
+          return subjectsBelowPassingMarks;
+        }
+        const count = countSubjectsBelowPassingMarks(this.resultStructureInfo.theoryPassMarks, examResult.theoryMarks);
+        let resultStatus: string;
+        if (count === 0) {
+          resultStatus = 'PASS';
+        } else if (count <= 2) {
+          resultStatus = 'SUPPLY';
+        } else {
+          resultStatus = 'FAIL';
+        }
+
 
         let grandTotalMarks = 0;
         let percentileGrade: string = "";
@@ -149,6 +173,7 @@ export class ResultComponent implements OnInit {
           this.examResultInfo.totalMaxMarks = totalMaxMarks;
           this.examResultInfo.percentile = percentile;
           this.examResultInfo.percentileGrade = percentileGrade;
+          this.examResultInfo.resultStatus = resultStatus;
         }
         if (!examResult.practicalMarks) {
           this.examResultInfo = {};
@@ -216,6 +241,7 @@ export class ResultComponent implements OnInit {
           this.examResultInfo.totalMaxMarks = totalMaxMarks;
           this.examResultInfo.percentile = percentile;
           this.examResultInfo.percentileGrade = percentileGrade;
+          this.examResultInfo.resultStatus = resultStatus;
         }
         setTimeout(() => {
           this.loader = false;
