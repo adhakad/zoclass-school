@@ -39,6 +39,15 @@ export class StudentAuthService {
   signup(studentSignupData: any) {
     return this.http.post(`${this.url}/signup`, studentSignupData);
   }
+  studentVarify(studentLoginData: StudentLoginData) {
+    return this.http.post(`${this.url}/varify-student`, studentLoginData);
+  }
+  otpVarify(studentLoginData: StudentLoginData) {
+    return this.http.post(`${this.url}/varify-otp`, studentLoginData);
+  }
+  usernamePasswordReset(studentLoginData: StudentLoginData) {
+    return this.http.post(`${this.url}/reset-username-password`, studentLoginData);
+  }
 
   storeAccessToken(accessToken: string) {
     this.token = accessToken;

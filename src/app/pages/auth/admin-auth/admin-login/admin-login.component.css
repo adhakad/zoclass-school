@@ -45,6 +45,10 @@ a {
   letter-spacing: .25px;
   text-decoration: none;
 }
+.success-message {
+  color: #16b978;
+  font-size: 20px;
+}
 
 @media(min-width:1200px) {
   .login {

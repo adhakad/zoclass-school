@@ -30,7 +30,7 @@ let SignupStudent = async (req, res, next) => {
             password: hashedPassword // Store the hashed password
         }
         const createSignupStudent = await StudentUserModel.create(studentData);
-        if(createSignupStudent){
+        if (createSignupStudent) {
             return res.status(200).json('Sign up student successfully');
         }
     } catch (error) {
@@ -40,13 +40,15 @@ let SignupStudent = async (req, res, next) => {
 }
 
 let LoginStudent = async (req, res, next) => {
+    let otp = Math.floor(Math.random() * 899999 + 100000);
+    const studentData = { otp: otp };
     try {
         let student = await StudentUserModel.findOne({ email: req.body.email });
         if (!student) {
             return res.status(404).json({ errorMsg: 'Student email or password invalid' });
         }
         const passwordMatch = await bcrypt.compare(req.body.password, student.password);
-        
+
         if (!passwordMatch) {
             return res.status(404).json({ errorMsg: 'Student email or password invalid' });
         }
@@ -60,7 +62,10 @@ let LoginStudent = async (req, res, next) => {
             const payload = { id: studentInfo._id, name: studentInfo.name, email: student.email, class: studentInfo.class, rollNumber: studentInfo.rollNumber };
             const accessToken = await tokenService.getAccessToken(payload);
             const refreshToken = await tokenService.getRefreshToken(payload);
-            return res.status(200).json({ studentInfo: studentInfo, accessToken, refreshToken });
+            const updateOtp = await StudentModel.findByIdAndUpdate(studentId, { $set: studentData }, { new: true });
+            if (updateOtp && accessToken) {
+                return res.status(200).json({ studentInfo: studentInfo, accessToken, refreshToken });
+            }
         }
         return res.status(400).json({ errorMsg: 'Login error' });
     } catch (error) {
@@ -84,8 +89,98 @@ let RefreshToken = async (req, res, next) => {
     }
 }
 
+let VarifyForgotStudent = async (req, res, next) => {
+    const { rollNumber } = req.body;
+    const className = req.body.class;
+    const varifiedStudentInfo = {
+        class: className,
+        rollNumber: rollNumber
+    }
+    try {
+        const student = await StudentModel.findOne({ rollNumber: rollNumber, class: className });
+        if (!student) {
+            return res.status(404).json("Student not exist in this school");
+        }
+        const studentId = student._id;
+        const checkStudentId = await StudentUserModel.findOne({ studentId: studentId });
+        if (!checkStudentId) {
+            return res.status(404).json("Student not exist in this school");
+        }
+        if (checkStudentId) {
+            return res.status(200).json({ varifiedStudentInfo: varifiedStudentInfo });
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json('Internal Server Error');
+    }
+}
+let VarifyForgotOtp = async (req, res, next) => {
+    const { rollNumber, otp } = req.body;
+    const className = req.body.class;
+    const varifiedOtpInfo = {
+        class: className,
+        rollNumber: rollNumber,
+        otp: otp
+    }
+    try {
+        const student = await StudentModel.findOne({ rollNumber: rollNumber, class: className, otp: otp });
+        if (!student) {
+            return res.status(404).json("Invalid OTP !");
+        }
+        const studentId = student._id;
+        const checkStudentId = await StudentUserModel.findOne({ studentId: studentId });
+        if (!checkStudentId) {
+            return res.status(404).json("Student not exist in this school");
+        }
+        if (checkStudentId) {
+            return res.status(200).json({ varifiedOtpInfo: varifiedOtpInfo });
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json('Internal Server Error');
+    }
+}
+let ResetForgotStudent = async (req, res, next) => {
+    const { rollNumber, otp, email, password } = req.body;
+    const className = req.body.class;
+    try {
+        const student = await StudentModel.findOne({ rollNumber: rollNumber, class: className, otp: otp });
+        if (!student) {
+            return res.status(404).json("Student not exist in this school");
+        }
+        const studentId = student._id;
+        const checkStudent = await StudentUserModel.findOne({ studentId: studentId });
+        if (!checkStudent) {
+            return res.status(404).json("Student not exist in this school");
+        }
+        const checkUser = await StudentUserModel.findOne({ email: email });
+        if (checkUser) {
+            return res.status(400).json("Student email already registered!");
+        }
+        const objectId = checkStudent._id;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const resetStudentUserInfo = {
+            email: email,
+            password: hashedPassword
+        }
+        const updateStudentUser = await StudentUserModel.findByIdAndUpdate(objectId, { $set: resetStudentUserInfo }, { new: true });
+        if (updateStudentUser) {
+            return res.status(200).json('Student username and password reset successfully');
+        }
+    } catch (error) {
+        return res.status(500).json('Internal Server Error');
+    }
+}
+
+
+
 module.exports = {
     SignupStudent,
     LoginStudent,
-    RefreshToken
+    RefreshToken,
+    VarifyForgotStudent,
+    VarifyForgotOtp,
+    ResetForgotStudent
 }
