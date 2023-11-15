@@ -90,7 +90,7 @@
                   <div class="modal-content" *ngIf="!successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title mt-2">{{updateMode?'Update': deleteMode ? 'Delete' :'Create'}} Exam Result
-                        Class - {{cls}}
+                        Class - {{cls | classSuffix}}
                       </h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
@@ -125,7 +125,7 @@
                                             value="{{subject}}">{{subject}}</mat-option>
                                         </div>
                                       </ng-container>
-                                      <ng-container *ngIf="cls<11">
+                                      <ng-container *ngIf="cls<11 && cls!==0 || cls==21 || cls==22">
                                         <div>
                                           <mat-option value="notApplicable"
                                             (click)='chooseStream(notApplicable)'>N/A</mat-option>
@@ -238,7 +238,7 @@
                                     value="{{subject}}">{{subject}}</mat-option>
                                 </div>
                               </ng-container>
-                              <ng-container *ngIf="cls<11">
+                              <ng-container *ngIf="cls<11 && cls!==0 || cls==21 || cls==22">
                                 <div>
                                   <mat-option value="notApplicable"
                                     (click)='chooseStream(notApplicable)'>N/A</mat-option>

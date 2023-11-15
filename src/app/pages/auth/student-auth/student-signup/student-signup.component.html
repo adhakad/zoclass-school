@@ -31,7 +31,7 @@
                                 <mat-label>Select class name</mat-label>
                                 <mat-select type="number" matInput formControlName="class">
                                     <div *ngFor="let classInfo of classInfo">
-                                        <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                                        <mat-option value="{{classInfo.class}}">{{classInfo.class | classSuffix}}</mat-option>
                                     </div>
                                 </mat-select>
                                 <mat-hint *ngIf="!signupForm.get('class')?.valid && signupForm.get('class')?.touched"

@@ -53,8 +53,8 @@ let GetSingleClass = async(req,res,next) => {
 let CreateClass = async(req,res,next) => {
     try{
         const countClass = await ClassModel.count();
-        if(countClass == 12){
-            return res.status(400).json("Class limit is over to 12")
+        if(countClass == 14){
+            return res.status(400).json("Class limit is over to 14")
         }
         const singleClass = await ClassModel.findOne({class:req.body.class});
         if(singleClass){

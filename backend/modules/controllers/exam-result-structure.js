@@ -115,8 +115,27 @@ let ChangeResultPublishStatus = async (req, res, next) => {
         let title='';
         let message ='';
         if (findResultPublishStatus == false) {
-            title = `${examType} Exam Results Announcement for Class ${cls}: Check Online and Download Your Results!`;
-            message = `All Class ${cls} students are informed that the online results for their ${examType} exams are being announced. You can check your results by visiting the school's website and download them online using the credentials provided by your school. We wish you the best of luck in achieving good results!`
+            let className;
+            if(cls==1){
+                className = `${cls}st`
+            }
+            if(cls==2){
+                className = `${cls}nd`
+            }
+            if(cls==3){
+                className = `${cls}rd`
+            }
+            if(cls >= 4 && cls <= 12){
+                className = `${cls}th`
+            }
+            if(cls==21){
+                className = `KG-I`
+            }
+            if(cls==22){
+                className = `KG-II`
+            }
+            title = `Class ${className} ${examType} exam results announcement : Check Online and Download Your Results!`;
+            message = `All class ${className} students are informed that the online results for their ${examType} exams are being announced. You can check your results by visiting the school's website and download them online using the credentials provided by your school. We wish you the best of luck in achieving good results!`
         }
         const { resultPublishStatus } = req.body;
         const resultPublishData = {

@@ -5,20 +5,24 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ClassSuffixPipe implements PipeTransform {
 
-  transform(classNumber: number): string {
-    if (classNumber >= 11 && classNumber <= 13) {
+  transform(classNumber: number): any {
+    if (classNumber >= 4 && classNumber <= 12) {
       return `${classNumber}th`;
     }
-
-    switch (classNumber % 10) {
-      case 1:
-        return `${classNumber}st`;
-      case 2:
-        return `${classNumber}nd`;
-      case 3:
-        return `${classNumber}rd`;
-      default:
-        return `${classNumber}th`;
+    if(classNumber==1){
+      return `${classNumber}st`;
+    }
+    if(classNumber==2){
+      return `${classNumber}nd`;
+    }
+    if(classNumber==3){
+      return `${classNumber}rd`;
+    }
+    if(classNumber==21){
+      return `KG-I`;
+    }
+    if(classNumber==22){
+      return `KG-II`;
     }
   }
 

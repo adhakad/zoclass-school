@@ -141,11 +141,11 @@ let CreateStudent = async (req, res, next) => {
     try {
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStr) {
-            return res.status(404).json(`Please create fees structure for class ${className} !`);
+            return res.status(404).json(`Please create fees structure for this class!`);
         }
         const checkRollNumber = await StudentModel.findOne({ rollNumber: rollNumber, class: className });
         if (checkRollNumber) {
-            // return res.status(400).json(`Roll number already exist for class ${className} !`);
+            return res.status(400).json(`Roll number already exist for this class!`);
         }
         let totalFees = checkFeesStr.totalFees;
         let installment = checkFeesStr.installment;

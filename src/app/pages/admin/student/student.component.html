@@ -167,7 +167,7 @@
                                         value="{{subject}}">{{subject}}</mat-option>
                                     </div>
                                   </ng-container>
-                                  <ng-container *ngIf="cls<11 && cls!==0">
+                                  <ng-container *ngIf="cls<11 && cls!==0 || cls==21 || cls==22">
                                     <div>
                                       <mat-option value="{{notApplicable}}"
                                         (click)="chooseStream(studentForm.get('stream'))">N/A</mat-option>

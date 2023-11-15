@@ -89,8 +89,27 @@ let ChangeAdmitCardPublishStatus = async (req, res, next) => {
         let title = '';
         let message = '';
         if (findAdmitCardPublishStatus == false) {
-            title = `Class ${cls} ${examType} exam Online Admit Cards Released - Download Now!`;
-            message = `All Class ${cls} students are informed that the online admit cards for your ${examType} exams have been issued on the school's website. You can download them online using the credentials provided by your school. Best of luck for your upcoming exams!`
+            let className;
+            if(cls==1){
+                className = `${cls}st`
+            }
+            if(cls==2){
+                className = `${cls}nd`
+            }
+            if(cls==3){
+                className = `${cls}rd`
+            }
+            if(cls >= 4 && cls <= 12){
+                className = `${cls}th`
+            }
+            if(cls==21){
+                className = `KG-I`
+            }
+            if(cls==22){
+                className = `KG-II`
+            }
+            title = `Class ${className} ${examType} exam online admit cards released - Download Now!`;
+            message = `All class ${className} students are informed that the online admit cards for your ${examType} exams have been issued on the school's website. You can download them online using the credentials provided by your school. Best of luck for your upcoming exams!`
         }
         const { admitCardPublishStatus } = req.body;
         const admitCardPublishData = {
