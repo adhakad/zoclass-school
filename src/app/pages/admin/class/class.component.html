@@ -76,9 +76,14 @@
                           <p class="error-message">{{errorMsg}}</p>
                         </div>
                         <mat-form-field appearance="outline">
-                          <mat-label>Class</mat-label>
-                          <input matInput type="number" formControlName="class">
-                          <mat-hint *ngIf="!classForm.get('class')?.valid && classForm.get('class')?.touched"
+                          <mat-label>Select class</mat-label>
+                          <mat-select type="number" matInput formControlName="class">
+                            <div *ngFor="let class of allClass">
+                              <mat-option value="{{class.class}}">{{class.class | classSuffix}}</mat-option>
+                            </div>
+                          </mat-select>
+                          <mat-hint
+                            *ngIf="!classForm.get('class')?.valid && classForm.get('class')?.touched"
                             class="form-text text-danger">Class is required</mat-hint>
                         </mat-form-field>
                       </div>

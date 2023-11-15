@@ -23,7 +23,8 @@ export class ClassComponent implements OnInit {
   filters: any = {};
   number: number = 0;
   paginationValues: Subject<any> = new Subject();
-  loader:Boolean=true;
+  loader: Boolean = true;
+  allClass: any;
   constructor(private fb: FormBuilder, private classService: ClassService) {
     this.classForm = this.fb.group({
       _id: [''],
@@ -32,12 +33,13 @@ export class ClassComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let load:any =this.getClass({ page: 1 });
-    if(load){
-      setTimeout(()=>{
+    let load: any = this.getClass({ page: 1 });
+    if (load) {
+      setTimeout(() => {
         this.loader = false;
-      },1000);
+      }, 1000);
     }
+    this.allClasses();
 
   }
   closeModal() {
@@ -129,6 +131,10 @@ export class ClassComponent implements OnInit {
         this.deleteById = '';
       }
     })
+  }
+
+  allClasses() {
+    this.allClass = [{ class:21 }, { class:22 },{ class: 1 }, { class:2 }, { class:3 }, { class:4 }, { class:5 }, { class:6 }, { class:7 },{ class: 8 }, { class:9 }, { class:10 }, { class:11 }, { class:12 }]
   }
 
 }

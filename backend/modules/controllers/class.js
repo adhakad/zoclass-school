@@ -52,13 +52,13 @@ let GetSingleClass = async(req,res,next) => {
 }
 let CreateClass = async(req,res,next) => {
     try{
-        const countClass = await ClassModel.count();
-        if(countClass == 14){
-            return res.status(400).json("Class limit is over to 14")
-        }
         const singleClass = await ClassModel.findOne({class:req.body.class});
         if(singleClass){
-         return res.status(400).json('Class already exist');
+         return res.status(400).json('Class already exist !');
+        }
+        const countClass = await ClassModel.count();
+        if(countClass == 14){
+            return res.status(400).json("Class limit is over to 14 !")
         }
         const addClass = {
             class:req.body.class,
@@ -67,7 +67,7 @@ let CreateClass = async(req,res,next) => {
         const data = await ClassModel.create(addClass);
         return res.status(200).json('Class Created successfully');
     }catch(error){
-         return res.status(500).json( 'Internal Server Error' );
+         return res.status(500).json( 'Internal Server Error !' );
     }
 }
 let UpdateClass = async(req,res,next) => {
