@@ -1,3 +1,4 @@
+'use strict';
 const jwt = require('jsonwebtoken')
 const { TEACHER_ACCESS_SECRET, TEACHER_REFRESH_SECRET, ACCESS_EXPIRES_IN, REFRESH_EXPIRES_IN } = process.env;
 const access_secret = TEACHER_ACCESS_SECRET;

@@ -1,3 +1,4 @@
+'use strict';
 const ClassModel = require('../models/class');
 
 let countClass = async(req,res,next) => {

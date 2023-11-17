@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const {GetSingleClassExamResultStructure,GetSingleClassExamResultStructureByStream,CreateExamResultStructure,DeleteResultStructure, ChangeResultPublishStatus} = require('../controllers/exam-result-structure');

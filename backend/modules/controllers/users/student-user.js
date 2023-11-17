@@ -1,3 +1,4 @@
+'use strict';
 const bcrypt = require('bcrypt');
 const tokenService = require('../../services/student-token');
 const StudentUserModel = require('../../models/users/student-user');

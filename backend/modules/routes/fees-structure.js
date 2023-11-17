@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const {GetSingleClassFeesStructure,CreateFeesStructure} = require('../controllers/fees-structure');

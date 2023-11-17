@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const {GetAllSubject,countSubject,GetSingleSubject,GetSingleSubjectBySubject,CreateSubject,UpdateSubject,DeleteSubject, GetSubjectPagination} = require('../controllers/subject');

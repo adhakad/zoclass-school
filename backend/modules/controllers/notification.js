@@ -1,3 +1,4 @@
+'use strict';
 const NotificationModel = require('../models/notification');
 
 let countNotification = async(req,res,next) => {

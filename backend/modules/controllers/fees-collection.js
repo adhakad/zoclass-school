@@ -1,3 +1,4 @@
+'use strict';
 const FeesCollectionModel = require('../models/fees-collection');
 const FeesStructureModel = require('../models/fees-structure');
 const StudentModel = require('../models/student');

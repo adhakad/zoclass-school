@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const {GetAllClass,countClass,GetSingleClass,CreateClass,UpdateClass,DeleteClass, GetClassPagination} = require('../controllers/class');

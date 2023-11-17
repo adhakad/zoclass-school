@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const {SignupStudent,LoginStudent,RefreshToken, VarifyForgotStudent, VarifyForgotOtp, ResetForgotStudent} = require('../../controllers/users/student-user');

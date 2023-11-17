@@ -1,3 +1,4 @@
+'use strict';
 const AdmitCardStructureModel = require('../models/admit-card-structure');
 const AdmitCardModel = require("../models/admit-card");
 const StudentModel = require('../models/student');

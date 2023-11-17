@@ -1,3 +1,4 @@
+'use strict';
 const tokenService = require('../services/student-token');
 const jwt = require('jsonwebtoken')
 

@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const { GetAllStudentByClass, countStudent, GetSingleStudent, CreateStudent, CreateStudentAdmissionEnquiry, CreateBulkStudentRecord, UpdateStudent, ChangeStatus, DeleteStudent, GetStudentPaginationByClass, GetStudentPaginationByAdmission, GetStudentAdmissionEnquiryPagination } = require('../controllers/student');

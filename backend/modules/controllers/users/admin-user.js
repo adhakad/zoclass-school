@@ -1,3 +1,4 @@
+'use strict';
 const tokenService = require('../../services/admin-token');
 const AdminUserModel = require('../../models/users/admin-user');
 

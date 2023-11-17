@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const FeesModel = mongoose.model('fees-structure', {
   class: { type: Number },

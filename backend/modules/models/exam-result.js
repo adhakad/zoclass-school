@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const ExamResultModel = mongoose.model('exam-result', {
   studentId: { type: String },

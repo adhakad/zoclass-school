@@ -1,3 +1,4 @@
+'use strict';
 const SchoolModel = require('../models/school');
 
 let GetSingleSchoolNameLogo = async (req, res, next) => {

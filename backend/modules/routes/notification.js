@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const {GetNotificationPagination,countNotification,GetAllNotification,GetSingleNotification,CreateNotification,UpdateNotification,DeleteNotification} = require('../controllers/notification');

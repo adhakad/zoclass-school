@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const ExamResultStructureModel = mongoose.model('exam-result-structure', {
   class: { type: Number },

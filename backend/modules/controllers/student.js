@@ -1,3 +1,4 @@
+'use strict';
 const StudentModel = require('../models/student');
 const AdmissionEnquiryModel = require('../models/admission-enquiry');
 const FeesStructureModel = require('../models/fees-structure');
@@ -156,8 +157,9 @@ let CreateStudent = async (req, res, next) => {
             });
         });
         let admissionFeesPayable = false;
-        paidFees = 0;
-        dueFees = totalFees - paidFees;
+        let paidFees = 0;
+        let dueFees = totalFees - paidFees;
+        console.log("abc")
         if (admissionType == 'New' && admissionFeesPaymentType == 'Immediate') {
             admissionFeesPayable = true;
             admissionFees = admissionFees;
@@ -172,7 +174,6 @@ let CreateStudent = async (req, res, next) => {
             paidFees = admissionFees;
             dueFees = totalFees - admissionFees;
         }
-
         const studentFeesData = {
             class: className,
             admissionFees: admissionFees,

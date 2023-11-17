@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const FeesCollectionModel = mongoose.model('fees-collection', {
   studentId: { type: String },

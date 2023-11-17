@@ -1,3 +1,4 @@
+'use strict';
 const ClassSubjectModel = require('../models/class-subject');
 
 let countClassSubject = async (req, res, next) => {

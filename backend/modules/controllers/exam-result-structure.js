@@ -1,3 +1,4 @@
+'use strict';
 const ExamResultStructureModel = require('../models/exam-result-structure');
 const ExamResultModel = require('../models/exam-result');
 const NotificationModel = require('../models/notification');

@@ -1,3 +1,4 @@
+'use strict';
 const fs = require('fs');
 const TopperModel = require('../models/topper');
 

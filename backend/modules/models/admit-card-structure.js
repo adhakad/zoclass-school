@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const AdmitCardStructureModel = mongoose.model('admit-card-structure', {
   class: { type: Number }, // 12th

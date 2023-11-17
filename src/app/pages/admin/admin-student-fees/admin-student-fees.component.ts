@@ -222,7 +222,6 @@ export class AdminStudentFeesComponent implements OnInit {
           this.feesService.addAdmissionFees(this.feesForm.value).subscribe((res: any) => {
             if (res) {
               this.receiptMode = true;
-              console.log(res.class)
               this.receiptInstallment = {
                 class: res.className,
                 receiptNo: res.admissionFeesReceiptNo,

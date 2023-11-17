@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const {GetSingleStudentFeesCollectionById,GetAllStudentFeesCollectionByClass,CreateFeesCollection,CreateAdmissionFeesCollection} = require('../controllers/fees-collection');

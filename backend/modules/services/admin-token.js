@@ -1,3 +1,4 @@
+'use strict';
 const jwt = require('jsonwebtoken')
 const { ADMIN_ACCESS_SECRET, ADMIN_REFRESH_SECRET, ACCESS_EXPIRES_IN, REFRESH_EXPIRES_IN } = process.env;
 const access_secret = ADMIN_ACCESS_SECRET;

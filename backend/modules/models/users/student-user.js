@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 
 const StudentUserModel = mongoose.model('student-user', {
