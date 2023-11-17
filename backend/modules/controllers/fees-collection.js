@@ -119,8 +119,9 @@ let CreateAdmissionFeesCollection = async (req, res, next) => {
         const totalFees = checkFeesCollection.totalFees;
         const paidFees = feesAmount;
         const dueFees = totalFees - paidFees;
-
         const admissionFeesData = {
+            studentId: studentId,
+            class: className,
             admissionFees: feesAmount,
             totalFees: totalFees,
             paidFees: paidFees,
@@ -130,7 +131,7 @@ let CreateAdmissionFeesCollection = async (req, res, next) => {
         }
         const updatedDocument = await FeesCollectionModel.findOneAndUpdate({_id:id}, { $set: admissionFeesData }, { new: true });
         if (updatedDocument) {
-            return res.status(200).json(updatedDocument);
+            return res.status(200).json(admissionFeesData);
         }
     } catch (error) {
         return res.status(500).json('Internal Server Error');

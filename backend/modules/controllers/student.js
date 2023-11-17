@@ -308,6 +308,7 @@ let CreateBulkStudentRecord = async (req, res, next) => {
         });
     }
     try {
+
         if (studentData.length > 100) {
             return res.status(400).json('File too large, Please make sure that file records to less then or equals to 100 !');
         }
@@ -366,8 +367,9 @@ let CreateBulkStudentRecord = async (req, res, next) => {
         let totalFees = checkFeesStr.totalFees;
 
         let studentFeesData = [];
+        for (let i = 0; i < createStudent.length; i++) {
+            let student = createStudent[i];
 
-        createStudent.forEach((student) => {
             let feesObject = {
                 studentId: student._id,
                 class: student.class,
@@ -388,9 +390,7 @@ let CreateBulkStudentRecord = async (req, res, next) => {
             }
 
             studentFeesData.push(feesObject);
-        });
-
-        console.log(studentFeesData);
+        }
         if (createStudent && studentFeesData.length > 0) {
             const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
             if (createStudentFeesData) {
