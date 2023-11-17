@@ -90,22 +90,22 @@ let ChangeAdmitCardPublishStatus = async (req, res, next) => {
         let message = '';
         if (findAdmitCardPublishStatus == false) {
             let className;
-            if(cls==1){
+            if (cls == 1) {
                 className = `${cls}st`
             }
-            if(cls==2){
+            if (cls == 2) {
                 className = `${cls}nd`
             }
-            if(cls==3){
+            if (cls == 3) {
                 className = `${cls}rd`
             }
-            if(cls >= 4 && cls <= 12){
+            if (cls >= 4 && cls <= 12) {
                 className = `${cls}th`
             }
-            if(cls==21){
+            if (cls == 21) {
                 className = `KG-I`
             }
-            if(cls==22){
+            if (cls == 22) {
                 className = `KG-II`
             }
             title = `Class ${className} ${examType} exam online admit cards released - Download Now!`;

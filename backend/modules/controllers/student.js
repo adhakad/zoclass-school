@@ -131,10 +131,10 @@ let CreateStudent = async (req, res, next) => {
     if (stream === "stream") {
         stream = "N/A";
     }
-      const parsedDate = DateTime.fromFormat(dob, 'dd-MM-yyyy');
-      if (!parsedDate.isValid) {
+    const parsedDate = DateTime.fromFormat(dob, 'dd-MM-yyyy');
+    if (!parsedDate.isValid) {
         dob = DateTime.fromISO(dob).toFormat("dd-MM-yyyy");
-      }
+    }
     const studentData = {
         name, rollNumber, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
     }
@@ -193,7 +193,7 @@ let CreateStudent = async (req, res, next) => {
             let studentId = createStudent._id;
             studentFeesData.studentId = studentId;
             let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-            if(status==='Complete' && objectId !==null && objectId !==undefined){
+            if (status === 'Complete' && objectId !== null && objectId !== undefined) {
                 const admissionData = {
                     status: status
                 }
@@ -239,7 +239,7 @@ let CreateStudentAdmissionEnquiry = async (req, res, next) => {
         name, session, stream, class: className, dob: dob, doae: doae, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
     }
     try {
-        const checkContact = await AdmissionEnquiryModel.findOne({ name: name, contact: contact});
+        const checkContact = await AdmissionEnquiryModel.findOne({ name: name, contact: contact });
         if (checkContact) {
             return res.status(400).json(`Name: ${name} phone ${contact} is already fill online admission form, please visit school and confirm your admission !`);
         }
@@ -255,6 +255,26 @@ let CreateStudentAdmissionEnquiry = async (req, res, next) => {
 let CreateBulkStudentRecord = async (req, res, next) => {
     let bulkStudentRecord = req.body.bulkStudentRecord;
     let className = req.body.class;
+    className = parseInt(className);
+    const classMappings = {
+        "KG-I": 21,
+        "KG-II": 22,
+        "1st": 1,
+        "2nd": 2,
+        "3rd": 3,
+        "4th": 4,
+        "5th": 5,
+        "6th": 6,
+        "7th": 7,
+        "8th": 8,
+        "9th": 9,
+        "10th": 10,
+        "11th": 11,
+        "12th": 12,
+    };
+    bulkStudentRecord.forEach((student) => {
+        student.class = classMappings[student.class] || "Unknown";
+    });
     let studentData = [];
     for (const student of bulkStudentRecord) {
         let otp = Math.floor(Math.random() * 899999 + 100000);
@@ -294,7 +314,6 @@ let CreateBulkStudentRecord = async (req, res, next) => {
         const otherClassAdmissionNo = [];
         for (const student of studentData) {
             if (student.class !== className) {
-                // Skip students from other classes
                 const { admissionNo } = student;
                 if (admissionNo) {
                     otherClassAdmissionNo.push(admissionNo);
@@ -335,33 +354,47 @@ let CreateBulkStudentRecord = async (req, res, next) => {
         if (!checkFeesStr) {
             return res.status(404).json(`Please create fees structure for class ${className} !`);
         }
-        const totalFees = checkFeesStr.totalFees;
-        const installment = checkFeesStr.installment;
+
+        let installment = checkFeesStr.installment;
         installment.forEach((item) => {
             Object.keys(item).forEach((key) => {
                 item[key] = 0;
             });
         });
-
         const createStudent = await StudentModel.create(studentData);
+        let admissionFees = checkFeesStr.admissionFees;
+        let totalFees = checkFeesStr.totalFees;
 
-        const studentFeesData = [];
-        for (const student of createStudent) {
-            studentFeesData.push({
+        let studentFeesData = [];
+
+        createStudent.forEach((student) => {
+            let feesObject = {
                 studentId: student._id,
-                class: className,
+                class: student.class,
+                admissionFeesPayable: false,
+                admissionFees: 0,
                 totalFees: totalFees,
                 paidFees: 0,
                 dueFees: totalFees,
                 receipt: installment,
                 installment: installment,
-                paymentDate: installment
-            });
-        }
+                paymentDate: installment,
+            };
+
+            if (student.admissionType === 'New') {
+                feesObject.admissionFeesPayable = true;
+                feesObject.totalFees += admissionFees;
+                feesObject.dueFees += admissionFees;
+            }
+
+            studentFeesData.push(feesObject);
+        });
+
+        console.log(studentFeesData);
         if (createStudent && studentFeesData.length > 0) {
             const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
             if (createStudentFeesData) {
-                return res.status(200).json('Student created succesfuly.');
+                return res.status(200).json('Student created succesfully.');
             }
         }
     } catch (error) {

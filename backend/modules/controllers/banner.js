@@ -55,10 +55,10 @@ let GetAllBanner = async(req,res,next) => {
     
     // const complexLicenseKey = generateComplexLicenseKey(32); // 32-character key
     // console.log('Generated Complex License Key:', complexLicenseKey);
+
     
 
-
-
+    
     try{
         const bannerList = await BannerModel.find({});
         return res.status(200).json(bannerList);

@@ -52,7 +52,7 @@ export class StudentComponent implements OnInit {
   schoolInfo: any;
   bulkStudentRecord: any;
   fileChoose: boolean = false;
-  loader:Boolean=true;
+  loader: Boolean = true;
   constructor(private fb: FormBuilder, private http: HttpClient, private schoolService: SchoolService, public ete: ExcelService, public activatedRoute: ActivatedRoute, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
@@ -91,11 +91,11 @@ export class StudentComponent implements OnInit {
   ngOnInit(): void {
     this.className = this.activatedRoute.snapshot.paramMap.get('id');
     if (this.className) {
-      let load:any=this.getStudents({ page: 1 });
-      if(load){
-        setTimeout(()=>{
+      let load: any = this.getStudents({ page: 1 });
+      if (load) {
+        setTimeout(() => {
           this.loader = false;
-        },1000);
+        }, 1000);
       }
     }
     this.getSchool();
@@ -204,7 +204,19 @@ export class StudentComponent implements OnInit {
     this.studentService.getStudentByClass(cls).subscribe((res: any) => {
       if (res) {
         this.studentInfoByClass = res;
-        console.log([...this.studentInfoByClass])
+        const classMappings: any = {
+          21: "KG-I",
+          22: "KG-II",
+          1: "1st",
+          2: "2nd",
+          3: "3rd",
+        };
+        for (let i = 4; i <= 12; i++) {
+          classMappings[i] = i + "th";
+        }
+        this.studentInfoByClass.forEach((student) => {
+          student.class = classMappings[student.class] || "Unknown";
+        });
       }
     })
   }
@@ -292,7 +304,7 @@ export class StudentComponent implements OnInit {
     fileReader.readAsArrayBuffer(file);
   }
 
-  parseExcel(arrayBuffer: any):void {
+  parseExcel(arrayBuffer: any): void {
     const workbook = new ExcelJS.Workbook();
     workbook.xlsx.load(arrayBuffer).then((workbook) => {
       const worksheet = workbook.getWorksheet(1);
@@ -307,8 +319,7 @@ export class StudentComponent implements OnInit {
           data.push(rowData);
         }
       });
-      const lastIndex =  data.length -1 ;
-      console.log(lastIndex)
+      const lastIndex = data.length - 1;
       const indexesToDelete = [0, lastIndex];
       // IndexesToDelete ke hisab se elements ko delete karna
       indexesToDelete.sort((a, b) => b - a); // Sort indexesToDelete in descending order
@@ -319,17 +330,17 @@ export class StudentComponent implements OnInit {
       // Data ke baki ke rows
       const dataRows = data.slice(1);
       // Data ko objects mein map karna
-      const mappedData = dataRows.map((row:any)=> {
-        const obj:any = {};
-        fields.forEach((field:any, index:any) => {
+      const mappedData = dataRows.map((row: any) => {
+        const obj: any = {};
+        fields.forEach((field: any, index: any) => {
           obj[field] = row[index];
         });
         return obj;
       });
-      
-      function transformKeys(dataArray:any) {
-        return dataArray.map((obj:any) => {
-          const newObj:any = {};
+
+      function transformKeys(dataArray: any) {
+        return dataArray.map((obj: any) => {
+          const newObj: any = {};
           for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
               const newKey = key.replace(/\s+/g, ''); // Remove spaces
@@ -341,12 +352,12 @@ export class StudentComponent implements OnInit {
       }
       // Transform the keys of the array
       const transformedDataArray = transformKeys(mappedData);
-      if(transformedDataArray.length > 100){
+      if (transformedDataArray.length > 100) {
         this.fileChoose = false;
         this.errorCheck = true;
         this.errorMsg = 'File too large, Please make sure that file records to less then or equals to 100';
       }
-      if(transformedDataArray.length <= 100){
+      if (transformedDataArray.length <= 100) {
         this.bulkStudentRecord = transformedDataArray;
         this.fileChoose = true;
         this.errorCheck = false;
@@ -357,10 +368,9 @@ export class StudentComponent implements OnInit {
   addBulkStudentRecord() {
     let studentRecordData = {
       bulkStudentRecord: this.bulkStudentRecord,
-      class:this.className
+      class: this.className
     }
-    if(studentRecordData){
-      console.log(studentRecordData)
+    if (studentRecordData) {
       this.studentService.addBulkStudentRecord(studentRecordData).subscribe((res: any) => {
         if (res) {
           this.successDone();
@@ -377,16 +387,22 @@ export class StudentComponent implements OnInit {
   async exportToExcel() {
     let className = this.className;
     if (className == 1) {
-      className = `${this.className}st`
+      className = `${this.className}st`;
     }
     if (className == 2) {
-      className = `${this.className}nd`
+      className = `${this.className}nd`;
     }
     if (className == 3) {
-      className = `${this.className}rd`
+      className = `${this.className}rd`;
     }
-    if (className > 3) {
-      className = `${this.className}th`
+    if (className >= 4 && className <= 12) {
+      className = `${this.className}th`;
+    }
+    if (className == 21) {
+      className = `KG-I`;
+    }
+    if (className == 22) {
+      className = `KG-II`;
     }
     const header: string[] = [
       'admissionNo',
@@ -417,7 +433,6 @@ export class StudentComponent implements OnInit {
     ];
 
     function orderObjectsByHeaders(studentInfoByClass: any, header: any) {
-      console.log(studentInfoByClass)
       return studentInfoByClass.map((obj: any) => {
         const orderedObj: any = {};
         header.forEach((header: any) => {
