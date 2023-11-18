@@ -32,7 +32,7 @@ let GetAdsPagination = async(req,res,next) => {
         adsData.countAds = countAds;
         return res.json(adsData);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let GetAllAds = async(req,res,next) => {
@@ -40,7 +40,7 @@ let GetAllAds = async(req,res,next) => {
         const adsList = await AdsModel.find({});
         return res.status(200).json(adsList);
     }catch(error){
-        return res.status(500).json('Internal Server Error' );
+        return res.status(500).json('Internal Server Error !' );
     }  
 }
 let GetSingleAds = async(req,res,next) => {
@@ -48,7 +48,7 @@ let GetSingleAds = async(req,res,next) => {
         const singleAds = await AdsModel.findOne({_id:req.params.id});
         return res.status(200).json(singleAds);
     }catch(error){
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');;
     }
 }
 let CreateAds = async(req,res,next) => {
@@ -59,12 +59,12 @@ let CreateAds = async(req,res,next) => {
     try{
         let countAds = await AdsModel.count();
         if(countAds == 15){
-            return res.status(400).json('Ads limit is over to 15');
+            return res.status(400).json('Ads limit is over to 15 !');
         }
         const createAds = await AdsModel.create(adsData);
-        return res.status(200).json('Ads created successfully');
+        return res.status(200).json('Ads created successfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');;
     }
 }
 let UpdateAds = async(req,res,next) => {
@@ -74,9 +74,9 @@ let UpdateAds = async(req,res,next) => {
             title:req.body.title
         }
         const updateAds = await AdsModel.findByIdAndUpdate(id,{$set:adsData},{new:true});
-        return res.status(200).json('Ads update successfully');
+        return res.status(200).json('Ads update successfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');;
     }
 }
 let DeleteAds = async(req,res,next) => {
@@ -86,9 +86,9 @@ let DeleteAds = async(req,res,next) => {
         const singleImage = await singleAds.image;
         await fs.unlinkSync('./public/ads-image/'+singleImage);
         const deleteAds = await AdsModel.findByIdAndRemove(id);
-        return res.status(200).json('Ads delete successfully');
+        return res.status(200).json('Ads delete successfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');;
     }
 }
 

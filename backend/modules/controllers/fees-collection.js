@@ -15,7 +15,7 @@ let GetSingleStudentFeesCollectionById = async (req, res, next) => {
         const studentFeesCollection = await FeesCollectionModel.findOne({ studentId: studentId });
         return res.status(200).json({ studentInfo: student, studentFeesCollection: studentFeesCollection });
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -32,7 +32,7 @@ let GetAllStudentFeesCollectionByClass = async (req, res, next) => {
         }
         return res.status(200).json({ studentFeesCollection: studentFeesCollection, studentInfo: student });
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -46,17 +46,17 @@ let CreateFeesCollection = async (req, res, next) => {
 
         const checkFeesStructure = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStructure) {
-            return res.status(404).json(`Class ${className} fees structure not found`);
+            return res.status(404).json(`Class ${className} fees structure not found !`);
         }
         const checkFeesCollection = await FeesCollectionModel.findOne({ studentId: studentId, class: className });
         if (!checkFeesCollection) {
-            return res.status(404).json(`Fees record not found`);
+            return res.status(404).json(`Fees record not found !`);
         }
 
         const feesStructureInstallment = checkFeesStructure.installment.find(item => Object.keys(item)[0] === feesInstallment);
         const paidFeesInstallment = checkFeesCollection.installment.find(item => Object.keys(item)[0] === feesInstallment);
         if (feesStructureInstallment[feesInstallment] === paidFeesInstallment[feesInstallment]) {
-            return res.status(400).json(`${feesInstallment} fees installment already paid`);
+            return res.status(400).json(`${feesInstallment} fees installment already paid !`);
         }
         const id = checkFeesCollection._id;
         const totalFees = checkFeesCollection.totalFees;
@@ -69,7 +69,7 @@ let CreateFeesCollection = async (req, res, next) => {
         const paidFees = totalInstallment + feesAmount + admissionFees;
         const dueFees = totalFees - paidFees;
         if (totalFees < paidFees) {
-            return res.status(400).json(`All fees installment already paid`);
+            return res.status(400).json(`All fees installment already paid !`);
         }
         const installment = {
             class: className,
@@ -91,7 +91,7 @@ let CreateFeesCollection = async (req, res, next) => {
             return res.status(200).json(installment);
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -105,16 +105,16 @@ let CreateAdmissionFeesCollection = async (req, res, next) => {
 
         const checkFeesStructure = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStructure) {
-            return res.status(404).json(`Class ${className} fees structure not found`);
+            return res.status(404).json(`Class ${className} fees structure not found !`);
         }
         const checkFeesCollection = await FeesCollectionModel.findOne({ studentId: studentId, class: className });
         if (!checkFeesCollection) {
-            return res.status(404).json(`Fees record not found`);
+            return res.status(404).json(`Fees record not found !`);
         }
 
 
         if (checkFeesCollection.admissionFees > 0) {
-            return res.status(400).json(`Admission fees already paid`);
+            return res.status(400).json(`Admission fees already paid !`);
         }
         const id = checkFeesCollection._id;
         const totalFees = checkFeesCollection.totalFees;
@@ -135,7 +135,7 @@ let CreateAdmissionFeesCollection = async (req, res, next) => {
             return res.status(200).json(admissionFeesData);
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

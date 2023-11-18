@@ -10,7 +10,7 @@ let GetSingleStudentExamResult = async (req, res, next) => {
     try {
         let student = await StudentModel.findOne({ admissionNo: admissionNo, class: className, rollNumber: rollNumber },'admissionNo name rollNumber class fatherName motherName stream');
         if (!student) {
-            return res.status(404).json({ errorMsg:'Exam result not found' });
+            return res.status(404).json({ errorMsg:'Exam result not found !' });
         }
         let studentId = student._id;
         let stream = student.stream;
@@ -19,20 +19,20 @@ let GetSingleStudentExamResult = async (req, res, next) => {
         }
         let examResult = await ExamResultModel.findOne({ studentId: studentId })
         if (!examResult) {
-            return res.status(404).json({ errorMsg:'Exam result not found' });
+            return res.status(404).json({ errorMsg:'Exam result not found !' });
         }
         let examType = examResult.examType;
         let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType, stream: stream });
         if (!examResultStructure) {
-            return res.status(404).json({ errorMsg:'This class any exam not found' });
+            return res.status(404).json({ errorMsg:'This class any exam not found !' });
         }
         let resultPublishStatus = examResultStructure.resultPublishStatus;
         if (resultPublishStatus==false) {
-            return res.status(404).json({ errorMsg:'Your exam result will be declared soon' });
+            return res.status(404).json({ errorMsg:'Your exam result will be declared soon !' });
         }
         return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: student });
     } catch (error) {
-        return res.status(500).json({errorMsg:'Internal Server Error' });
+        return res.status(500).json({errorMsg:'Internal Server Error !' });
     }
 }
 let GetSingleStudentExamResultById = async (req, res, next) => {
@@ -40,7 +40,7 @@ let GetSingleStudentExamResultById = async (req, res, next) => {
     try {
         let student = await StudentModel.findOne({ _id: studentId },'admissionNo name rollNumber class fatherName motherName stream');
         if (!student) {
-            return res.status(404).json({ errorMsg:'Student not found' });
+            return res.status(404).json({ errorMsg:'Student not found !' });
         }
         let stream = student.stream;
         let className = student.class;
@@ -49,24 +49,24 @@ let GetSingleStudentExamResultById = async (req, res, next) => {
         }
         let examResultStr = await ExamResultStructureModel.findOne({ class: className, stream: stream });
         if (!examResultStr) {
-            return res.status(404).json({ errorMsg:'This class any exam not found' });
+            return res.status(404).json({ errorMsg:'This class any exam not found !' });
         }
         let examResult = await ExamResultModel.findOne({ studentId: studentId });
         if (!examResult) {
-            return res.status(404).json({ errorMsg:'Exam result not found' });
+            return res.status(404).json({ errorMsg:'Exam result not found !' });
         }
         let examType = examResult.examType;
         let examResultStructure = await ExamResultStructureModel.findOne({ class: className, examType: examType });
         if (!examResultStructure) {
-            return res.status(404).json({ errorMsg:'This class any exam not found' });
+            return res.status(404).json({ errorMsg:'This class any exam not found !' });
         }
         let resultPublishStatus = examResultStructure.resultPublishStatus;
         if (resultPublishStatus==false) {
-            return res.status(404).json({ errorMsg:'Your exam result will be declared soon' });
+            return res.status(404).json({ errorMsg:'Your exam result will be declared soon !' });
         }
         return res.status(200).json({ examResultStructure: examResultStructure, examResult: examResult, studentInfo: student });
     } catch (error) {
-        return res.status(500).json({errorMsg:'Internal Server Error' });
+        return res.status(500).json({errorMsg:'Internal Server Error !' });
     }
 }
 let GetAllStudentExamResultByClass = async (req, res, next) => {
@@ -74,15 +74,15 @@ let GetAllStudentExamResultByClass = async (req, res, next) => {
     try {
         const student = await StudentModel.find({ class: className });
         if (!student) {
-            return res.status(404).json({ errorMsg:'This class any student not found' });
+            return res.status(404).json({ errorMsg:'This class any student not found !' });
         }
         const examResult = await ExamResultModel.find({ class: className });
         if (!examResult) {
-            return res.status(404).json({ errorMsg:'This class exam result not found' });
+            return res.status(404).json({ errorMsg:'This class exam result not found !' });
         }
         return res.status(200).json({ examResultInfo: examResult, studentInfo: student });
     } catch (error) {
-        return res.status(500).json({errorMsg:'Internal Server Error' });
+        return res.status(500).json({errorMsg:'Internal Server Error !' });
     }
 }
 
@@ -126,16 +126,16 @@ let CreateExamResult = async (req, res, next) => {
     try {
         const student = await StudentModel.findOne({ rollNumber: rollNumber, class: className, stream: stream });
         if (!student) {
-            return res.status(404).json(`Roll number ${rollNumber} is invailid`);
+            return res.status(404).json(`Roll number ${rollNumber} is invailid !`);
         }
         let studentId = student._id;
         const checkResultStr = await ExamResultStructureModel.findOne({ class: className, examType: examType, stream: stream });
         if (!checkResultStr) {
-            return res.status(404).json(`${examType} exam not found`);
+            return res.status(404).json(`${examType} exam not found !`);
         }
         const resultExist = await ExamResultModel.findOne({ studentId: studentId, class: className });
         if (resultExist) {
-            return res.status(400).json(`Roll number ${rollNumber} result already exist`);
+            return res.status(400).json(`Roll number ${rollNumber} result already exist !`);
         }
         let examResultData = {
             studentId: studentId,
@@ -148,10 +148,10 @@ let CreateExamResult = async (req, res, next) => {
             examResultData.practicalMarks = practicalMarks;
         }
         let createExamResult = await ExamResultModel.create(examResultData);
-        return res.status(200).json('Student exam result add successfully');
+        return res.status(200).json('Student exam result add successfully.');
 
     } catch (error) {
-        return res.status(500).json('Internal Server Error' );
+        return res.status(500).json('Internal Server Error !' );
     }
 }
 
@@ -234,13 +234,13 @@ let CreateBulkExamResult = async (req, res, next) => {
         }
         const checkResultStr = await ExamResultStructureModel.findOne({ class: className, examType: examType, stream: stream });
         if (!checkResultStr) {
-            return res.status(404).json(`${examType} exam not found`);
+            return res.status(404).json(`${examType} exam not found !`);
         }
         let createExamResult = await ExamResultModel.create(result);
-        return res.status(200).json('Student exam result add successfully');
+        return res.status(200).json('Student exam result add successfully.');
 
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

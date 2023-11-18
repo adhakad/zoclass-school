@@ -31,7 +31,7 @@ let GetTopperPagination = async(req,res,next) => {
         topperData.countTopper = countTopper;
         return res.json(topperData);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let GetAllTopper = async(req,res,next) => {
@@ -47,7 +47,7 @@ let GetSingleTopper = async(req,res,next) => {
         const singleTopper = await TopperModel.find({});
         return res.status(200).json(singleTopper);
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let CreateTopper = async(req,res,next) => {
@@ -61,19 +61,19 @@ let CreateTopper = async(req,res,next) => {
     }
     try{
         if(percentile > 100){
-            return res.status(400).json("Topper percentile is not possible to greater then 100%")
+            return res.status(400).json("Topper percentile is not possible to greater then 100% !")
         }
         if(percentile < 60){
-            return res.status(400).json("Topper percentile is not possible to less then 60%")
+            return res.status(400).json("Topper percentile is not possible to less then 60% !")
         }
         const countTopper = await TopperModel.count();
         if(countTopper == 15){
-            return res.status(400).json("Topper limit is over to 15");
+            return res.status(400).json("Topper limit is over to 15 !");
         }
         const createTopper = await TopperModel.create(topperData);
-        return res.status(200).json('Topper create succesfully');
+        return res.status(200).json('Topper create succesfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let UpdateTopper = async(req,res,next) => {
@@ -86,9 +86,9 @@ let UpdateTopper = async(req,res,next) => {
             year:req.body.year,
         }
         const updateTopper = await TopperModel.findByIdAndUpdate(id,{$set:topperData},{new:true});
-        return res.status(200).json('Topper update succesfully');
+        return res.status(200).json('Topper update succesfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let DeleteTopper = async(req,res,next) => {
@@ -98,9 +98,9 @@ let DeleteTopper = async(req,res,next) => {
         const singleImage = await singleTopper.image;
         await fs.unlinkSync('./public/topper-image/'+singleImage);
         const deleteTopper = await TopperModel.findByIdAndRemove(id);
-        return res.status(200).json('Topper delete succesfully');
+        return res.status(200).json('Topper delete succesfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

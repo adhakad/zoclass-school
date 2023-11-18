@@ -34,7 +34,7 @@ let GetBannerPagination = async(req,res,next) => {
         bannerData.countBanner = countBanner;
         return res.json(bannerData);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let GetAllBanner = async(req,res,next) => {
@@ -62,9 +62,12 @@ let GetAllBanner = async(req,res,next) => {
     
     try{
         const bannerList = await BannerModel.find({});
+        if(!bannerList){
+            return res.status(404).json("Banner not found !");
+        }
         return res.status(200).json(bannerList);
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );
+        return res.status(500).json( 'Internal Server Error !' );
     }  
 }
 let GetSingleBanner = async(req,res,next) => {
@@ -72,7 +75,7 @@ let GetSingleBanner = async(req,res,next) => {
         const singleBanner = await BannerModel.findOne({_id:req.params.id});
         return res.status(200).json(singleBanner);
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let CreateBanner = async(req,res,next) => {
@@ -83,12 +86,12 @@ let CreateBanner = async(req,res,next) => {
     try{
         let countBanner = await BannerModel.count();
         if(countBanner == 15){
-            return res.status(400).json("Banner limit is over to 15");
+            return res.status(400).json("Banner limit is over to 15 !");
         }
         const createBanner = await BannerModel.create(bannerData);
-        return res.status(200).json('Banner created successfully');
+        return res.status(200).json('Banner created successfully.');
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let UpdateBanner = async(req,res,next) => {
@@ -98,9 +101,9 @@ let UpdateBanner = async(req,res,next) => {
             title:req.body.title
         }
         const updateBanner = await BannerModel.findByIdAndUpdate(id,{$set:bannerData},{new:true});
-        return res.status(200).json('Banner update successfully');
+        return res.status(200).json('Banner update successfully.');
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let DeleteBanner = async(req,res,next) => {
@@ -110,9 +113,9 @@ let DeleteBanner = async(req,res,next) => {
         const singleImage = await singleBanner.image;
         await fs.unlinkSync('./public/banner-image/'+singleImage);
         const deleteBanner = await BannerModel.findByIdAndRemove(id);
-        return res.status(200).json('Banner delete successfully');
+        return res.status(200).json('Banner delete successfully.');
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 

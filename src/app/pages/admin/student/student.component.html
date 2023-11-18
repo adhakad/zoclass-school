@@ -462,33 +462,6 @@
                       </div>
                       <main>
                         <div class="row mb-2 mt-5">
-                          <!-- <mat-form-field appearance="outline">
-                            <mat-label>Exam Type</mat-label>
-                            <mat-select #examSelect matInput>
-                              <div *ngFor="let exam of examType">
-                                <mat-option (click)="selectExam(examSelect.value)" value="{{exam}}">
-                                  {{exam | titlecase}} Exam
-                                </mat-option>
-                              </div>
-                            </mat-select>
-                          </mat-form-field> -->
-                          <!-- <mat-form-field appearance="outline">
-                            <mat-label>Stream</mat-label>
-                            <mat-select type="text" matInput>
-                              <ng-container *ngIf="cls==12 || cls==11">
-                                <div *ngFor="let subject of streamMainSubject">
-                                  <mat-option (click)="chooseStream(subject)"
-                                    value="{{subject}}">{{subject}}</mat-option>
-                                </div>
-                              </ng-container>
-                              <ng-container *ngIf="cls<11">
-                                <div>
-                                  <mat-option value="notApplicable"
-                                    (click)='chooseStream(notApplicable)'>N/A</mat-option>
-                                </div>
-                              </ng-container>
-                            </mat-select>
-                          </mat-form-field> -->
                           <div class="custom-file">
                             <input type="file" name="file" class="form-control file-input" id="inputGroupFile" required
                               (change)="handleImport($event)"

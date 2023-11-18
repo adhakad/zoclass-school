@@ -31,7 +31,7 @@ let GetTeacherPagination = async (req, res, next) => {
         teacherData.countTeacher = countTeacher;
         return res.json(teacherData);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let GetAllTeacher = async (req, res, next) => {
@@ -47,7 +47,7 @@ let GetSingleTeacher = async (req, res, next) => {
         const singleTeacher = await TeacherModel.findOne({ _id: req.params.id });
         return res.status(200).json(singleTeacher);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let CreateTeacher = async (req, res, next) => {
@@ -56,7 +56,7 @@ let CreateTeacher = async (req, res, next) => {
     try {
         const checkTeacher = await TeacherModel.findOne({teacherUserId:teacherUserId});
         if(checkTeacher){
-            return res.status(400).json("Teacher user id already exist")
+            return res.status(400).json("Teacher user id already exist !")
         }
         const teacherData = {
             name: name,
@@ -66,9 +66,9 @@ let CreateTeacher = async (req, res, next) => {
             image: req.file.filename,
         }
         const createTeacher = await TeacherModel.create(teacherData);
-        return res.status(200).json('Teacher created succesfully');
+        return res.status(200).json('Teacher created succesfully.');
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let UpdateTeacher = async (req, res, next) => {
@@ -80,9 +80,9 @@ let UpdateTeacher = async (req, res, next) => {
             education: education
         }
         const updateTeacher = await TeacherModel.findByIdAndUpdate(id, { $set: teacherData }, { new: true });
-        return res.status(200).json('Teacher updated succesfully');
+        return res.status(200).json('Teacher updated succesfully.');
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let ChangeStatus = async(req,res,next) => {
@@ -94,9 +94,9 @@ let ChangeStatus = async(req,res,next) => {
             status:status
         }
         const updateStatus = await TeacherModel.findByIdAndUpdate(id, { $set: teacherData }, { new: true });
-        return res.status(200).json('Teacher update succesfully');
+        return res.status(200).json('Teacher update succesfully.');
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let DeleteTeacher = async (req, res, next) => {
@@ -106,9 +106,9 @@ let DeleteTeacher = async (req, res, next) => {
         const singleImage = await singleTeacher.image;
         await fs.unlinkSync('./public/teacher-image/' + singleImage);
         const deleteTeacher = await TeacherModel.findByIdAndRemove(id);
-        return res.status(200).json('Teacher delete succesfully');
+        return res.status(200).json('Teacher delete succesfully.');
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

@@ -31,7 +31,7 @@ let GetClassPagination = async(req,res,next) => {
         classData.countClass = countClass;
         return res.json(classData);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 
@@ -40,7 +40,7 @@ let GetAllClass = async(req,res,next) => {
         const classList = await ClassModel.find({});
         return res.status(200).json(classList);
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );
+        return res.status(500).json( 'Internal Server Error !' );
     }
 }
 let GetSingleClass = async(req,res,next) => {
@@ -48,7 +48,7 @@ let GetSingleClass = async(req,res,next) => {
         const singleClass = await ClassModel.findOne({_id:req.params.id});
         return res.status(200).json(singleClass);
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );
+        return res.status(500).json( 'Internal Server Error !' );
     }
 }
 let CreateClass = async(req,res,next) => {
@@ -66,7 +66,7 @@ let CreateClass = async(req,res,next) => {
         }
         
         const data = await ClassModel.create(addClass);
-        return res.status(200).json('Class Created successfully');
+        return res.status(200).json('Class Created successfully.');
     }catch(error){
          return res.status(500).json( 'Internal Server Error !' );
     }
@@ -78,18 +78,18 @@ let UpdateClass = async(req,res,next) => {
             class:req.body.class
         }
         const update = await ClassModel.findByIdAndUpdate(id,{$set:classData}, {new:true});
-        return res.status(200).json('Class update successfully');
+        return res.status(200).json('Class update successfully.');
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let DeleteClass = async(req,res,next) => {
     try{
         const id = req.params.id;
         const dlt = await ClassModel.findByIdAndRemove(id);
-        return res.status(200).json('Class delete successfully');
+        return res.status(200).json('Class delete successfully.');
     }catch(error){
-        return res.status(500).json( 'Internal Server Error' );
+        return res.status(500).json( 'Internal Server Error !' );
     }
 
 

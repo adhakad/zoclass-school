@@ -6,10 +6,10 @@ let LoginAdmin = async (req, res, next) => {
     try {
         let admin = await AdminUserModel.findOne({ email: req.body.email, password: req.body.password })
         if (!admin) {
-            return res.status(404).json({ errorMsg: 'Admin email or password invalid' });
+            return res.status(404).json({ errorMsg: 'Admin email or password invalid !' });
         }
         if (admin.status == "Inactive") {
-            return res.status(400).json({ errorMsg: 'Login permission blocked, please contact app development company' });
+            return res.status(400).json({ errorMsg: 'Login permission blocked, please contact app development company !' });
         }
         if (admin.status == "Active") {
             const payload = { id: admin._id, email: admin.email };
@@ -17,9 +17,9 @@ let LoginAdmin = async (req, res, next) => {
             const refreshToken = await tokenService.getRefreshToken(payload);
             return res.status(200).json({ adminInfo: admin, accessToken, refreshToken });
         }
-        return res.status(400).json({ errorMsg: 'Login error' })
+        return res.status(400).json({ errorMsg: 'Login error !' })
     } catch (error) {
-        return res.status(500).json({ errorMsg: 'Internal Server Error' });
+        return res.status(500).json({ errorMsg: 'Internal Server Error !' });
     }
 }
 

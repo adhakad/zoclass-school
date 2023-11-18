@@ -34,7 +34,7 @@ let GetStudentPaginationByAdmission = async (req, res, next) => {
         studentData.countStudent = countStudent;
         return res.json(studentData);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -63,7 +63,7 @@ let GetStudentAdmissionEnquiryPagination = async (req, res, next) => {
         admissionEnquiryData.countAdmissionEnquiry = countAdmissionEnquiry;
         return res.json(admissionEnquiryData);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -91,7 +91,7 @@ let GetStudentPaginationByClass = async (req, res, next) => {
         studentData.countStudent = countStudent;
         return res.json(studentData);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -100,7 +100,7 @@ let GetAllStudentByClass = async (req, res, next) => {
         const singleStudent = await StudentModel.find({ class: req.params.class }, '-_id -otp -status -__v');
         return res.status(200).json(singleStudent);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let GetSingleStudent = async (req, res, next) => {
@@ -108,7 +108,7 @@ let GetSingleStudent = async (req, res, next) => {
         const singleStudent = await StudentModel.findOne({ _id: req.params.id });
         return res.status(200).json(singleStudent);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let CreateStudent = async (req, res, next) => {
@@ -142,11 +142,11 @@ let CreateStudent = async (req, res, next) => {
     try {
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStr) {
-            return res.status(404).json(`Please create fees structure for this class!`);
+            return res.status(404).json(`Please create fees structure for this class !`);
         }
         const checkRollNumber = await StudentModel.findOne({ rollNumber: rollNumber, class: className });
         if (checkRollNumber) {
-            return res.status(400).json(`Roll number already exist for this class!`);
+            return res.status(400).json(`Roll number already exist for this class !`);
         }
         let totalFees = checkFeesStr.totalFees;
         let installment = checkFeesStr.installment;
@@ -159,7 +159,6 @@ let CreateStudent = async (req, res, next) => {
         let admissionFeesPayable = false;
         let paidFees = 0;
         let dueFees = totalFees - paidFees;
-        console.log("abc")
         if (admissionType == 'New' && admissionFeesPaymentType == 'Immediate') {
             admissionFeesPayable = true;
             admissionFees = admissionFees;
@@ -219,11 +218,11 @@ let CreateStudent = async (req, res, next) => {
                     paidFees: createStudentFeesData.paidFees,
                     dueFees: createStudentFeesData.dueFees
                 }
-                return res.status(200).json({ studentAdmissionData: studentAdmissionData, successMsg: 'Student created succesfully' });
+                return res.status(200).json({ studentAdmissionData: studentAdmissionData, successMsg: 'Student created succesfully.' });
             }
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -246,10 +245,10 @@ let CreateStudentAdmissionEnquiry = async (req, res, next) => {
         }
         let createAdmissionEnquiryModel = await AdmissionEnquiryModel.create(studentData);
         if (createAdmissionEnquiryModel) {
-            return res.status(200).json({ successMsg: 'Online admission form submited succesfully' });
+            return res.status(200).json({ successMsg: 'Online admission form submited succesfully.' });
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -399,7 +398,7 @@ let CreateBulkStudentRecord = async (req, res, next) => {
             }
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -413,9 +412,9 @@ let UpdateStudent = async (req, res, next) => {
             rollNumber: rollNumber
         }
         const updateStudent = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
-        return res.status(200).json('Student update succesfully');
+        return res.status(200).json('Student update succesfully.');
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let ChangeStatus = async (req, res, next) => {
@@ -428,18 +427,18 @@ let ChangeStatus = async (req, res, next) => {
         }
 
         const updateStatus = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
-        return res.status(200).json('Student update succesfully');
+        return res.status(200).json('Student update succesfully.');
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let DeleteStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
         const deleteStudent = await StudentModel.findByIdAndRemove(id);
-        return res.status(200).json('Student delete succesfully');
+        return res.status(200).json('Student delete succesfully.');
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

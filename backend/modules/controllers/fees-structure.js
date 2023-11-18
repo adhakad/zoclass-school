@@ -9,7 +9,7 @@ let GetSingleClassFeesStructure = async(req,res,next) => {
         const singleFeesStr = await FeesStructureModel.findOne({class:className});
         return res.status(200).json(singleFeesStr);
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -30,17 +30,17 @@ let CreateFeesStructure = async (req, res, next) => {
     try {
         const checkClassExist = await classModel.findOne({ class: className });
         if(!checkClassExist){
-            return res.status(404).json('Invalid Class');
+            return res.status(404).json('Invalid Class !');
         }
         const checkFeesStructure = await FeesStructureModel.findOne({ class: className });
         if (checkFeesStructure) {
-            return res.status(400).json(`Class ${className} fees structure already exist`);
+            return res.status(400).json(`Class ${className} fees structure already exist !`);
         }
         if (totalFees!==feesTypeTotal) {
-            return res.status(400).json(`Class ${className} total fees is not equal to all fees particulars total`);
+            return res.status(400).json(`Class ${className} total fees is not equal to all fees particulars total !`);
         }
         if (totalFees!==feesPayTypeTotal) {
-            return res.status(400).json(`Class ${className} total fees is not equal to all fees installment total`);
+            return res.status(400).json(`Class ${className} total fees is not equal to all fees installment total !`);
         }
         
         let feesStructureData = {
@@ -52,10 +52,10 @@ let CreateFeesStructure = async (req, res, next) => {
         }
         let feesStructure = await FeesStructureModel.create(feesStructureData);
         // console.log(feesStructure)
-        return res.status(200).json('Fees structure add successfuly');
+        return res.status(200).json('Fees structure add successfully.');
 
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

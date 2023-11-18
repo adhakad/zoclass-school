@@ -8,7 +8,7 @@ let GetSingleSchoolNameLogo = async (req, res, next) => {
             return res.status(200).json(singleSchool);
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let GetSingleSchool = async (req, res, next) => {
@@ -18,7 +18,7 @@ let GetSingleSchool = async (req, res, next) => {
             return res.status(200).json(singleSchool);
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let CreateSchool = async (req, res, next) => {
@@ -35,10 +35,10 @@ let CreateSchool = async (req, res, next) => {
         }
         const createSchool = await SchoolModel.create(schoolData);
         if (createSchool) {
-            return res.status(200).json('School created successfully');
+            return res.status(200).json('School created successfully.');
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let UpdateSchool = async (req, res, next) => {
@@ -49,10 +49,10 @@ let UpdateSchool = async (req, res, next) => {
         }
         const updateSchool = await SchoolModel.findByIdAndUpdate(id, { $set: schoolData }, { new: true });
         if (updateSchool) {
-            return res.status(200).json('School update successfully');
+            return res.status(200).json('School update successfully.');
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let DeleteSchool = async (req, res, next) => {
@@ -60,10 +60,10 @@ let DeleteSchool = async (req, res, next) => {
         const id = req.params.id;
         const deleteSchool = await SchoolModel.findByIdAndRemove(id);
         if (deleteSchool) {
-            return res.status(200).json('School delete successfully');
+            return res.status(200).json('School delete successfully.');
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

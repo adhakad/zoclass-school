@@ -8,9 +8,12 @@ let GetSingleClassAdmitCardStructure = async (req, res, next) => {
     let className = req.params.id;
     try {
         const singleAdmitCardStr = await AdmitCardStructureModel.find({ class: className });
+        if(!singleAdmitCardStr){
+            return res.status(404).json('Fees structure not found !');;
+        }
         return res.status(200).json(singleAdmitCardStr);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let CreateAdmitCardStructure = async (req, res, next) => {
@@ -52,11 +55,11 @@ let CreateAdmitCardStructure = async (req, res, next) => {
         let admitCardStructure = await AdmitCardStructureModel.create(admitCardStructureData);
         let studentAdmitCard = await AdmitCardModel.create(studentAdmitCardData);
         if (admitCardStructure && studentAdmitCard) {
-            return res.status(200).json('Admit card structure add successfuly');
+            return res.status(200).json('Admit card structure add successfully.');
         }
 
     } catch (error) {
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');;
     }
 }
 let DeleteAdmitCardStructure = async (req, res, next) => {
@@ -69,10 +72,10 @@ let DeleteAdmitCardStructure = async (req, res, next) => {
         const deleteAdmitCard = await AdmitCardModel.deleteMany({ class: className, stream: stream, examType: examType });
         const deleteAdmitCardStructure = await AdmitCardStructureModel.findByIdAndRemove(id);
         if (deleteAdmitCard && deleteAdmitCardStructure) {
-            return res.status(200).json('Admit card structure delete succesfully');
+            return res.status(200).json('Admit card structure delete succesfully.');
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error');;
+        return res.status(500).json('Internal Server Error !');
     }
 }
 
@@ -81,7 +84,7 @@ let ChangeAdmitCardPublishStatus = async (req, res, next) => {
         const id = req.params.id;
         const admitCardStr = await AdmitCardStructureModel.findOne({ _id: id });
         if (!admitCardStr) {
-            return res.status(200).json('Admit card structure not found');
+            return res.status(200).json('Admit card structure not found !');
         }
         const findAdmitCardPublishStatus = await admitCardStr.admitCardPublishStatus;
         const cls = await admitCardStr.class;
@@ -109,8 +112,8 @@ let ChangeAdmitCardPublishStatus = async (req, res, next) => {
             if (cls == 22) {
                 className = `KG-II`
             }
-            title = `Class ${className} ${examType} exam online admit cards released - Download Now!`;
-            message = `All class ${className} students are informed that the online admit cards for your ${examType} exams have been issued on the school's website. You can download them online using the credentials provided by your school. Best of luck for your upcoming exams!`
+            title = `Class ${className} ${examType} exam online admit cards released - Download Now`;
+            message = `All class ${className} students are informed that the online admit cards for your ${examType} exams have been issued on the school's website. You can download them online using the credentials provided by your school. Best of luck for your upcoming exams.`
         }
         const { admitCardPublishStatus } = req.body;
         const admitCardPublishData = {
@@ -129,14 +132,14 @@ let ChangeAdmitCardPublishStatus = async (req, res, next) => {
                 }
                 let createNotification = await NotificationModel.create(notificationData);
                 if (createNotification) {
-                    return res.status(200).json('Admit card publish status update succesfully');
+                    return res.status(200).json('Admit card publish status update succesfully.');
                 }
             }
-            return res.status(200).json('Admit card publish status update succesfully');
+            return res.status(200).json('Admit card publish status update succesfully.');
         }
 
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

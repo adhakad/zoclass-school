@@ -30,7 +30,7 @@ let GetClassSubjectPagination = async (req, res, next) => {
         classSubjectData.countClassSubject = countClassSubject;
         return res.json(classSubjectData);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let GetAllClassSubject = async (req, res, next) => {
@@ -38,7 +38,7 @@ let GetAllClassSubject = async (req, res, next) => {
         const classSubjectList = await ClassSubjectModel.find({});
         return res.status(200).json(classSubjectList);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );
+        return res.status(500).json( 'Internal Server Error !' );
     }
 }
 let GetSingleClassSubjectByStream = async (req, res, next) => {
@@ -51,7 +51,7 @@ let GetSingleClassSubjectByStream = async (req, res, next) => {
         const classSubjectList = await ClassSubjectModel.findOne({class:className,stream:stream});
         return res.status(200).json(classSubjectList);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );
+        return res.status(500).json( 'Internal Server Error !' );
     }
 }
 
@@ -60,7 +60,7 @@ let GetSubjectByClass = async (req, res, next) => {
         const subjectList = await ClassSubjectModel.find({ class: req.params.class });
         return res.status(200).json(subjectList);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let GetSingleClassSubject = async (req, res, next) => {
@@ -68,7 +68,7 @@ let GetSingleClassSubject = async (req, res, next) => {
         const singleClassSubject = await ClassSubjectModel.findOne({ _id: req.params.id });
         return res.status(200).json(singleClassSubject);
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 let CreateClassSubject = async (req, res, next) => {
@@ -82,16 +82,16 @@ let CreateClassSubject = async (req, res, next) => {
     }
     try {
         if(subject.length ==0 || subject ==null){
-            return res.status(400).json(`Please select subject according to this class!`)
+            return res.status(400).json(`Please select subject according to this class !`)
         }
         let checkClassSubject = await ClassSubjectModel.findOne({ class: className, stream: stream });
         if(checkClassSubject){
             return res.status(400).json(`Class ${className} ${stream} stream already exist !`)
         }
         const createClassSubject = await ClassSubjectModel.create(classSubjectData);
-        return res.status(200).json("Class and subject combination created succesfully");
+        return res.status(200).json("Class and subject combination created succesfully.");
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );
     }
 }
 let UpdateClassSubject = async (req, res, next) => {
@@ -102,18 +102,18 @@ let UpdateClassSubject = async (req, res, next) => {
             subject: req.body.subject,
         }
         const updateClassSubject = await ClassSubjectModel.findByIdAndUpdate(id, { $set: classSubjectData }, { new: true });
-        return res.status(200).json('Class and subject combination update succesfully');
+        return res.status(200).json('Class and subject combination update succesfully.');
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );
     }
 }
 let DeleteClassSubject = async (req, res, next) => {
     try {
         const id = req.params.id;
         const deleteClassSubject = await ClassSubjectModel.findByIdAndRemove(id);
-        return res.status(200).json('Class and subject combination delete succesfuly');
+        return res.status(200).json('Class and subject combination delete succesfully.');
     } catch (error) {
-        return res.status(500).json( 'Internal Server Error' );;
+        return res.status(500).json( 'Internal Server Error !' );;
     }
 }
 

@@ -31,7 +31,7 @@ let GetTestimonialPagination = async(req,res,next) => {
         testimonialData.countTestimonial = countTestimonial;
         return res.json(testimonialData);
     } catch (error) {
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let GetAllTestimonial = async(req,res,next) => {
@@ -47,7 +47,7 @@ let GetSingleTestimonial = async(req,res,next) => {
         const singleTestimonial = await TestimonialModel.findOne({_id:req.params.id});
         return res.status(200).json(singleTestimonial);
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let CreateTestimonial = async(req,res,next) => {
@@ -61,20 +61,20 @@ let CreateTestimonial = async(req,res,next) => {
     try{
         const countTestimonial = await TestimonialModel.count();
         if(countTestimonial==15){
-            return res.status(400).json("Testimonial limit is over to 15");
+            return res.status(400).json("Testimonial limit is over to 15 !");
         }
         const checkName = await TestimonialModel.findOne({name:name,role:role});
         if(checkName){
-            return res.status(400).json(`Name already exist on ${role} role`)
+            return res.status(400).json(`Name already exist on ${role} role !`)
         }
         const checkDesc = await TestimonialModel.findOne({desc:desc});
         if(checkDesc){
-            return res.status(400).json("Testimonial description already exist")
+            return res.status(400).json("Testimonial description already exist !")
         }
         const createTestimonial = await TestimonialModel.create(testimonialData);
-        return res.status(200).json('Testimonial created succesfulLy');
+        return res.status(200).json('Testimonial created succesfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let UpdateTestimonial = async(req,res,next) => {
@@ -86,9 +86,9 @@ let UpdateTestimonial = async(req,res,next) => {
             desc:req.body.desc,
         }
         const updateTestimonial = await TestimonialModel.findByIdAndUpdate(id,{$set:testimonialData},{new:true});
-        return res.status(200).json('Testimonial update succesfully');
+        return res.status(200).json('Testimonial update succesfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 let DeleteTestimonial = async(req,res,next) => {
@@ -98,9 +98,9 @@ let DeleteTestimonial = async(req,res,next) => {
         const singleImage = await singleTestimonial.image;
         await fs.unlinkSync('./public/testimonial-image/'+singleImage);
         const deleteTestimonial = await TestimonialModel.findByIdAndRemove(id);
-        return res.status(200).json('Testimonial delete succesfully');
+        return res.status(200).json('Testimonial delete succesfully.');
     }catch(error){
-        return res.status(500).json('Internal Server Error');
+        return res.status(500).json('Internal Server Error !');
     }
 }
 

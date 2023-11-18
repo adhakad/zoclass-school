@@ -10,7 +10,7 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
     try {
         let student = await StudentModel.findOne({admissionNo:admissionNo,class:className,rollNumber:rollNumber});
         if(!student){
-            return res.status(404).json({ errorMsg: 'Admit card not found' });
+            return res.status(404).json({ errorMsg: 'Admit card not found !' });
         }
         let studentId = student._id;
         let stream = student.stream;
@@ -19,22 +19,22 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
         }
         let admitCard = await AdmitCardModel.findOne({studentId:studentId});
         if (!admitCard) {
-            return res.status(404).json({ errorMsg: 'Admit card not foundd' });
+            return res.status(404).json({ errorMsg: 'Admit card not found !' });
         }
         let examType = admitCard.examType;
         let admitCardStructure = await AdmitCardStructureModel.findOne({class:className,stream:stream,examType:examType});
         if(!admitCardStructure){
-            return res.status(404).json({ errorMsg: 'This class any admit card not found' });
+            return res.status(404).json({ errorMsg: 'This class any admit card not found !' });
         }
         let admitCardPublishStatus = admitCardStructure.admitCardPublishStatus;
         if (admitCardPublishStatus==false) {
-            return res.status(404).json({ errorMsg:'Your exam admit card will be release soon' });
+            return res.status(404).json({ errorMsg:'Your exam admit card will be release soon !' });
         }
         
 
         return res.status(200).json({admitCardStructure:admitCardStructure,studentInfo:student,admitCard:admitCard});
     } catch (error) {
-        return res.status(500).json({ errorMsg: 'Internal Server Error' });
+        return res.status(500).json({ errorMsg: 'Internal Server Error !' });
     }
 }
 let GetSingleStudentAdmitCardById = async(req,res,next) => {
@@ -42,11 +42,11 @@ let GetSingleStudentAdmitCardById = async(req,res,next) => {
     try{
         let student = await StudentModel.findOne({_id:studentId},'admissionNo name rollNumber class fatherName motherName stream');
         if (!student) {
-            return res.status(404).json({ errorMsg: 'Student not found' });
+            return res.status(404).json({ errorMsg: 'Student not found !' });
         }
         let admitCard = await AdmitCardModel.findOne({studentId:studentId})
         if (!admitCard) {
-            return res.status(404).json({ errorMsg: 'Admit card not found' });
+            return res.status(404).json({ errorMsg: 'Admit card not found !' });
         }
         let stream = student.stream;
         if(stream==="stream"){
@@ -57,16 +57,16 @@ let GetSingleStudentAdmitCardById = async(req,res,next) => {
         let examType =  admitCard.examType;
         let admitCardStructure = await AdmitCardStructureModel.findOne({class:className,stream:stream,examType:examType});
         if(!admitCardStructure){
-            return res.status(404).json({ errorMsg: 'This class any admit card not found' });
+            return res.status(404).json({ errorMsg: 'This class any admit card not found !' });
         }
         let admitCardPublishStatus = admitCardStructure.admitCardPublishStatus;
         if (admitCardPublishStatus==false) {
-            return res.status(404).json({ errorMsg:'Your exam admit card will be release soon' });
+            return res.status(404).json({ errorMsg:'Your exam admit card will be release soon !' });
         }
 
         return res.status(200).json({admitCardStructure:admitCardStructure,admitCard:admitCard,student:student});
     }catch(error){
-        return res.status(500).json({ errorMsg: 'Internal Server Error' });;
+        return res.status(500).json({ errorMsg: 'Internal Server Error !' });;
     }
 }
 
@@ -75,15 +75,15 @@ let GetAllStudentAdmitCardByClass = async (req, res, next) => {
     try{
         const studentInfo = await StudentModel.find({class:className});
         if(!studentInfo){
-            return res.status(404).json({ errorMsg: 'This class any student not found' });
+            return res.status(404).json({ errorMsg: 'This class any student not found !' });
         }
         const admitCardInfo = await AdmitCardModel.find({class:className});
         if(!admitCardInfo){
-            return res.status(404).json({ errorMsg: 'This class admit card not found' });
+            return res.status(404).json({ errorMsg: 'This class admit card not found !' });
         }
         return res.status(200).json({admitCardInfo:admitCardInfo,studentInfo:studentInfo});
     }catch(error){
-        return res.status(500).json({ errorMsg: 'Internal Server Error' });;
+        return res.status(500).json({ errorMsg: 'Internal Server Error !' });;
     }
 }
 
@@ -98,9 +98,9 @@ let ChangeStatus = async (req, res, next) => {
             status: status
         }
         const updateStatus = await AdmitCardModel.findByIdAndUpdate(objectId, { $set: studentData }, { new: true });
-        return res.status(200).json('Student update succesfully');
+        return res.status(200).json('Student update succesfully.');
     } catch (error) {
-        return res.status(500).json({ errorMsg: 'Internal Server Error' });;
+        return res.status(500).json({ errorMsg: 'Internal Server Error !' });;
     }
 }
 
