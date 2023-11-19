@@ -16,8 +16,4 @@ import { StudentDashboardComponent } from './student-dashboard.component';
     StudentSharedModule
   ]
 })
-export class StudentDashboardModule {
-  constructor(){
-    console.log("student dashboard module load")
-  }
- }
+export class StudentDashboardModule { }

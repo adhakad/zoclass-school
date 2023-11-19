@@ -19,9 +19,11 @@ import { HttpClient } from '@angular/common/http';
 export class StudentComponent implements OnInit {
   studentForm: FormGroup;
   excelForm: FormGroup;
+  studentClassPromoteForm: FormGroup;
   showModal: boolean = false;
   showBulkImportModal: boolean = false;
   showBulkExportModal: boolean = false;
+  showClassPromoteModal: boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
   deleteById: String = '';
@@ -53,7 +55,8 @@ export class StudentComponent implements OnInit {
   bulkStudentRecord: any;
   fileChoose: boolean = false;
   loader: Boolean = true;
-  constructor(private fb: FormBuilder, private http: HttpClient, private schoolService: SchoolService, public ete: ExcelService, public activatedRoute: ActivatedRoute, private classService: ClassService, private studentService: StudentService) {
+  promotedClass:any;
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, public ete: ExcelService, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
       session: ['', Validators.required],
@@ -86,6 +89,13 @@ export class StudentComponent implements OnInit {
     this.excelForm = this.fb.group({
       excelData: [null]
     });
+
+    this.studentClassPromoteForm = this.fb.group({
+      _id: ['', Validators.required],
+      class: [''],
+      admissionNo: ['', Validators.required],
+      rollNumber: ['', Validators.required],
+    })
   }
 
   ngOnInit(): void {
@@ -147,6 +157,7 @@ export class StudentComponent implements OnInit {
     this.showModal = false;
     this.showBulkImportModal = false;
     this.showBulkExportModal = false;
+    this.showClassPromoteModal = false;
     this.updateMode = false;
     this.deleteMode = false;
     this.fileChoose = false;
@@ -154,8 +165,11 @@ export class StudentComponent implements OnInit {
     this.errorMsg = '';
     this.stream = '';
     this.cls = 0;
+    this.promotedClass;
     this.admissionType = '';
     this.studentForm.reset();
+    this.studentClassPromoteForm.reset();
+    this.excelForm.reset();
   }
   addStudentModel() {
     this.showModal = true;
@@ -171,6 +185,10 @@ export class StudentComponent implements OnInit {
     this.showBulkExportModal = true;
     this.errorCheck = false;
     this.getStudentByClass(this.className);
+  }
+  addStudentClassPromoteModel(student:any) {
+    this.showClassPromoteModal = true;
+    this.studentClassPromoteForm.patchValue(student);
   }
   updateStudentModel(student: any) {
     this.showModal = true;
@@ -467,5 +485,26 @@ export class StudentComponent implements OnInit {
     this.religions = [{ religion: 'Hinduism' }, { religion: 'Buddhism' }, { religion: 'Christanity' }, { religion: 'Jainism' }, { religion: 'Sikhism' }, { religion: 'Other' }]
     this.qualifications = [{ qualification: 'Doctoral Degree' }, { qualification: 'Masters Degree' }, { qualification: 'Graduate Diploma' }, { qualification: 'Graduate Certificate' }, { qualification: 'Graduate Certificate' }, { qualification: 'Bachelor Degree' }, { qualification: 'Advanced Diploma' }, { qualification: 'Primary School' }, { qualification: 'High School' }, { qualification: 'Higher Secondary School' }, { qualification: 'Illiterate' }, { qualification: 'Other' }]
     this.occupations = [{ occupation: 'Agriculture(Farmer)' }, { occupation: 'Laborer' }, { occupation: 'Self Employed' }, { occupation: 'Private Job' }, { occupation: 'State Govt. Employee' }, { occupation: 'Central Govt. Employee' }, { occupation: 'Military Job' }, { occupation: 'Para-Military Job' }, { occupation: 'PSU Employee' }, { occupation: 'Other' }]
+  }
+
+  studentClassPromote() {
+    if (this.studentClassPromoteForm.valid) {
+      this.studentClassPromoteForm.value.class = parseInt(this.className);
+      this.studentService.studentClassPromote(this.studentClassPromoteForm.value).subscribe((res: any) => {
+        if (res) {
+          this.successDone();
+          this.promotedClass;
+          this.promotedClass = res.className;
+          this.successMsg = res.successMsg;
+        }
+      }, err => {
+        this.errorCheck = true;
+        this.promotedClass;
+        if(err.error.className){
+          this.promotedClass = parseInt(err.error.className);
+        }
+        this.errorMsg = err.error.errorMsg;
+      })
+    }
   }
 }

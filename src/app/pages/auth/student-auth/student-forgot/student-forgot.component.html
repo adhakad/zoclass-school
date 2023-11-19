@@ -11,25 +11,22 @@
               <mat-form-field appearance="outline">
                 <mat-label>Select class name</mat-label>
                 <mat-select type="number" matInput formControlName="class">
-                    <div *ngFor="let classInfo of classInfo">
-                        <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
-                    </div>
+                  <div *ngFor="let classInfo of classInfo">
+                    <mat-option value="{{classInfo.class}}">{{classInfo.class}}</mat-option>
+                  </div>
                 </mat-select>
                 <mat-hint *ngIf="!varifyForm.get('class')?.valid && varifyForm.get('class')?.touched"
-                    class="form-text text-danger">Please select class name.</mat-hint>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
+                  class="form-text text-danger">Please select class name.</mat-hint>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Roll number</mat-label>
                 <input matInput type="text" formControlName="rollNumber">
-                <mat-hint
-                    *ngIf="!varifyForm.get('rollNumber')?.valid && varifyForm.get('rollNumber')?.touched"
-                    class="form-text text-danger">Please enter roll number.</mat-hint>
-            </mat-form-field>
+                <mat-hint *ngIf="!varifyForm.get('rollNumber')?.valid && varifyForm.get('rollNumber')?.touched"
+                  class="form-text text-danger">Please enter roll number.</mat-hint>
+              </mat-form-field>
 
-
-
-              <button style="width: 100%;height: 48px;margin-bottom: 15px;" type="submit" mat-raised-button
-                [disabled]="!varifyForm.valid" class="submit-button">Varify</button>
+              <button type="submit" mat-raised-button [disabled]="!varifyForm.valid"
+                class="submit-button">Varify</button>
             </form>
           </div>
         </div>
@@ -51,14 +48,13 @@
               </mat-form-field>
 
 
-              <button style="width: 100%;height: 48px;margin-bottom: 15px;" type="submit" mat-raised-button
-                [disabled]="!otpForm.valid" class="submit-button">Varify</button>
+              <button type="submit" mat-raised-button [disabled]="!otpForm.valid" class="submit-button">Varify</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="col-12 col-lg-5 offset-lg-3 login-card" *ngIf="formType=='Reset'">
       <div class="row">
         <div class="col-12 col-lg-10 offset-lg-1">
@@ -80,7 +76,7 @@
               </mat-form-field>
 
 
-              <button style="width: 100%;height: 48px;margin-bottom: 15px;" type="submit" mat-raised-button
+              <button type="submit" mat-raised-button
                 [disabled]="!resetForm.valid" class="submit-button">Reset</button>
             </form>
           </div>

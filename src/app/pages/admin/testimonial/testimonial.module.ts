@@ -17,8 +17,4 @@ import { TestimonialComponent } from './testimonial.component';
     AdminSharedModule,
   ]
 })
-export class TestimonialModule { 
-  constructor(){
-    console.log("admin testimonial module")
-  }
-}
+export class TestimonialModule { }

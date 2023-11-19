@@ -17,8 +17,4 @@ import { AdminSharedModule } from '../admin-shared/admin-shared.module';
     AdminSharedModule
   ]
 })
-export class AdminStudentFeesModule { 
-  constructor(){
-    console.log("admin student fees module")
-  }
-}
+export class AdminStudentFeesModule { }

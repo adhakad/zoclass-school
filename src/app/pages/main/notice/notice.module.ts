@@ -16,8 +16,4 @@ import { MainSharedModule } from '../main-shared/main-shared.module';
     MainSharedModule
   ]
 })
-export class NoticeModule {
-  constructor(){
-    console.log("notice module load")
-  }
- }
+export class NoticeModule { }

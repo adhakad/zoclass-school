@@ -17,8 +17,4 @@ import { TopperComponent } from './topper.component';
     AdminSharedModule,
   ]
 })
-export class TopperModule { 
-  constructor(){
-    console.log("admin topper module")
-  }
-}
+export class TopperModule { }

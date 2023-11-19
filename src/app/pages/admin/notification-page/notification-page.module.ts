@@ -16,8 +16,4 @@ import { NotificationPageComponent } from './notification-page.component';
     AdminSharedModule,
   ]
 })
-export class NotificationPageModule { 
-  constructor(){
-    console.log("admin notification module")
-  }
-}
+export class NotificationPageModule { }

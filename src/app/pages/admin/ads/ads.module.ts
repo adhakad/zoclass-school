@@ -17,8 +17,4 @@ import { AdsComponent } from './ads.component';
     AdminSharedModule,
   ]
 })
-export class AdsModule {
-  constructor(){
-    console.log("admin ads module")
-  }
- }
+export class AdsModule { }

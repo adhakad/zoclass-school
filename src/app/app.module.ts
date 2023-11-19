@@ -73,8 +73,4 @@ import { MainSharedModule } from './pages/main/main-shared/main-shared.module';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  constructor(){
-    console.log("app module load")
-  }
- }
+export class AppModule { }

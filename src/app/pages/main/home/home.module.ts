@@ -16,8 +16,4 @@ import { MainSharedModule } from '../main-shared/main-shared.module';
     MainSharedModule
   ]
 })
-export class HomeModule {
-  constructor(){
-    console.log("home module load")
-  }
- }
+export class HomeModule { }

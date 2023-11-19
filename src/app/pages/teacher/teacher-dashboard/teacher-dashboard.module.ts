@@ -16,8 +16,4 @@ import { TeacherDashboardComponent } from './teacher-dashboard.component';
     TeacherSharedModule
   ]
 })
-export class TeacherDashboardModule { 
-  constructor(){
-    console.log("teacher dashboard module load")
-  }
-}
+export class TeacherDashboardModule { }

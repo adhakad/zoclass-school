@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const { GetAllStudentByClass, countStudent, GetSingleStudent, CreateStudent, CreateStudentAdmissionEnquiry, CreateBulkStudentRecord, UpdateStudent, ChangeStatus, DeleteStudent, GetStudentPaginationByClass, GetStudentPaginationByAdmission, GetStudentAdmissionEnquiryPagination } = require('../controllers/student');
+const { GetAllStudentByClass, countStudent, GetSingleStudent, CreateStudent, CreateStudentAdmissionEnquiry, CreateBulkStudentRecord, UpdateStudent, ChangeStatus, DeleteStudent, GetStudentPaginationByClass, GetStudentPaginationByAdmission, GetStudentAdmissionEnquiryPagination, StudentClassPromote } = require('../controllers/student');
 
 router.get('/student-count', countStudent);
 router.get('/student/:class', GetAllStudentByClass);
@@ -13,6 +13,7 @@ router.post('/', CreateStudent);
 router.post('/online-admission', CreateStudentAdmissionEnquiry);
 router.post('/bulk-student-record', CreateBulkStudentRecord);
 router.put('/:id', UpdateStudent);
+router.put('/class-promote/:id', StudentClassPromote);
 router.put('/status/:id', ChangeStatus);
 router.delete('/:id', DeleteStudent);
 

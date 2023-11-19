@@ -16,8 +16,4 @@ import { MainSharedModule } from 'src/app/pages/main/main-shared/main-shared.mod
     MainSharedModule
   ]
 })
-export class TeacherSignupModule {
-  constructor(){
-    console.log("teacher signup module load")
-  }
- }
+export class TeacherSignupModule { }

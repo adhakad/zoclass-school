@@ -45,6 +45,7 @@ a {
   letter-spacing: .25px;
   text-decoration: none;
 }
+
 .success-message {
   color: #16b978;
   font-size: 20px;
@@ -68,6 +69,8 @@ a {
   }
 
   .login-card button {
-    width: auto;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 15px;
   }
 }

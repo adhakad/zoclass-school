@@ -17,8 +17,4 @@ import { ClassSubjectComponent } from './class-subject.component';
     AdminSharedModule,
   ]
 })
-export class ClassSubjectModule { 
-  constructor(){
-    console.log("admin class subject module")
-  }
-}
+export class ClassSubjectModule { }

@@ -48,6 +48,7 @@
                     <th>Roll Number</th>
                     <th>Otp</th>
                     <th>Status</th>
+                    <th>Class Promote</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -77,6 +78,11 @@
                         href="javascript:void(0)">{{students.status}}&nbsp;&nbsp;</a>
                       <a class="mb-0 status-inactive" (click)="changeStatus(students._id,1)"
                         *ngIf="students.status == 'Inactive'" href="javascript:void(0)">{{students.status}}</a>
+                    </td>
+                    <td>
+                      <button style="background-color: transparent;color: #8d6dff;border: 1px solid #8d6dff;"
+                        class="submit-button" (click)="addStudentClassPromoteModel(students)"
+                        mat-raised-button>Promote</button>
                     </td>
                     <td class="mb-0">
                       <mat-icon (click)="updateStudentModel(students)">edit_note</mat-icon>
@@ -471,8 +477,8 @@
                       </main>
                     </div>
                     <div class="modal-footer">
-                      <button [disabled]="!fileChoose" (click)="addBulkStudentRecord()"
-                        class="submit-button" mat-raised-button>
+                      <button [disabled]="!fileChoose" (click)="addBulkStudentRecord()" class="submit-button"
+                        mat-raised-button>
                         Import
                       </button>
                     </div>
@@ -499,7 +505,7 @@
                   </div>
                   <div class="modal-content" *ngIf="!successMsg">
                     <div class="modal-header">
-                      <h6 class="modal-title">Export Excel File 
+                      <h6 class="modal-title">Export Excel File
                       </h6>
                       <mat-icon matRipple (click)="closeModal()" style="cursor: pointer;">close</mat-icon>
                     </div>
@@ -509,49 +515,130 @@
                       </div>
                       <main>
                         <div class="row">
-                            <div class="col-12">
-                              <ng-container>
-                                <h3>All Student Class - {{className | classSuffix}}</h3>
-                              </ng-container>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Id</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Admission Number</th>
-                                            <th scope="col">Roll Number</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf="studentInfoByClass && studentInfoByClass.length>0">
-                                      <tr *ngFor="let students of studentInfoByClass,let i=index">
-                                        <td>
-                                          <p class="mb-0">{{number*10+i+1-10}}</p>
-                                        </td>
-                                        <td>
-                                          <p class="mb-0">{{students.name}}</p>
-                                        </td>
-                                        <td>
-                                          <p class="mb-0">{{students.admissionNo}}</p>
-                                        </td>
-                                        <td>
-                                          <p class="mb-0">{{students.rollNumber}}</p>
-                                        </td>        
-                                      </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                          <div class="col-12">
+                            <ng-container>
+                              <h3>All Student Class - {{className | classSuffix}}</h3>
+                            </ng-container>
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Id</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Admission Number</th>
+                                  <th scope="col">Roll Number</th>
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="studentInfoByClass && studentInfoByClass.length>0">
+                                <tr *ngFor="let students of studentInfoByClass,let i=index">
+                                  <td>
+                                    <p class="mb-0">{{number*10+i+1-10}}</p>
+                                  </td>
+                                  <td>
+                                    <p class="mb-0">{{students.name}}</p>
+                                  </td>
+                                  <td>
+                                    <p class="mb-0">{{students.admissionNo}}</p>
+                                  </td>
+                                  <td>
+                                    <p class="mb-0">{{students.rollNumber}}</p>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </main>
                     </div>
                     <div class="modal-footer">
-                      <button
-                        class="submit-button" (click)="exportToExcel()" mat-raised-button>
+                      <button class="submit-button" (click)="exportToExcel()" mat-raised-button>
                         Export
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <div class="modal fade show" [class.show]="showClassPromoteModal">
+                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!successMsg">
+                  <div class="modal-content" *ngIf="successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p class="success-message" *ngIf="promotedClass">{{successMsg}} {{promotedClass | classSuffix}}</p>
+                      <p class="success-message" *ngIf="!promotedClass">{{successMsg}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <mat-icon></mat-icon>
+                    </div>
+                  </div>
+                  <div class="modal-content" *ngIf="!successMsg">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Student Class Promote</h5>
+                      <mat-icon matRipple (click)="closeModal()">close</mat-icon>
+                    </div>
+                    <form [formGroup]="studentClassPromoteForm" (ngSubmit)="studentClassPromote()">
+                      <div class="modal-body">
+
+                        <div *ngIf="errorCheck">
+                          <p class="error-message" *ngIf="promotedClass">{{errorMsg}} {{promotedClass | classSuffix}}</p>
+                          <p class="error-message" *ngIf="!promotedClass">{{errorMsg}}</p>
+                        </div>
+                        <div class="container">
+                          <div class="row">
+                            <ng-container>
+                              <h3>Student Info</h3>
+                            </ng-container>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Admission No.</mat-label>
+                                <input matInput type="number" formControlName="admissionNo">
+                                <mat-hint
+                                  *ngIf="!studentClassPromoteForm.get('admissionNo')?.valid && studentClassPromoteForm.get('admissionNo')?.touched"
+                                  class="form-text text-danger">Admission no. is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Roll Number</mat-label>
+                                <input matInput type="number" formControlName="rollNumber">
+                                <mat-hint
+                                  *ngIf="!studentClassPromoteForm.get('rollNumber')?.valid && studentClassPromoteForm.get('rollNumber')?.touched"
+                                  class="form-text text-danger">Roll number is required</mat-hint>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- </div> -->
+                      <div class="modal-footer">
+                        <button class="submit-button" [disabled]="!studentClassPromoteForm.valid" mat-raised-button type="submit">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
             </div>
           </div>
         </div>
@@ -561,6 +648,6 @@
 </div>
 <div class="spinner-container" *ngIf="loader">
   <div class="spinner-overlay" *ngIf="loader">
-      <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
+    <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
   </div>
 </div>

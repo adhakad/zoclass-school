@@ -42,7 +42,6 @@ const routes: Routes = [
 
   { path: 'admin/students/:id', loadChildren: () => import('src/app/pages/admin/admin-student-cls/admin-student-cls.module').then((module) => module.AdminStudentClsModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/student/class/:id', loadChildren: () => import('src/app/pages/admin/student/student.module').then((module) => module.StudentModule), canActivate: [AdminAuthGuard] },  
-  { path: 'admin/students/student-promote/class/:id', loadChildren: () => import('src/app/pages/admin/student-promote/student-promote.module').then((module) => module.StudentPromoteModule), canActivate: [AdminAuthGuard] },  
   { path: 'admin/students/result/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-result/admin-student-result.module').then((module) => module.AdminStudentResultModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/admit-card/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-admit-card/admin-student-admit-card.module').then((module) => module.AdminStudentAdmitCardModule), canActivate: [AdminAuthGuard] },
   { path: 'admin/students/fees/class/:id', loadChildren: () => import('src/app/pages/admin/admin-student-fees/admin-student-fees.module').then((module) => module.AdminStudentFeesModule), canActivate: [AdminAuthGuard] },

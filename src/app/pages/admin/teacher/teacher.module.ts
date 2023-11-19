@@ -15,8 +15,4 @@ import { AdminSharedModule } from '../admin-shared/admin-shared.module';
     AdminSharedModule,
   ]
 })
-export class TeacherModule { 
-  constructor(){
-    console.log("teacher module load")
-  }
-}
+export class TeacherModule { }

@@ -14,8 +14,4 @@ import { NotificationPagesComponent } from './notification-pages.component';
     NotificationPagesRoutingModule
   ]
 })
-export class NotificationPagesModule { 
-  constructor(){
-    console.log("teacher notification module load")
-  }
-}
+export class NotificationPagesModule { }

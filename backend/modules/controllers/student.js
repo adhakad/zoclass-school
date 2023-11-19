@@ -3,6 +3,8 @@ const StudentModel = require('../models/student');
 const AdmissionEnquiryModel = require('../models/admission-enquiry');
 const FeesStructureModel = require('../models/fees-structure');
 const FeesCollectionModel = require('../models/fees-collection');
+const AdmitCardModel = require('../models/admit-card');
+const ExamResultModel = require('../models/exam-result');
 const { DateTime } = require('luxon');
 
 let countStudent = async (req, res, next) => {
@@ -405,14 +407,87 @@ let CreateBulkStudentRecord = async (req, res, next) => {
 let UpdateStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const { name, rollNumber } = req.body;
+        let { name, rollNumber, session, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
         const studentData = {
-            name: name,
-            class: req.body.class,
-            rollNumber: rollNumber
+            name, rollNumber, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
         }
         const updateStudent = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
         return res.status(200).json('Student update succesfully.');
+    } catch (error) {
+        return res.status(500).json('Internal Server Error !');
+    }
+}
+let StudentClassPromote = async (req, res, next) => {
+    try {
+        const studentId = req.params.id;
+        let { rollNumber } = req.body;
+        let className = req.body.class;
+        className = parseInt(className);
+        let checkStudent = await StudentModel.findOne({ _id: studentId });
+        if (!checkStudent) {
+            return res.status(404).json('Student not found');
+        }
+        let cls = checkStudent.class;
+        if(className == cls && className===12){
+            return res.status(400).json(`In this school, students cannot be promoted after the ${className} class`);
+        }
+        if(className == cls && className===22){
+            className = 1;
+        }
+        if (className == cls && className!==22) {
+            className = className + 1;
+        }
+        const checkFeesStr = await FeesStructureModel.findOne({ class: className });
+        if (!checkFeesStr) {
+            return res.status(404).json({errorMsg:'Please create fees structure for this class',className:className});
+        }
+        const studentData = {
+            rollNumber,
+            class: className
+        }
+        const updateStudent = await StudentModel.findByIdAndUpdate(studentId, { $set: studentData }, { new: true });
+        if (updateStudent) {
+            let checkAdmitCard = await AdmitCardModel.findOne({ studentId: studentId });
+            if (checkAdmitCard) {
+                let objectId = checkAdmitCard._id;
+                let deleteAdmitCard = await AdmitCardModel.findByIdAndRemove(objectId);
+            }
+            let checkResult = await ExamResultModel.findOne({ studentId: studentId });
+            if (checkResult) {
+                let objectId = checkResult._id;
+                let deleteResult = await ExamResultModel.findByIdAndRemove(objectId);
+            }
+            let checkFeesCollection = await FeesCollectionModel.findOne({ studentId: studentId });
+            if (checkFeesCollection) {
+                let objectId = checkFeesCollection._id;
+                let deleteFeesCollection = await FeesCollectionModel.findByIdAndRemove(objectId);
+                if (deleteFeesCollection) {
+                    let totalFees = checkFeesStr.totalFees;
+                    let installment = checkFeesStr.installment;
+                    installment.forEach((item) => {
+                        Object.keys(item).forEach((key) => {
+                            item[key] = 0;
+                        });
+                    });
+                    const studentFeesData = {
+                        studentId: studentId,
+                        class: className,
+                        admissionFees: 0,
+                        admissionFeesPayable: false,
+                        totalFees: totalFees,
+                        paidFees: 0,
+                        dueFees: totalFees,
+                        receipt: installment,
+                        installment: installment,
+                        paymentDate: installment,
+                    }
+                    let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
+                    if (createStudentFeesData) {
+                        return res.status(200).json({ successMsg: `The student has successfully been promoted to the class`, className: className });
+                    }
+                }
+            }
+        }
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }
@@ -453,6 +528,7 @@ module.exports = {
     CreateStudentAdmissionEnquiry,
     CreateBulkStudentRecord,
     UpdateStudent,
+    StudentClassPromote,
     ChangeStatus,
     DeleteStudent,
 }

@@ -15,8 +15,4 @@ import { AdminSharedModule } from '../admin-shared/admin-shared.module';
     AdminSharedModule
   ]
 })
-export class DashboardModule { 
-  constructor(){
-    console.log("admin dashboard module load")
-  }
-}
+export class DashboardModule { }

@@ -17,8 +17,4 @@ import { BannerComponent } from './banner.component';
     AdminSharedModule,
   ]
 })
-export class BannerModule {
-  constructor(){
-    console.log("admin banner module")
-  }
- }
+export class BannerModule { }

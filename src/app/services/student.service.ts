@@ -46,4 +46,8 @@ export class StudentService {
   deleteStudent(id:String){
     return this.http.delete(`${this.url}/${id}`);
   }
+  studentClassPromote(studentData:any){
+    console.log(studentData)
+    return this.http.put(`${this.url}/class-promote/${studentData._id}`, studentData);
+  }
 }

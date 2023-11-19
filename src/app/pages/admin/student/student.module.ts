@@ -16,8 +16,4 @@ import { StudentComponent } from './student.component';
     AdminSharedModule,
   ]
 })
-export class StudentModule {
-  constructor(){
-    console.log("admin student module")
-  }
- }
+export class StudentModule { }

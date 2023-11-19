@@ -16,8 +16,4 @@ import { TeacherSharedModule } from '../teacher-shared/teacher-shared.module';
     TeacherSharedModule
   ]
 })
-export class TeacherStudentModule {
-  constructor(){
-    console.log("teacher student module load")
-  }
- }
+export class TeacherStudentModule { }
