@@ -421,75 +421,68 @@ let StudentClassPromote = async (req, res, next) => {
     try {
         const studentId = req.params.id;
         let { rollNumber } = req.body;
-        let className = req.body.class;
-        className = parseInt(className);
+        let className = parseInt(req.body.class);
+    
         let checkStudent = await StudentModel.findOne({ _id: studentId });
+    
         if (!checkStudent) {
-            return res.status(404).json('Student not found');
+            return res.status(404).json({ errorMsg: 'Student not found' });
         }
+    
         let cls = checkStudent.class;
-        if(className == cls && className===12){
-            return res.status(400).json(`In this school, students cannot be promoted after the ${className} class`);
+        if (className == cls && className === 12) {
+            return res.status(400).json({ errorMsg: `In this school, students cannot be promoted after the ${className}th class` });
         }
-        if(className == cls && className===22){
+    
+        if (className == cls && className === 22) {
             className = 1;
         }
-        if (className == cls && className!==22) {
+    
+        if (className == cls && className !== 22) {
             className = className + 1;
         }
+    
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
+    
         if (!checkFeesStr) {
-            return res.status(404).json({errorMsg:'Please create fees structure for this class',className:className});
+            return res.status(404).json({ errorMsg: 'Please create fees structure for this class', className: className });
         }
-        const studentData = {
-            rollNumber,
-            class: className
-        }
+    
+        const studentData = { rollNumber, class: className };
         const updateStudent = await StudentModel.findByIdAndUpdate(studentId, { $set: studentData }, { new: true });
+    
         if (updateStudent) {
-            let checkAdmitCard = await AdmitCardModel.findOne({ studentId: studentId });
-            if (checkAdmitCard) {
-                let objectId = checkAdmitCard._id;
-                let deleteAdmitCard = await AdmitCardModel.findByIdAndRemove(objectId);
-            }
-            let checkResult = await ExamResultModel.findOne({ studentId: studentId });
-            if (checkResult) {
-                let objectId = checkResult._id;
-                let deleteResult = await ExamResultModel.findByIdAndRemove(objectId);
-            }
-            let checkFeesCollection = await FeesCollectionModel.findOne({ studentId: studentId });
-            if (checkFeesCollection) {
-                let objectId = checkFeesCollection._id;
-                let deleteFeesCollection = await FeesCollectionModel.findByIdAndRemove(objectId);
-                if (deleteFeesCollection) {
-                    let totalFees = checkFeesStr.totalFees;
-                    let installment = checkFeesStr.installment;
-                    installment.forEach((item) => {
-                        Object.keys(item).forEach((key) => {
-                            item[key] = 0;
-                        });
-                    });
-                    const studentFeesData = {
-                        studentId: studentId,
-                        class: className,
-                        admissionFees: 0,
-                        admissionFeesPayable: false,
-                        totalFees: totalFees,
-                        paidFees: 0,
-                        dueFees: totalFees,
-                        receipt: installment,
-                        installment: installment,
-                        paymentDate: installment,
-                    }
-                    let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-                    if (createStudentFeesData) {
-                        return res.status(200).json({ successMsg: `The student has successfully been promoted to the class`, className: className });
-                    }
-                }
+            await Promise.all([
+                AdmitCardModel.findOneAndDelete({ studentId: studentId }),
+                ExamResultModel.findOneAndDelete({ studentId: studentId }),
+                FeesCollectionModel.findOneAndDelete({ studentId: studentId }),
+            ]);
+    
+            const totalFees = checkFeesStr.totalFees;
+            const installment = checkFeesStr.installment.map(item => Object.fromEntries(Object.keys(item).map(key => [key, 0])));
+    
+            const studentFeesData = {
+                studentId,
+                class: className,
+                admissionFees: 0,
+                admissionFeesPayable: false,
+                totalFees: totalFees,
+                paidFees: 0,
+                dueFees: totalFees,
+                receipt: installment,
+                installment: installment,
+                paymentDate: installment,
+            };
+    
+            let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
+    
+            if (createStudentFeesData) {
+                return res.status(200).json({ successMsg: `The student has successfully been promoted to the class`, className: className });
             }
         }
     } catch (error) {
-        return res.status(500).json('Internal Server Error !');
+        console.error(error);
+        return res.status(500).json({ errorMsg: 'Internal Server Error!' });
     }
 }
 let ChangeStatus = async (req, res, next) => {
