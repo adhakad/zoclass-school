@@ -55,7 +55,7 @@ export class StudentComponent implements OnInit {
   bulkStudentRecord: any;
   fileChoose: boolean = false;
   loader: Boolean = true;
-  promotedClass:any;
+  promotedClass: any;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, public ete: ExcelService, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
@@ -186,7 +186,7 @@ export class StudentComponent implements OnInit {
     this.errorCheck = false;
     this.getStudentByClass(this.className);
   }
-  addStudentClassPromoteModel(student:any) {
+  addStudentClassPromoteModel(student: any) {
     this.showClassPromoteModal = true;
     this.studentClassPromoteForm.patchValue(student);
   }
@@ -492,7 +492,9 @@ export class StudentComponent implements OnInit {
       this.studentClassPromoteForm.value.class = parseInt(this.className);
       this.studentService.studentClassPromote(this.studentClassPromoteForm.value).subscribe((res: any) => {
         if (res) {
-          this.successDone();
+          setTimeout(()=> {
+            this.successDone();
+          },2000)
           this.promotedClass;
           this.promotedClass = res.className;
           this.successMsg = res.successMsg;
@@ -500,7 +502,7 @@ export class StudentComponent implements OnInit {
       }, err => {
         this.errorCheck = true;
         this.promotedClass;
-        if(err.error.className){
+        if (err.error.className) {
           this.promotedClass = parseInt(err.error.className);
         }
         this.errorMsg = err.error.errorMsg;

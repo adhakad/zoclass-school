@@ -38,6 +38,10 @@ export class SchoolComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getSchool();
+    
+    setTimeout(()=>{
+      this.loader=false;
+    },2000)
   }
   closeModal() {
     this.showModal = false;
@@ -69,16 +73,13 @@ export class SchoolComponent implements OnInit {
       this.closeModal();
       this.successMsg = '';
       this.getSchool();
-    }, 1000)
+    }, 1500)
   }
 
   getSchool() {
       this.schoolService.getSchool().subscribe((res: any) => {
         if (res) {
           this.schoolInfo = res;
-          setTimeout(()=>{
-            this.loader=false;
-          },1000)
         }
       });
   }

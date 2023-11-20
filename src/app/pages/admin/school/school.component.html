@@ -89,7 +89,7 @@
                       <p class="mb-0">{{schoolInfo?.email}}</p>
                     </td>
                     <td class="mb-0">
-                      <mat-icon (click)="updateSchoolModel(schoolInfo)">edit_note</mat-icon>
+                      <!-- <mat-icon (click)="updateSchoolModel(schoolInfo)">edit_note</mat-icon> -->
                       <mat-icon (click)="deleteSchoolModel(schoolInfo?._id)">delete</mat-icon>
                     </td>
                   </tr>
@@ -98,7 +98,7 @@
               </table>
 
               <div class="modal fade show" [class.show]="showModal">
-                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode">
+                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode && !successMsg">
                   <div class="modal-content" *ngIf="successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>

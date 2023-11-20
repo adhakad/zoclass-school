@@ -7,7 +7,7 @@
                         <h3 class="mb-4">{{schoolName}}</h3>
                         <div class="row">
                             <div class="col-10 col-lg-12" style="padding-left: 15px !important;">
-                                <p style="display: inline;">Goushala ke pass {{schoolInfo?.street}},
+                                <p style="display: inline;">{{schoolInfo?.street}},
                                     {{schoolInfo?.city}}, {{schoolInfo?.state}}
                                     ({{schoolInfo?.country}}) {{schoolInfo?.pinCode}}</p>
                             </div>
@@ -35,9 +35,9 @@
                 <div class="row">
                     <div class="col-10 offset-1">
                         <h3 class="mb-4">Contact</h3>
-                        <p>Email - adhakad@gmail.com</p>
+                        <p>Email - {{schoolInfo?.email}}</p>
                         <p>Linkedin - linkedin.com</p>
-                        <p>Mobile - +91 9340700360</p>
+                        <p>Mobile - {{schoolInfo?.phone}}</p>
                         <p>Tel - 07542 4736452</p>
                     </div>
                 </div>

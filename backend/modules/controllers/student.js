@@ -422,45 +422,45 @@ let StudentClassPromote = async (req, res, next) => {
         const studentId = req.params.id;
         let { rollNumber } = req.body;
         let className = parseInt(req.body.class);
-    
+
         let checkStudent = await StudentModel.findOne({ _id: studentId });
-    
+
         if (!checkStudent) {
             return res.status(404).json({ errorMsg: 'Student not found' });
         }
-    
+
         let cls = checkStudent.class;
         if (className == cls && className === 12) {
             return res.status(400).json({ errorMsg: `In this school, students cannot be promoted after the ${className}th class` });
         }
-    
+
         if (className == cls && className === 22) {
             className = 1;
         }
-    
+
         if (className == cls && className !== 22) {
             className = className + 1;
         }
-    
+
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
-    
+
         if (!checkFeesStr) {
             return res.status(404).json({ errorMsg: 'Please create fees structure for this class', className: className });
         }
-    
-        const studentData = { rollNumber, class: className };
+
+        const studentData = { rollNumber, class: className, admissionType: 'Old' };
         const updateStudent = await StudentModel.findByIdAndUpdate(studentId, { $set: studentData }, { new: true });
-    
+
         if (updateStudent) {
             await Promise.all([
                 AdmitCardModel.findOneAndDelete({ studentId: studentId }),
                 ExamResultModel.findOneAndDelete({ studentId: studentId }),
                 FeesCollectionModel.findOneAndDelete({ studentId: studentId }),
             ]);
-    
+
             const totalFees = checkFeesStr.totalFees;
             const installment = checkFeesStr.installment.map(item => Object.fromEntries(Object.keys(item).map(key => [key, 0])));
-    
+
             const studentFeesData = {
                 studentId,
                 class: className,
@@ -473,9 +473,9 @@ let StudentClassPromote = async (req, res, next) => {
                 installment: installment,
                 paymentDate: installment,
             };
-    
+
             let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-    
+
             if (createStudentFeesData) {
                 return res.status(200).json({ successMsg: `The student has successfully been promoted to the class`, className: className });
             }

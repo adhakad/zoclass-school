@@ -18,7 +18,7 @@
                   </mat-radio-group>
                 </div>
                 <div class="col-8 col-lg-5 mb-2">
-                  <input type="text" class="form-control" placeholder="Student Search..." id="searchText"
+                  <input type="text" class="form-control" placeholder="{{className | classSuffix}} Student Search..." id="searchText"
                     name="searchText" #searchText="ngModel" [(ngModel)]="filters.searchText"
                     (keyup)="getStudents({page : 1, limit : 0})">
                 </div>
@@ -604,7 +604,7 @@
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Admission No.</mat-label>
-                                <input matInput type="number" formControlName="admissionNo">
+                                <input matInput type="number" formControlName="admissionNo" readonly>
                                 <mat-hint
                                   *ngIf="!studentClassPromoteForm.get('admissionNo')?.valid && studentClassPromoteForm.get('admissionNo')?.touched"
                                   class="form-text text-danger">Admission no. is required</mat-hint>
@@ -613,7 +613,7 @@
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Roll Number</mat-label>
-                                <input matInput type="number" formControlName="rollNumber">
+                                <input matInput type="number" formControlName="rollNumber" readonly>
                                 <mat-hint
                                   *ngIf="!studentClassPromoteForm.get('rollNumber')?.valid && studentClassPromoteForm.get('rollNumber')?.touched"
                                   class="form-text text-danger">Roll number is required</mat-hint>
