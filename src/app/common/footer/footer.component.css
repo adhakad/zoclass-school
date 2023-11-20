@@ -45,13 +45,13 @@
 .margin-social-media-icon{
    margin-top: 25px !important;
 }
-.bi-facebook ,.bi-linkedin,.bi-whatsapp,.bi-youtube{
+.bi-facebook ,.bi-linkedin,.bi-instagram,.bi-youtube{
    color: #e0e0ffe2;
    font-size: 2em;
    cursor: pointer;
    margin-right: 20px;
 }
-.bi-facebook:hover ,.bi-linkedin:hover,.bi-whatsapp:hover,.bi-youtube:hover{
+.bi-facebook:hover ,.bi-linkedin:hover,.bi-instagram:hover,.bi-youtube:hover{
    color: #fff;
 }
 .mat-icon{

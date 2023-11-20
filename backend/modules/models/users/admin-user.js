@@ -2,11 +2,21 @@
 const mongoose = require('mongoose');
 
 const AdminModel = mongoose.model('admin-users', {
-    email:{type:String},
-    password:{type:String},
-    status:{
+    email: {
         type: String,
-        enum : ['Active','Inactive'],
+        required: true,
+        trim: true,
+    },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    status: {
+        type: String,
+        trim: true,
+        required: true,
+        enum: ['Active', 'Inactive'],
         default: 'Active'
     }
 });

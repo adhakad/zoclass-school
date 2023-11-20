@@ -9,7 +9,7 @@ let SignupStudent = async (req, res, next) => {
     try {
         const checkUser = await StudentUserModel.findOne({ email: email });
         if (checkUser) {
-            return res.status(400).json("Student email already registered !");
+            return res.status(400).json("Username already registered !");
         }
         const student = await StudentModel.findOne({ rollNumber: rollNumber, class: req.body.class });
         if (!student) {
@@ -46,12 +46,12 @@ let LoginStudent = async (req, res, next) => {
     try {
         let student = await StudentUserModel.findOne({ email: req.body.email });
         if (!student) {
-            return res.status(404).json({ errorMsg: 'Student email or password invalid !' });
+            return res.status(404).json({ errorMsg: 'Username or password invalid !' });
         }
         const passwordMatch = await bcrypt.compare(req.body.password, student.password);
 
         if (!passwordMatch) {
-            return res.status(404).json({ errorMsg: 'Student email or password invalid !' });
+            return res.status(404).json({ errorMsg: 'Username or password invalid !' });
         }
 
         let studentId = student.studentId;
@@ -158,7 +158,7 @@ let ResetForgotStudent = async (req, res, next) => {
         }
         const checkUser = await StudentUserModel.findOne({ email: email });
         if (checkUser) {
-            return res.status(400).json("Student email already registered !");
+            return res.status(400).json("Username already registered !");
         }
         const objectId = checkStudent._id;
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -168,7 +168,7 @@ let ResetForgotStudent = async (req, res, next) => {
         }
         const updateStudentUser = await StudentUserModel.findByIdAndUpdate(objectId, { $set: resetStudentUserInfo }, { new: true });
         if (updateStudentUser) {
-            return res.status(200).json('Student username and password reset successfully.');
+            return res.status(200).json('Username and password reset successfully.');
         }
     } catch (error) {
         return res.status(500).json('Internal Server Error !');

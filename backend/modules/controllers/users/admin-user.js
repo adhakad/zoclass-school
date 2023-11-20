@@ -6,7 +6,7 @@ let LoginAdmin = async (req, res, next) => {
     try {
         let admin = await AdminUserModel.findOne({ email: req.body.email, password: req.body.password })
         if (!admin) {
-            return res.status(404).json({ errorMsg: 'Admin email or password invalid !' });
+            return res.status(404).json({ errorMsg: 'Username or password invalid !' });
         }
         if (admin.status == "Inactive") {
             return res.status(400).json({ errorMsg: 'Login permission blocked, please contact app development company !' });

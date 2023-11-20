@@ -3,7 +3,7 @@ const SchoolModel = require('../models/school');
 
 let GetSingleSchoolNameLogo = async (req, res, next) => {
     try {
-        const singleSchool = await SchoolModel.findOne({},'schoolName foundedYear');
+        const singleSchool = await SchoolModel.findOne({}, 'schoolName foundedYear');
         if (singleSchool) {
             return res.status(200).json(singleSchool);
         }
@@ -22,14 +22,14 @@ let GetSingleSchool = async (req, res, next) => {
     }
 }
 let CreateSchool = async (req, res, next) => {
-    let { schoolName, affiliationNumber, schoolCode, foundedYear, board, medium, street, city, state, country, pinCode, phone, email } = req.body;
-    const schoolData = { schoolName, affiliationNumber, schoolCode, foundedYear, board, medium, street, city, state, country, pinCode, phone, email };
+    let { schoolName, affiliationNumber, schoolCode, foundedYear, board, medium, street, city, state, country, pinCode, phoneOne, phoneSecond, email, facebookLink, linkedinLink, instagramLink, youtubeLink } = req.body;
+    const schoolData = { schoolName, affiliationNumber, schoolCode, foundedYear, board, medium, street, city, state, country, pinCode, phoneOne, phoneSecond, email, facebookLink, linkedinLink, instagramLink, youtubeLink };
     try {
         let countSchool = await SchoolModel.count();
-        if(countSchool > 0){
+        if (countSchool > 0) {
             return res.status(400).json('School detail already exist !');
         }
-        let school = await SchoolModel.findOne({affiliationNumber:affiliationNumber,schoolCode:schoolCode});
+        let school = await SchoolModel.findOne({ affiliationNumber: affiliationNumber, schoolCode: schoolCode });
         if (school) {
             return res.status(400).json('School detail already exist !');
         }

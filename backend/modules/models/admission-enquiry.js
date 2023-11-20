@@ -2,33 +2,126 @@
 const mongoose = require('mongoose');
 
 const AdmissionEnquiryModel = mongoose.model('admission-enquiry', {
-    session: { type: String },
-    name: { type: String },
-    class: { type: Number },
-    stream: { type: String },
-    dob: { type: String },
-    doae: { type: String },
-    gender: { type: String },
-    category: { type: String },
-    religion: { type: String },
-    nationality: { type: String },
-    contact: { type: Number },
-    address: { type: String },
-    lastSchool: { type: String },
-    fatherName: { type: String },
-    fatherQualification: { type: String },
-    fatherOccupation: { type: String },
-    fatherContact: { type: Number },
-    fatherAnnualIncome: { type: String },
-    motherName: { type: String },
-    motherQualification: { type: String },
-    motherOccupation: { type: String },
-    motherContact: { type: Number },
-    motherAnnualIncome: { type: String },
-    status:{
-        type:String,
-        enum:['Panding','Complete'],
-        default:'Panding',
+    session: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    class: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+    stream: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    dob: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    doae: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    gender: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    category: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    religion: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    nationality: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    contact: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+    address: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    lastSchool: {
+        type: String,
+        trim: true,
+    },
+    fatherName: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    fatherQualification: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    fatherOccupation: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    fatherContact: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+    fatherAnnualIncome: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    motherName: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    motherQualification: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    motherOccupation: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    motherContact: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+    motherAnnualIncome: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    status: {
+        type: String,
+        required: true,
+        trim: true,
+        enum: ['Panding', 'Complete'],
+        default: 'Panding',
     },
 });
 module.exports = AdmissionEnquiryModel;

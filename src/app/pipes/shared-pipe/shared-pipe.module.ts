@@ -8,14 +8,14 @@ import { ClassSuffixPipe } from '../class-suffix.pipe';
 @NgModule({
   declarations: [
     ChunkPipe,
-    ClassSuffixPipe
+    ClassSuffixPipe,
   ],
   imports: [
     CommonModule
   ],
   exports:[
     ChunkPipe,
-    ClassSuffixPipe
+    ClassSuffixPipe,
   ]
 })
 export class SharedPipeModule { }

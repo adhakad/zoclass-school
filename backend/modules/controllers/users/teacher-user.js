@@ -18,7 +18,7 @@ let SignupTeacher = async (req, res, next) => {
         const teacherId = teacher._id;
         const checkTeacherId = await TeacherUserModel.findOne({ teacherId: teacherId });
         if (checkTeacherId) {
-            return res.status(400).json("Teacher user id is invalid !")
+            return res.status(400).json("User id is invalid !")
         }
         const checkOtp = await teacher.otp;
         if (otp !== checkOtp) {
@@ -32,7 +32,7 @@ let SignupTeacher = async (req, res, next) => {
         }
         const createSignupTeacher = await TeacherUserModel.create(teacherData);
         if(createSignupTeacher){
-            return res.status(200).json('Sign up teacher succesfully.');
+            return res.status(200).json('Sign up teacher successfully.');
         }
     } catch (error) {
         return res.status(500).json({ errorMsg: 'Internal Server Error !' });;
@@ -43,11 +43,11 @@ let LoginTeacher = async (req, res, next) => {
     try {
         let teacher = await TeacherUserModel.findOne({ email: req.body.email})
         if (!teacher) {
-            return res.status(404).json({ errorMsg: 'Teacher email or password invalid !' });
+            return res.status(404).json({ errorMsg: 'Username or password invalid !' });
         }
         const passwordMatch = await bcrypt.compare(req.body.password, teacher.password);
         if (!passwordMatch) {
-            return res.status(404).json({ errorMsg: 'Teacher email or password invalid !' });
+            return res.status(404).json({ errorMsg: 'Username or password invalid !' });
         }
         let teacherId = await teacher.teacherId;
         let teacherInfo = await TeacherModel.findOne({ _id: teacherId });

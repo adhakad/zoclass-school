@@ -98,7 +98,7 @@ let ChangeStatus = async (req, res, next) => {
             status: status
         }
         const updateStatus = await AdmitCardModel.findByIdAndUpdate(objectId, { $set: studentData }, { new: true });
-        return res.status(200).json('Student update succesfully.');
+        return res.status(200).json('Student update successfully.');
     } catch (error) {
         return res.status(500).json({ errorMsg: 'Internal Server Error !' });;
     }

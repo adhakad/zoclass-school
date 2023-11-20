@@ -71,7 +71,7 @@ let CreateTopper = async(req,res,next) => {
             return res.status(400).json("Topper limit is over to 15 !");
         }
         const createTopper = await TopperModel.create(topperData);
-        return res.status(200).json('Topper create succesfully.');
+        return res.status(200).json('Topper create successfully.');
     }catch(error){
         return res.status(500).json('Internal Server Error !');
     }
@@ -86,7 +86,7 @@ let UpdateTopper = async(req,res,next) => {
             year:req.body.year,
         }
         const updateTopper = await TopperModel.findByIdAndUpdate(id,{$set:topperData},{new:true});
-        return res.status(200).json('Topper update succesfully.');
+        return res.status(200).json('Topper update successfully.');
     }catch(error){
         return res.status(500).json('Internal Server Error !');
     }
@@ -98,7 +98,7 @@ let DeleteTopper = async(req,res,next) => {
         const singleImage = await singleTopper.image;
         await fs.unlinkSync('./public/topper-image/'+singleImage);
         const deleteTopper = await TopperModel.findByIdAndRemove(id);
-        return res.status(200).json('Topper delete succesfully.');
+        return res.status(200).json('Topper delete successfully.');
     }catch(error){
         return res.status(500).json('Internal Server Error !');
     }

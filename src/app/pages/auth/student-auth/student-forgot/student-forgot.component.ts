@@ -22,21 +22,22 @@ export class StudentForgotComponent implements OnInit {
   varifiedOtpInfo:any;
   constructor(private fb: FormBuilder, private router: Router, private classService: ClassService, private studentAuthService: StudentAuthService, private adminAuthService: AdminAuthService, private teacherAuthService: TeacherAuthService) {
     this.varifyForm = this.fb.group({
-      rollNumber: ['', Validators.required],
-      class: ['', Validators.required],
+      rollNumber: ['', [Validators.required, Validators.maxLength(8),Validators.pattern('^[0-9]+$')]],
+      class: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
     })
     this.otpForm = this.fb.group({
-      otp: ['', Validators.required],
+      otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/),Validators.pattern('^[0-9]+$')]],
       rollNumber: [''],
       class: [''],
     })
     this.resetForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
       otp: [''],
       rollNumber: [''],
       class: [''],
     })
+      
   }
   ngOnInit(): void {
     this.getClass();

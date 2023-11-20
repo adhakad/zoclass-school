@@ -66,7 +66,7 @@ let CreateTeacher = async (req, res, next) => {
             image: req.file.filename,
         }
         const createTeacher = await TeacherModel.create(teacherData);
-        return res.status(200).json('Teacher created succesfully.');
+        return res.status(200).json('Teacher created successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }
@@ -80,7 +80,7 @@ let UpdateTeacher = async (req, res, next) => {
             education: education
         }
         const updateTeacher = await TeacherModel.findByIdAndUpdate(id, { $set: teacherData }, { new: true });
-        return res.status(200).json('Teacher updated succesfully.');
+        return res.status(200).json('Teacher updated successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }
@@ -94,7 +94,7 @@ let ChangeStatus = async(req,res,next) => {
             status:status
         }
         const updateStatus = await TeacherModel.findByIdAndUpdate(id, { $set: teacherData }, { new: true });
-        return res.status(200).json('Teacher update succesfully.');
+        return res.status(200).json('Teacher update successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }
@@ -106,7 +106,7 @@ let DeleteTeacher = async (req, res, next) => {
         const singleImage = await singleTeacher.image;
         await fs.unlinkSync('./public/teacher-image/' + singleImage);
         const deleteTeacher = await TeacherModel.findByIdAndRemove(id);
-        return res.status(200).json('Teacher delete succesfully.');
+        return res.status(200).json('Teacher delete successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }

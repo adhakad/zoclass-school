@@ -36,6 +36,8 @@ p{
 }
 mat-expansion-panel-header {
     box-shadow: none !important;
+    min-height: 50px;
+    height: auto;
 }
 mat-panel-title {
     color: #4e4caacd !important;

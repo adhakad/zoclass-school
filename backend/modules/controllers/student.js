@@ -220,7 +220,7 @@ let CreateStudent = async (req, res, next) => {
                     paidFees: createStudentFeesData.paidFees,
                     dueFees: createStudentFeesData.dueFees
                 }
-                return res.status(200).json({ studentAdmissionData: studentAdmissionData, successMsg: 'Student created succesfully.' });
+                return res.status(200).json({ studentAdmissionData: studentAdmissionData, successMsg: 'Student created successfully.' });
             }
         }
     } catch (error) {
@@ -247,7 +247,7 @@ let CreateStudentAdmissionEnquiry = async (req, res, next) => {
         }
         let createAdmissionEnquiryModel = await AdmissionEnquiryModel.create(studentData);
         if (createAdmissionEnquiryModel) {
-            return res.status(200).json({ successMsg: 'Online admission form submited succesfully.' });
+            return res.status(200).json({ successMsg: 'Online admission form submited successfully.' });
         }
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
@@ -396,7 +396,7 @@ let CreateBulkStudentRecord = async (req, res, next) => {
         if (createStudent && studentFeesData.length > 0) {
             const createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
             if (createStudentFeesData) {
-                return res.status(200).json('Student created succesfully.');
+                return res.status(200).json('Student created successfully.');
             }
         }
     } catch (error) {
@@ -412,7 +412,7 @@ let UpdateStudent = async (req, res, next) => {
             name, rollNumber, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
         }
         const updateStudent = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
-        return res.status(200).json('Student update succesfully.');
+        return res.status(200).json('Student update successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }
@@ -495,7 +495,7 @@ let ChangeStatus = async (req, res, next) => {
         }
 
         const updateStatus = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
-        return res.status(200).json('Student update succesfully.');
+        return res.status(200).json('Student update successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }
@@ -504,7 +504,7 @@ let DeleteStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
         const deleteStudent = await StudentModel.findByIdAndRemove(id);
-        return res.status(200).json('Student delete succesfully.');
+        return res.status(200).json('Student delete successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }

@@ -8,26 +8,29 @@ const schoolSchema = new mongoose.Schema({
     trim: true,
   },
   affiliationNumber: {
-    type: String,
+    type: Number,
     required: true,
     unique: true,
     trim: true,
   },
   schoolCode: {
-    type: String,
+    type: Number,
     required: true,
     unique: true,
     trim: true,
   },
   foundedYear: {
     type: Number,
+    required: true,
   },
   board: {
     type: String,
+    required: true,
     trim: true,
   },
   medium: {
     type: String,
+    required: true,
     trim: true,
   },
   street: {
@@ -47,21 +50,46 @@ const schoolSchema = new mongoose.Schema({
   },
   country: {
     type: String,
+    required: true,
     default: 'India',
   },
   pinCode: {
-    type: String,
+    type: Number,
     required: true,
     trim: true,
   },
-  phone: {
-    type: String,
+  phoneOne: {
+    type: Number,
+    required: true,
+    trim: true,
+  },
+  phoneSecond: {
+    type: Number,
+    required: true,
     trim: true,
   },
   email: {
     type: String,
+    required: true,
     trim: true,
   },
+  facebookLink:{
+    type: String,
+    trim: true,
+  },
+  linkedinLink:{
+    type: String,
+    trim: true,
+  },
+  instagramLink:{
+    type: String,
+    trim: true,
+  },
+  youtubeLink:{
+    type: String,
+    trim: true,
+  }
+
 });
 
 const School = mongoose.model('School', schoolSchema);

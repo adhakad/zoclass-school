@@ -39,7 +39,8 @@
                     <th>State</th>
                     <th>Country</th>
                     <th>Pin Code</th>
-                    <th>Phone</th>
+                    <th>First Phone</th>
+                    <th>Second Phone</th>
                     <th>Email</th>
                     <th>Action</th>
                   </tr>
@@ -83,7 +84,10 @@
                       <p class="mb-0">{{schoolInfo?.pinCode}}</p>
                     </td>
                     <td>
-                      <p class="mb-0">{{schoolInfo?.phone}}</p>
+                      <p class="mb-0">{{schoolInfo?.phoneOne}}</p>
+                    </td>
+                    <td>
+                      <p class="mb-0">{{schoolInfo?.phoneSecond}}</p>
                     </td>
                     <td>
                       <p class="mb-0">{{schoolInfo?.email}}</p>
@@ -258,15 +262,36 @@
                             </ng-container>                     
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Phone</mat-label>
-                                <input matInput type="text" formControlName="phone">
-                                <mat-error *ngIf="schoolForm.get('phone')?.hasError('required') && schoolForm.get('phone')?.touched">
+                                <mat-label>First Phone</mat-label>
+                                <input matInput type="number" formControlName="phoneOne">
+                                <mat-error *ngIf="schoolForm.get('phoneOne')?.hasError('required') && schoolForm.get('phoneOne')?.touched">
                                   Phone is required
                                 </mat-error>
-                                <mat-error *ngIf="schoolForm.get('phone')?.hasError('minlength')">
+                                <mat-error *ngIf="schoolForm.get('phoneOne')?.hasError('minlength')">
                                   Phone must be at least 10 characters long
                                 </mat-error>
-                                <mat-error *ngIf="schoolForm.get('phone')?.hasError('pattern')">
+                                <mat-error *ngIf="schoolForm.get('phoneOne')?.hasError('maxlength')">
+                                  Phone cannot be more than 10 characters long
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('phoneOne')?.hasError('pattern')">
+                                  Phone must contain only digits
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Second Phone</mat-label>
+                                <input matInput type="number" formControlName="phoneSecond">
+                                <mat-error *ngIf="schoolForm.get('phoneSecond')?.hasError('required') && schoolForm.get('phoneSecond')?.touched">
+                                  Phone is required
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('phoneSecond')?.hasError('minlength')">
+                                  Phone must be at least 10 characters long
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('phoneSecond')?.hasError('maxlength')">
+                                  Phone cannot be more than 10 characters long
+                                </mat-error>
+                                <mat-error *ngIf="schoolForm.get('phoneSecond')?.hasError('pattern')">
                                   Phone must contain only digits
                                 </mat-error>
                               </mat-form-field>
@@ -280,6 +305,45 @@
                                 </mat-error>
                                 <mat-error *ngIf="schoolForm.get('email')?.hasError('email')">
                                   Invalid email format
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            <ng-container>
+                              <h3>Social Media Account</h3>
+                            </ng-container>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Facebook Link</mat-label>
+                                <input matInput type="text" formControlName="facebookLink">
+                                <mat-error *ngIf="schoolForm.get('facebookLink')?.hasError('pattern')">
+                                  Invalid Facebook link format
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>LinkedIn Link</mat-label>
+                                <input matInput type="text" formControlName="linkedinLink">
+                                <mat-error *ngIf="schoolForm.get('linkedinLink')?.hasError('pattern')">
+                                  Invalid LinkedIn link format
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>Instagram Link</mat-label>
+                                <input matInput type="text" formControlName="instagramLink">
+                                <mat-error *ngIf="schoolForm.get('instagramLink')?.hasError('pattern')">
+                                  Invalid Instagram link format
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                              <mat-form-field appearance="outline">
+                                <mat-label>YouTube Link</mat-label>
+                                <input matInput type="text" formControlName="youtubeLink">
+                                <mat-error *ngIf="schoolForm.get('youtubeLink')?.hasError('pattern')">
+                                  Invalid YouTube link format
                                 </mat-error>
                               </mat-form-field>
                             </div>

@@ -2,13 +2,34 @@
 const mongoose = require('mongoose');
 
 const TeacherModel = mongoose.model('teacher', {
-    name: { type: String },
-    teacherUserId: { type: Number },
-    otp: { type: Number },
-    education: { type: String },
-    image: { type: String },
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    teacherUserId: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+    otp: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+    education: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    image: {
+        type: String,
+        trim: true,
+    },
     status: {
         type: String,
+        required: true,
+        trim: true,
         enum: ['Active', 'Inactive'],
         default: 'Inactive',
     }

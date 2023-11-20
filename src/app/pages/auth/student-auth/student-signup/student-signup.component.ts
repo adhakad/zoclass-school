@@ -14,13 +14,12 @@ export class StudentSignupComponent implements OnInit {
   classInfo:any;
   constructor(private fb: FormBuilder, public studentAuthService: StudentAuthService, private router: Router,private classService:ClassService) {
     this.signupForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      otp: ['', Validators.required],
-      rollNumber: ['', Validators.required],
-      class: ['', Validators.required],
-
-    })
+      email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
+      otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/),Validators.pattern('^[0-9]+$')]],
+      rollNumber: ['', [Validators.required, Validators.maxLength(8),Validators.pattern('^[0-9]+$')]], // Maximum length of 8 characters
+      class: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Numeric characters only
+    });
   }
   ngOnInit(): void {
     this.getClass();

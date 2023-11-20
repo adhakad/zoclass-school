@@ -86,11 +86,11 @@ let DeleteResultStructure = async (req, res, next) => {
         if (deleteResultStructure) {
             const result = await ExamResultModel.findOne({ class: className, stream: stream, examType: examType });
             if (!result) {
-                return res.status(200).json('Exam Result structure delete succesfully.');
+                return res.status(200).json('Exam Result structure delete successfully.');
             }
             const deleteResult = await ExamResultModel.deleteMany({ class: className, stream: stream, examType: examType });
             if (deleteResult) {
-                return res.status(200).json('Exam Result structure delete succesfully.');
+                return res.status(200).json('Exam Result structure delete successfully.');
             }
         }
     } catch (error) {
@@ -155,10 +155,10 @@ let ChangeResultPublishStatus = async (req, res, next) => {
                 }
                 let createNotification = await NotificationModel.create(notificationData);
                 if (createNotification) {
-                    return res.status(200).json('Exam result publish status update succesfully.');
+                    return res.status(200).json('Exam result publish status update successfully.');
                 }
             }
-            return res.status(200).json('Exam result publish status update succesfully.');
+            return res.status(200).json('Exam result publish status update successfully.');
         }
 
     } catch (error) {

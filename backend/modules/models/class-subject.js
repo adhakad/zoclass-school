@@ -2,8 +2,16 @@
 const mongoose = require('mongoose');
 
 const ClassSubjectModel = mongoose.model('class-subject', {
-    class: { type: Number },
-    stream: { type: String },
+    class: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
+    stream: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     subject: {},
 });
 

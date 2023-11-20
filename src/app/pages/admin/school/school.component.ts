@@ -18,8 +18,8 @@ export class SchoolComponent implements OnInit {
   errorMsg: String = '';
   errorCheck: Boolean = false;
   schoolInfo: any;
-  loader:Boolean=true;
-  constructor(private fb: FormBuilder,private schoolService: SchoolService) {
+  loader: Boolean = true;
+  constructor(private fb: FormBuilder, private schoolService: SchoolService) {
     this.schoolForm = this.fb.group({
       _id: [''],
       schoolName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -32,16 +32,21 @@ export class SchoolComponent implements OnInit {
       city: ['', [Validators.required, Validators.maxLength(50)]],
       state: ['', [Validators.required, Validators.maxLength(50)]],
       pinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-      phone: ['', [Validators.required, Validators.minLength(10), Validators.pattern(/^\d+$/)]],
-      email:['',[Validators.required, Validators.email]],
+      phoneOne: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
+      phoneSecond: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
+      email: ['', [Validators.required, Validators.email]],
+      facebookLink: ['', [Validators.pattern(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/)]],
+      linkedinLink: ['', [Validators.pattern(/^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/)]],
+      instagramLink: ['', [Validators.pattern(/^(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9(\.\?)?]/)]],
+      youtubeLink: ['', [Validators.pattern(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/)]],
     })
   }
   ngOnInit(): void {
     this.getSchool();
-    
-    setTimeout(()=>{
-      this.loader=false;
-    },2000)
+
+    setTimeout(() => {
+      this.loader = false;
+    }, 2000)
   }
   closeModal() {
     this.showModal = false;
@@ -77,11 +82,11 @@ export class SchoolComponent implements OnInit {
   }
 
   getSchool() {
-      this.schoolService.getSchool().subscribe((res: any) => {
-        if (res) {
-          this.schoolInfo = res;
-        }
-      });
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
+        this.schoolInfo = res;
+      }
+    });
   }
 
   schoolAddUpdate() {

@@ -72,7 +72,7 @@ let DeleteAdmitCardStructure = async (req, res, next) => {
         const deleteAdmitCard = await AdmitCardModel.deleteMany({ class: className, stream: stream, examType: examType });
         const deleteAdmitCardStructure = await AdmitCardStructureModel.findByIdAndRemove(id);
         if (deleteAdmitCard && deleteAdmitCardStructure) {
-            return res.status(200).json('Admit card structure delete succesfully.');
+            return res.status(200).json('Admit card structure delete successfully.');
         }
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
@@ -132,10 +132,10 @@ let ChangeAdmitCardPublishStatus = async (req, res, next) => {
                 }
                 let createNotification = await NotificationModel.create(notificationData);
                 if (createNotification) {
-                    return res.status(200).json('Admit card publish status update succesfully.');
+                    return res.status(200).json('Admit card publish status update successfully.');
                 }
             }
-            return res.status(200).json('Admit card publish status update succesfully.');
+            return res.status(200).json('Admit card publish status update successfully.');
         }
 
     } catch (error) {

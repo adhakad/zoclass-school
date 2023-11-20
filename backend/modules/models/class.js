@@ -2,7 +2,11 @@
 const mongoose = require('mongoose');
 
 const ClassModel = mongoose.model('class', {
-    class: {type: Number},
+    class: {
+        type: Number,
+        required: true,
+        trim: true,
+    },
 });
 
 module.exports = ClassModel;
