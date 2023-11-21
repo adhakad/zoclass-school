@@ -51,32 +51,33 @@ export class AdmissionComponent implements OnInit {
     this.studentForm = this.fb.group({
       _id: [''],
       session: ['', Validators.required],
-      admissionNo: ['', Validators.required],
-      class: ['', Validators.required],
-      stream: ['', Validators.required],
+      admissionNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       admissionFees: ['', Validators.required],
       admissionFeesPaymentType: ['', Validators.required],
       rollNumberType: ['', Validators.required],
-      rollNumber: ['', Validators.required],
-      name: ['', Validators.required],
+      rollNumber: ['', [Validators.required, Validators.maxLength(8), Validators.pattern('^[0-9]+$')]],
+      class: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      stream: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       dob: ['', Validators.required],
       gender: ['', Validators.required],
       category: ['', Validators.required],
       religion: ['', Validators.required],
       nationality: ['', Validators.required],
-      contact: ['', Validators.required],
-      address: ['', Validators.required],
-      lastSchool: [''],
-      fatherName: ['', Validators.required],
-      fatherQualification: ['', Validators.required],
+      contact: ['', [Validators.required, Validators.pattern('^[6789]\\d{9}$')]],
+      address: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$'), Validators.maxLength(50)]],
+      lastSchool: ['', [Validators.pattern('^[a-zA-Z\\s]+$'), Validators.maxLength(50)]],
+      fatherName: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
+      fatherQualification: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       fatherOccupation: ['', Validators.required],
-      fatherContact: ['', Validators.required],
-      fatherAnnualIncome: ['', Validators.required],
-      motherName: ['', Validators.required],
+      fatherContact: ['', [Validators.required, Validators.pattern('^[6789]\\d{9}$')]],
+      fatherAnnualIncome: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      motherName: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       motherQualification: ['', Validators.required],
       motherOccupation: ['', Validators.required],
-      motherContact: ['', Validators.required],
-      motherAnnualIncome: ['', Validators.required],
+      motherContact: ['', [Validators.required, Validators.pattern('^[6789]\\d{9}$')]],
+      motherAnnualIncome: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      
     })
   }
 
@@ -237,17 +238,6 @@ export class AdmissionComponent implements OnInit {
 
   studentAddUpdate() {
     if (this.studentForm.valid) {
-      // if (this.updateMode) {
-      //   this.studentService.updateStudent(this.studentForm.value).subscribe((res: any) => {
-      //     if (res) {
-      //       this.successDone();
-      //       this.successMsg = res;
-      //     }
-      //   }, err => {
-      //     this.errorCheck = true;
-      //     this.errorMsg = err.error;
-      //   })
-      // } else {
       this.studentForm.value.admissionType = 'New';
       this.studentService.addStudent(this.studentForm.value).subscribe((res: any) => {
         if (res) {
@@ -265,7 +255,6 @@ export class AdmissionComponent implements OnInit {
         this.errorMsg = err.error;
       })
     }
-    // }
   }
 
   allOptions() {
