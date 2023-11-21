@@ -114,6 +114,7 @@ export class AdminOnlineAdmissionComponent implements OnInit {
     this.updateMode = false;
     this.deleteMode = false;
     this.errorMsg = '';
+    this.admissionEnquiryForm.reset();
   }
 
   updateAdmissionEnquiryModel(admissionEnquiry: any) {

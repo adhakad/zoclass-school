@@ -20,11 +20,11 @@
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>No.</th>
-                                        <th>Admission Form</th>
                                         <th>Name</th>
                                         <th>Father Name</th>
                                         <th>Contact</th>
                                         <th>Admission</th>
+                                        <th>Admission Form</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -32,16 +32,6 @@
                                     <tr *ngFor="let admissionEnquiry of admissionEnquiryInfo,let i=index">
                                         <td>
                                             <p class="mb-0">{{number*10+i+1-10}}</p>
-                                        </td>
-                                        <td class="mb-0">
-                                            <button class="submit-button" *ngIf="admissionEnquiry.status=='Panding'"
-                                                mat-raised-button
-                                                (click)="updateAdmissionEnquiryModel(admissionEnquiry)">Form
-                                                Open</button>
-                                            <button class="submit-button" mat-raised-button
-                                                *ngIf="admissionEnquiry.status=='Complete'"
-                                                [disabled]="admissionEnquiry.status=='Complete'"
-                                                style="background-color: transparent;">Submitted</button>
                                         </td>
                                         <td>
                                             <p class="mb-0">{{admissionEnquiry.name}}</p>
@@ -57,6 +47,19 @@
                                                 href="javascript:void(0)">{{admissionEnquiry.status}}</a>
                                             <a class="mb-0 status-inactive" *ngIf="admissionEnquiry.status=='Panding'"
                                                 href="javascript:void(0)">{{admissionEnquiry.status}}</a>
+                                        </td>
+                                        <td class="mb-0">
+                                            <button
+                                                style="background-color: transparent;color: #8d6dff;border: 1px solid #8d6dff;"
+                                                class="submit-button" *ngIf="admissionEnquiry.status=='Panding'"
+                                                mat-raised-button
+                                                (click)="updateAdmissionEnquiryModel(admissionEnquiry)">Form
+                                                Open</button>
+                                            <button class="submit-button" mat-raised-button
+                                                *ngIf="admissionEnquiry.status=='Complete'"
+                                                [disabled]="admissionEnquiry.status=='Complete'"
+                                                style="background-color: transparent;"><span
+                                                    class="status-active">Submitted</span></button>
                                         </td>
                                         <td class="mb-0">
                                             <mat-icon
@@ -115,10 +118,10 @@
                                                                             Fill</mat-option>
                                                                     </div>
                                                                 </mat-select>
-                                                                <mat-hint
-                                                                    *ngIf="!admissionEnquiryForm.get('rollNumberType')?.valid && admissionEnquiryForm.get('rollNumberType')?.touched"
-                                                                    class="form-text text-danger">Roll Number is
-                                                                    required</mat-hint>
+                                                                <mat-error
+                                                                    *ngIf="admissionEnquiryForm.get('rollNumberType')?.hasError('required') && admissionEnquiryForm.get('rollNumberType')?.touched">
+                                                                    Roll number type is required
+                                                                </mat-error>
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-12 col-lg-6"
@@ -133,10 +136,10 @@
                                                                 <mat-label>Roll Number</mat-label>
                                                                 <input matInput type="number"
                                                                     formControlName="rollNumber" readonly>
-                                                                <mat-hint
-                                                                    *ngIf="!admissionEnquiryForm.get('rollNumber')?.valid && admissionEnquiryForm.get('rollNumber')?.touched"
-                                                                    class="form-text text-danger">Roll number is
-                                                                    required</mat-hint>
+                                                                <mat-error
+                                                                    *ngIf="admissionEnquiryForm.get('rollNumber')?.hasError('required') && admissionEnquiryForm.get('rollNumber')?.touched">
+                                                                    Roll number is required
+                                                                </mat-error>
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-12 col-lg-6"
@@ -145,10 +148,10 @@
                                                                 <mat-label>Roll Number</mat-label>
                                                                 <input matInput type="number"
                                                                     formControlName="rollNumber">
-                                                                <mat-hint
-                                                                    *ngIf="!admissionEnquiryForm.get('rollNumber')?.valid && admissionEnquiryForm.get('rollNumber')?.touched"
-                                                                    class="form-text text-danger">Roll number is
-                                                                    required</mat-hint>
+                                                                <mat-error
+                                                                    *ngIf="admissionEnquiryForm.get('rollNumber')?.hasError('required') && admissionEnquiryForm.get('rollNumber')?.touched">
+                                                                    Roll number is required
+                                                                </mat-error>
                                                             </mat-form-field>
                                                         </div>
                                                         <ng-container>
@@ -322,8 +325,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" mat-raised-button
-                                                    class="submit-button">Submit</button>
+                                                <button [disabled]="!admissionEnquiryForm.valid" type="submit"
+                                                    mat-raised-button class="submit-button">Submit</button>
                                             </div>
                                         </form>
                                         <div *ngIf="deleteMode">
@@ -347,7 +350,6 @@
 </div>
 <div class="spinner-container" *ngIf="loader">
     <div class="spinner-overlay" *ngIf="loader">
-      <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate"
-        strokeWidth="3"></mat-progress-spinner>
+        <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
     </div>
-  </div>
+</div>

@@ -59,12 +59,12 @@ export class StudentComponent implements OnInit {
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, public ete: ExcelService, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
-      session: ['', Validators.required],//
+      session: ['', Validators.required],
+      admissionNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       admissionType: ['', Validators.required],
       class: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      rollNumber: ['', [Validators.required, Validators.maxLength(8), Validators.pattern('^[0-9]+$')]],
       stream: ['', Validators.required],
-      admissionNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      rollNumber: ['', [Validators.required, Validators.maxLength(8), Validators.pattern('^[0-9]+$')]],
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       dob: ['', Validators.required],
       gender: ['', Validators.required],
