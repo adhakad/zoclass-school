@@ -59,31 +59,31 @@ export class StudentComponent implements OnInit {
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, public ete: ExcelService, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
-      session: ['', Validators.required],
+      session: ['', Validators.required],//
       admissionType: ['', Validators.required],
-      class: ['', Validators.required],
-      rollNumber: ['', Validators.required],
+      class: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      rollNumber: ['', [Validators.required, Validators.maxLength(8), Validators.pattern('^[0-9]+$')]],
       stream: ['', Validators.required],
-      admissionNo: ['', Validators.required],
-      name: ['', Validators.required],
+      admissionNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       dob: ['', Validators.required],
       gender: ['', Validators.required],
       category: ['', Validators.required],
       religion: ['', Validators.required],
       nationality: ['', Validators.required],
-      contact: ['', Validators.required],
-      address: ['', Validators.required],
-      lastSchool: [''],
-      fatherName: ['', Validators.required],
-      fatherQualification: ['', Validators.required],
+      contact: ['', [Validators.required, Validators.pattern('^[6789]\\d{9}$')]],
+      address: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$'), Validators.maxLength(50)]],
+      lastSchool: ['', [Validators.pattern('^[a-zA-Z\\s]+$'), Validators.maxLength(50)]],
+      fatherName: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
+      fatherQualification: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       fatherOccupation: ['', Validators.required],
-      fatherContact: ['', Validators.required],
-      fatherAnnualIncome: ['', Validators.required],
-      motherName: ['', Validators.required],
+      fatherContact: ['', [Validators.required, Validators.pattern('^[6789]\\d{9}$')]],
+      fatherAnnualIncome: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      motherName: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       motherQualification: ['', Validators.required],
       motherOccupation: ['', Validators.required],
-      motherContact: ['', Validators.required],
-      motherAnnualIncome: ['', Validators.required],
+      motherContact: ['', [Validators.required, Validators.pattern('^[6789]\\d{9}$')]],
+      motherAnnualIncome: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
     })
 
     this.excelForm = this.fb.group({
@@ -492,9 +492,9 @@ export class StudentComponent implements OnInit {
       this.studentClassPromoteForm.value.class = parseInt(this.className);
       this.studentService.studentClassPromote(this.studentClassPromoteForm.value).subscribe((res: any) => {
         if (res) {
-          setTimeout(()=> {
+          setTimeout(() => {
             this.successDone();
-          },2000)
+          }, 2000)
           this.promotedClass;
           this.promotedClass = res.className;
           this.successMsg = res.successMsg;
