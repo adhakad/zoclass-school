@@ -175,8 +175,6 @@ let ResetForgotStudent = async (req, res, next) => {
     }
 }
 
-
-
 module.exports = {
     SignupStudent,
     LoginStudent,

@@ -1,5 +1,6 @@
 'use strict';
 const StudentModel = require('../models/student');
+const StudentUserModel = require('../models/users/student-user');
 const AdmissionEnquiryModel = require('../models/admission-enquiry');
 const FeesStructureModel = require('../models/fees-structure');
 const FeesCollectionModel = require('../models/fees-collection');
@@ -12,16 +13,13 @@ let countStudent = async (req, res, next) => {
     return res.status(200).json({ countStudent });
 }
 
-
 let GetStudentPaginationByAdmission = async (req, res, next) => {
     let searchText = req.body.filters.searchText;
     let className = req.body.class;
     let searchObj = {};
     if (searchText) {
         searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText }, { admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
-
     }
-
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
@@ -30,7 +28,6 @@ let GetStudentPaginationByAdmission = async (req, res, next) => {
             .skip((page - 1) * limit)
             .exec();
         const countStudent = await StudentModel.count({ admissionType: 'New' });
-
         let studentData = { countStudent: 0 };
         studentData.studentList = studentList;
         studentData.countStudent = countStudent;
@@ -50,7 +47,6 @@ let GetStudentAdmissionEnquiryPagination = async (req, res, next) => {
             }
             : { name: new RegExp(`${searchText.toString().trim()}`, 'i') };
     }
-
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
@@ -59,7 +55,6 @@ let GetStudentAdmissionEnquiryPagination = async (req, res, next) => {
             .skip((page - 1) * limit)
             .exec();
         const countAdmissionEnquiry = await AdmissionEnquiryModel.count();
-
         let admissionEnquiryData = { countAdmissionEnquiry: 0 };
         admissionEnquiryData.admissionEnquiryList = admissionEnquiryList;
         admissionEnquiryData.countAdmissionEnquiry = countAdmissionEnquiry;
@@ -69,16 +64,13 @@ let GetStudentAdmissionEnquiryPagination = async (req, res, next) => {
     }
 }
 
-
 let GetStudentPaginationByClass = async (req, res, next) => {
     let searchText = req.body.filters.searchText;
     let className = req.body.class;
     let searchObj = {};
     if (searchText) {
         searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchText) ? { $or: [{ class: searchText }, { rollNumber: searchText }, { admissionNo: searchText }] } : { name: new RegExp(`${searchText.toString().trim()}`, 'i') }
-
     }
-
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
@@ -87,7 +79,6 @@ let GetStudentPaginationByClass = async (req, res, next) => {
             .skip((page - 1) * limit)
             .exec();
         const countStudent = await StudentModel.count({ class: className });
-
         let studentData = { countStudent: 0 };
         studentData.studentList = studentList;
         studentData.countStudent = countStudent;
@@ -105,6 +96,7 @@ let GetAllStudentByClass = async (req, res, next) => {
         return res.status(500).json('Internal Server Error !');
     }
 }
+
 let GetSingleStudent = async (req, res, next) => {
     try {
         const singleStudent = await StudentModel.findOne({ _id: req.params.id });
@@ -113,6 +105,7 @@ let GetSingleStudent = async (req, res, next) => {
         return res.status(500).json('Internal Server Error !');
     }
 }
+
 let CreateStudent = async (req, res, next) => {
     let otp = Math.floor(Math.random() * 899999 + 100000);
     let receiptNo = Math.floor(Math.random() * 899999 + 100000);
@@ -220,7 +213,10 @@ let CreateStudent = async (req, res, next) => {
                     paidFees: createStudentFeesData.paidFees,
                     dueFees: createStudentFeesData.dueFees
                 }
-                return res.status(200).json({ studentAdmissionData: studentAdmissionData, successMsg: 'Student created successfully.' });
+                if (admissionType == 'New') {
+                    return res.status(200).json({ studentAdmissionData: studentAdmissionData, successMsg: 'Student created successfully.' });
+                }
+                return res.status(200).json('Student created successfully.');
             }
         }
     } catch (error) {
@@ -351,13 +347,10 @@ let CreateBulkStudentRecord = async (req, res, next) => {
             const spreadRollNumber = duplicateRollNumber.join(', ');
             return res.status(400).json(`Roll number(s) ${spreadRollNumber} already exist !`);
         }
-
-
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStr) {
             return res.status(404).json(`Please create fees structure for class ${className} !`);
         }
-
         let installment = checkFeesStr.installment;
         installment.forEach((item) => {
             Object.keys(item).forEach((key) => {
@@ -367,11 +360,9 @@ let CreateBulkStudentRecord = async (req, res, next) => {
         const createStudent = await StudentModel.create(studentData);
         let admissionFees = checkFeesStr.admissionFees;
         let totalFees = checkFeesStr.totalFees;
-
         let studentFeesData = [];
         for (let i = 0; i < createStudent.length; i++) {
             let student = createStudent[i];
-
             let feesObject = {
                 studentId: student._id,
                 class: student.class,
@@ -384,13 +375,11 @@ let CreateBulkStudentRecord = async (req, res, next) => {
                 installment: installment,
                 paymentDate: installment,
             };
-
             if (student.admissionType === 'New') {
                 feesObject.admissionFeesPayable = true;
                 feesObject.totalFees += admissionFees;
                 feesObject.dueFees += admissionFees;
             }
-
             studentFeesData.push(feesObject);
         }
         if (createStudent && studentFeesData.length > 0) {
@@ -417,50 +406,40 @@ let UpdateStudent = async (req, res, next) => {
         return res.status(500).json('Internal Server Error !');
     }
 }
+
 let StudentClassPromote = async (req, res, next) => {
     try {
         const studentId = req.params.id;
         let { rollNumber } = req.body;
         let className = parseInt(req.body.class);
-
         let checkStudent = await StudentModel.findOne({ _id: studentId });
-
         if (!checkStudent) {
             return res.status(404).json({ errorMsg: 'Student not found' });
         }
-
         let cls = checkStudent.class;
         if (className == cls && className === 12) {
             return res.status(400).json({ errorMsg: `In this school, students cannot be promoted after the ${className}th class` });
         }
-
         if (className == cls && className === 22) {
             className = 1;
         }
-
         if (className == cls && className !== 22) {
             className = className + 1;
         }
-
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
-
         if (!checkFeesStr) {
             return res.status(404).json({ errorMsg: 'Please create fees structure for this class', className: className });
         }
-
         const studentData = { rollNumber, class: className, admissionType: 'Old' };
         const updateStudent = await StudentModel.findByIdAndUpdate(studentId, { $set: studentData }, { new: true });
-
         if (updateStudent) {
             await Promise.all([
                 AdmitCardModel.findOneAndDelete({ studentId: studentId }),
                 ExamResultModel.findOneAndDelete({ studentId: studentId }),
                 FeesCollectionModel.findOneAndDelete({ studentId: studentId }),
             ]);
-
             const totalFees = checkFeesStr.totalFees;
             const installment = checkFeesStr.installment.map(item => Object.fromEntries(Object.keys(item).map(key => [key, 0])));
-
             const studentFeesData = {
                 studentId,
                 class: className,
@@ -473,18 +452,16 @@ let StudentClassPromote = async (req, res, next) => {
                 installment: installment,
                 paymentDate: installment,
             };
-
             let createStudentFeesData = await FeesCollectionModel.create(studentFeesData);
-
             if (createStudentFeesData) {
                 return res.status(200).json({ successMsg: `The student has successfully been promoted to the class`, className: className });
             }
         }
     } catch (error) {
-        console.error(error);
         return res.status(500).json({ errorMsg: 'Internal Server Error!' });
     }
 }
+
 let ChangeStatus = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -493,20 +470,32 @@ let ChangeStatus = async (req, res, next) => {
         const studentData = {
             status: status
         }
-
         const updateStatus = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
         return res.status(200).json('Student update successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');
     }
 }
+
 let DeleteStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
         const deleteStudent = await StudentModel.findByIdAndRemove(id);
-        return res.status(200).json('Student delete successfully.');
+        if (deleteStudent) {
+            const [deleteStudentUser, deleteAdmitCard, deleteExamResult, deleteFeesCollection] = await Promise.all([
+                StudentUserModel.deleteOne({ studentId: id }),
+                AdmitCardModel.deleteOne({ studentId: id }),
+                ExamResultModel.deleteOne({ studentId: id }),
+                FeesCollectionModel.deleteOne({ studentId: id }),
+            ]);
+
+            if (deleteStudentUser || deleteAdmitCard || deleteExamResult || deleteFeesCollection) {
+                return res.status(200).json('Student delete successfully.');
+            }
+            return res.status(200).json('Student delete successfully.');
+        }
     } catch (error) {
-        return res.status(500).json('Internal Server Error !');
+        return res.status(500).json('Internal Server Error!');
     }
 }
 
