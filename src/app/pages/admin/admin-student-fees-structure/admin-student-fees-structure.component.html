@@ -46,69 +46,22 @@
                                                 <mat-icon>launch</mat-icon>
                                             </td>
                                             <td>
-                                                <p class="mb-0">{{clsFeesStructure?.class | classSuffix}}</p>
+                                                <p class="mb-0">{{clsFeesStructure.class | classSuffix}}</p>
                                             </td>
                                             <td>
-                                                <p class="mb-0">&#8377; {{clsFeesStructure?.totalFees}}</p>
+                                                <p class="mb-0">&#8377; {{clsFeesStructure.totalFees}}</p>
                                             </td>
                                             <td>
-                                                <p class="mb-0">&#8377; {{clsFeesStructure?.admissionFees}}</p>
+                                                <p class="mb-0">&#8377; {{clsFeesStructure.admissionFees}}</p>
                                             </td>
                                             <td class="mb-0">
-                                                <mat-icon>delete</mat-icon>
+                                                <mat-icon
+                                                    (click)="deleteFeesStructureModel(clsFeesStructure._id)">delete</mat-icon>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- <div class="col-12 col-lg-6">
-                                <table class="table table-hover mt-4 align-middle mb-0 bg-white">
-                                    <thead class="bg-light">
-                                        <tr class="text-muted">
-                                            <th>S.No.</th>
-                                            <th>Fee Installment</th>
-                                            <th>Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of  clsFeesStructure?.installment,let i = index">
-                                            <td>
-                                                <p class="mb-0">{{i+1}}</p>
-                                            </td>
-                                            <td *ngFor="let fee of item | keyvalue">
-                                                <p class="mb-0">{{ fee.key}}</p>
-                                            </td>
-                                            <td *ngFor="let fee of item | keyvalue">
-                                                <p class="mb-0">&#8377; {{ fee.value }}</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <table class="table table-hover mt-4 align-middle mb-0 bg-white">
-                                    <thead class="bg-light">
-                                        <tr class="text-muted">
-                                            <th>S.No.</th>
-                                            <th>Particulars</th>
-                                            <th>Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of clsFeesStructure?.feesType,let i = index">
-                                            <td>
-                                                <p class="mb-0">{{i+1}}</p>
-                                            </td>
-                                            <td *ngFor="let fee of item | keyvalue">
-                                                <p class="mb-0">{{ fee.key}}</p>
-                                            </td>
-                                            <td *ngFor="let fee of item | keyvalue">
-                                                <p class="mb-0">&#8377; {{ fee.value }}</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> -->
 
                             <div class="modal fade show" [class.show]="showModal">
                                 <div class="modal-dialog" role="document">
@@ -126,11 +79,11 @@
 
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Create Fees Structure {{cls | classSuffix}}
-                                            </h5>
+                                            <h5 class="modal-title" *ngIf="feesTypeMode || feesMode">Create Fees Structure {{cls | classSuffix}}</h5>
+                                            <h5 class="modal-title" *ngIf="deleteMode">Delete Fees Structure {{cls | classSuffix}}</h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
-                                        <div class="modal-body" *ngIf="feesTypeMode">
+                                        <div class="modal-body" *ngIf="feesTypeMode && !deleteMode">
                                             <ng-container>
                                                 <h3>Particular's</h3>
                                             </ng-container>
@@ -255,7 +208,7 @@
                                                 (click)="selectFeesStructure()">Save</button>
                                         </div>
                                         <form [formGroup]="feesForm" (ngSubmit)="feesStructureAddUpdate()"
-                                            *ngIf="feesMode">
+                                            *ngIf="feesMode && !deleteMode">
 
                                             <div class="modal-body">
                                                 <div *ngIf="errorCheck">
@@ -310,6 +263,13 @@
                                                     [disabled]="!feesForm.valid" type="submit">Submit</button>
                                             </div>
                                         </form>
+                                        <div *ngIf="deleteMode && !feesMode && !feesTypeMode">
+                                            <h4>To delete fees structure, click ok to confirm.</h4>
+                                            <div class="modal-footer">
+                                                <button class="delete-button" mat-raised-button type="button"
+                                                    (click)="feesStructureDelete(deleteById)">Ok</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

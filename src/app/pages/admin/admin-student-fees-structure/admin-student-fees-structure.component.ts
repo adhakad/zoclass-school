@@ -17,8 +17,8 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   cls: any;
   feesForm: FormGroup;
   showModal: boolean = false;
-  updateMode: boolean = false;
   deleteMode: boolean = false;
+  updateMode: boolean = false;
   deleteById: String = '';
   successMsg: String = '';
   errorMsg: String = '';
@@ -32,11 +32,11 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   feesTypeMode: boolean = false;
   feesMode: boolean = false;
   clsFeesStructure: any;
-  feePerticulars:any[]=['Registration','Tution', 'Books', 'Uniform','Examination'];
-  loader:Boolean=true;
+  feePerticulars: any[] = ['Registration', 'Tution', 'Books', 'Uniform', 'Examination'];
+  loader: Boolean = true;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
-      admissionFees:['',Validators.required],
+      admissionFees: ['', Validators.required],
       type: this.fb.group({
         feesType: this.fb.array([], [Validators.required]),
         feesPayType: this.fb.array([], [Validators.required]),
@@ -47,19 +47,15 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   ngOnInit(): void {
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.getFeesStructureByClass(this.cls);
+    setTimeout(() => {
+      this.loader = false;
+    }, 1000);
 
   }
   getFeesStructureByClass(cls: any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.clsFeesStructure = res;
-        setTimeout(()=>{
-          this.loader = false;
-        },1000);
-      }else{
-        setTimeout(()=>{
-          this.loader = false;
-        },1000);
       }
     })
   }
@@ -109,15 +105,23 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   closeModal() {
     this.falseAllValue();
     this.showModal = false;
+    this.deleteMode = false;
     this.errorMsg = '';
+    this.errorCheck = false
     this.feesForm.reset();
   }
-
+  deleteFeesStructureModel(id: String) {
+    this.showModal = true;
+    this.deleteMode = true;
+    this.deleteById = id;
+  }
 
   successDone() {
     setTimeout(() => {
       this.closeModal();
       this.successMsg = '';
+      this.getFeesStructureByClass(this.cls);
+      console.log(this.cls)
     }, 1000)
   }
 
@@ -180,6 +184,16 @@ export class AdminStudentFeesStructureComponent implements OnInit {
       })
     }
 
+  }
+  feesStructureDelete(id: String) {
+    this.feesStructureService.deleteFeesStructure(id).subscribe((res: any) => {
+      if (res) {
+        this.successDone();
+        this.getFeesStructureByClass(this.cls);
+        this.successMsg = res;
+        this.deleteById = '';
+      }
+    })
   }
 
 }

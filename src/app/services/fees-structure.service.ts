@@ -11,7 +11,6 @@ export class FeesStructureService {
   constructor(private http: HttpClient) { }
 
   addFeesStructure(feesForm:any) {
-    console.log(feesForm)
     return this.http.post(`${this.url}`,feesForm);
   }
   feesStructureByClass(cls: any) {
@@ -28,7 +27,7 @@ export class FeesStructureService {
   //   return this.http.put(`${this.url}`,feesForm);
   // }
   
-  // deleteFees(id:any){
-  //   return this.http.delete(`${this.url}/${id}`);
-  // }
+  deleteFeesStructure(id:any){
+    return this.http.delete(`${this.url}/${id}`);
+  }
 }
