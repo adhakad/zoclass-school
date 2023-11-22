@@ -143,6 +143,12 @@ Dashboard section
   font-size: 18px;
 }
 
+.modal-content h3 {
+  color: #4e4caacd;
+  letter-spacing: .5px;
+  font-size: 16px;
+}
+
 h4 {
   color: #4e4caacd;
 }

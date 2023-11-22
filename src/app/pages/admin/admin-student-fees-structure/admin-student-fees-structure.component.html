@@ -30,10 +30,10 @@
                                     <thead class="bg-light">
                                         <tr class="text-muted">
                                             <th>S.No.</th>
-                                            <th>Fee Structure</th>
                                             <th>Class</th>
                                             <th>Particular Total Fees</th>
                                             <th>Admission Fees</th>
+                                            <th>Fee Structure</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -41,9 +41,6 @@
                                         <tr>
                                             <td>
                                                 <p class="mb-0">1</p>
-                                            </td>
-                                            <td class="mb-0">
-                                                <mat-icon>launch</mat-icon>
                                             </td>
                                             <td>
                                                 <p class="mb-0">{{clsFeesStructure.class | classSuffix}}</p>
@@ -53,6 +50,9 @@
                                             </td>
                                             <td>
                                                 <p class="mb-0">&#8377; {{clsFeesStructure.admissionFees}}</p>
+                                            </td>
+                                            <td class="mb-0">
+                                                <mat-icon (click)="openFeesStructureModal()">launch</mat-icon>
                                             </td>
                                             <td class="mb-0">
                                                 <mat-icon
@@ -79,8 +79,10 @@
 
                                     <div class="modal-content" *ngIf="!successMsg">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" *ngIf="feesTypeMode || feesMode">Create Fees Structure {{cls | classSuffix}}</h5>
-                                            <h5 class="modal-title" *ngIf="deleteMode">Delete Fees Structure {{cls | classSuffix}}</h5>
+                                            <h5 class="modal-title" *ngIf="feesTypeMode || feesMode">Create Fees
+                                                Structure {{cls | classSuffix}}</h5>
+                                            <h5 class="modal-title" *ngIf="deleteMode">Delete Fees Structure {{cls |
+                                                classSuffix}}</h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
                                         <div class="modal-body" *ngIf="feesTypeMode && !deleteMode">
@@ -273,6 +275,99 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="modal fade show" [class.show]="showFeesStructureModal">
+                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Class - {{cls | classSuffix}} Fee Structure 2023-24</h5>
+                                            <mat-icon matRipple (click)="closeModal()">close</mat-icon>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="custom-container">
+                                                    <div class="table-container">
+                                                        <ng-container>
+                                                            <h3>New Student</h3>
+                                                        </ng-container>
+                                                        <table class="custom-table">
+                                                            <tr>
+                                                                <td class="text-bold">Admission Fee</td>
+                                                                <td>*Apply</td>
+                                                                <td class="text-bold">Total Annual Fee</td>
+                                                                <td>&#8377; {{clsFeesStructure?.totalFees +
+                                                                    clsFeesStructure?.admissionFees}}</td>
+                                                            </tr>
+                                                        </table>
+                                                        <ng-container>
+                                                            <h3>Existing Student</h3>
+                                                        </ng-container>
+                                                        <table class="custom-table">
+                                                            <tr>
+                                                                <td class="text-bold">Admission Fee</td>
+                                                                <td>*Not Apply</td>
+                                                                <td class="text-bold">Total Fee</td>
+                                                                <td>&#8377; {{clsFeesStructure?.totalFees}}</td>
+                                                            </tr>
+                                                        </table>
+                                                        <ng-container>
+                                                            <h3>Installment's</h3>
+                                                        </ng-container>
+                                                        <table class="custom-table">
+                                                            <tr
+                                                                *ngFor="let installmentGroup of clsFeesStructure?.installment | chunk: 3; let i = index">
+                                                                <ng-container>
+                                                                    <ng-container
+                                                                        *ngFor="let installmentObject of installmentGroup; let j = index">
+                                                                        <ng-container
+                                                                            *ngFor="let entry of installmentObject | keyvalue">
+                                                                            <td class="text-bold">
+                                                                                {{ entry.key }}
+                                                                            </td>
+                                                                            <td style="font-weight: 400">
+                                                                                &#8377; {{ entry.value }}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </table>
+                                                        <ng-container>
+                                                            <h3>Particular's</h3>
+                                                        </ng-container>
+                                                        <table class="custom-table">
+                                                            <tr
+                                                                *ngFor="let installmentGroup of particularsAdmissionFees | chunk: 3; let i = index">
+                                                                <ng-container>
+                                                                    <ng-container
+                                                                        *ngFor="let installmentObject of installmentGroup; let j = index">
+                                                                        <ng-container
+                                                                            *ngFor="let entry of installmentObject | keyvalue">
+                                                                            <td class="text-bold">
+                                                                                {{ entry.key }} Fee
+                                                                            </td>
+                                                                            <td style="font-weight: 400">
+                                                                                &#8377; {{ entry.value }}
+                                                                            </td>
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button style="background-color: transparent;" class="submit-button" mat-raised-button
+                                                 type="submit"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

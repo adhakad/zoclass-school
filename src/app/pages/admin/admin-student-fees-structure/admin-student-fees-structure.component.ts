@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FeesStructureService } from 'src/app/services/fees-structure.service';
+import { SchoolService } from 'src/app/services/school.service';
 
 @Component({
   selector: 'app-admin-student-fees-structure',
@@ -17,6 +18,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   cls: any;
   feesForm: FormGroup;
   showModal: boolean = false;
+  showFeesStructureModal: boolean = false
   deleteMode: boolean = false;
   updateMode: boolean = false;
   deleteById: String = '';
@@ -32,9 +34,11 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   feesTypeMode: boolean = false;
   feesMode: boolean = false;
   clsFeesStructure: any;
+  particularsAdmissionFees: any[] = [];
   feePerticulars: any[] = ['Registration', 'Tution', 'Books', 'Uniform', 'Examination'];
+  schoolInfo: any;
   loader: Boolean = true;
-  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private feesStructureService: FeesStructureService) {
+  constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private schoolService: SchoolService, private feesStructureService: FeesStructureService) {
     this.feesForm = this.fb.group({
       admissionFees: ['', Validators.required],
       type: this.fb.group({
@@ -45,17 +49,25 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getSchool();
     this.cls = this.activatedRoute.snapshot.paramMap.get('id');
     this.getFeesStructureByClass(this.cls);
     setTimeout(() => {
       this.loader = false;
     }, 1000);
-
+  }
+  getSchool() {
+    this.schoolService.getSchool().subscribe((res: any) => {
+      if (res) {
+        this.schoolInfo = res;
+      }
+    })
   }
   getFeesStructureByClass(cls: any) {
     this.feesStructureService.feesStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.clsFeesStructure = res;
+        this.particularsAdmissionFees = [{ Admission: res.admissionFees }, ...res.feesType];
       }
     })
   }
@@ -78,7 +90,9 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.feesTypeMode = true;
     this.feesForm.reset();
   }
-
+  openFeesStructureModal(){
+    this.showFeesStructureModal = true;
+  }
   selectFeesStructure() {
     this.feesTypeMode = false;
     this.feesMode = true;
@@ -108,6 +122,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
     this.deleteMode = false;
     this.errorMsg = '';
     this.errorCheck = false
+    this.showFeesStructureModal = false;
     this.feesForm.reset();
   }
   deleteFeesStructureModel(id: String) {
