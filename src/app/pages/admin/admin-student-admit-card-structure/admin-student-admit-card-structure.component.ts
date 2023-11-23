@@ -13,6 +13,7 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   cls: any;
   admitcardForm: FormGroup;
   showModal: boolean = false;
+  showAdmitCardStructureModal:boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
   deleteById: String = '';
@@ -21,6 +22,8 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   errorCheck: Boolean = false;
   classSubject: any[] = [];
   examAdmitCard: any[] = [];
+  admitCardInfo: any;
+  processedData: any[] = [];
   stream: string = '';
   notApplicable: String = "stream";
   examTypes: any[] = ["quarterly", "half yearly", "final"];
@@ -91,74 +94,92 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     this.admitCardStructureService.admitCardStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.examAdmitCard = res;
+        this.admitCardInfo = res;
         setTimeout(()=>{
           this.loader = false;
         },1000)
-        
+        this.processData();
 
-        let date = new Date();
-        let examDate: any = this.examAdmitCard[0]?.examDate;
+        // let date = new Date();
+        // let examDate: any = this.examAdmitCard[0]?.examDate;
 
-        // Convert the date strings to Date objects
-        const datesAsObjects = examDate?.map((entry: any) => {
-          const subject = Object.keys(entry)[0];
-          const dateParts = entry[subject].split('.');
-          const dateObject = new Date(
-            parseInt(dateParts[2], 10),
-            parseInt(dateParts[1], 10) - 1,
-            parseInt(dateParts[0], 10)
-          );
-          return { subject, date: dateObject };
-        });
+        // // Convert the date strings to Date objects
+        // const datesAsObjects = examDate?.map((entry: any) => {
+        //   const subject = Object.keys(entry)[0];
+        //   const dateParts = entry[subject].split('.');
+        //   const dateObject = new Date(
+        //     parseInt(dateParts[2], 10),
+        //     parseInt(dateParts[1], 10) - 1,
+        //     parseInt(dateParts[0], 10)
+        //   );
+        //   return { subject, date: dateObject };
+        // });
 
-        // Sort the dates in ascending order
-        datesAsObjects?.sort((a: any, b: any) => a.date - b.date);
+        // // Sort the dates in ascending order
+        // datesAsObjects?.sort((a: any, b: any) => a.date - b.date);
 
-        // Get the last date
-        const lastDate = datesAsObjects[datesAsObjects?.length - 1];
-
-
-
-        console.log(lastDate)
-        console.log(date)
-
-
-        const date1 = lastDate;
-        const date2 = date;
-
-        // Set the time components of both dates to zero
-        const newDate1 = new Date(date1);
-        newDate1.setHours(0, 0, 0, 0);
-
-        const newDate2 = new Date(date2);
-        newDate2.setHours(0, 0, 0, 0);
-
-        // Compare the dates
-        if (newDate1.getTime() === newDate2.getTime()) {
-          console.log('The dates are equal.');
-        } else if (newDate1.getTime() < newDate2.getTime()) {
-          console.log('date1 is before date2.');
-        } else {
-          console.log('date1 is after date2.');
-        }
+        // // Get the last date
+        // const lastDate = datesAsObjects[datesAsObjects?.length - 1];
 
 
 
+        // console.log(lastDate)
+        // console.log(date)
 
-        // const dateString: string = "20.07.2023";
-        // const [day, month, year]: number[] = dateString.split(".").map(Number);
-        // const dateObject: Date = new Date(year, month - 1, day);
-        // const timestamp: number = Math.floor(dateObject.getTime() / 1000);
 
-        // console.log(timestamp);
+        // const date1 = lastDate;
+        // const date2 = date;
+
+        // // Set the time components of both dates to zero
+        // const newDate1 = new Date(date1);
+        // newDate1.setHours(0, 0, 0, 0);
+
+        // const newDate2 = new Date(date2);
+        // newDate2.setHours(0, 0, 0, 0);
+
+        // // Compare the dates
+        // if (newDate1.getTime() === newDate2.getTime()) {
+        //   console.log('The dates are equal.');
+        // } else if (newDate1.getTime() < newDate2.getTime()) {
+        //   console.log('date1 is before date2.');
+        // } else {
+        //   console.log('date1 is after date2.');
+        // }
+
+
+
+
+        // // const dateString: string = "20.07.2023";
+        // // const [day, month, year]: number[] = dateString.split(".").map(Number);
+        // // const dateObject: Date = new Date(year, month - 1, day);
+        // // const timestamp: number = Math.floor(dateObject.getTime() / 1000);
+
+        // // console.log(timestamp);
 
       }
     })
   }
 
+  processData() {
+    for (let i = 0; i < this.admitCardInfo[0].examDate.length; i++) {
+      const subject = Object.keys(this.admitCardInfo[0].examDate[i])[0];
+      const date = Object.values(this.admitCardInfo[0].examDate[i])[0];
+      const startTime = Object.values(this.admitCardInfo[0].examStartTime[i])[0];
+      const endTime = Object.values(this.admitCardInfo[0].examEndTime[i])[0];
+
+      this.processedData.push({
+        subject,
+        date,
+        timing: `${startTime} to ${endTime}`
+      });
+    }
+  }
 
   addAdmitCardModel() {
     this.showModal = true;
+  }
+  openAdmitCardStructureModal(){
+    this.showAdmitCardStructureModal = true;
   }
   deleteAdmitCardStructureModel(id: String) {
     this.showModal = true;
@@ -171,11 +192,10 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     this.errorMsg = '';
     this.deleteMode = false;
     this.deleteById = '';
+    this.showAdmitCardStructureModal = false;
     this.falseAllValue();
     this.admitcardForm.reset();
   }
-
-
   successDone() {
     setTimeout(() => {
       this.closeModal();
