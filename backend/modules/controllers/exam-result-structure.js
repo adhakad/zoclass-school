@@ -129,11 +129,14 @@ let ChangeResultPublishStatus = async (req, res, next) => {
             if(cls >= 4 && cls <= 12){
                 className = `${cls}th`
             }
-            if(cls==21){
-                className = `KG-I`
+            if(cls==200){
+                className = `Nursery`;
             }
-            if(cls==22){
-                className = `KG-II`
+            if (cls == 201) {
+                className = `LKG`;
+            }
+            if (cls == 202) {
+                className = `UKG`;
             }
             title = `Class ${className} ${examType} exam results announcement : Check Online and Download Your Results`;
             message = `All class ${className} students are informed that the online results for their ${examType} exams are being announced. You can check your results by visiting the school's website and download them online using the credentials provided by your school. We wish you the best of luck in achieving good results.`

@@ -223,8 +223,9 @@ export class StudentComponent implements OnInit {
       if (res) {
         this.studentInfoByClass = res;
         const classMappings: any = {
-          21: "KG-I",
-          22: "KG-II",
+          200: "Nursery",
+          201: "LKG",
+          202: "UKG",
           1: "1st",
           2: "2nd",
           3: "3rd",
@@ -416,11 +417,14 @@ export class StudentComponent implements OnInit {
     if (className >= 4 && className <= 12) {
       className = `${this.className}th`;
     }
-    if (className == 21) {
-      className = `KG-I`;
+    if(className==200){
+      className = `Nursery`;
     }
-    if (className == 22) {
-      className = `KG-II`;
+    if (className == 201) {
+      className = `LKG`;
+    }
+    if (className == 202) {
+      className = `UKG`;
     }
     const header: string[] = [
       'admissionNo',

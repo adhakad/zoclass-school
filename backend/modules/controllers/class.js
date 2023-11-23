@@ -58,8 +58,8 @@ let CreateClass = async(req,res,next) => {
          return res.status(400).json('Class already exist !');
         }
         const countClass = await ClassModel.count();
-        if(countClass == 14){
-            return res.status(400).json("Class limit is over to 14 !")
+        if(countClass == 15){
+            return res.status(400).json("Class limit is over !")
         }
         const addClass = {
             class:req.body.class,

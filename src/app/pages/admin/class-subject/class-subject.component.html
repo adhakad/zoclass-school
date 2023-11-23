@@ -58,7 +58,7 @@
                 </app-pagination>
               </div>
               <div class="modal fade show" [class.show]="showModal">
-                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode" role="document">
+                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode && !successMsg" role="document">
                   <div class="modal-content" *ngIf="successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title" style="color: transparent;">Class Subject</h5>
@@ -108,7 +108,7 @@
                                       <mat-option value="{{subject}}">{{subject}}</mat-option>
                                     </div>
                                   </ng-container>
-                                  <ng-container *ngIf="cls<11 && cls!==0 || cls==21 || cls==22">
+                                  <ng-container *ngIf="cls<11 && cls!==0 || cls == 200 || cls==201 || cls==202">
                                     <div>
                                       <mat-option value="N/A">N/A</mat-option>
                                     </div>

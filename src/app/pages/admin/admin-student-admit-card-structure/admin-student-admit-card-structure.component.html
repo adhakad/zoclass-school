@@ -52,7 +52,8 @@
                                             <p class="mb-0">{{examAdmitCard.stream}}</p>
                                         </td>
                                         <td class="mb-0">
-                                            <mat-icon (click)="openAdmitCardStructureModal(examAdmitCard)">launch</mat-icon>
+                                            <mat-icon
+                                                (click)="openAdmitCardStructureModal(examAdmitCard)">launch</mat-icon>
                                         </td>
                                         <td>
                                             <mat-slide-toggle [(ngModel)]="examAdmitCard.admitCardPublishStatus"
@@ -110,7 +111,7 @@
                                                                                 value="{{subject}}">{{subject}}</mat-option>
                                                                         </div>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="cls<11 && cls!==0 || cls==21 || cls==22">
+                                                                    <ng-container *ngIf="cls<11 && cls!==0 || cls == 200 || cls==201 || cls==202">
                                                                         <div>
                                                                             <mat-option value="notApplicable"
                                                                                 (click)='chooseStream(notApplicable)'>N/A</mat-option>
@@ -240,7 +241,8 @@
                                                 <div class="modal-body">
                                                     <ng-container>
                                                         <h3 style="font-size: 16px;letter-spacing: normal;">Note : As
-                                                            soon as the admit card structure for the {{cls | classSuffix}} class is
+                                                            soon as the admit card structure for the {{cls |
+                                                            classSuffix}} class is
                                                             deleted, the admit cards for all the students will be
                                                             automatically deleted.</h3>
                                                     </ng-container>
@@ -266,43 +268,46 @@
                                                 <div class="custom-container">
                                                     <div class="table-container">
                                                         <ng-container>
-                                                            <h3>{{admitCardInfo?.examType | titlecase}} Exam Admit Card - {{admitCardInfo?.stream | titlecase}} {{cls | classSuffix}}</h3>
+                                                            <h3>{{admitCardInfo?.examType | titlecase}} Exam Admit Card
+                                                                - {{admitCardInfo?.stream | titlecase}} {{cls |
+                                                                classSuffix}}</h3>
                                                         </ng-container>
                                                         <table class="custom-table">
                                                             <tr>
-                                                              <th>S.No.</th>
-                                                              <th>Subject Code</th>
-                                                              <th>Subject</th>
-                                                              <th>Exam Date</th>
-                                                              <th>Exam Timing</th>
+                                                                <th>S.No.</th>
+                                                                <th>Subject Code</th>
+                                                                <th>Subject</th>
+                                                                <th>Exam Date</th>
+                                                                <th>Exam Timing</th>
                                                             </tr>
-                                                            <ng-container *ngIf="processedData && processedData.length > 0">
-                                                              <tr *ngFor="let exam of processedData; let i = index">
-                                                                <td>
-                                                                  {{ i + 1 }}
-                                                                </td>
-                                                                <td>
-                                                                  100
-                                                                </td>
-                                                                <td>
-                                                                  {{ exam.subject | titlecase}}
-                                                                </td>
-                                                                <td>
-                                                                  {{ exam.date }}
-                                                                </td>
-                                                                <td>
-                                                                  {{ exam.timing }}
-                                                                </td>
-                                                              </tr>
+                                                            <ng-container
+                                                                *ngIf="processedData && processedData.length > 0">
+                                                                <tr *ngFor="let exam of processedData; let i = index">
+                                                                    <td>
+                                                                        {{ i + 1 }}
+                                                                    </td>
+                                                                    <td>
+                                                                        100
+                                                                    </td>
+                                                                    <td>
+                                                                        {{ exam.subject | titlecase}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{ exam.date }}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{ exam.timing }}
+                                                                    </td>
+                                                                </tr>
                                                             </ng-container>
-                                                          </table>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button style="background-color: transparent;" class="submit-button" mat-raised-button
-                                                 type="submit"></button>
+                                            <button style="background-color: transparent;" class="submit-button"
+                                                mat-raised-button type="submit"></button>
                                         </div>
                                     </div>
                                 </div>

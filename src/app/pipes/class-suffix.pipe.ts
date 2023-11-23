@@ -18,11 +18,14 @@ export class ClassSuffixPipe implements PipeTransform {
     if(classNumber==3){
       return `${classNumber}rd`;
     }
-    if(classNumber==21){
-      return `KG-I`;
+    if(classNumber==200){
+      return `Nursery`
     }
-    if(classNumber==22){
-      return `KG-II`;
+    if(classNumber==201){
+      return `LKG`
+    }
+    if(classNumber==202){
+      return `UKG`
     }
   }
 

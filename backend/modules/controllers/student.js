@@ -255,8 +255,9 @@ let CreateBulkStudentRecord = async (req, res, next) => {
     let className = req.body.class;
     className = parseInt(className);
     const classMappings = {
-        "KG-I": 21,
-        "KG-II": 22,
+        "Nursery": 200,
+        "LKG": 201,
+        "UKG": 202,
         "1st": 1,
         "2nd": 2,
         "3rd": 3,

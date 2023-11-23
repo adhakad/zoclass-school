@@ -109,11 +109,14 @@ let ChangeAdmitCardPublishStatus = async (req, res, next) => {
             if (cls >= 4 && cls <= 12) {
                 className = `${cls}th`
             }
-            if (cls == 21) {
-                className = `KG-I`
+            if(cls==200){
+                className = `Nursery`;
             }
-            if (cls == 22) {
-                className = `KG-II`
+            if (cls == 201) {
+                className = `LKG`;
+            }
+            if (cls == 202) {
+                className = `UKG`;
             }
             title = `Class ${className} ${examType} exam online admit cards released - Download Now`;
             message = `All class ${className} students are informed that the online admit cards for your ${examType} exams have been issued on the school's website. You can download them online using the credentials provided by your school. Best of luck for your upcoming exams.`
