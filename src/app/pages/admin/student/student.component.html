@@ -89,7 +89,6 @@
                       <mat-icon (click)="deleteStudentModel(students._id)">delete</mat-icon>
                     </td>
                   </tr>
-
                 </tbody>
               </table>
               <div class="pagination">
@@ -98,7 +97,7 @@
               </div>
 
               <div class="modal fade show" [class.show]="showModal">
-                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode">
+                <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!deleteMode && !successMsg">
                   <div class="modal-content" *ngIf="successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title" style="color: transparent;">&nbsp;</h5>
@@ -110,22 +109,17 @@
                       <mat-icon></mat-icon>
                     </div>
                   </div>
-
                   <div class="modal-content" *ngIf="!successMsg">
                     <div class="modal-header">
                       <h5 class="modal-title">{{updateMode?'Update': deleteMode ? 'Delete' :'Create New'}} Student</h5>
                       <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                     </div>
-
                     <form [formGroup]="studentForm" (ngSubmit)="studentAddUpdate()">
                       <div class="modal-body" *ngIf="!deleteMode">
-
                         <div *ngIf="errorCheck">
                           <p class="error-message">{{errorMsg}}</p>
                         </div>
-
                         <div class="container">
-
                           <div class="row">
                             <ng-container>
                               <h3>Academic Info</h3>
@@ -268,7 +262,6 @@
                                 </mat-error>
                               </mat-form-field>
                             </div>
-
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Roll Number</mat-label>
@@ -315,7 +308,6 @@
                                 </mat-error>
                               </mat-form-field>
                             </div>
-
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Category</mat-label>
@@ -330,7 +322,6 @@
                                 </mat-error>
                               </mat-form-field>
                             </div>
-
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Religion</mat-label>
@@ -345,7 +336,6 @@
                                 </mat-error>
                               </mat-form-field>
                             </div>
-
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Nationality</mat-label>
@@ -375,7 +365,6 @@
                                 </mat-error>
                               </mat-form-field>
                             </div>
-
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Address</mat-label>
@@ -410,7 +399,6 @@
                                   Please enter a valid Father name (only letters and spaces are allowed)
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Father Qualification</mat-label>
                                 <mat-select type="text" matInput formControlName="fatherQualification">
@@ -424,7 +412,6 @@
                                   Father qualification is required
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Father Occupation</mat-label>
                                 <mat-select type="text" matInput formControlName="fatherOccupation">
@@ -437,7 +424,6 @@
                                   Father occupation is required
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Father Contact</mat-label>
                                 <input matInput type="text" formControlName="fatherContact">
@@ -450,7 +436,6 @@
                                   Please enter a valid Contact (10-digit phone number starting with 6, 7, 8, or 9)
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Father Annual Income</mat-label>
                                 <input matInput type="text" formControlName="fatherAnnualIncome">
@@ -477,7 +462,6 @@
                                   Please enter a valid Mother name (only letters and spaces are allowed)
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Mother Qualification</mat-label>
                                 <mat-select type="text" matInput formControlName="motherQualification">
@@ -491,7 +475,6 @@
                                   Mother qualification is required
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Mother Occupation</mat-label>
                                 <mat-select type="text" matInput formControlName="motherOccupation">
@@ -504,7 +487,6 @@
                                   Mother occupation is required
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Mother Contact</mat-label>
                                 <input matInput type="text" formControlName="motherContact">
@@ -517,7 +499,6 @@
                                   Please enter a valid Contact (10-digit phone number starting with 6, 7, 8, or 9)
                                 </mat-error>
                               </mat-form-field>
-
                               <mat-form-field appearance="outline">
                                 <mat-label>Mother Annual Income</mat-label>
                                 <input matInput type="text" formControlName="motherAnnualIncome">
@@ -534,7 +515,6 @@
                           </div>
                         </div>
                       </div>
-
                       <div class="modal-footer" *ngIf="!deleteMode">
                         <button class="submit-button" mat-raised-button type="submit"
                           [disabled]="!studentForm.valid">Submit</button>
@@ -550,7 +530,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <div class="modal fade show" [class.show]="showBulkImportModal">
                 <div class="modal-dialog modal-dialog-top" role="document">
                   <div class="modal-content" *ngIf="successMsg">
@@ -593,11 +573,6 @@
                   </div>
                 </div>
               </div>
-
-
-
-
-
               <div class="modal fade show" [class.show]="showBulkExportModal">
                 <div class="modal-dialog modal-dialog-top" role="document">
                   <div class="modal-content" *ngIf="successMsg">
@@ -665,19 +640,6 @@
                   </div>
                 </div>
               </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
               <div class="modal fade show" [class.show]="showClassPromoteModal">
                 <div class="modal-dialog modal-dialog-scrollable" [class.modal-lg]="!successMsg">
                   <div class="modal-content" *ngIf="successMsg">
@@ -700,7 +662,6 @@
                     </div>
                     <form [formGroup]="studentClassPromoteForm" (ngSubmit)="studentClassPromote()">
                       <div class="modal-body">
-
                         <div *ngIf="errorCheck">
                           <p class="error-message" *ngIf="promotedClass">{{errorMsg}} {{promotedClass | classSuffix}}
                           </p>
@@ -732,7 +693,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- </div> -->
                       <div class="modal-footer">
                         <button class="submit-button" [disabled]="!studentClassPromoteForm.valid" mat-raised-button
                           type="submit">Submit</button>
@@ -741,15 +701,6 @@
                   </div>
                 </div>
               </div>
-
-
-
-
-
-
-
-
-
             </div>
           </div>
         </div>

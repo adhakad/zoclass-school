@@ -14,6 +14,7 @@ export class AdminStudentResultStructureComponent implements OnInit {
   examResultForm: FormGroup;
   disabled = true;
   showModal: boolean = false;
+  showExamResultStructureModal: boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
   deleteById: String = '';
@@ -23,6 +24,9 @@ export class AdminStudentResultStructureComponent implements OnInit {
   cls: any;
   classSubject: any[] = [];
   examResultStr: any;
+  examResultInfo: any;
+  processedTheoryData: any[] = [];
+  processedPracticalData: any[] = [];
   marksTypeMode: boolean = false;
   marksMode: boolean = false;
   theoryMarks: boolean = false;
@@ -38,8 +42,8 @@ export class AdminStudentResultStructureComponent implements OnInit {
   gradeMaxMarks: any = [{ "A+": 100 }, { "A": 90 }, { "B+": 80 }, { "B": 70 }, { "C+": 60 }, { "C": 50 }, { "D": 40 }, { "E": 32 }];
   examType: any[] = ["quarterly", "half yearly", "final"];
   streamMainSubject: any[] = ['Mathematics(Science)', 'Biology(Science)', 'History(Arts)', 'Sociology(Arts)', 'Political Science(Arts)', 'Accountancy(Commerce)', 'Economics(Commerce)'];
-  loader:Boolean=true;
-  isChecked!:Boolean;
+  loader: Boolean = true;
+  isChecked!: Boolean;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private classSubjectService: ClassSubjectService, private examResultStructureService: ExamResultStructureService) {
     this.examResultForm = this.fb.group({
       class: [''],
@@ -61,12 +65,40 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.getExamResultStructureByClass(this.cls);
   }
 
+  processData(examResult: any) {
+    for (let i = 0; i < examResult.theoryMaxMarks.length; i++) {
+      const subject = Object.keys(examResult.theoryMaxMarks[i])[0];
+      const theoryMaxMarks = Object.values(examResult.theoryMaxMarks[i])[0];
+      const theoryPassMarks = Object.values(examResult.theoryPassMarks[i])[0];
+      this.processedTheoryData.push({
+        subject,
+        theoryMaxMarks,
+        theoryPassMarks,
+      });
+    }
+    for (let i = 0; i < examResult.practicalMaxMarks.length; i++) {
+      const subject = Object.keys(examResult.practicalMaxMarks[i])[0];
+      const practicalMaxMarks = Object.values(examResult.practicalMaxMarks[i])[0];
+      const practicalPassMarks = Object.values(examResult.practicalPassMarks[i])[0];
+      this.processedPracticalData.push({
+        subject,
+        practicalMaxMarks,
+        practicalPassMarks,
+      });
+    }
+    
+  }
+
   addExamResultModel() {
     this.showModal = true;
     this.marksTypeMode = true;
     this.examResultForm.reset();
   }
-
+  openExamResultStructureModal(examResult: any) {
+    this.showExamResultStructureModal = true;
+    this.examResultInfo = examResult;
+    this.processData(examResult);
+  }
   deleteResultStructureModel(id: String) {
     this.showModal = true;
     this.deleteMode = true;
@@ -100,6 +132,10 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.deleteMode = false;
     this.deleteById = '';
     this.successMsg = '';
+    this.showExamResultStructureModal = false;
+    this.examResultInfo;
+    this.processedTheoryData = [];
+    this.processedPracticalData = [];
     this.examResultForm.reset();
   }
   successDone() {
@@ -113,9 +149,9 @@ export class AdminStudentResultStructureComponent implements OnInit {
     this.examResultStructureService.examResultStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.examResultStr = res;
-        setTimeout(()=>{
+        setTimeout(() => {
           this.loader = false;
-        },1000);
+        }, 1000);
       }
     })
   }
@@ -272,10 +308,10 @@ export class AdminStudentResultStructureComponent implements OnInit {
 
   }
 
-  onToggleChange(id:any,resultPublishStatus:any) {
+  onToggleChange(id: any, resultPublishStatus: any) {
     let params = {
-      id:id,
-      resultPublishStatus :resultPublishStatus
+      id: id,
+      resultPublishStatus: resultPublishStatus
     }
     this.examResultStructureService.changeResultPublishStatus(params)
       .subscribe(
