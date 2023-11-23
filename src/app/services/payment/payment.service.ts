@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PaymentService {
-  url = `${environment.API_URL}/api/payment`;
+  url = `${environment.API_URL}/v1/payment`;
   constructor(private http: HttpClient) {}
 
   createPayment(paymentData: any) {

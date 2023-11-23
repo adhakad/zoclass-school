@@ -35,7 +35,7 @@ export class AdminStudentFeesStructureComponent implements OnInit {
   feesMode: boolean = false;
   clsFeesStructure: any;
   particularsAdmissionFees: any[] = [];
-  feePerticulars: any[] = ['Registration', 'Tution', 'Books', 'Uniform', 'Examination'];
+  feePerticulars: any[] = ['Registration', 'Tution', 'Books', 'Uniform', 'Examination','Sports','Library','Transport'];
   schoolInfo: any;
   loader: Boolean = true;
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute,private schoolService: SchoolService, private feesStructureService: FeesStructureService) {

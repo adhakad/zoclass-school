@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FeesService {
-  url = `${environment.API_URL}/api/fees`;
+  url = `${environment.API_URL}/v1/fees`;
   constructor(private http: HttpClient) { }
 
   addFees(feesForm:any) {

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FeesStructureService {
-  url = `${environment.API_URL}/api/fees-structure`;
+  url = `${environment.API_URL}/v1/fees-structure`;
   constructor(private http: HttpClient) { }
 
   addFeesStructure(feesForm:any) {

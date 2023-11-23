@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TeacherService {
-  url = `${environment.API_URL}/api/teacher`;
+  url = `${environment.API_URL}/v1/teacher`;
   constructor(private http:HttpClient) { }
 
   addTeacher(teacherData:Teacher){

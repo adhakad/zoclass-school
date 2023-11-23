@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TopperService {
-  url = `${environment.API_URL}/api/topper`;
+  url = `${environment.API_URL}/v1/topper`;
   constructor(private http:HttpClient) { }
 
   addTopper(topperData:Topper){

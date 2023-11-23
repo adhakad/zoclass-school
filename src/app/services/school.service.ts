@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SchoolService {
-  url = `${environment.API_URL}/api/school`;
+  url = `${environment.API_URL}/v1/school`;
   constructor(private http: HttpClient) { }
   getSchoolNameLogo() {
     return this.http.get<any>(`${this.url}/name-logo`);

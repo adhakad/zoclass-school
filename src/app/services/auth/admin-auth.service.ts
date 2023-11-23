@@ -11,7 +11,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class AdminAuthService {
-  url = `${environment.API_URL}/api/admin`;
+  url = `${environment.API_URL}/v1/admin`;
   private isAdminAuthenticated = false;
   private token: string | null = '';
   private tokenTimer: any;

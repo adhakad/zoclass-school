@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class AdmitCardStructureService {
-  url = `${environment.API_URL}/api/admit-card-structure`;
+  url = `${environment.API_URL}/v1/admit-card-structure`;
   constructor(private http: HttpClient) { }
 
   addAdmitCardStructure(formData:any) {

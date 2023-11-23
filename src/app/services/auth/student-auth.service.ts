@@ -11,7 +11,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class StudentAuthService {
-  url = `${environment.API_URL}/api/student-user`;
+  url = `${environment.API_URL}/v1/student-user`;
   private isStudentAuthenticated = false;
   private token: string | null = '';
   private tokenTimer: any;

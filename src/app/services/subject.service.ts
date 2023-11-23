@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SubjectService {
-  url = `${environment.API_URL}/api/subject`;
+  url = `${environment.API_URL}/v1/subject`;
   constructor(private http: HttpClient) { }
 
   addSubject(subjectData: Subject) {

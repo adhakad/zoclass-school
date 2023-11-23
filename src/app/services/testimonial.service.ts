@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TestimonialService {
-  url = `${environment.API_URL}/api/testimonial`;
+  url = `${environment.API_URL}/v1/testimonial`;
   constructor(private http:HttpClient) { }
 
   addTestimonial(testimonialData:Testimonial){

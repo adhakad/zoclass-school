@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class AdsService {
-  url = `${environment.API_URL}/api/ads`;
+  url = `${environment.API_URL}/v1/ads`;
   constructor(private http:HttpClient) { }
 
   addAds(adsData:Ads){

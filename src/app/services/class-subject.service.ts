@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ClassSubjectService {
-  url = `${environment.API_URL}/api/class-subject`;
+  url = `${environment.API_URL}/v1/class-subject`;
   constructor(private http:HttpClient) { }
 
   addClassSubject(classSubjectData:ClassSubject){

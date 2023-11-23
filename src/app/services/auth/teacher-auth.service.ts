@@ -11,7 +11,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class TeacherAuthService {
-  url = `${environment.API_URL}/api/teacher-user`;
+  url = `${environment.API_URL}/v1/teacher-user`;
   private isTeacherAuthenticated = false;
   private token: string | null = '';
   private tokenTimer: any;

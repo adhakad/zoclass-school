@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ExamResultService {
-  url = `${environment.API_URL}/api/exam-result`;
+  url = `${environment.API_URL}/v1/exam-result`;
   constructor(private http: HttpClient) { }
 
   addExamResult(userForm:any) {

@@ -10,7 +10,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class NotificationService {
-  url = `${environment.API_URL}/api/notification`;
+  url = `${environment.API_URL}/v1/notification`;
   loggedInStudentInfo:any;
   loggedInTeacherInfo:any;
   loggedInAdminInfo:any;

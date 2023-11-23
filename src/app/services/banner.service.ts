@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class BannerService {
-  url = `${environment.API_URL}/api/banner`;
+  url = `${environment.API_URL}/v1/banner`;
   constructor(private http:HttpClient) { }
 
   addBanner(bannerData:Banner){

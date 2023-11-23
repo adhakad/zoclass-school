@@ -5,7 +5,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class AdmitCardService {
-  url = `${environment.API_URL}/api/admit-card`;
+  url = `${environment.API_URL}/v1/admit-card`;
   constructor(private http: HttpClient) { }
 
   admitCardStudentByClass(cls: any) {
