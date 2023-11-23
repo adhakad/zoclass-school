@@ -42,7 +42,10 @@ let CreateAdmitCardStructure = async (req, res, next) => {
             examEndTime: endTime,
         }
         const studentData = await StudentModel.find({ class: className, stream: stream });
-
+        const checkStudent = await StudentModel.findOne({ class: className, stream: stream });
+        if(!checkStudent){
+            return res.status(404).json('Student not found , please add students then create admit card structure !')
+        }
         let studentAdmitCardData = [];
         for (const student of studentData) {
             studentAdmitCardData.push({

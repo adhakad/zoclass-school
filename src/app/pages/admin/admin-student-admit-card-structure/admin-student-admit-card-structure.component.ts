@@ -94,12 +94,9 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     this.admitCardStructureService.admitCardStructureByClass(cls).subscribe((res: any) => {
       if (res) {
         this.examAdmitCard = res;
-        this.admitCardInfo = res;
         setTimeout(()=>{
           this.loader = false;
         },1000)
-        this.processData();
-
         // let date = new Date();
         // let examDate: any = this.examAdmitCard[0]?.examDate;
 
@@ -159,13 +156,12 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
       }
     })
   }
-
-  processData() {
-    for (let i = 0; i < this.admitCardInfo[0].examDate.length; i++) {
-      const subject = Object.keys(this.admitCardInfo[0].examDate[i])[0];
-      const date = Object.values(this.admitCardInfo[0].examDate[i])[0];
-      const startTime = Object.values(this.admitCardInfo[0].examStartTime[i])[0];
-      const endTime = Object.values(this.admitCardInfo[0].examEndTime[i])[0];
+  processData(examAdmitCard:any) {
+    for (let i = 0; i < examAdmitCard.examDate.length; i++) {
+      const subject = Object.keys(examAdmitCard.examDate[i])[0];
+      const date = Object.values(examAdmitCard.examDate[i])[0];
+      const startTime = Object.values(examAdmitCard.examStartTime[i])[0];
+      const endTime = Object.values(examAdmitCard.examEndTime[i])[0];
 
       this.processedData.push({
         subject,
@@ -178,8 +174,10 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
   addAdmitCardModel() {
     this.showModal = true;
   }
-  openAdmitCardStructureModal(){
+  openAdmitCardStructureModal(examAdmitCard:any){
     this.showAdmitCardStructureModal = true;
+    this.admitCardInfo = examAdmitCard;
+    this.processData(examAdmitCard);
   }
   deleteAdmitCardStructureModel(id: String) {
     this.showModal = true;
@@ -193,6 +191,8 @@ export class AdminStudentAdmitCardStructureComponent implements OnInit {
     this.deleteMode = false;
     this.deleteById = '';
     this.showAdmitCardStructureModal = false;
+    this.admitCardInfo;
+    this.processedData = [];
     this.falseAllValue();
     this.admitcardForm.reset();
   }

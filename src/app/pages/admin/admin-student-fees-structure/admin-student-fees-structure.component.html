@@ -266,7 +266,14 @@
                                             </div>
                                         </form>
                                         <div *ngIf="deleteMode && !feesMode && !feesTypeMode">
-                                            <h4>To delete fees structure, click ok to confirm.</h4>
+                                            <div class="modal-body">
+                                                <ng-container>
+                                                    <h3 style="font-size: 16px;letter-spacing: normal;">Note : As
+                                                        soon as the fees structure for the {{cls | classSuffix}} class is
+                                                        deleted, the fees records for all the students will be
+                                                        automatically deleted.</h3>
+                                                </ng-container>
+                                            </div>
                                             <div class="modal-footer">
                                                 <button class="delete-button" mat-raised-button type="button"
                                                     (click)="feesStructureDelete(deleteById)">Ok</button>
