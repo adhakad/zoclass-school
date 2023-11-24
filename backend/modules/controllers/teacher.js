@@ -1,6 +1,7 @@
 'use strict';
 const fs = require('fs');
 const TeacherModel = require('../models/teacher');
+const TeacherUserModel = require('../models/users/teacher-user');
 
 let countTeacher = async(req,res,next) => {
     let countTeacher = await TeacherModel.count();
@@ -63,7 +64,6 @@ let CreateTeacher = async (req, res, next) => {
             teacherUserId:teacherUserId,
             education: education,
             otp:otp,
-            image: req.file.filename,
         }
         const createTeacher = await TeacherModel.create(teacherData);
         return res.status(200).json('Teacher created successfully.');
@@ -102,10 +102,8 @@ let ChangeStatus = async(req,res,next) => {
 let DeleteTeacher = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const singleTeacher = await TeacherModel.findOne({ _id: id });
-        const singleImage = await singleTeacher.image;
-        await fs.unlinkSync('./public/teacher-image/' + singleImage);
         const deleteTeacher = await TeacherModel.findByIdAndRemove(id);
+        const deleteTeacherUser = await TeacherUserModel.findByIdAndDelete({_id:id})
         return res.status(200).json('Teacher delete successfully.');
     } catch (error) {
         return res.status(500).json('Internal Server Error !');

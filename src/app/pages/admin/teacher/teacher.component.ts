@@ -29,10 +29,9 @@ export class TeacherComponent implements OnInit {
   constructor(private fb: FormBuilder, private teacherService: TeacherService) {
     this.teacherForm = this.fb.group({
       _id: [''],
-      name: ['', Validators.required],
-      teacherUserId: ['', Validators.required],
-      education: ['', Validators.required],
-      image: ['']
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
+      teacherUserId: ['', [Validators.required, Validators.pattern(/^\d{6}$/),Validators.pattern('^[0-9]+$')]],
+      education: ['', [Validators.required, Validators.pattern('^[a-zA-Z.\\s]+$')]],
     })
   }
 

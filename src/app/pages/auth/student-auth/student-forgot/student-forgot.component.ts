@@ -31,7 +31,7 @@ export class StudentForgotComponent implements OnInit {
       class: [''],
     })
     this.resetForm = this.fb.group({
-      email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
+      email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
       otp: [''],
       rollNumber: [''],

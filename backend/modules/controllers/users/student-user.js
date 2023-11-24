@@ -28,7 +28,7 @@ let SignupStudent = async (req, res, next) => {
         let studentData = {
             studentId: studentId,
             email: email,
-            password: hashedPassword // Store the hashed password
+            password: hashedPassword
         }
         const createSignupStudent = await StudentUserModel.create(studentData);
         if (createSignupStudent) {

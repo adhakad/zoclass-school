@@ -14,7 +14,7 @@ export class StudentLoginComponent implements OnInit {
   loginForm: FormGroup;
   constructor(private fb: FormBuilder,private router:Router,private studentAuthService: StudentAuthService,private adminAuthService: AdminAuthService,private teacherAuthService: TeacherAuthService) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
+      email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20),Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
     })
   }

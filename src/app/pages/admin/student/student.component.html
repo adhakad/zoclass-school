@@ -382,7 +382,7 @@
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Contact</mat-label>
-                                <input matInput type="text" formControlName="contact">
+                                <input matInput type="number" formControlName="contact">
                                 <mat-error
                                   *ngIf="studentForm.get('contact')?.hasError('required') && studentForm.get('contact')?.touched">
                                   Contact is required
@@ -454,7 +454,7 @@
                               </mat-form-field>
                               <mat-form-field appearance="outline">
                                 <mat-label>Father Contact</mat-label>
-                                <input matInput type="text" formControlName="fatherContact">
+                                <input matInput type="number" formControlName="fatherContact">
                                 <mat-error
                                   *ngIf="studentForm.get('fatherContact')?.hasError('required') && studentForm.get('fatherContact')?.touched">
                                   Father contact is required
@@ -466,7 +466,7 @@
                               </mat-form-field>
                               <mat-form-field appearance="outline">
                                 <mat-label>Father Annual Income</mat-label>
-                                <input matInput type="text" formControlName="fatherAnnualIncome">
+                                <input matInput type="number" formControlName="fatherAnnualIncome">
                                 <mat-error
                                   *ngIf="studentForm.get('fatherAnnualIncome')?.hasError('required') && studentForm.get('fatherAnnualIncome')?.touched">
                                   Father annual income is required
@@ -517,7 +517,7 @@
                               </mat-form-field>
                               <mat-form-field appearance="outline">
                                 <mat-label>Mother Contact</mat-label>
-                                <input matInput type="text" formControlName="motherContact">
+                                <input matInput type="number" formControlName="motherContact">
                                 <mat-error
                                   *ngIf="studentForm.get('motherContact')?.hasError('required') && studentForm.get('motherContact')?.touched">
                                   Mother contact is required
@@ -529,7 +529,7 @@
                               </mat-form-field>
                               <mat-form-field appearance="outline">
                                 <mat-label>Mother Annual Income</mat-label>
-                                <input matInput type="text" formControlName="motherAnnualIncome">
+                                <input matInput type="number" formControlName="motherAnnualIncome">
                                 <mat-error
                                   *ngIf="studentForm.get('motherAnnualIncome')?.hasError('required') && studentForm.get('motherAnnualIncome')?.touched">
                                   Mother annual income is required

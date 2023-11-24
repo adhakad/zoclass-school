@@ -22,10 +22,6 @@ const TeacherModel = mongoose.model('teacher', {
         required: true,
         trim: true,
     },
-    image: {
-        type: String,
-        trim: true,
-    },
     status: {
         type: String,
         required: true,
