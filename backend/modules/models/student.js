@@ -67,6 +67,16 @@ const StudentModel = mongoose.model('student', {
         required: true,
         trim: true
     },
+    aadharNumber: {
+        type: Number,
+        trim: true,
+
+    },
+    samagraId: {
+        type: Number,
+        trim: true,
+
+    },
     contact: {
         type: Number,
         required: true,

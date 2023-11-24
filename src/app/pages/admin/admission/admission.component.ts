@@ -60,6 +60,8 @@ export class AdmissionComponent implements OnInit {
       stream: ['', Validators.required],
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       dob: ['', Validators.required],
+      aadharNumber:['',[Validators.required, Validators.pattern('^\\d{12}$')]],
+      samagraId:['',[Validators.required, Validators.pattern('^\\d{9}$')]],
       gender: ['', Validators.required],
       category: ['', Validators.required],
       religion: ['', Validators.required],

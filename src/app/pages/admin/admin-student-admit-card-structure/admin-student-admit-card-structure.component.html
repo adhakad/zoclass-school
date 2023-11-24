@@ -260,7 +260,7 @@
                                 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Admit Card Structure 2023-24</h5>
+                                            <h5 class="modal-title">Admit Card Structure </h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
                                         <div class="modal-body">
@@ -269,7 +269,7 @@
                                                     <div class="table-container">
                                                         <ng-container>
                                                             <h3>{{admitCardInfo?.examType | titlecase}} Exam Admit Card
-                                                                - {{admitCardInfo?.stream | titlecase}} {{cls |
+                                                                - {{admitCardInfo?.stream | uppercase}} {{cls |
                                                                 classSuffix}}</h3>
                                                         </ng-container>
                                                         <table class="custom-table">
