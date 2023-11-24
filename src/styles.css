@@ -71,8 +71,9 @@ Header section
   font-size: large;
   color: #525098eb !important;
 }
+
 .hamburger-menu .mat-icon {
-  font-size:medium;
+  font-size: medium;
   margin-top: 5px;
   color: #525098eb !important;
 }
@@ -404,6 +405,31 @@ table mat-icon {
   background-color: #8d6dff !important;
 }
 
+::ng-deep .mat-slide-toggle-bar {
+  height: 27px !important;
+  width: 48px !important;
+  border-radius: 36px !important;
+  background-color: #d3cde8;
+}
+
+::ng-deep .mat-slide-toggle-thumb {
+  top: 6px !important;
+  right: -6px !important;
+  position: relative !important;
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-ripple-element {
+  background-color: transparent;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #8d6dff !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #fff !important;
+}
 
 @media (min-width: 576px) and (max-width:991.98px) {
   .header {
@@ -453,14 +479,17 @@ Header section
     font: 1.20em sans-serif;
     letter-spacing: .85px;
   }
-  .desktop-menu span{
+
+  .desktop-menu span {
     color: #525098eb;
   }
-  .desktop-menu .mat-icon{
+
+  .desktop-menu .mat-icon {
     font-size: medium;
     margin-top: 2px;
     color: #525098eb;
   }
+
   .hamburger {
     display: none;
   }
@@ -501,11 +530,12 @@ Side navigation section
   }
 
   .side-navbar li button .mat-icon {
-    font-size:medium;
+    font-size: medium;
     display: inline-block;
     margin-left: 5px;
     margin-top: 5px;
   }
+
   .side-navbar li button span {
     display: inline-block;
     font-size: 1.1em;
@@ -519,6 +549,7 @@ Side navigation section
     background: #8d6dff;
     color: #fff;
   }
+
   /* 
   Dashboard section 
   */
@@ -528,7 +559,7 @@ Side navigation section
     background-color: #64748d15;
     padding-bottom: 1.5vh;
   }
-  
+
   .big-container {
     background-color: #fff;
     min-height: 87vh;
