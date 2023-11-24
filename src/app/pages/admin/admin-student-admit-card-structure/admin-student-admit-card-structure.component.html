@@ -260,7 +260,7 @@
                                 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Admit Card Structure </h5>
+                                            <h5 class="modal-title">Class {{cls | classSuffix}}</h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
                                         <div class="modal-body">
@@ -268,14 +268,11 @@
                                                 <div class="custom-container">
                                                     <div class="table-container">
                                                         <ng-container>
-                                                            <h3>{{admitCardInfo?.examType | titlecase}} Exam Admit Card
-                                                                - {{admitCardInfo?.stream | uppercase}} {{cls |
-                                                                classSuffix}}</h3>
+                                                            <h3>{{admitCardInfo?.examType | titlecase}} Exam Admit Card <span *ngIf="admitCardInfo?.stream!=='N/A'">- {{admitCardInfo?.stream}}</span></h3>
                                                         </ng-container>
                                                         <table class="custom-table">
                                                             <tr>
                                                                 <th>S.No.</th>
-                                                                <th>Subject Code</th>
                                                                 <th>Subject</th>
                                                                 <th>Exam Date</th>
                                                                 <th>Exam Timing</th>
@@ -285,9 +282,6 @@
                                                                 <tr *ngFor="let exam of processedData; let i = index">
                                                                     <td>
                                                                         {{ i + 1 }}
-                                                                    </td>
-                                                                    <td>
-                                                                        100
                                                                     </td>
                                                                     <td>
                                                                         {{ exam.subject | titlecase}}

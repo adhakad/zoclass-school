@@ -8,7 +8,7 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
     let className = req.body.class;
 
     try {
-        let student = await StudentModel.findOne({admissionNo:admissionNo,class:className,rollNumber:rollNumber});
+        let student = await StudentModel.findOne({admissionNo:admissionNo,class:className,rollNumber:rollNumber},'session admissionNo name rollNumber class fatherName motherName stream');
         if(!student){
             return res.status(404).json({ errorMsg: 'Admit card not found !' });
         }
@@ -40,7 +40,7 @@ let GetSingleStudentAdmitCard = async(req,res,next) => {
 let GetSingleStudentAdmitCardById = async(req,res,next) => {
     let studentId = req.params.id;
     try{
-        let student = await StudentModel.findOne({_id:studentId},'admissionNo name rollNumber class fatherName motherName stream');
+        let student = await StudentModel.findOne({_id:studentId},'session admissionNo name rollNumber class fatherName motherName stream');
         if (!student) {
             return res.status(404).json({ errorMsg: 'Student not found !' });
         }

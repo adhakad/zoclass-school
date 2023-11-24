@@ -23,6 +23,7 @@
                                 <thead class="bg-light">
                                     <tr class="text-muted">
                                         <th>No.</th>
+                                        <th>Session</th>
                                         <th>Fee Payment</th>
                                         <th>Fee Statement</th>
                                         <th>Student Name</th>
@@ -37,6 +38,9 @@
                                     <tr>
                                         <td>
                                             <p class="mb-0">{{i+1}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">{{student.session}}</p>
                                         </td>
                                         <th>
                                             <button
@@ -103,6 +107,9 @@
                                                                 <tr>
                                                                     <td>
                                                                         School Code : {{schoolInfo?.schoolCode}}
+                                                                    </td>
+                                                                    <td>
+                                                                        School Fee - {{singleStudent.session}}
                                                                     </td>
                                                                     <td>
                                                                         Affiliation No. :
@@ -192,6 +199,9 @@
                                                             <tr>
                                                                 <td>
                                                                     School Code : {{schoolInfo?.schoolCode}}
+                                                                </td>
+                                                                <td>
+                                                                    School Fee Receipt - {{singleStudent.session}}
                                                                 </td>
                                                                 <td>
                                                                     Affiliation No. : {{schoolInfo?.affiliationNumber}}

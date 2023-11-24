@@ -385,7 +385,7 @@
                                 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Exam Result Structure</h5>
+                                            <h5 class="modal-title">Class {{cls | classSuffix}}</h5>
                                             <mat-icon matRipple (click)="closeModal()">close</mat-icon>
                                         </div>
                                         <div class="modal-body">
@@ -393,14 +393,11 @@
                                                 <div class="custom-container">
                                                     <div class="table-container">
                                                         <ng-container>
-                                                            <h3>{{examResultInfo?.examType | titlecase}} Exam Result
-                                                                - {{examResultInfo?.stream | titlecase}} {{cls |
-                                                                classSuffix}}</h3>
+                                                            <h3>{{examResultInfo?.examType | titlecase}} Exam Result <span *ngIf="examResultInfo?.stream!=='N/A'">- {{examResultInfo?.stream}}</span></h3>
                                                         </ng-container>
                                                         <table class="custom-table">
                                                             <tr>
                                                                 <th>S.No.</th>
-                                                                <th>Subject Code</th>
                                                                 <th>Subject</th>
                                                                 <th>Theory Maximum Marks</th>
                                                                 <th>Theory Passing Marks</th>

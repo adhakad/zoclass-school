@@ -8,7 +8,7 @@ let GetSingleStudentFeesCollectionById = async (req, res, next) => {
     let studentId = req.params.studentId;
 
     try {
-        const student = await StudentModel.find({ _id: studentId }, '_id admissionNo name rollNumber class fatherName motherName dob');
+        const student = await StudentModel.find({ _id: studentId }, '_id session admissionNo name rollNumber class fatherName motherName dob');
         if (!student) {
             return res.status(404).json('Student not found !')
         }
@@ -22,7 +22,7 @@ let GetSingleStudentFeesCollectionById = async (req, res, next) => {
 let GetAllStudentFeesCollectionByClass = async (req, res, next) => {
     let className = req.params.class;
     try {
-        const student = await StudentModel.find({ class: className }, '_id admissionNo name rollNumber class fatherName dob');
+        const student = await StudentModel.find({ class: className }, '_id session admissionNo name rollNumber class fatherName dob');
         if (!student) {
             return res.status(404).json('Student not found !')
         }

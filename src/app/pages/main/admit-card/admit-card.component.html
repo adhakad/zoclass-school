@@ -56,7 +56,7 @@
               School Code : {{schoolInfo?.schoolCode}}
             </td>
             <td>
-              {{studentAdmitCardInfo?.examType | titlecase}} Exam Admit Card - 2023
+              {{studentAdmitCardInfo?.examType | titlecase}} Exam Admit Card - {{studentAdmitCardInfo?.session}}
             </td>
             <td>
               Affiliation No. : {{schoolInfo?.affiliationNumber}}
@@ -86,7 +86,7 @@
         <table class="custom-table">
           <tr>
             <th>S.No.</th>
-            <th>Subject Code</th>
+            <!-- <th>Subject Code</th> -->
             <th>Subject</th>
             <th>Exam Date</th>
             <th>Exam Timing</th>
@@ -96,9 +96,9 @@
               <td>
                 {{ i + 1 }}
               </td>
-              <td>
+              <!-- <td>
                 100
-              </td>
+              </td> -->
               <td>
                 {{ exam.subject | titlecase}}
               </td>
