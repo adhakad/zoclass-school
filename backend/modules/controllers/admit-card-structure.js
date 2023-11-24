@@ -31,7 +31,29 @@ let CreateAdmitCardStructure = async (req, res, next) => {
             if (stream === "N/A") {
                 streamMsg = ``;
             }
-            return res.status(400).json(`Class ${className} ${streamMsg} exam admit card structure already exist !`);
+            let cls;
+            if (className == 1) {
+                cls = `${className}st`
+            }
+            if (className == 2) {
+                cls = `${className}nd`
+            }
+            if (cls == 3) {
+                cls = `${className}rd`
+            }
+            if (className >= 4 && className <= 12) {
+                cls = `${className}th`
+            }
+            if(className==200){
+                cls = `Nursery`;
+            }
+            if (className == 201) {
+                cls = `LKG`;
+            }
+            if (className == 202) {
+                cls = `UKG`;
+            }
+            return res.status(400).json(`Class ${cls} ${streamMsg} exam admit card structure already exist !`);
         }
         let admitCardStructureData = {
             class: className,

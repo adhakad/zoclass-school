@@ -156,10 +156,10 @@
                               <mat-form-field appearance="outline">
                                 <mat-label>Class</mat-label>
                                 <mat-select matInput formControlName="class">
-                                  <div *ngFor="let classInfo of classInfo">
-                                    <mat-option [value]="classInfo.class"
+                                  <div>
+                                    <mat-option [value]="className"
                                       (click)="chooseClass(studentForm.get('class'))">
-                                      {{ classInfo.class | classSuffix }}
+                                      {{ className | classSuffix }}
                                     </mat-option>
                                   </div>
                                 </mat-select>
@@ -698,21 +698,31 @@
                         <div class="container">
                           <div class="row">
                             <ng-container>
-                              <h3>Student Info</h3>
+                              <p>Admission No. - {{promotingStudent?.admissionNo}}</p>
+                              <p>Name - {{promotingStudent?.name | titlecase}}</p>
+                              <p>Father Name - {{promotingStudent?.fatherName | titlecase}}</p>
+                              <p>Class - {{promotingStudent?.class | classSuffix}}</p>
                             </ng-container>
+                            <div class="mb-5"></div>
+                            <input matInput type="hidden" formControlName="admissionNo" readonly>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
-                                <mat-label>Admission No.</mat-label>
-                                <input matInput type="number" formControlName="admissionNo" readonly>
-                                <mat-hint
-                                  *ngIf="!studentClassPromoteForm.get('admissionNo')?.valid && studentClassPromoteForm.get('admissionNo')?.touched"
-                                  class="form-text text-danger">Admission no. is required</mat-hint>
+                                <mat-label>Session</mat-label>
+                                <mat-select type="text" matInput formControlName="session">
+                                  <div *ngFor="let session of sessions">
+                                    <mat-option value="{{session.year}}">{{session.year}}</mat-option>
+                                  </div>
+                                </mat-select>
+                                <mat-error
+                                  *ngIf="studentForm.get('session')?.hasError('required') && studentForm.get('session')?.touched">
+                                  Session is required
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="col-12 col-lg-6">
                               <mat-form-field appearance="outline">
                                 <mat-label>Roll Number</mat-label>
-                                <input matInput type="number" formControlName="rollNumber" readonly>
+                                <input matInput type="number" formControlName="rollNumber">
                                 <mat-hint
                                   *ngIf="!studentClassPromoteForm.get('rollNumber')?.valid && studentClassPromoteForm.get('rollNumber')?.touched"
                                   class="form-text text-danger">Roll number is required</mat-hint>

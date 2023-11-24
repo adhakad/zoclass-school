@@ -449,7 +449,7 @@ let UpdateStudent = async (req, res, next) => {
 let StudentClassPromote = async (req, res, next) => {
     try {
         const studentId = req.params.id;
-        let { rollNumber } = req.body;
+        let { session , rollNumber } = req.body;
         let className = parseInt(req.body.class);
         let checkStudent = await StudentModel.findOne({ _id: studentId });
         if (!checkStudent) {
@@ -459,10 +459,14 @@ let StudentClassPromote = async (req, res, next) => {
         if (className == cls && className === 12) {
             return res.status(400).json({ errorMsg: `In this school, students cannot be promoted after the ${className}th class` });
         }
-        if (className == cls && className === 22) {
+        let isSession = checkStudent.session;
+        if (session == isSession) {
+            return res.status(400).json({ errorMsg: `The student is currently in the ${isSession} session, please choose the academic session for the next year.` });
+        }
+        if (className == cls && className === 202) {
             className = 1;
         }
-        if (className == cls && className !== 22) {
+        if (className == cls && className !== 202) {
             className = className + 1;
         }
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });

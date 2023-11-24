@@ -79,9 +79,7 @@ let DeleteResultStructure = async (req, res, next) => {
     try {
         const id = req.params.id;
         const resultStr = await ExamResultStructureModel.findOne({ _id: id });
-        const className = resultStr.class;
-        const stream = resultStr.stream;
-        const examType = resultStr.examType;
+        const { class: className, stream, examType } = resultStr;
         const deleteResultStructure = await ExamResultStructureModel.findByIdAndRemove(id);
         if (deleteResultStructure) {
             const result = await ExamResultModel.findOne({ class: className, stream: stream, examType: examType });

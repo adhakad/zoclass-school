@@ -56,6 +56,7 @@ export class StudentComponent implements OnInit {
   fileChoose: boolean = false;
   loader: Boolean = true;
   promotedClass: any;
+  promotingStudent: any
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, public ete: ExcelService, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
@@ -67,8 +68,8 @@ export class StudentComponent implements OnInit {
       rollNumber: ['', [Validators.required, Validators.maxLength(8), Validators.pattern('^[0-9]+$')]],
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]],
       dob: ['', Validators.required],
-      aadharNumber:['',[Validators.required, Validators.pattern('^\\d{12}$')]],
-      samagraId:['',[Validators.required, Validators.pattern('^\\d{9}$')]],
+      aadharNumber: ['', [Validators.required, Validators.pattern('^\\d{12}$')]],
+      samagraId: ['', [Validators.required, Validators.pattern('^\\d{9}$')]],
       gender: ['', Validators.required],
       category: ['', Validators.required],
       religion: ['', Validators.required],
@@ -95,6 +96,7 @@ export class StudentComponent implements OnInit {
     this.studentClassPromoteForm = this.fb.group({
       _id: ['', Validators.required],
       class: [''],
+      session: ['', Validators.required],
       admissionNo: ['', Validators.required],
       rollNumber: ['', Validators.required],
     })
@@ -168,6 +170,7 @@ export class StudentComponent implements OnInit {
     this.stream = '';
     this.cls = 0;
     this.promotedClass;
+    this.promotingStudent;
     this.admissionType = '';
     this.studentForm.reset();
     this.studentClassPromoteForm.reset();
@@ -190,6 +193,7 @@ export class StudentComponent implements OnInit {
   }
   addStudentClassPromoteModel(student: any) {
     this.showClassPromoteModal = true;
+    this.promotingStudent = student;
     this.studentClassPromoteForm.patchValue(student);
   }
   updateStudentModel(student: any) {
@@ -419,7 +423,7 @@ export class StudentComponent implements OnInit {
     if (className >= 4 && className <= 12) {
       className = `${this.className}th`;
     }
-    if(className==200){
+    if (className == 200) {
       className = `Nursery`;
     }
     if (className == 201) {
@@ -498,6 +502,7 @@ export class StudentComponent implements OnInit {
   studentClassPromote() {
     if (this.studentClassPromoteForm.valid) {
       this.studentClassPromoteForm.value.class = parseInt(this.className);
+      console.log(this.studentClassPromoteForm.value.class)
       this.studentService.studentClassPromote(this.studentClassPromoteForm.value).subscribe((res: any) => {
         if (res) {
           setTimeout(() => {

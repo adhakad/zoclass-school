@@ -28,7 +28,7 @@
                     <th>Roll Number</th>
                     <th>Class</th>
                     <th>Exam</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                   </tr>
                 </thead>
                 <tbody *ngIf="allAdmitCards && allAdmitCards.length>0">
@@ -51,13 +51,13 @@
                     <td>
                       <p class="mb-0">{{students.examType | titlecase}}</p>
                     </td>
-                    <td>
+                    <!-- <td>
                       <a class="mb-0 status-active" (click)="changeStatus(students.studentId,0)"
                         *ngIf="students.status == 'Active'"
                         href="javascript:void(0)">{{students.status}}&nbsp;&nbsp;</a>
                       <a class="mb-0 status-inactive" (click)="changeStatus(students.studentId,1)"
                         *ngIf="students.status == 'Inactive'" href="javascript:void(0)">{{students.status}}</a>
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>
