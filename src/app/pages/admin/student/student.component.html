@@ -49,7 +49,9 @@
                     <th>Otp</th>
                     <th>Status</th>
                     <th>Class Promote</th>
-                    <th>Action</th>
+                    <th>View</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="studentInfo && studentInfo.length>0">
@@ -85,8 +87,12 @@
                         mat-raised-button>Promote</button>
                     </td>
                     <td class="mb-0">
-                      <mat-icon (click)="addStudentInfoViewModel(students)">edit_note</mat-icon>
-                      <mat-icon (click)="updateStudentModel(students)">edit_note</mat-icon>
+                      <mat-icon (click)="addStudentInfoViewModel(students)">visibility</mat-icon>
+                    </td>
+                    <td class="mb-0">
+                      <mat-icon (click)="updateStudentModel(students)">edit</mat-icon>
+                    </td>
+                    <td class="mb-0">
                       <mat-icon (click)="deleteStudentModel(students._id)">delete</mat-icon>
                     </td>
                   </tr>
@@ -549,7 +555,9 @@
                           [disabled]="!studentForm.valid">Submit</button>
                       </div>
                       <div *ngIf="deleteMode">
-                        <h3>To delete student detail, click ok to confirm.</h3>
+                        <div class="modal-body">
+                          <h3>Note : When deleting student details, all related data such as login information, fee records, student details, admit cards, results, etc., will be removed.</h3>
+                        </div>
                         <div class="modal-footer">
                           <button class="delete-button" mat-raised-button type="button"
                             (click)="studentDelete(deleteById)">Ok</button>

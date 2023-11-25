@@ -27,7 +27,7 @@
                     <th>Class</th>
                     <th>Stream</th>
                     <th>Subject</th>
-                    <th>Actions</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="classSubjectInfo && classSubjectInfo.length>0">
@@ -47,7 +47,7 @@
                       </ng-container>
                     </td>
                     <td class="mb-0">
-                      <mat-icon (click)="updateClassSubjectModel(classSubject)">edit_note</mat-icon>
+                      <!-- <mat-icon (click)="updateClassSubjectModel(classSubject)">edit</mat-icon> -->
                       <mat-icon (click)="deleteClassSubjectModel(classSubject._id)">delete</mat-icon>
                     </td>
                   </tr>

@@ -42,7 +42,7 @@
                     <th>First Phone</th>
                     <th>Second Phone</th>
                     <th>Email</th>
-                    <th>Action</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="schoolInfo">
@@ -93,7 +93,7 @@
                       <p class="mb-0">{{schoolInfo?.email}}</p>
                     </td>
                     <td class="mb-0">
-                      <!-- <mat-icon (click)="updateSchoolModel(schoolInfo)">edit_note</mat-icon> -->
+                      <!-- <mat-icon (click)="updateSchoolModel(schoolInfo)">edit</mat-icon> -->
                       <mat-icon (click)="deleteSchoolModel(schoolInfo?._id)">delete</mat-icon>
                     </td>
                   </tr>

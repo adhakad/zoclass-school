@@ -27,7 +27,8 @@
                                         <th>Banner Title</th>
                                         <th style="color: transparent;">Banner Title</th>
                                         <th>Image</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
+                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="bannerInfo && bannerInfo.length>0">
@@ -44,7 +45,9 @@
                                                 style="height: 28px;;">
                                         </td>
                                         <td class="mb-0">
-                                            <mat-icon (click)="updateBannerModel(banner)">edit_note</mat-icon>
+                                            <mat-icon (click)="updateBannerModel(banner)">edit</mat-icon>
+                                        </td>
+                                        <td class="mb-0">
                                             <mat-icon (click)="deleteBannerModel(banner._id)">delete</mat-icon>
                                         </td>
                                     </tr>

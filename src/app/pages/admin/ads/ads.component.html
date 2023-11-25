@@ -28,7 +28,8 @@
                                         <th style="color: transparent;">Ads Title</th>
                                         <th>Image</th>
                                         <th style="color: transparent;">Image</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
+                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="adsInfo && adsInfo.length>0">
@@ -46,7 +47,9 @@
                                         </td>
                                         <td></td>
                                         <td class="mb-0">
-                                            <mat-icon (click)="updateAdsModel(ads)">edit_note</mat-icon>
+                                            <mat-icon (click)="updateAdsModel(ads)">edit</mat-icon>
+                                        </td>
+                                        <td class="mb-0">
                                             <mat-icon (click)="deleteAdsModel(ads._id)">delete</mat-icon>
                                         </td>
                                     </tr>

@@ -29,7 +29,8 @@
                                         <th>Class</th>
                                         <th>Percentile</th>
                                         <th>Year</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
+                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,7 +56,9 @@
                                             <p class="mb-0">{{topper.year}}</p>
                                         </td>
                                         <td class="mb-0">
-                                            <mat-icon (click)="updateTopperModel(topper)">edit_note</mat-icon>
+                                            <mat-icon (click)="updateTopperModel(topper)">edit</mat-icon>
+                                        </td>
+                                        <td class="mb-0">
                                             <mat-icon (click)="deleteTopperModel(topper._id)">delete</mat-icon>
                                         </td>
                                     </tr>
@@ -103,8 +106,8 @@
                                                     <mat-label>Select Class</mat-label>
                                                     <mat-select type="number" matInput formControlName="class">
                                                         <div *ngFor="let classInfo of classInfo">
-                                                            <mat-option
-                                                                value="{{classInfo.class}}">{{classInfo.class | classSuffix}}</mat-option>
+                                                            <mat-option value="{{classInfo.class}}">{{classInfo.class |
+                                                                classSuffix}}</mat-option>
                                                         </div>
                                                     </mat-select>
                                                     <mat-hint
@@ -159,6 +162,7 @@
     </div>
     <div class="spinner-container" *ngIf="loader">
         <div class="spinner-overlay" *ngIf="loader">
-            <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
+            <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate"
+                strokeWidth="3"></mat-progress-spinner>
         </div>
     </div>

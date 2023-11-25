@@ -25,7 +25,8 @@
                   <tr class="text-muted">
                     <th>No.</th>
                     <th>Subject</th>
-                    <th>Actions</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="subjectInfo && subjectInfo.length>0">
@@ -37,7 +38,9 @@
                       <p class="mb-0">{{subject.subject}}</p>
                     </td>
                     <td class="mb-0">
-                      <mat-icon (click)="updateSubjectModel(subject)">edit_note</mat-icon>
+                      <mat-icon (click)="updateSubjectModel(subject)">edit</mat-icon>
+                    </td>
+                    <td class="mb-0">
                       <mat-icon (click)="deleteSubjectModel(subject._id)">delete</mat-icon>
                     </td>
                   </tr>
@@ -102,6 +105,6 @@
 </div>
 <div class="spinner-container" *ngIf="loader">
   <div class="spinner-overlay" *ngIf="loader">
-      <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
+    <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
   </div>
 </div>

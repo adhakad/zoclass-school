@@ -29,7 +29,8 @@
                     <th>Title</th>
                     <th>Notification</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="notificationInfo && notificationInfo.length>0">
@@ -55,7 +56,9 @@
                       <p class="mb-0">{{notifications.date}} {{notifications.time}}</p>
                     </td>
                     <td class="mb-0">
-                      <mat-icon (click)="updateNotificationModel(notifications)">edit_note</mat-icon>
+                      <mat-icon (click)="updateNotificationModel(notifications)">edit</mat-icon>
+                    </td>
+                    <td class="mb-0">
                       <mat-icon (click)="deleteNotificationModel(notifications._id)">delete</mat-icon>
                     </td>
                   </tr>
@@ -156,6 +159,6 @@
 </div>
 <div class="spinner-container" *ngIf="loader">
   <div class="spinner-overlay" *ngIf="loader">
-      <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
+    <mat-progress-spinner *ngIf="loader" diameter="65" mode="indeterminate" strokeWidth="3"></mat-progress-spinner>
   </div>
 </div>

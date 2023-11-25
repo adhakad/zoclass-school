@@ -26,7 +26,8 @@
                     <th>No.</th>
                     <th>Class</th>
                     <th>Class In Words</th>
-                    <th>Actions</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="classInfo && classInfo.length>0">
@@ -41,7 +42,9 @@
                       <p class="mb-0">{{class.class | classSuffix}}</p>
                     </td>
                     <td class="mb-0">
-                      <mat-icon (click)="updateClassModel(class)">edit_note</mat-icon>
+                      <mat-icon (click)="updateClassModel(class)">edit</mat-icon>
+                    </td>
+                    <td class="mb-0">
                       <mat-icon (click)="deleteClassModel(class._id)">delete</mat-icon>
                     </td>
                   </tr>

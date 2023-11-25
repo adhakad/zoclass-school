@@ -29,7 +29,7 @@
                     <th>Teacher User Id</th>
                     <th>Otp</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="teacherInfo && teacherInfo.length>0">
@@ -56,7 +56,7 @@
                         *ngIf="teacher.status == 'Inactive'">{{teacher.status}}</a>
                     </td>
                     <td class="mb-0">
-                      <!-- <mat-icon (click)="updateTeacherModel(teacher)">edit_note</mat-icon> -->
+                      <!-- <mat-icon (click)="updateTeacherModel(teacher)">edit</mat-icon> -->
                       <mat-icon (click)="deleteTeacherModel(teacher._id)">delete</mat-icon>
                     </td>
                   </tr>

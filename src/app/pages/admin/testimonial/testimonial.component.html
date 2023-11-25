@@ -30,7 +30,8 @@
                                         <th>Image</th>
                                         <th>Role</th>
                                         <th>Description</th>
-                                        <th>Actions</th>
+                                        <th>Edit</th>
+                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="testimonialInfo && testimonialInfo.length>0">
@@ -42,8 +43,8 @@
                                             <p class="mb-0">{{testimonial.name}}</p>
                                         </td>
                                         <td>
-                                            <img src="{{baseUrl}}/public/testimonial-image/{{testimonial.image}}"
-                                                alt="" style="height: 28px;;">
+                                            <img src="{{baseUrl}}/public/testimonial-image/{{testimonial.image}}" alt=""
+                                                style="height: 28px;;">
                                         </td>
                                         <td>
                                             <p class="mb-0">{{testimonial.role}}</p>
@@ -53,7 +54,9 @@
                                         </td>
 
                                         <td class="mb-0">
-                                            <mat-icon (click)="updateTestimonialModel(testimonial)">edit_note</mat-icon>
+                                            <mat-icon (click)="updateTestimonialModel(testimonial)">edit</mat-icon>
+                                        </td>
+                                        <td class="mb-0">
                                             <mat-icon
                                                 (click)="deleteTestimonialModel(testimonial._id)">delete</mat-icon>
                                         </td>
