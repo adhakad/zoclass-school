@@ -24,6 +24,7 @@ export class StudentComponent implements OnInit {
   showBulkImportModal: boolean = false;
   showBulkExportModal: boolean = false;
   showClassPromoteModal: boolean = false;
+  showStudentInfoViewModal:boolean = false;
   updateMode: boolean = false;
   deleteMode: boolean = false;
   deleteById: String = '';
@@ -56,7 +57,7 @@ export class StudentComponent implements OnInit {
   fileChoose: boolean = false;
   loader: Boolean = true;
   promotedClass: any;
-  promotingStudent: any
+  singleStudentInfo: any
   constructor(private fb: FormBuilder, public activatedRoute: ActivatedRoute, private schoolService: SchoolService, public ete: ExcelService, private classService: ClassService, private studentService: StudentService) {
     this.studentForm = this.fb.group({
       _id: [''],
@@ -162,6 +163,7 @@ export class StudentComponent implements OnInit {
     this.showBulkImportModal = false;
     this.showBulkExportModal = false;
     this.showClassPromoteModal = false;
+    this.showStudentInfoViewModal = false;
     this.updateMode = false;
     this.deleteMode = false;
     this.fileChoose = false;
@@ -170,7 +172,7 @@ export class StudentComponent implements OnInit {
     this.stream = '';
     this.cls = 0;
     this.promotedClass;
-    this.promotingStudent;
+    this.singleStudentInfo;
     this.admissionType = '';
     this.studentForm.reset();
     this.studentClassPromoteForm.reset();
@@ -193,8 +195,12 @@ export class StudentComponent implements OnInit {
   }
   addStudentClassPromoteModel(student: any) {
     this.showClassPromoteModal = true;
-    this.promotingStudent = student;
+    this.singleStudentInfo = student;
     this.studentClassPromoteForm.patchValue(student);
+  }
+  addStudentInfoViewModel(student: any) {
+    this.showStudentInfoViewModal = true;
+    this.singleStudentInfo = student;
   }
   updateStudentModel(student: any) {
     this.showModal = true;
