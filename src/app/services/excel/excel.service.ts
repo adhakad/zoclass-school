@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
@@ -8,6 +9,7 @@ export class ExcelService {
 
   constructor() { }
   exportExcel(excelData: { title: any; data: any; headers: any ,fileName:any}) {
+    console.log(excelData.title);
     //Title, Header & Data
     const title = excelData.title;
     const header = excelData.headers;
@@ -15,16 +17,14 @@ export class ExcelService {
     const fileName = excelData.fileName
     let workbook = new Workbook();
     let worksheet = workbook.addWorksheet('Student Record');
-    const numberOfColumns = Object.keys(data[0]).length; // Assuming data is an array of student details
     // Merge cells for the title
-    worksheet.mergeCells(`A1:${String.fromCharCode(64 + numberOfColumns)}1`);
+    worksheet.mergeCells(`A1:AB1`);
     worksheet.getRow(1).height = 70;
     let titleRow = worksheet.getCell('A1');
     function generatePaddingSpaces(paddingCount: number): string {
       return ' '.repeat(paddingCount);
     }
     const leftPaddingCount = 75;
-    // Calculate the number of spaces for left padding
     const leftPadding = generatePaddingSpaces(leftPaddingCount);
     titleRow.value = leftPadding + title;
     titleRow.font = {
@@ -37,7 +37,6 @@ export class ExcelService {
       type: 'pattern',
       pattern: 'solid',
       fgColor: { argb: '8D6DFF' },
-      // Replace 'FFFF00' with your desired color code
     };
     titleRow.alignment = { vertical: 'middle', };
     worksheet.views = [
@@ -121,3 +120,6 @@ export class ExcelService {
     });
   }
 }
+
+
+
