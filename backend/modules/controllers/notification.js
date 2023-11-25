@@ -19,7 +19,7 @@ let GetNotificationPagination = async (req, res, next) => {
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
-        const notificationList = await NotificationModel.find(searchObj)
+        const notificationList = await NotificationModel.find(searchObj).sort({ _id: -1 })
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
@@ -36,7 +36,7 @@ let GetNotificationPagination = async (req, res, next) => {
 
 let GetAllNotification = async (req, res, next) => {
     try {
-        const notificationList = await NotificationModel.find({ class: req.params.id });
+        const notificationList = await NotificationModel.find({ class: req.params.id }).sort({ _id: -1 });
         return res.status(200).json(notificationList);
     } catch (error) {
         console.log(error)

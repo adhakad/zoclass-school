@@ -23,7 +23,7 @@ let GetStudentPaginationByAdmission = async (req, res, next) => {
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
-        const studentList = await StudentModel.find({ admissionType: 'New' }).find(searchObj)
+        const studentList = await StudentModel.find({ admissionType: 'New' }).find(searchObj).sort({ _id: -1 })
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
@@ -50,7 +50,7 @@ let GetStudentAdmissionEnquiryPagination = async (req, res, next) => {
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
-        const admissionEnquiryList = await AdmissionEnquiryModel.find(searchObj)
+        const admissionEnquiryList = await AdmissionEnquiryModel.find(searchObj).sort({ _id: -1 })
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
@@ -74,7 +74,7 @@ let GetStudentPaginationByClass = async (req, res, next) => {
     try {
         let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
         let page = req.body.page || 1;
-        const studentList = await StudentModel.find({ class: className }).find(searchObj)
+        const studentList = await StudentModel.find({ class: className }).find(searchObj).sort({ _id: -1 })
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
@@ -90,7 +90,7 @@ let GetStudentPaginationByClass = async (req, res, next) => {
 
 let GetAllStudentByClass = async (req, res, next) => {
     try {
-        const singleStudent = await StudentModel.find({ class: req.params.class }, '-_id -otp -status -__v');
+        const singleStudent = await StudentModel.find({ class: req.params.class }, '-_id -otp -status -__v').sort({ _id: -1 });
         return res.status(200).json(singleStudent);
     } catch (error) {
         return res.status(500).json('Internal Server Error !');

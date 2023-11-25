@@ -20,7 +20,7 @@ let GetClassPagination = async(req,res,next) => {
     try {
       let limit = (req.body.limit) ? parseInt(req.body.limit) : 10;
       let page = req.body.page || 1;
-        const classList = await ClassModel.find(searchObj)
+        const classList = await ClassModel.find(searchObj).sort({ _id: -1 })
           .limit(limit * 1)
           .skip((page - 1) * limit)
           .exec();
