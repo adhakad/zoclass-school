@@ -112,7 +112,7 @@ let CreateStudent = async (req, res, next) => {
     const currentDateIst = DateTime.now().setZone('Asia/Kolkata');
     const istDateTimeString = currentDateIst.toFormat('dd-MM-yyyy hh:mm:ss a');
     const doa = currentDateIst.toFormat('dd-MM-yyyy');
-    let { name, rollNumber,aadharNumber,samagraId, session, admissionFees, admissionFeesPaymentType, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
+    let { name, rollNumber, aadharNumber, samagraId, session, admissionFees, admissionFeesPaymentType, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
     let className = req.body.class;
     let onlineAdmissionStatus = req.body.status;
     let onlineAdmObjId = req.body._id;
@@ -132,22 +132,22 @@ let CreateStudent = async (req, res, next) => {
         dob = DateTime.fromISO(dob).toFormat("dd-MM-yyyy");
     }
     const studentData = {
-        name, rollNumber,aadharNumber,samagraId, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
+        name, rollNumber, aadharNumber, samagraId, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
     }
     try {
         const checkFeesStr = await FeesStructureModel.findOne({ class: className });
         if (!checkFeesStr) {
             return res.status(404).json(`Please create fees structure for this class !`);
         }
-        const checkAadharNumber = await StudentModel.findOne({ aadharNumber:aadharNumber });
+        const checkAadharNumber = await StudentModel.findOne({ aadharNumber: aadharNumber });
         if (checkAadharNumber) {
             return res.status(400).json(`Aadhar card number already exist !`);
         }
-        const checkSamagraId = await StudentModel.findOne({ samagraId:samagraId });
+        const checkSamagraId = await StudentModel.findOne({ samagraId: samagraId });
         if (checkSamagraId) {
             return res.status(400).json(`Samagra id already exist !`);
         }
-        const checkAdmissionNo = await StudentModel.findOne({ admissionNo:admissionNo });
+        const checkAdmissionNo = await StudentModel.findOne({ admissionNo: admissionNo });
         if (checkAdmissionNo) {
             return res.status(400).json(`Admission no already exist !`);
         }
@@ -292,8 +292,8 @@ let CreateBulkStudentRecord = async (req, res, next) => {
         studentData.push({
             name: student.name,
             rollNumber: student.rollNumber,
-            aadharNumber:student.aadharNumber,
-            samagraId:student.samagraId,
+            aadharNumber: student.aadharNumber,
+            samagraId: student.samagraId,
             otp: otp,
             session: student.session,
             admissionType: student.admissionType,
@@ -339,16 +339,16 @@ let CreateBulkStudentRecord = async (req, res, next) => {
             const spreadAdmissionNo = otherClassAdmissionNo.join(', ');
             return res.status(400).json(`Admission number(s) ${spreadAdmissionNo} student(s) class is invailid !`);
         }
-        const existRecords = await StudentModel.find({ }).lean();
+        const existRecords = await StudentModel.find({}).lean();
         const duplicateAadharNumber = [];
         const duplicateSamagraId = [];
         const duplicateAdmissionNo = [];
         for (const student of studentData) {
-            const { admissionNo,aadharNumber,samagraId,} = student;
+            const { admissionNo, aadharNumber, samagraId, } = student;
             const aadharNumberExists = existRecords.some(record => record.aadharNumber == aadharNumber);
             const samagraIdExists = existRecords.some(record => record.samagraId == samagraId);
             const admissionNoExists = existRecords.some(record => record.admissionNo == admissionNo);
-            
+
             if (aadharNumberExists) {
                 duplicateAadharNumber.push(aadharNumber);
             }
@@ -435,9 +435,9 @@ let CreateBulkStudentRecord = async (req, res, next) => {
 let UpdateStudent = async (req, res, next) => {
     try {
         const id = req.params.id;
-        let { name, rollNumber,aadharNumber,samagraId, session, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
+        let { name, rollNumber, aadharNumber, samagraId, session, admissionType, stream, admissionNo, dob, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome } = req.body;
         const studentData = {
-            name, rollNumber,aadharNumber,samagraId, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
+            name, rollNumber, aadharNumber, samagraId, otp, session, admissionType, stream, admissionNo, class: className, dob: dob, doa: doa, gender, category, religion, nationality, contact, address, fatherName, fatherQualification, fatherOccupation, fatherContact, fatherAnnualIncome, motherName, motherQualification, motherOccupation, motherContact, motherAnnualIncome
         }
         const updateStudent = await StudentModel.findByIdAndUpdate(id, { $set: studentData }, { new: true });
         return res.status(200).json('Student update successfully.');
@@ -449,7 +449,7 @@ let UpdateStudent = async (req, res, next) => {
 let StudentClassPromote = async (req, res, next) => {
     try {
         const studentId = req.params.id;
-        let { session , rollNumber } = req.body;
+        let { session, rollNumber } = req.body;
         let className = parseInt(req.body.class);
         let checkStudent = await StudentModel.findOne({ _id: studentId });
         if (!checkStudent) {
@@ -541,6 +541,15 @@ let DeleteStudent = async (req, res, next) => {
         return res.status(500).json('Internal Server Error!');
     }
 }
+let DeleteAdmissionEnquiry = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const admissionEnquiry = await AdmissionEnquiryModel.findByIdAndRemove(id);
+        return res.status(200).json('Student Online admission form delete successfully.');
+    } catch (error) {
+        return res.status(500).json('Internal Server Error!');
+    }
+}
 
 module.exports = {
     countStudent,
@@ -556,4 +565,5 @@ module.exports = {
     StudentClassPromote,
     ChangeStatus,
     DeleteStudent,
+    DeleteAdmissionEnquiry
 }

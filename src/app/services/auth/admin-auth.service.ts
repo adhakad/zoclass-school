@@ -33,9 +33,15 @@ export class AdminAuthService {
     return this.authStatusListener.asObservable();
   }
 
+  // productKey(adminLoginData: AdminLoginData) {
+  //   console.log(adminLoginData)
+  //   return this.http.post(`${this.url}/product-key`, adminLoginData);
+  // }
+
   login(adminLoginData: AdminLoginData) {
     return this.http.post(`${this.url}/login`, adminLoginData);
   }
+
   signup(adminSignupData: any) {
     return this.http.post(`${this.url}/signup`, adminSignupData);
   }

@@ -1,6 +1,8 @@
 'use strict';
+const bcrypt = require('bcrypt');
 const tokenService = require('../../services/admin-token');
 const AdminUserModel = require('../../models/users/admin-user');
+const SchoolKeyModel = require('../../models/users/school-key');
 
 let LoginAdmin = async (req, res, next) => {
     try {
@@ -38,7 +40,58 @@ let RefreshToken = async (req, res, next) => {
         res.status(500).json(err)
     }
 }
+
+let SignupAdmin = async (req, res, next) => {
+    const { email, password, productKey } = req.body;
+    try {
+        const checkUser = await AdminUserModel.findOne({ email: email });
+        if (checkUser) {
+            return res.status(400).json("Admin already signup !");
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        let adminData = {
+            email: email,
+            password: hashedPassword,
+        }
+        const createSignupAdmin = await AdminUserModel.create(adminData);
+        if (createSignupAdmin) {
+            return res.status(200).json('Sign up F successfully.');
+        }
+    } catch (error) {
+        return res.status(500).json({ errorMsg: 'Internal Server Error !' });;
+    }
+}
+
+// let CreateProductKey = async (req, res, next) => {
+    
+//     const {productKey }= req.body;
+    
+    
+//     try {
+//         let countProductKey = await SchoolKeyModel.count();
+//         if(countProductKey === 1){
+//             return res.status(400).json("Invalid entry !");
+//         }
+//         const checkProductKey = await SchoolKeyModel.findOne({ productKey: productKey });
+//         if (checkProductKey) {
+//             return res.status(400).json("Invalid entry !");
+//         }
+//         const hashedProductKey = await bcrypt.hash(productKey, 10);
+//         let productKeyData = {
+//             productKey: hashedProductKey,
+//             status:'Inactive',
+//         }
+//         const createProductKey = await SchoolKeyModel.create(productKeyData);
+//         if (createProductKey) {
+//             return res.status(200).json('Product key created successfully.');
+//         }
+//     } catch (error) {
+//         return res.status(500).json({ errorMsg: 'Internal Server Error !' });;
+//     }
+// }
 module.exports = {
     LoginAdmin,
-    RefreshToken
+    RefreshToken,
+    // CreateProductKey,
+    SignupAdmin
 }

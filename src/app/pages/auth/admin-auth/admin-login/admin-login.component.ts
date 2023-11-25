@@ -12,11 +12,17 @@ import { TeacherAuthService } from 'src/app/services/auth/teacher-auth.service';
 export class AdminLoginComponent implements OnInit{
   errorMsg:string ='';
   loginForm: FormGroup;
+  // productForm:FormGroup;
   constructor(private fb: FormBuilder,private router:Router,private studentAuthService: StudentAuthService,private adminAuthService: AdminAuthService,private teacherAuthService: TeacherAuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30),Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
     })
+
+    // this.productForm = this.fb.group({
+    //   productKey: ['',Validators.required],
+      
+    // })
   }
   ngOnInit(): void {
   }
@@ -40,5 +46,17 @@ export class AdminLoginComponent implements OnInit{
       })
     }
   }
+
+
+  // product() {
+    
+      
+  //     this.adminAuthService.productKey(this.productForm.value).subscribe((res:any) => {
+  //       if(res){
+  //         console.log(res)
+          
+  //       }
+  //     })
+  //   }
 
 }

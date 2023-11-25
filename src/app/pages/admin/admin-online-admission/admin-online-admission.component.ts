@@ -40,6 +40,8 @@ export class AdminOnlineAdmissionComponent implements OnInit {
       rollNumber: ['', Validators.required],
       name: ['', Validators.required],
       dob: ['', Validators.required],
+      aadharNumber:['',[Validators.required, Validators.pattern('^\\d{12}$')]],
+      samagraId:['',[Validators.required, Validators.pattern('^\\d{9}$')]],
       gender: ['', Validators.required],
       category: ['', Validators.required],
       religion: ['', Validators.required],
@@ -161,13 +163,13 @@ export class AdminOnlineAdmissionComponent implements OnInit {
   }
 
   admissionEnquiryDelete(id: String) {
-    // this.admissionEnquiryService.deleteAdmissionEnquiry(id).subscribe((res: any) => {
-    //   if (res) {
-    //     this.successDone();
-    //     this.successMsg = res;
-    //     this.deleteById = '';
-    //   }
-    // })
+    this.studentService.deletedeleteAdmissionEnquiry(id).subscribe((res: any) => {
+      if (res) {
+        this.successDone();
+        this.successMsg = res;
+        this.deleteById = '';
+      }
+    })
   }
 
 }

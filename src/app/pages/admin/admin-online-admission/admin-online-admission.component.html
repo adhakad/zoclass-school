@@ -142,6 +142,34 @@
                                                                 </mat-error>
                                                             </mat-form-field>
                                                         </div>
+                                                        <div class="col-12 col-lg-6">
+                                                            <mat-form-field appearance="outline">
+                                                              <mat-label>Aadhar Card Number</mat-label>
+                                                              <input matInput type="number" formControlName="aadharNumber">
+                                                              <mat-error
+                                                                *ngIf="admissionEnquiryForm.get('aadharNumber')?.hasError('required') && admissionEnquiryForm.get('aadharNumber')?.touched">
+                                                                Aadhar card number is required
+                                                              </mat-error>
+                                                              <mat-error
+                                                                *ngIf="admissionEnquiryForm.get('aadharNumber')?.hasError('pattern') && admissionEnquiryForm.get('aadharNumber')?.touched">
+                                                                Aadhar number must be a 12-digit number
+                                                              </mat-error>
+                                                            </mat-form-field>
+                                                          </div>
+                                                          <div class="col-12 col-lg-6">
+                                                            <mat-form-field appearance="outline">
+                                                              <mat-label>Samagra Id</mat-label>
+                                                              <input matInput type="number" formControlName="samagraId">
+                                                              <mat-error
+                                                                *ngIf="admissionEnquiryForm.get('samagraId')?.hasError('required') && admissionEnquiryForm.get('samagraId')?.touched">
+                                                                Samagra id is required
+                                                              </mat-error>
+                                                              <mat-error
+                                                                *ngIf="admissionEnquiryForm.get('samagraId')?.hasError('pattern') && admissionEnquiryForm.get('samagraId')?.touched">
+                                                                Samagra id must be a 9-digit number
+                                                              </mat-error>
+                                                            </mat-form-field>
+                                                          </div>
                                                         <div class="col-12 col-lg-6"
                                                             *ngIf="rollNumberType=='manualFill'">
                                                             <mat-form-field appearance="outline">

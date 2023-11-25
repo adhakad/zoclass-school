@@ -40,10 +40,41 @@
               <button type="submit" mat-raised-button
                 [disabled]="!loginForm.valid" class="submit-button">Login</button>
             </form>
-            <!-- <p>Don't have an account yet? <a routerLink="/admin/signup">Register now</a></p> -->
+            <p>Don't have an account yet? <a routerLink="/admin/signup">Register now</a></p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+<!-- <app-header></app-header>
+<div class="login">
+  <div class="row">
+    <div class="col-12 col-lg-5 offset-lg-3 login-card">
+      <div class="row">
+        <div class="col-12 col-lg-10 offset-lg-1">
+          <h3>Product key create</h3>
+          <div class="col-12">
+            <form [formGroup]="productForm" (ngSubmit)="product()">
+              <mat-form-field appearance="outline">
+                <mat-label>Product Key</mat-label>
+                <input matInput type="text" formControlName="productKey">
+                
+              </mat-form-field>
+
+
+
+              <button type="submit" mat-raised-button
+                [disabled]="!productForm.valid" class="submit-button">Product Key</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

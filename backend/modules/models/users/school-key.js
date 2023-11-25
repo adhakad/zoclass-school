@@ -1,13 +1,8 @@
 'use strict';
 const mongoose = require('mongoose');
 
-const AdminModel = mongoose.model('admin-users', {
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    password: {
+const SchoolKeyModel = mongoose.model('school-key', {
+    productKey:{
         type: String,
         required: true,
         trim: true,
@@ -21,4 +16,4 @@ const AdminModel = mongoose.model('admin-users', {
     }
 });
 
-module.exports = AdminModel;
+module.exports = SchoolKeyModel;

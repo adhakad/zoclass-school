@@ -3,7 +3,6 @@ require('dotenv').config()
 let constant = "./config/config.js";
 process.config.global_config = require(constant);
 
-
 const express = require('express');
 const app = express();
 const { DbConnect } = require('./modules/helpers/database');
@@ -31,6 +30,9 @@ require('./routes')(app);
 // app.get('/*',(req,res) => {
 //   res.sendFile(path.join(__dirname ,'./dist/zoclass/index.html'));
 // })
+
+
+
 
 let port = Number(process.config.global_config.server.port);
 let server = app.listen(port, function () {
