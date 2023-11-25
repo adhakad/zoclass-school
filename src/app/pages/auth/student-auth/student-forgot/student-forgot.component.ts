@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AdminAuthService } from 'src/app/services/auth/admin-auth.service';
 import { StudentAuthService } from 'src/app/services/auth/student-auth.service';
-import { TeacherAuthService } from 'src/app/services/auth/teacher-auth.service';
 import { ClassService } from 'src/app/services/class.service';
 @Component({
   selector: 'app-student-forgot',
@@ -20,7 +18,7 @@ export class StudentForgotComponent implements OnInit {
   classInfo: any;
   varifiedStudentInfo:any;
   varifiedOtpInfo:any;
-  constructor(private fb: FormBuilder, private router: Router, private classService: ClassService, private studentAuthService: StudentAuthService, private adminAuthService: AdminAuthService, private teacherAuthService: TeacherAuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private classService: ClassService, private studentAuthService: StudentAuthService) {
     this.varifyForm = this.fb.group({
       rollNumber: ['', [Validators.required, Validators.maxLength(8),Validators.pattern('^[0-9]+$')]],
       class: ['', [Validators.required, Validators.pattern(/^\d+$/)]],

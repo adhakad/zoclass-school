@@ -17,7 +17,6 @@ const AdminModel = mongoose.model('admin-users', {
         trim: true,
         required: true,
         enum: ['Active', 'Inactive'],
-        default: 'Inactive'
     }
 });
 

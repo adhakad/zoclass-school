@@ -30,7 +30,9 @@ const routes: Routes = [
   { path: 'student/result', loadChildren: () => import('src/app/pages/student/student-result/student-result.module').then((module) => module.StudentResultModule), canActivate: [StudentAuthGuard] },
   // Admin Routing Section
 
+  { path: 'admin/signup', loadChildren: () => import('src/app/pages/auth/admin-auth/admin-signup/admin-signup.module').then((module) => module.AdminSignupModule) },
   { path: 'admin/login', loadChildren: () => import('src/app/pages/auth/admin-auth/admin-login/admin-login.module').then((module) => module.AdminLoginModule) },
+  { path: 'admin/forgot', loadChildren: () => import('src/app/pages/auth/admin-auth/admin-forgot/admin-forgot.module').then((module) => module.AdminForgotModule) },
   { path: 'admin/dashboard', loadChildren: () => import('src/app/pages/admin/dashboard/dashboard.module').then((module) => module.DashboardModule), canActivate: [AdminAuthGuard] },
 
   { path: 'admin/setting', loadChildren: () => import('src/app/pages/admin/admin-setting/admin-setting.module').then((module) => module.AdminSettingModule), canActivate: [AdminAuthGuard] },

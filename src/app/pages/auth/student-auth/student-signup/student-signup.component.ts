@@ -34,7 +34,7 @@ export class StudentSignupComponent implements OnInit {
   signup() {
     if (this.signupForm.valid) {
       this.studentAuthService.signup(this.signupForm.value).subscribe((res: any) => {
-        if (res) {
+        if (res) { 
           this.router.navigate(['/student/login']);
         }
       }, err => {
