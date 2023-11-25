@@ -77,8 +77,8 @@ Header section
   margin-top: 5px;
   color: #525098eb !important;
 }
-
-.close-icon {
+ 
+.hamburger-menu .close-icon {
   color: #525098eb !important;
   font-size: 28px;
   margin-top: 3.5vh;

@@ -82,7 +82,8 @@ export class NotificationPageComponent implements OnInit {
     }
   }
   private getRole() {
-    this.roleInfo = [{ role: "Student" }, { role: "Teacher" }, { role: "Public" }]
+    // this.roleInfo = [{ role: "Student" }, { role: "Teacher" }, { role: "Public" }]
+    this.roleInfo = [{ role: "Student" }, { role: "Public" }]
   }
 
   getClass() {

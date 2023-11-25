@@ -72,11 +72,11 @@
     <mat-icon>admin_panel_settings</mat-icon>
     <span>Admin Login</span>
   </button>
-  <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
+  <!-- <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
     routerLink="/teacher/login">
     <mat-icon>account_box</mat-icon>
     <span>Teacher Login</span>
-  </button>
+  </button> -->
   <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
     routerLink="/student/login">
     <mat-icon>person</mat-icon>
@@ -86,10 +86,10 @@
     <mat-icon>dashboard</mat-icon>
     <span>Admin Dashboard</span>
   </button>
-  <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
+  <!-- <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
     <mat-icon>dashboard</mat-icon>
     <span>Teacher Dashboard</span>
-  </button>
+  </button> -->
   <button mat-menu-item *ngIf="isStudentAuthenticated" routerLink="/student/dashboard">
     <mat-icon>dashboard</mat-icon>
     <span>Student Dashboard</span>
@@ -98,10 +98,10 @@
     <mat-icon>logout</mat-icon>
     <span>Logout</span>
   </button>
-  <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
+  <!-- <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
     <mat-icon>logout</mat-icon>
     <span>Logout</span>
-  </button>
+  </button> -->
   <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">
     <mat-icon>logout</mat-icon>
     <span>Logout</span>
@@ -147,11 +147,11 @@
       <mat-icon>admin_panel_settings</mat-icon>
       <span>Admin Login</span>
     </button>
-    <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
+    <!-- <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/teacher/login">
       <mat-icon>account_box</mat-icon>
       <span>Teacher Login</span>
-    </button>
+    </button> -->
     <button mat-menu-item *ngIf="!isAdminAuthenticated && !isTeacherAuthenticated && !isStudentAuthenticated"
       routerLink="/student/login">
       <mat-icon>person</mat-icon>
@@ -161,10 +161,10 @@
       <mat-icon>dashboard</mat-icon>
       <span>Admin Dashboard</span>
     </button>
-    <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
+    <!-- <button mat-menu-item *ngIf="isTeacherAuthenticated" routerLink="/teacher/dashboard">
       <mat-icon>dashboard</mat-icon>
       <span>Teacher Dashboard</span>
-    </button>
+    </button> -->
     <button mat-menu-item *ngIf="isStudentAuthenticated" routerLink="/student/dashboard">
       <mat-icon>dashboard</mat-icon>
       <span>Student Dashboard</span>
@@ -173,10 +173,10 @@
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
-    <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
+    <!-- <button mat-menu-item *ngIf="isTeacherAuthenticated" (click)="onLogout('teacher')">
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
-    </button>
+    </button> -->
     <button mat-menu-item *ngIf="isStudentAuthenticated" (click)="onLogout('student')">
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
